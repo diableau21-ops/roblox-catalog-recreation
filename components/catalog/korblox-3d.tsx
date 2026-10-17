@@ -137,6 +137,16 @@ export function Korblox3D({ rotating, tryOn }: Props) {
     }
 
     const load = async () => {
+      let officialBundleLoaded = false
+      try {
+        const bundleResponse = await fetch('/api/korblox-bundle')
+        if (bundleResponse.ok) {
+          const bundle = await bundleResponse.json()
+          officialBundleLoaded = bundle?.id === 192 && Array.isArray(bundle?.items)
+        }
+      } catch {
+        // The 3D viewer can still work if catalog metadata is temporarily unavailable.
+      }
       try {
         const res = await fetch('/api/korblox-preview')
         const info = await res.json()
@@ -164,7 +174,9 @@ export function Korblox3D({ rotating, tryOn }: Props) {
         if (stopped) return
         model = makeModel()
         scene.add(model)
-        setMessage('Modèle 3D recréé — fais glisser pour le tourner')
+        setMessage(officialBundleLoaded
+          ? 'Données officielles Korblox chargées · modèle 3D recréé — fais glisser pour tourner'
+          : 'Modèle 3D recréé — fais glisser pour le tourner')
       }
     }
     void load()
@@ -200,7 +212,7 @@ export function Korblox3D({ rotating, tryOn }: Props) {
     }
   }, [])
 
-  return <div ref={host} className="absolute inset-0 cursor-grab active:cursor-grabbing" aria-label="Modèle 3D Korblox recréé" role="img">
+  return <div ref={host} className="absolute inset-0 cursor-grab active:cursor-grabbing" aria-label="Aperçu 3D Korblox Deathspeaker, modèle recréé avec données du catalogue officiel" role="img">
     {message && <div className="absolute inset-x-3 bottom-3 z-10 rounded-lg bg-black/80 px-3 py-2 text-center text-xs text-white">{message}</div>}
   </div>
 }
