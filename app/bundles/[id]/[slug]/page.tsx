@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { useState } from 'react'
-import { ArrowLeft, Gift, Rotate3D, Shirt } from 'lucide-react'
+import { ArrowLeft, Gift } from 'lucide-react'
 import { catalogItems } from '@/lib/catalog-data'
 import { VerifiedBadge } from '@/components/catalog/verified-badge'
 import { Price, RobloxMark, RobuxIcon } from '@/components/catalog/robux-icon'
@@ -14,8 +14,6 @@ export default function BundlePage() {
   const params = useParams<{ id: string; slug: string }>()
   const [giftOpen, setGiftOpen] = useState(false)
   const [message, setMessage] = useState('')
-  const [isRotating, setIsRotating] = useState(false)
-  const [tryOn, setTryOn] = useState(false)
   const isHeadless = params.id === '201' || params.slug?.toLowerCase().includes('headless')
   const item = catalogItems.find((entry) => entry.id === (isHeadless ? 13 : 10))
 
@@ -42,7 +40,7 @@ export default function BundlePage() {
         <section className="grid gap-8 md:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
           <div className={`relative aspect-square overflow-hidden rounded-xl border border-[#3b3b3b] ${!isHeadless ? 'bg-gradient-to-br from-[#292929] via-[#151515] to-[#080808]' : 'bg-thumb'}`}>
             {!isHeadless ? (
-              <Korblox3D rotating={isRotating} tryOn={tryOn} />
+              <Korblox3D />
             ) : (
               <div className="absolute inset-0">
                 <Image
@@ -55,24 +53,7 @@ export default function BundlePage() {
                 />
               </div>
             )}
-            {!isHeadless && <div className="absolute right-3 top-1/2 z-10 flex -translate-y-1/2 flex-col gap-2">
-              <button
-                type="button"
-                onClick={() => setTryOn((active) => !active)}
-                aria-pressed={tryOn}
-                className={`flex h-9 items-center justify-center gap-1.5 rounded-md border border-white/15 px-2.5 text-xs font-semibold shadow-lg backdrop-blur-sm transition ${tryOn ? 'bg-white text-black' : 'bg-black/75 text-white hover:bg-black'}`}
-              >
-                <Shirt className="size-3.5" /> Try On
-              </button>
-              <button
-                type="button"
-                onClick={() => setIsRotating((active) => !active)}
-                aria-pressed={isRotating}
-                className="flex h-9 items-center justify-center gap-1.5 rounded-md border border-white/15 bg-black/75 px-2.5 text-xs font-semibold text-white shadow-lg backdrop-blur-sm transition hover:bg-black"
-              >
-                <Rotate3D className="size-3.5" /> {isRotating ? '2D' : '3D'}
-              </button>
-            </div>}
+
           </div>
 
           <div className="flex flex-col gap-5 py-1">
