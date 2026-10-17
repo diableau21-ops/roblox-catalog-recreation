@@ -8,6 +8,7 @@ import { ArrowLeft, Gift, Rotate3D, Shirt } from 'lucide-react'
 import { catalogItems } from '@/lib/catalog-data'
 import { VerifiedBadge } from '@/components/catalog/verified-badge'
 import { Price, RobloxMark, RobuxIcon } from '@/components/catalog/robux-icon'
+import { Korblox3D } from '@/components/catalog/korblox-3d'
 
 export default function BundlePage() {
   const params = useParams<{ id: string; slug: string }>()
@@ -40,17 +41,20 @@ export default function BundlePage() {
 
         <section className="grid gap-8 md:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
           <div className={`relative aspect-square overflow-hidden rounded-xl border border-[#3b3b3b] ${!isHeadless ? 'bg-gradient-to-br from-[#292929] via-[#151515] to-[#080808]' : 'bg-thumb'}`}>
-            <div className="absolute inset-0" style={{ perspective: '900px' }}>
-              <Image
-                src={item.image || '/placeholder.svg'}
-                alt={item.name}
-                fill
-                priority
-                sizes="(min-width: 768px) 55vw, 100vw"
-                className={`object-contain p-6 transition-transform duration-300 ${isRotating ? 'korblox-turn-y' : ''} ${tryOn ? 'scale-110' : ''}`}
-                style={{ transformStyle: 'preserve-3d' }}
-              />
-            </div>
+            {!isHeadless ? (
+              <Korblox3D rotating={isRotating} tryOn={tryOn} />
+            ) : (
+              <div className="absolute inset-0">
+                <Image
+                  src={item.image || '/placeholder.svg'}
+                  alt={item.name}
+                  fill
+                  priority
+                  sizes="(min-width: 768px) 55vw, 100vw"
+                  className="object-contain p-6"
+                />
+              </div>
+            )}
             {!isHeadless && <div className="absolute right-3 top-1/2 z-10 flex -translate-y-1/2 flex-col gap-2">
               <button
                 type="button"
