@@ -80,6 +80,14 @@ export function LeftNav({ open, onClose, onNotify, onBuyRobux }: Props) {
           ))}
         </ul>
         <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-3">
+          <div className="mb-3 flex items-center gap-2">
+            <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-[#f5c542]">
+              <span className="relative block size-4 rotate-[15deg] bg-[#202020]">
+                <span className="absolute left-[5px] top-[5px] size-[6px] bg-[#f5c542]" />
+              </span>
+            </span>
+            <span className="text-sm font-bold leading-5 text-foreground">Roblox Plus</span>
+          </div>
           <p className="text-sm font-bold leading-5 text-foreground">More fun for less Robux.</p>
           <p className="mt-1 text-xs leading-4 text-muted-foreground">Subscribe to Roblox Plus.</p>
           <button
