@@ -41,19 +41,20 @@ export default function BundlePage() {
 
         <section className="grid gap-8 md:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
           <div className={`relative aspect-square overflow-hidden rounded-xl border border-[#3b3b3b] ${!isHeadless ? 'bg-[#232323]' : 'bg-thumb'}`}>
-            {show2D || isHeadless ? (
-              <div className="absolute inset-0">
-                <Image
-                  src={item.image || '/placeholder.svg'}
-                  alt={item.name}
-                  fill
-                  priority
-                  sizes="(min-width: 768px) 55vw, 100vw"
-                  className="object-contain p-6"
-                />
+            <div className={`absolute inset-0 ${show2D || isHeadless ? 'block' : 'hidden'}`}>
+              <Image
+                src={item.image || '/placeholder.svg'}
+                alt={item.name}
+                fill
+                priority
+                sizes="(min-width: 768px) 55vw, 100vw"
+                className="object-contain p-6"
+              />
+            </div>
+            {!isHeadless && (
+              <div className={`absolute inset-0 ${show2D ? 'invisible' : 'visible'}`}>
+                <Korblox3D />
               </div>
-            ) : (
-              <Korblox3D />
             )}
 
             {!isHeadless && (
