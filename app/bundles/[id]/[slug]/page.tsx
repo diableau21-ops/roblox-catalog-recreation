@@ -14,6 +14,8 @@ export default function BundlePage() {
   const params = useParams<{ id: string; slug: string }>()
   const [giftOpen, setGiftOpen] = useState(false)
   const [message, setMessage] = useState('')
+  const [show2D, setShow2D] = useState(false)
+  const [tryOn, setTryOn] = useState(false)
   const isHeadless = params.id === '201' || params.slug?.toLowerCase().includes('headless')
   const item = catalogItems.find((entry) => entry.id === (isHeadless ? 13 : 10))
 
@@ -38,10 +40,8 @@ export default function BundlePage() {
         </nav>
 
         <section className="grid gap-8 md:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
-          <div className={`relative aspect-square overflow-hidden rounded-xl border border-[#3b3b3b] ${!isHeadless ? 'bg-gradient-to-br from-[#292929] via-[#151515] to-[#080808]' : 'bg-thumb'}`}>
-            {!isHeadless ? (
-              <Korblox3D />
-            ) : (
+          <div className={`relative aspect-square overflow-hidden rounded-xl border border-[#3b3b3b] ${!isHeadless ? 'bg-[#232323]' : 'bg-thumb'}`}>
+            {show2D || isHeadless ? (
               <div className="absolute inset-0">
                 <Image
                   src={item.image || '/placeholder.svg'}
@@ -52,8 +52,33 @@ export default function BundlePage() {
                   className="object-contain p-6"
                 />
               </div>
+            ) : (
+              <Korblox3D />
             )}
 
+            {!isHeadless && (
+              <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setTryOn((value) => !value)
+                    setMessage(tryOn ? 'Try On désactivé.' : 'Try On : aperçu activé sur cette démo.')
+                  }}
+                  aria-pressed={tryOn}
+                  className={`rounded-lg px-4 py-2 text-sm font-bold shadow-lg transition ${tryOn ? 'bg-[#00b06f] text-white' : 'bg-white text-[#222] hover:bg-gray-200'}`}
+                >
+                  {tryOn ? 'Wearing' : 'Try On'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShow2D((value) => !value)}
+                  aria-pressed={show2D}
+                  className="rounded-lg border border-white/20 bg-[#333] px-4 py-2 text-sm font-bold text-white shadow-lg transition hover:bg-[#444]"
+                >
+                  {show2D ? '3D' : '2D'}
+                </button>
+              </div>
+            )}
           </div>
 
           <div className="flex flex-col gap-5 py-1">
@@ -88,7 +113,6 @@ export default function BundlePage() {
               >
                 <Gift className="size-4" /> Gift
               </button>
-              
             </div>
 
             {!isHeadless && <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-8 gap-y-4 border-t border-border pt-5 text-sm">
@@ -98,10 +122,8 @@ export default function BundlePage() {
               <dt className="font-semibold">Created</dt><dd>Aug 14, 2018</dd>
               <dt className="font-semibold">Description</dt><dd className="leading-6">His tribe is widely considered the best and strongest of the twelve Korblox tribes. No one dares challenge his authority.</dd>
             </dl>}
-
           </div>
         </section>
-
       </div>
 
       {message && (
