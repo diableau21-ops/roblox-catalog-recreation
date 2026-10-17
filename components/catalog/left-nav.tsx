@@ -81,8 +81,13 @@ export function LeftNav({ open, onClose, onNotify, onBuyRobux }: Props) {
         </ul>
         <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-3">
           <div className="mb-3 flex items-center gap-2">
-            <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-[#f5c542] text-[#202020]">
-              <span className="font-serif text-[23px] font-black leading-none">&amp;</span>
+            <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-transparent">
+              <svg viewBox="0 0 32 32" className="size-7 text-foreground" aria-label="Roblox Plus logo" role="img">
+                <g transform="rotate(15 13 16)" fill="currentColor">
+                  <path fillRule="evenodd" d="M3 4H23V28H3Z M10 12H16V18H10Z" />
+                </g>
+                <path fill="currentColor" d="M21 13H24V16H29V19H24V24H21V19H17V16H21Z" />
+              </svg>
             </span>
             <span className="text-sm font-bold leading-5 text-foreground">Roblox Plus</span>
           </div>
