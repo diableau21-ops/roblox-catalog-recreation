@@ -2,7 +2,6 @@
 
 import Image from 'next/image'
 import {
-  Crown,
   Gift,
   House,
   MessageSquare,
@@ -85,7 +84,6 @@ export function LeftNav({ open, onClose, onNotify, onBuyRobux }: Props) {
           onClick={onBuyRobux}
           className="mt-4 flex w-full items-center gap-3 rounded-lg px-2 py-3 text-left transition-colors hover:bg-secondary"
         >
-          <Crown className="size-6 shrink-0 text-[#f5b800]" aria-hidden="true" />
           <span className="flex min-w-0 flex-col">
             <span className="text-sm font-bold text-foreground">Get Premium</span>
             <span className="mt-0.5 text-xs leading-4 text-muted-foreground">More fun for less Robux.</span>
