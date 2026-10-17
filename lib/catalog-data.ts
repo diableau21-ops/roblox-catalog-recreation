@@ -44,7 +44,7 @@ export const catalogItems: CatalogItem[] = [
     creator: "Roblox",
     verified: true,
     price: 27849,
-    image: "https://www.roblox.com/asset-thumbnail/image?assetId=10159600649&width=420&height=420&format=png",
+    image: "https://tr.rbxcdn.com/180DAY-9c8bb8e0b58f5f97aebf1b23a5e25a33/420/420/Hat/Webp/noFilter",
     category: "accessories",
     subcategory: "Hats",
     featured: true,
