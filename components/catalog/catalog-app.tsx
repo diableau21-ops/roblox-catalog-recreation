@@ -24,6 +24,7 @@ const sortLabels: Record<Sort, string> = {
 export function CatalogApp() {
   const [balance, setBalance] = useState(1250)
   const [query, setQuery] = useState('')
+  const [language, setLanguage] = useState('English')
   const [category, setCategory] = useState<Category>('all')
   const [subcategory, setSubcategory] = useState<string | null>(null)
   const [priceFilter, setPriceFilter] = useState<PriceFilter>('any')
@@ -216,6 +217,22 @@ export function CatalogApp() {
               </a>
             ),
           )}
+          <div className="flex w-full flex-wrap items-center gap-2 border-t border-border pt-5">
+            <label htmlFor="site-language" className="font-semibold text-foreground">Language:</label>
+            <select
+              id="site-language"
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+              className="rounded-md border border-border bg-input px-3 py-2 text-sm text-foreground"
+            >
+              {['English', 'Français', 'Español', 'Português', 'Deutsch', 'Italiano', '日本語', '한국어', '简体中文'].map((l) => (
+                <option key={l} value={l}>{l}</option>
+              ))}
+            </select>
+          </div>
+          <p className="w-full pt-3 text-xs leading-relaxed text-muted-foreground">
+            ©2026 Roblox Corporation. Roblox, the Roblox logo and Powering Imagination are among our registered and unregistered trademarks in the U.S. and other countries.
+          </p>
         </div>
       </footer>
 
