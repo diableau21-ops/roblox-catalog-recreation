@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+// @ts-ignore -- Three.js is used as a runtime renderer; the model is built procedurally.
 import * as THREE from 'three'
 
 type Props = { rotating: boolean; tryOn: boolean }
@@ -58,7 +59,7 @@ export function Korblox3D({ rotating, tryOn }: Props) {
     const gold = material('#a77a35', 0.72, 0.3)
     const eye = new THREE.MeshStandardMaterial({ color: '#48c9ff', emissive: '#168aff', emissiveIntensity: 3 })
 
-    const addBox = (parent: THREE.Object3D, size: [number, number, number], pos: [number, number, number], mat: THREE.Material, bevel = false) => {
+    const addBox = (parent: any, size: [number, number, number], pos: [number, number, number], mat: any, bevel = false) => {
       const geometry = new THREE.BoxGeometry(...size)
       const mesh = new THREE.Mesh(geometry, mat)
       mesh.position.set(...pos)
@@ -134,7 +135,7 @@ export function Korblox3D({ rotating, tryOn }: Props) {
     scene.add(floor)
     const grid = new THREE.GridHelper(8, 16, 0x39465e, 0x252c39)
     grid.position.y = 0.02
-    const gridMat = grid.material as THREE.Material
+    const gridMat: any = grid.material
     gridMat.transparent = true
     gridMat.opacity = 0.24
     scene.add(grid)
@@ -183,7 +184,7 @@ export function Korblox3D({ rotating, tryOn }: Props) {
       renderer.domElement.removeEventListener('pointermove', move)
       renderer.domElement.removeEventListener('pointerup', up)
       renderer.domElement.removeEventListener('pointercancel', up)
-      scene.traverse((obj) => {
+      scene.traverse((obj: any) => {
         if (obj instanceof THREE.Mesh || obj instanceof THREE.LineSegments) {
           obj.geometry.dispose()
           const mats = Array.isArray(obj.material) ? obj.material : [obj.material]
