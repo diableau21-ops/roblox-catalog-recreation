@@ -21,7 +21,7 @@ export function ItemCard({ item, owned, favorited, onOpen, onToggleFavorite }: P
       <button
         type="button"
         onClick={onOpen}
-        className="relative aspect-square overflow-hidden rounded-lg bg-[#101827] transition-shadow group-hover:shadow-[0_0_0_2px_var(--foreground)] focus-visible:outline-2 focus-visible:outline-foreground"
+        className="relative aspect-square overflow-hidden rounded-lg bg-black transition-shadow group-hover:shadow-[0_0_0_2px_var(--foreground)] focus-visible:outline-2 focus-visible:outline-foreground"
         aria-label={`View ${item.name}`}
       >
         <Image
