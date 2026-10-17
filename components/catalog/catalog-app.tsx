@@ -27,7 +27,7 @@ export function CatalogApp() {
   const [category, setCategory] = useState<Category>('all')
   const [subcategory, setSubcategory] = useState<string | null>(null)
   const [priceFilter, setPriceFilter] = useState<PriceFilter>('any')
-  const [hideOffSale, setHideOffSale] = useState(false)
+  const [hideOffSale, setHideOffSale] = useState(true)
   const [sort, setSort] = useState<Sort>('relevance')
   const [owned, setOwned] = useState<Set<number>>(() => new Set([8]))
   const [favorites, setFavorites] = useState<Set<number>>(() => new Set())
