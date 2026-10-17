@@ -39,33 +39,34 @@ export default function BundlePage() {
         </nav>
 
         <section className="grid gap-8 md:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
-          <div className={`relative flex aspect-square flex-col overflow-hidden rounded-xl border border-[#3b3b3b] ${!isHeadless ? 'bg-gradient-to-br from-[#292929] via-[#151515] to-[#080808]' : 'bg-thumb'}`}>
-            <div className="relative min-h-0 flex-1">
+          <div className={`relative aspect-square overflow-hidden rounded-xl border border-[#3b3b3b] ${!isHeadless ? 'bg-gradient-to-br from-[#292929] via-[#151515] to-[#080808]' : 'bg-thumb'}`}>
+            <div className="absolute inset-0" style={{ perspective: '900px' }}>
               <Image
                 src={item.image || '/placeholder.svg'}
                 alt={item.name}
                 fill
                 priority
                 sizes="(min-width: 768px) 55vw, 100vw"
-                className={`object-contain p-6 transition-transform duration-300 ${isRotating ? 'animate-[spin_3s_linear_infinite]' : ''} ${tryOn ? 'scale-110' : ''}`}
+                className={`object-contain p-6 transition-transform duration-300 ${isRotating ? 'korblox-turn-y' : ''} ${tryOn ? 'scale-110' : ''}`}
+                style={{ transformStyle: 'preserve-3d' }}
               />
             </div>
-            {!isHeadless && <div className="flex items-center justify-between gap-3 border-t border-white/10 bg-black/50 p-3">
+            {!isHeadless && <div className="absolute right-3 top-1/2 z-10 flex -translate-y-1/2 flex-col gap-2">
               <button
                 type="button"
                 onClick={() => setTryOn((active) => !active)}
                 aria-pressed={tryOn}
-                className={`flex h-10 flex-1 items-center justify-center gap-2 rounded-md px-4 text-sm font-semibold transition ${tryOn ? 'bg-white text-black' : 'bg-[#333] text-white hover:bg-[#444]'}`}
+                className={`flex h-9 items-center justify-center gap-1.5 rounded-md border border-white/15 px-2.5 text-xs font-semibold shadow-lg backdrop-blur-sm transition ${tryOn ? 'bg-white text-black' : 'bg-black/75 text-white hover:bg-black'}`}
               >
-                <Shirt className="size-4" /> {tryOn ? 'Remove Try On' : 'Try On'}
+                <Shirt className="size-3.5" /> Try On
               </button>
               <button
                 type="button"
                 onClick={() => setIsRotating((active) => !active)}
                 aria-pressed={isRotating}
-                className="flex h-10 min-w-20 items-center justify-center gap-2 rounded-md border border-white/15 bg-[#292929] px-4 text-sm font-semibold text-white transition hover:bg-[#3a3a3a]"
+                className="flex h-9 items-center justify-center gap-1.5 rounded-md border border-white/15 bg-black/75 px-2.5 text-xs font-semibold text-white shadow-lg backdrop-blur-sm transition hover:bg-black"
               >
-                <Rotate3D className="size-4" /> {isRotating ? '2D' : '3D'}
+                <Rotate3D className="size-3.5" /> {isRotating ? '2D' : '3D'}
               </button>
             </div>}
           </div>
