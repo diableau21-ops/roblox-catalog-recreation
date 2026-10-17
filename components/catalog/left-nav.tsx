@@ -85,7 +85,7 @@ export function LeftNav({ open, onClose, onNotify, onBuyRobux }: Props) {
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg"
                 alt="Roblox Plus"
-                className="size-7 object-contain"
+                className="size-7 object-contain brightness-0 invert"
               />
             </span>
             <span className="text-sm font-bold leading-5 text-foreground">Roblox Plus</span>
