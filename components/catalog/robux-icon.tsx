@@ -3,10 +3,10 @@ import { cn } from '@/lib/utils'
 export function RobuxIcon({ className }: { className?: string }) {
   return (
     <img
-      src="https://images.rbxcdn.com/3a9b44283e65ae1ead90defcb0bdcb6e-economy_28x28_dark.svg"
+      src="https://upload.wikimedia.org/wikipedia/commons/0/09/Robux_2019_Logo_Black.svg"
       alt=""
       aria-hidden="true"
-      className={cn('inline-block size-4 shrink-0 object-contain', className)}
+      className={cn('inline-block size-4 shrink-0 object-contain invert', className)}
     />
   )
 }
