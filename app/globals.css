@@ -153,6 +153,41 @@
   }
 }
 
+.roblox,
+:root.roblox:not(.light) {
+  color-scheme: dark;
+  --background: #111216;
+  --foreground: #f7f7f8;
+  --card: #1c1d21;
+  --card-foreground: #f7f7f8;
+  --popover: #1c1d21;
+  --popover-foreground: #f7f7f8;
+  --primary: #335fff;
+  --primary-foreground: #ffffff;
+  --secondary: #2a2b30;
+  --secondary-foreground: #f7f7f8;
+  --muted: #2a2b30;
+  --muted-foreground: #a3a5ab;
+  --accent: #2a2b30;
+  --accent-foreground: #f7f7f8;
+  --border: #2f3036;
+  --input: #1c1d21;
+  --ring: #335fff;
+  --header: #18191d;
+  --thumb: #d4d6db;
+  --success: #00a85a;
+  --limited: #2ec27e;
+  --favorite: #ff4d6d;
+}
+
+@theme inline {
+  --color-header: var(--header);
+  --color-thumb: var(--thumb);
+  --color-success: var(--success);
+  --color-limited: var(--limited);
+  --color-favorite: var(--favorite);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
