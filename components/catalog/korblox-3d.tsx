@@ -73,9 +73,9 @@ export function Korblox3D({ rotating, tryOn }: Props) {
         parent.add(mesh)
         return mesh
       }
-      const box = (x: number, y: number, z: number, sx: number, sy: number, sz: number, mat: THREE.Material, parent?: THREE.Group) =>
+      const box = (x: number, y: number, z: number, sx: number, sy: number, sz: number, mat: THREE.Material, parent: THREE.Group = root) =>
         add(new THREE.BoxGeometry(1, 1, 1), mat, x, y, z, sx, sy, sz, parent)
-      const sphere = (x: number, y: number, z: number, sx: number, sy: number, sz: number, mat: THREE.Material, parent?: THREE.Group) =>
+      const sphere = (x: number, y: number, z: number, sx: number, sy: number, sz: number, mat: THREE.Material, parent: THREE.Group = root) =>
         add(new THREE.SphereGeometry(0.5, 16, 12), mat, x, y, z, sx, sy, sz, parent)
       const limb = (a: THREE.Vector3, b: THREE.Vector3, radius: number, mat: THREE.Material, parent: THREE.Group = root) => {
         const direction = new THREE.Vector3().subVectors(b, a)
