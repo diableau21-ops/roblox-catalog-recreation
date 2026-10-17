@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { useState } from 'react'
-import { ArrowLeft, Gift } from 'lucide-react'
+import { ArrowLeft, Gift, Rotate3D, Shirt } from 'lucide-react'
 import { catalogItems } from '@/lib/catalog-data'
 import { VerifiedBadge } from '@/components/catalog/verified-badge'
 import { Price, RobloxMark, RobuxIcon } from '@/components/catalog/robux-icon'
@@ -13,6 +13,8 @@ export default function BundlePage() {
   const params = useParams<{ id: string; slug: string }>()
   const [giftOpen, setGiftOpen] = useState(false)
   const [message, setMessage] = useState('')
+  const [isRotating, setIsRotating] = useState(false)
+  const [tryOn, setTryOn] = useState(false)
   const isHeadless = params.id === '201' || params.slug?.toLowerCase().includes('headless')
   const item = catalogItems.find((entry) => entry.id === (isHeadless ? 13 : 10))
 
@@ -37,8 +39,35 @@ export default function BundlePage() {
         </nav>
 
         <section className="grid gap-8 md:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
-          <div className="relative aspect-square overflow-hidden rounded-xl bg-thumb">
-            <Image src={item.image || '/placeholder.svg'} alt={item.name} fill priority sizes="(min-width: 768px) 55vw, 100vw" className="object-contain p-6" />
+          <div className={`relative flex aspect-square flex-col overflow-hidden rounded-xl border border-[#3b3b3b] ${!isHeadless ? 'bg-gradient-to-br from-[#292929] via-[#151515] to-[#080808]' : 'bg-thumb'}`}>
+            <div className="relative min-h-0 flex-1">
+              <Image
+                src={item.image || '/placeholder.svg'}
+                alt={item.name}
+                fill
+                priority
+                sizes="(min-width: 768px) 55vw, 100vw"
+                className={`object-contain p-6 transition-transform duration-300 ${isRotating ? 'animate-[spin_3s_linear_infinite]' : ''} ${tryOn ? 'scale-110' : ''}`}
+              />
+            </div>
+            {!isHeadless && <div className="flex items-center justify-between gap-3 border-t border-white/10 bg-black/50 p-3">
+              <button
+                type="button"
+                onClick={() => setTryOn((active) => !active)}
+                aria-pressed={tryOn}
+                className={`flex h-10 flex-1 items-center justify-center gap-2 rounded-md px-4 text-sm font-semibold transition ${tryOn ? 'bg-white text-black' : 'bg-[#333] text-white hover:bg-[#444]'}`}
+              >
+                <Shirt className="size-4" /> {tryOn ? 'Remove Try On' : 'Try On'}
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsRotating((active) => !active)}
+                aria-pressed={isRotating}
+                className="flex h-10 min-w-20 items-center justify-center gap-2 rounded-md border border-white/15 bg-[#292929] px-4 text-sm font-semibold text-white transition hover:bg-[#3a3a3a]"
+              >
+                <Rotate3D className="size-4" /> {isRotating ? '2D' : '3D'}
+              </button>
+            </div>}
           </div>
 
           <div className="flex flex-col gap-5 py-1">
