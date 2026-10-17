@@ -7,7 +7,6 @@ export function RobuxIcon({ className }: { className?: string }) {
         fillRule="evenodd"
         d="M7.1 1.8 22.2 7.1 16.9 22.2 1.8 16.9 7.1 1.8ZM8.3 5.6 5.6 13.7l8.1 2.7 2.7-8.1-8.1-2.7Z"
       />
-      <path d="m9.1 8.1 6.8 2.3-2.3 6.8-6.8-2.3 2.3-6.8Z" />
     </svg>
   )
 }
