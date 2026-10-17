@@ -50,6 +50,7 @@ export function CatalogApp() {
       if (category !== 'all' && category !== 'featured' && i.category !== category) return false
       if (subcategory && i.subcategory !== subcategory) return false
       if (hideOffSale && i.price === null) return false
+      if (i.price === 0) return false
       if (priceFilter === 'free' && i.price !== 0) return false
       if (priceFilter === 'under100' && (i.price === null || i.price >= 100)) return false
       if (priceFilter === 'over100' && (i.price === null || i.price < 100)) return false
@@ -178,7 +179,7 @@ export function CatalogApp() {
                   setQuery('')
                   selectCategory('all', null)
                   setPriceFilter('any')
-                  setHideOffSale(false)
+                  setHideOffSale(true)
                 }}
                 className="mt-2 rounded-lg bg-secondary px-4 py-2 text-sm font-semibold hover:bg-secondary/80"
               >
