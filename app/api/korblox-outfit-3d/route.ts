@@ -31,12 +31,19 @@ export async function GET() {
   try {
     const endpoint = new URL('https://thumbnails.roblox.com/v1/users/outfit-3d')
     endpoint.searchParams.set('userOutfitId', OUTFIT_ID)
+    endpoint.searchParams.set('useGltf', 'true')
     const response = await fetch(endpoint, {
       headers: { 'x-api-key': apiKey, accept: 'application/json' },
       cache: 'no-store',
     })
     if (!response.ok) {
-      return NextResponse.json({ error: `Roblox outfit 3D request failed (HTTP ${response.status}).` }, { status: 502 })
+      const errorBody = (await response.text()).slice(0, 1200)
+      return NextResponse.json({
+        error: `Roblox outfit 3D request failed (HTTP ${response.status}).`,
+        details: errorBody || 'Roblox returned an empty error response.',
+        outfitId: OUTFIT_ID,
+        requestedFormat: 'gltf',
+      }, { status: 502 })
     }
 
     const payload = await response.json()
