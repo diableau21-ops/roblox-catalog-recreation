@@ -136,7 +136,82 @@ export function Korblox3D({ rotating, tryOn }: Props) {
       return root
     }
 
+    const loadOfficialParts = async (): Promise<boolean> => {
+      const response = await fetch('/api/korblox-parts')
+      if (!response.ok) return false
+      const data = await response.json()
+      const items = Array.isArray(data?.items) ? data.items.filter((item: any) => item.previewState === 'Completed' && typeof item.obj === 'string') : []
+      // Require several real Roblox meshes before replacing the known fallback.
+      if (items.length < 4) return false
+
+      const root = new THREE.Group()
+      const loader = new OBJLoader()
+      const placements: Record<string, { x: number; y: number; z: number; height: number }> = {
+        head: { x: 0, y: 2.75, z: 0, height: 0.62 },
+        torso: { x: 0, y: 1.95, z: 0, height: 0.92 },
+        leftarm: { x: -0.53, y: 1.92, z: 0, height: 0.88 },
+        rightarm: { x: 0.53, y: 1.92, z: 0, height: 0.88 },
+        leftleg: { x: -0.23, y: 0.78, z: 0, height: 1.05 },
+        rightleg: { x: 0.23, y: 0.78, z: 0, height: 1.05 },
+      }
+      let placed = 0
+      for (const item of items) {
+        try {
+          const type = String(item.assetType || item.name || '').toLowerCase().replace(/[^a-z]/g, '')
+          const placementKey = Object.keys(placements).find((key) => type.includes(key))
+          const placement = placementKey ? placements[placementKey] : null
+          const object = await new Promise<THREE.Group>((resolve, reject) => {
+            const objectLoader = new OBJLoader()
+            if (typeof item.mtl === 'string') {
+              new MTLLoader().load(item.mtl, (materials) => {
+                materials.preload()
+                objectLoader.setMaterials(materials)
+                objectLoader.load(item.obj, resolve, undefined, reject)
+              }, undefined, reject)
+            } else {
+              objectLoader.load(item.obj, resolve, undefined, reject)
+            }
+          })
+          if (stopped) return false
+          const bounds = new THREE.Box3().setFromObject(object)
+          const size = bounds.getSize(new THREE.Vector3())
+          const center = bounds.getCenter(new THREE.Vector3())
+          const targetHeight = placement?.height ?? 0.55
+          const scale = targetHeight / Math.max(size.y, 0.01)
+          object.scale.setScalar(scale)
+          object.position.set(
+            (placement?.x ?? 0) - center.x * scale,
+            (placement?.y ?? 1.7) - bounds.min.y * scale,
+            (placement?.z ?? 0) - center.z * scale,
+          )
+          root.add(object)
+          placed++
+        } catch {
+          // Ignore an individual asset preview that failed to load.
+        }
+      }
+      if (placed < 4) {
+        root.traverse((part) => {
+          if (part instanceof THREE.Mesh) {
+            part.geometry.dispose()
+            const materials = Array.isArray(part.material) ? part.material : [part.material]
+            materials.forEach((material) => material.dispose())
+          }
+        })
+        return false
+      }
+      model = root
+      scene.add(model)
+      setMessage('Pièces 3D récupérées du catalogue Roblox · fais glisser pour tourner')
+      return true
+    }
+
     const load = async () => {
+      try {
+        if (await loadOfficialParts()) return
+      } catch {
+        // Fall through to the single-asset preview and then the visual fallback.
+      }
       let officialBundleLoaded = false
       try {
         const bundleResponse = await fetch('/api/korblox-bundle')
