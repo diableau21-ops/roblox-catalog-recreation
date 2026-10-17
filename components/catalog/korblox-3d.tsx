@@ -9,6 +9,7 @@ type Props = { rotating: boolean; tryOn: boolean }
 export function Korblox3D({ rotating, tryOn }: Props) {
   const host = useRef<HTMLDivElement>(null)
   const [message, setMessage] = useState('Chargement du modèle officiel Roblox…')
+  const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null)
   const rotatingRef = useRef(rotating)
   const tryOnRef = useRef(tryOn)
   useEffect(() => { rotatingRef.current = rotating }, [rotating])
@@ -56,7 +57,10 @@ export function Korblox3D({ rotating, tryOn }: Props) {
       try {
         const res = await fetch('/api/korblox-preview')
         const info = await res.json()
-        if (!res.ok) throw new Error(info.error || 'Aperçu 3D indisponible.')
+        if (!res.ok) {
+          if (typeof info.thumbnailUrl === 'string') setThumbnailUrl(info.thumbnailUrl)
+          throw new Error(info.error || 'Aperçu 3D indisponible.')
+        }
         const objLoader = new OBJLoader()
         if (info.mtl) {
           const mats = await new Promise<THREE.MaterialCreator>((resolve, reject) => new MTLLoader().load(info.mtl, resolve, undefined, reject))
@@ -114,6 +118,7 @@ export function Korblox3D({ rotating, tryOn }: Props) {
   }, [])
 
   return <div ref={host} className="absolute inset-0 cursor-grab active:cursor-grabbing" aria-label="Aperçu 3D officiel Roblox" role="img">
-    {message && <div className="absolute inset-x-3 bottom-3 z-10 rounded-lg bg-black/80 px-3 py-2 text-center text-xs text-white">{message}</div>}
+    {thumbnailUrl && <img src={thumbnailUrl} alt="Korblox Deathspeaker — image officielle Roblox" className="absolute inset-0 z-[5] h-full w-full object-contain" />}
+    {message && <div className="absolute inset-x-3 bottom-3 z-10 rounded-lg bg-black/80 px-3 py-2 text-center text-xs text-white">{thumbnailUrl ? 'Image officielle Roblox — aperçu 3D indisponible' : message}</div>}
   </div>
 }
