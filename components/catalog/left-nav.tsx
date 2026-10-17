@@ -2,15 +2,12 @@
 
 import Image from 'next/image'
 import {
-  BookOpen,
   Gift,
   House,
   MessageSquare,
   Package,
   Repeat,
-  Rss,
-  ShoppingBag,
-  Shirt,
+undefined  Shirt,
   Users,
   UsersRound,
 } from 'lucide-react'
@@ -31,9 +28,6 @@ const links = [
   { label: 'Inventory', icon: Package },
   { label: 'Trade', icon: Repeat },
   { label: 'Communities', icon: UsersRound },
-  { label: 'My Feed', icon: Rss },
-  { label: 'Blog', icon: BookOpen },
-  { label: 'Official Store', icon: ShoppingBag },
   { label: 'Gift Cards', icon: Gift },
 ]
 
