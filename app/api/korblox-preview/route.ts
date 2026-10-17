@@ -4,6 +4,24 @@ export const runtime = 'nodejs'
 export const revalidate = 3600
 
 const KORBLOX_CLASSIC_ASSET_ID = '139610216'
+const KORBLOX_BUNDLE_ID = '192'
+
+async function getOfficialThumbnail() {
+  try {
+    const url = new URL('https://thumbnails.roblox.com/v1/bundles/thumbnails')
+    url.searchParams.set('bundleIds', KORBLOX_BUNDLE_ID)
+    url.searchParams.set('size', '420x420')
+    url.searchParams.set('format', 'Png')
+    url.searchParams.set('isCircular', 'false')
+    const response = await fetch(url, { cache: 'no-store' })
+    if (!response.ok) return null
+    const payload = await response.json()
+    const imageUrl = payload?.data?.[0]?.imageUrl
+    return typeof imageUrl === 'string' ? imageUrl : null
+  } catch {
+    return null
+  }
+}
 
 export async function GET() {
   const apiKey = process.env.ROBLOX_API_KEY
@@ -22,7 +40,7 @@ export async function GET() {
 
     if (!response.ok) {
       return NextResponse.json(
-        { error: `Roblox 3D preview request failed (HTTP ${response.status}). Check the API key's thumbnails/read permission.` },
+        { error: `Roblox 3D preview request failed (HTTP ${response.status}). Check the API key's thumbnails/read permission.`, thumbnailUrl: await getOfficialThumbnail() },
         { status: 502 },
       )
     }
@@ -30,31 +48,29 @@ export async function GET() {
     const payload = await response.json()
     const preview = Array.isArray(payload?.data) ? payload.data[0] : null
 
-    // The thumbnails API returns imageUrl + state first. The OBJ/MTL hashes
-    // are in the JSON document served at imageUrl, not on the first response.
     if (!preview || preview.state !== 'Completed' || typeof preview.imageUrl !== 'string') {
       return NextResponse.json({
         error: 'Roblox has not generated a 3D preview for this asset.',
         state: preview?.state ?? 'Unknown',
+        thumbnailUrl: await getOfficialThumbnail(),
       }, { status: 502 })
     }
 
     const metadataUrl = new URL(preview.imageUrl)
     if (metadataUrl.protocol !== 'https:' || !metadataUrl.hostname.endsWith('.rbxcdn.com')) {
-      return NextResponse.json({ error: 'Roblox returned an unexpected preview metadata URL.' }, { status: 502 })
+      return NextResponse.json({ error: 'Roblox returned an unexpected preview metadata URL.', thumbnailUrl: await getOfficialThumbnail() }, { status: 502 })
     }
 
     const metadataResponse = await fetch(metadataUrl, { cache: 'no-store' })
     if (!metadataResponse.ok) {
-      return NextResponse.json({ error: 'Could not read Roblox 3D preview metadata.' }, { status: 502 })
+      return NextResponse.json({ error: 'Could not read Roblox 3D preview metadata.', thumbnailUrl: await getOfficialThumbnail() }, { status: 502 })
     }
 
     const metadata = await metadataResponse.json()
     if (typeof metadata?.obj !== 'string') {
-      return NextResponse.json({ error: 'Roblox preview metadata does not contain a 3D model.' }, { status: 502 })
+      return NextResponse.json({ error: 'Roblox preview metadata does not contain a 3D model.', thumbnailUrl: await getOfficialThumbnail() }, { status: 502 })
     }
 
-    // Roblox's metadata contains content hashes. Serve them from Roblox CDN.
     const assetUrl = (hash: unknown) => typeof hash === 'string' && /^[a-f0-9]{16,128}$/i.test(hash)
       ? `https://t0.rbxcdn.com/${hash}`
       : null
@@ -62,13 +78,13 @@ export async function GET() {
     const obj = assetUrl(metadata.obj)
     const mtl = assetUrl(metadata.mtl)
     if (!obj) {
-      return NextResponse.json({ error: 'Roblox returned an invalid model reference.' }, { status: 502 })
+      return NextResponse.json({ error: 'Roblox returned an invalid model reference.', thumbnailUrl: await getOfficialThumbnail() }, { status: 502 })
     }
 
     return NextResponse.json({ obj, mtl, state: preview.state }, {
       headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400' },
     })
   } catch {
-    return NextResponse.json({ error: 'Could not contact Roblox 3D preview service.' }, { status: 502 })
+    return NextResponse.json({ error: 'Could not contact Roblox 3D preview service.', thumbnailUrl: await getOfficialThumbnail() }, { status: 502 })
   }
 }
