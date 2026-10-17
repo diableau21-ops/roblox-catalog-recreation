@@ -5,8 +5,9 @@ export function RobuxIcon({ className }: { className?: string }) {
     <svg viewBox="0 0 24 24" aria-hidden="true" className={cn('size-4 shrink-0', className)} fill="currentColor">
       <path
         fillRule="evenodd"
-        d="M12 1.5 21.1 6.75v10.5L12 22.5l-9.1-5.25V6.75L12 1.5Zm0 3.2L5.7 8.33v7.34L12 19.3l6.3-3.63V8.33L12 4.7Zm-3.2 4.1h6.4v6.4H8.8V8.8Zm2.2 2.2v2h2v-2h-2Z"
+        d="M7.1 1.8 22.2 7.1 16.9 22.2 1.8 16.9 7.1 1.8ZM8.3 5.6 5.6 13.7l8.1 2.7 2.7-8.1-8.1-2.7Z"
       />
+      <path d="m9.1 8.1 6.8 2.3-2.3 6.8-6.8-2.3 2.3-6.8Z" />
     </svg>
   )
 }
