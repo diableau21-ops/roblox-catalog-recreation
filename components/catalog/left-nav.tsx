@@ -8,6 +8,7 @@ import {
   Package,
   Repeat,
   Shirt,
+  UserRound,
   Users,
   UsersRound,
 } from 'lucide-react'
@@ -22,6 +23,7 @@ type Props = {
 
 const links = [
   { label: 'Home', icon: House },
+  { label: 'Profil', icon: UserRound },
   { label: 'Messages', icon: MessageSquare, badge: 3 },
   { label: 'Friends', icon: Users },
   { label: 'Avatar', icon: Shirt },
