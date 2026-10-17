@@ -8,10 +8,10 @@ export function Korblox3D(_props: Props) {
   return (
     <div className="absolute inset-0 bg-[#17181c]">
       <iframe
-        title="Korblox 3D model on Sketchfab"
+        title="Korblox interactive 3D model"
         className="absolute inset-0 h-full w-full border-0"
-        src={`https://sketchfab.com/models/${SKETCHFAB_MODEL_ID}/embed?autostart=1&preload=1&ui_hint=2`}
-        allow="autoplay; fullscreen; xr-spatial-tracking"
+        src={`https://sketchfab.com/models/${SKETCHFAB_MODEL_ID}/embed?autostart=0&preload=1&ui_hint=2&ui_controls=1&ui_animations=0`}
+        allow="fullscreen; xr-spatial-tracking"
         allowFullScreen
         referrerPolicy="strict-origin-when-cross-origin"
       />
