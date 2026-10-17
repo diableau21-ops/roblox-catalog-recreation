@@ -7,7 +7,7 @@ import {
   MessageSquare,
   Package,
   Repeat,
-undefined  Shirt,
+  Shirt,
   Users,
   UsersRound,
 } from 'lucide-react'
