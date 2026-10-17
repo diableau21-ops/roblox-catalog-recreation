@@ -1,13 +1,22 @@
 import { cn } from '@/lib/utils'
 
 export function RobuxIcon({ className }: { className?: string }) {
+  const robuxIcon = 'https://images.rbxcdn.com/3a9b44283e65ae1ead90defcb0bdcb6e-economy_28x28_dark.svg'
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className={cn('size-4 shrink-0', className)} fill="currentColor">
-      <path
-        fillRule="evenodd"
-        d="M7.2 1.5 22.5 7.2 16.8 22.5 1.5 16.8 7.2 1.5ZM8.8 5.4 5.4 14.6l9.2 3.4 3.4-9.2-9.2-3.4Z"
-      />
-    </svg>
+    <span
+      aria-hidden="true"
+      className={cn('inline-block size-4 shrink-0 bg-current', className)}
+      style={{
+        maskImage: `url("${robuxIcon}")`,
+        WebkitMaskImage: `url("${robuxIcon}")`,
+        maskRepeat: 'no-repeat',
+        WebkitMaskRepeat: 'no-repeat',
+        maskPosition: 'center',
+        WebkitMaskPosition: 'center',
+        maskSize: 'contain',
+        WebkitMaskSize: 'contain',
+      }}
+    />
   )
 }
 
