@@ -59,14 +59,6 @@ export function LeftNav({ open, onClose, onNotify, onBuyRobux }: Props) {
           </span>
           <span className="text-base font-bold">Builderman</span>
         </button>
-        <div className="mb-1 flex items-center gap-2 rounded-lg px-2 py-2">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg"
-            alt=""
-            className="size-5 object-contain brightness-0 invert"
-          />
-          <span className="text-base font-bold text-foreground">Roblox Plus</span>
-        </div>
         <ul className="flex flex-col gap-0.5">
           {links.map(({ label, icon: Icon, badge }) => (
             <li key={label}>
@@ -85,6 +77,18 @@ export function LeftNav({ open, onClose, onNotify, onBuyRobux }: Props) {
                 )}
               </a>
             </li>
+            {label === 'Home' && (
+              <li>
+                <div className="flex items-center gap-3 rounded-lg px-2 py-2 text-base font-bold text-foreground">
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg"
+                    alt=""
+                    className="size-5 object-contain brightness-0 invert"
+                  />
+                  <span>Roblox Plus</span>
+                </div>
+              </li>
+            )}
           ))}
         </ul>
         <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-3">
