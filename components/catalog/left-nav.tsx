@@ -79,19 +79,17 @@ export function LeftNav({ open, onClose, onNotify, onBuyRobux }: Props) {
             </li>
           ))}
         </ul>
-        <button
-          type="button"
-          onClick={onBuyRobux}
-          className="mt-4 flex w-full flex-col rounded-xl border border-border bg-secondary/40 p-3 text-left transition-colors hover:bg-secondary"
-        >
-          <span className="mb-2 flex w-full items-center gap-2 border-b border-border pb-2">
-            <span className="flex size-6 items-center justify-center rounded-md bg-[#f5b800] text-xs font-black text-[#252525]">P</span>
-            <span className="text-xs font-bold uppercase tracking-wide text-foreground">Premium</span>
-          </span>
-          <span className="text-sm font-bold text-foreground">Get Premium</span>
-          <span className="mt-0.5 text-xs leading-4 text-muted-foreground">More fun for less Robux.</span>
-          <span className="mt-1 w-fit text-xs font-semibold text-foreground underline underline-offset-2">Subscribe to Roblox Plus</span>
-        </button>
+        <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-3">
+          <p className="text-sm font-bold leading-5 text-foreground">More fun for less Robux.</p>
+          <p className="mt-1 text-xs leading-4 text-muted-foreground">Subscribe to Roblox Plus.</p>
+          <button
+            type="button"
+            onClick={onBuyRobux}
+            className="mt-2 text-xs font-semibold text-foreground underline underline-offset-2 hover:text-foreground/80"
+          >
+            Subscribe
+          </button>
+        </div>
       </nav>
     </>
   )
