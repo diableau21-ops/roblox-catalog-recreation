@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 type Props = { rotating: boolean; tryOn: boolean }
 
@@ -136,6 +137,45 @@ export function Korblox3D({ rotating, tryOn }: Props) {
       return root
     }
 
+    const loadOfficialOutfit = async (): Promise<boolean> => {
+      const response = await fetch('/api/korblox-outfit-3d')
+      if (!response.ok) return false
+      const data = await response.json()
+      let object: THREE.Object3D | null = null
+
+      if (typeof data.gltf === 'string') {
+        const gltf = await new Promise<{ scene: THREE.Group }>((resolve, reject) => {
+          new GLTFLoader().load(data.gltf, resolve, undefined, reject)
+        })
+        object = gltf.scene
+      } else if (typeof data.obj === 'string') {
+        const loader = new OBJLoader()
+        if (typeof data.mtl === 'string') {
+          const materials = await new Promise<THREE.MaterialCreator>((resolve, reject) => {
+            new MTLLoader().load(data.mtl, resolve, undefined, reject)
+          })
+          materials.preload()
+          loader.setMaterials(materials)
+        }
+        object = await new Promise<THREE.Group>((resolve, reject) => {
+          loader.load(data.obj, resolve, undefined, reject)
+        })
+      }
+
+      if (!object || stopped) return false
+      const bounds = new THREE.Box3().setFromObject(object)
+      const size = bounds.getSize(new THREE.Vector3())
+      const center = bounds.getCenter(new THREE.Vector3())
+      const scale = 3.4 / Math.max(size.x, size.y, size.z, 0.01)
+      object.scale.setScalar(scale)
+      object.position.set(-center.x * scale, -bounds.min.y * scale, -center.z * scale)
+      model = new THREE.Group()
+      model.add(object)
+      scene.add(model)
+      setMessage('Modèle 3D officiel du catalogue Roblox · fais glisser pour tourner')
+      return true
+    }
+
     const loadOfficialParts = async (): Promise<boolean> => {
       const response = await fetch('/api/korblox-parts')
       if (!response.ok) return false
@@ -207,6 +247,11 @@ export function Korblox3D({ rotating, tryOn }: Props) {
     }
 
     const load = async () => {
+      try {
+        if (await loadOfficialOutfit()) return
+      } catch {
+        // If Roblox cannot provide an outfit model, try individual asset previews.
+      }
       try {
         if (await loadOfficialParts()) return
       } catch {
