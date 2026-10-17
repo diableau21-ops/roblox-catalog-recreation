@@ -86,16 +86,6 @@ export function LeftNav({ open, onClose, onNotify, onBuyRobux }: Props) {
         >
           Get Premium
         </button>
-        <a
-          href="#"
-          onClick={(e) => {
-            e.preventDefault()
-            onNotify('Events are coming soon')
-          }}
-          className="mt-3 px-2 text-sm font-medium text-muted-foreground hover:text-foreground"
-        >
-          Events
-        </a>
       </nav>
     </>
   )
