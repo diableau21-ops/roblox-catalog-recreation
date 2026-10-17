@@ -31,7 +31,6 @@ export async function GET() {
   try {
     const endpoint = new URL('https://thumbnails.roblox.com/v1/users/outfit-3d')
     endpoint.searchParams.set('userOutfitId', OUTFIT_ID)
-    endpoint.searchParams.set('useGltf', 'true')
     const response = await fetch(endpoint, {
       headers: { 'x-api-key': apiKey, accept: 'application/json' },
       cache: 'no-store',
