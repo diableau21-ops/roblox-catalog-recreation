@@ -29,6 +29,7 @@ declare global {
 
 const SKETCHFAB_MODEL_ID = '2371f80005c14807b5627b148739e04b'
 const VIEWER_API_URL = 'https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js'
+const BACKGROUND = 35 / 255
 
 export function Korblox3D(_props: { rotating?: boolean; tryOn?: boolean }) {
   const iframeRef = useRef<HTMLIFrameElement>(null)
@@ -49,11 +50,9 @@ export function Korblox3D(_props: { rotating?: boolean; tryOn?: boolean }) {
         success: (api) => {
           if (cancelled) return
           api.start()
-          api.setBackground({ color: [58 / 255, 58 / 255, 58 / 255] })
+          api.setBackground({ color: [BACKGROUND, BACKGROUND, BACKGROUND] })
         },
-        error: () => {
-          // The embedded viewer can still display an error if the model is unavailable.
-        },
+        error: () => {},
       })
     }
 
@@ -61,9 +60,8 @@ export function Korblox3D(_props: { rotating?: boolean; tryOn?: boolean }) {
       initialize()
     } else {
       const existing = document.querySelector<HTMLScriptElement>(`script[src="${VIEWER_API_URL}"]`)
-      if (existing) {
-        existing.addEventListener('load', initialize, { once: true })
-      } else {
+      if (existing) existing.addEventListener('load', initialize, { once: true })
+      else {
         const script = document.createElement('script')
         script.src = VIEWER_API_URL
         script.async = true
@@ -72,13 +70,11 @@ export function Korblox3D(_props: { rotating?: boolean; tryOn?: boolean }) {
       }
     }
 
-    return () => {
-      cancelled = true
-    }
+    return () => { cancelled = true }
   }, [])
 
   return (
-    <div className="absolute inset-0 bg-[#3a3a3a]">
+    <div className="absolute inset-0 bg-[#232323]">
       <iframe
         ref={iframeRef}
         title="Korblox interactive 3D model"
