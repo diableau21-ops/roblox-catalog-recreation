@@ -4,10 +4,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { useState } from 'react'
-import { ArrowLeft, Gift, Share2 } from 'lucide-react'
+import { ArrowLeft, Gift } from 'lucide-react'
 import { catalogItems } from '@/lib/catalog-data'
 import { VerifiedBadge } from '@/components/catalog/verified-badge'
-import { Price } from '@/components/catalog/robux-icon'
+import { Price, RobloxMark, RobuxIcon } from '@/components/catalog/robux-icon'
 
 export default function BundlePage() {
   const params = useParams<{ id: string; slug: string }>()
@@ -24,8 +24,9 @@ export default function BundlePage() {
         <Link href="/" className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold hover:bg-secondary">
           <ArrowLeft className="size-4" /> Marketplace
         </Link>
-        <span className="text-lg font-black tracking-tight">ROBLOX</span>
+        <RobloxMark className="size-7" />
         <span className="text-sm text-muted-foreground">/ Bundles</span>
+        {!isHeadless && <span className="ml-auto inline-flex items-center gap-1.5 text-base font-bold"><RobuxIcon className="size-5" />{item.price?.toLocaleString('en-US')}</span>}
       </header>
 
       <div className="mx-auto max-w-6xl px-4 py-8 md:px-8">
@@ -45,15 +46,15 @@ export default function BundlePage() {
               <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">Bundle</p>
               <h1 className="text-3xl font-bold tracking-tight md:text-4xl">{item.name}</h1>
               <p className="mt-3 flex items-center gap-1.5 text-sm text-muted-foreground">
-                By <span className="font-semibold text-foreground">@Roblox</span>
+                By <span className="font-semibold text-foreground">Roblox</span>
                 <VerifiedBadge className="size-4" />
               </p>
             </div>
 
-            <div className="border-y border-border py-5">
+            {isHeadless && <div className="border-y border-border py-5">
               <p className="mb-2 text-sm text-muted-foreground">Price</p>
               <div className="text-2xl font-bold"><Price price={item.price} /></div>
-            </div>
+            </div>}
 
             <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>
 
@@ -72,22 +73,16 @@ export default function BundlePage() {
               >
                 <Gift className="size-4" /> Gift
               </button>
-              <button
-                type="button"
-                onClick={() => {
-                  navigator.clipboard?.writeText(window.location.href)
-                  setMessage('Bundle link copied.')
-                }}
-                className="flex h-10 items-center justify-center gap-2 rounded-lg px-5 text-sm font-semibold text-muted-foreground hover:bg-secondary hover:text-foreground"
-              >
-                <Share2 className="size-4" /> Share
-              </button>
+              
             </div>
 
-            <div className="rounded-lg border border-border p-4">
-              <h2 className="mb-2 font-semibold">About this bundle</h2>
-              <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>
-            </div>
+            {!isHeadless && <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-8 gap-y-4 border-t border-border pt-5 text-sm">
+              <dt className="font-semibold">Description</dt><dd className="leading-6">His tribe is widely considered the best and strongest of the twelve Korblox tribes. No one dares challenge his authority.</dd>
+              <dt className="font-semibold">Tradable</dt><dd>No</dd>
+              <dt className="font-semibold">Type</dt><dd>Characters</dd>
+              <dt className="font-semibold">Placement</dt><dd>Full Body</dd>
+              <dt className="font-semibold">Created</dt><dd>Aug 14, 2018</dd>
+            </dl>}
           </div>
         </section>
       </div>
