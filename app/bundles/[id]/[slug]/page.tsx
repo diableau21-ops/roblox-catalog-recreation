@@ -56,7 +56,7 @@ export default function BundlePage() {
               <div className="text-2xl font-bold"><Price price={item.price} /></div>
             </div>}
 
-            <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>
+            {isHeadless && <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>}
 
             <div className="mt-2 flex flex-col gap-3">
               <button
@@ -76,15 +76,18 @@ export default function BundlePage() {
               
             </div>
 
-            {!isHeadless && <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-8 gap-y-4 border-t border-border pt-5 text-sm">
-              <dt className="font-semibold">Description</dt><dd className="leading-6">His tribe is widely considered the best and strongest of the twelve Korblox tribes. No one dares challenge his authority.</dd>
-              <dt className="font-semibold">Tradable</dt><dd>No</dd>
-              <dt className="font-semibold">Type</dt><dd>Characters</dd>
-              <dt className="font-semibold">Placement</dt><dd>Full Body</dd>
-              <dt className="font-semibold">Created</dt><dd>Aug 14, 2018</dd>
-            </dl>}
           </div>
         </section>
+
+        {!isHeadless && <section className="mt-10 border-t border-border pt-6">
+          <dl className="grid grid-cols-[auto_1fr] gap-x-8 gap-y-4 text-sm md:max-w-3xl">
+            <dt className="font-semibold">Description</dt><dd className="leading-6">His tribe is widely considered the best and strongest of the twelve Korblox tribes. No one dares challenge his authority.</dd>
+            <dt className="font-semibold">Tradable</dt><dd>No</dd>
+            <dt className="font-semibold">Type</dt><dd>Characters</dd>
+            <dt className="font-semibold">Placement</dt><dd>Full Body</dd>
+            <dt className="font-semibold">Created</dt><dd>Aug 14, 2018</dd>
+          </dl>
+        </section>}
       </div>
 
       {message && (
