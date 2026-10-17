@@ -39,6 +39,21 @@ export const categories: { id: Category; label: string; subs?: string[] }[] = [
 
 export const catalogItems: CatalogItem[] = [
   {
+    id: 14,
+    name: "8-Bit Royal Crown",
+    creator: "Roblox",
+    verified: true,
+    price: 27849,
+    image: "https://www.roblox.com/asset-thumbnail/image?assetId=10159600649&width=420&height=420&format=png",
+    category: "accessories",
+    subcategory: "Hats",
+    featured: true,
+    limited: "Limited",
+    favorites: 449914,
+    createdAt: 16,
+    description: "Perfect for sending adventurers out to save the princess.",
+  },
+  {
     id: 10,
     name: "Korblox Deathspeaker",
     creator: "Roblox",
