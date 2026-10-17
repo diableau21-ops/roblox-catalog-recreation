@@ -44,7 +44,7 @@ export const catalogItems: CatalogItem[] = [
     creator: "Roblox",
     verified: true,
     price: 27849,
-    image: "https://tr.rbxcdn.com/180DAY-9c8bb8e0b58f5f97aebf1b23a5e25a33/420/420/Hat/Webp/noFilter",
+    image: "https://tr.rbxcdn.com/180DAY-033fcdc594f17b089eaf2bcd57be171a/420/420/Hat/Webp/noFilter",
     category: "accessories",
     subcategory: "Hats",
     featured: true,
