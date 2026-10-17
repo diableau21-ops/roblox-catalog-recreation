@@ -193,7 +193,15 @@ export function CatalogApp() {
                     item={item}
                     owned={owned.has(item.id)}
                     favorited={favorites.has(item.id)}
-                    onOpen={() => setOpenId(item.id)}
+                    onOpen={() => {
+                      if (item.id === 13) {
+                        window.location.href = '/bundles/201/Headless-Horseman'
+                      } else if (item.id === 10) {
+                        window.location.href = '/bundles/192/Korblox-Deathspeaker'
+                      } else {
+                        setOpenId(item.id)
+                      }
+                    }}
                     onToggleFavorite={() => toggleFavorite(item.id)}
                   />
                 </li>
