@@ -113,7 +113,11 @@ export function Korblox3D(_props: { rotating?: boolean; tryOn?: boolean }) {
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 left-0 z-10 h-24 w-24 bg-[#232323]"
+        className="pointer-events-none absolute bottom-0 left-0 z-10 h-28 w-48 bg-[#232323]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-0 right-0 z-10 h-16 w-44 bg-[#232323]"
       />
       <div
         aria-hidden="true"
