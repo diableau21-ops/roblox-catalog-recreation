@@ -113,16 +113,6 @@ export function CatalogApp() {
           navOpen && 'xl:pl-[244px]',
         )}
       >
-        <CategorySidebar
-          category={category}
-          subcategory={subcategory}
-          onSelect={selectCategory}
-          priceFilter={priceFilter}
-          onPriceFilter={setPriceFilter}
-          hideOffSale={hideOffSale}
-          onHideOffSale={setHideOffSale}
-        />
-
         <section className="min-w-0 flex-1" aria-labelledby="catalog-heading">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
