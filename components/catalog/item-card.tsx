@@ -59,7 +59,7 @@ export function ItemCard({ item, owned, favorited, onOpen, onToggleFavorite }: P
         <h3 className="line-clamp-2 text-[15px] font-medium leading-tight text-foreground">{item.name}</h3>
         <p className="mt-1 flex items-center gap-1 text-[13px] text-muted-foreground">
           By <span className="font-medium text-foreground/80">@{item.creator}</span>
-          {item.verified && <VerifiedBadge className="size-3.5" />}
+          {item.verified && <VerifiedBadge className="size-4" />}
         </p>
         <Price price={item.price} className="mt-1 text-[15px]" />
       </button>
