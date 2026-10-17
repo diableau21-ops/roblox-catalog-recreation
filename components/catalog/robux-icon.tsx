@@ -1,21 +1,12 @@
 import { cn } from '@/lib/utils'
 
 export function RobuxIcon({ className }: { className?: string }) {
-  const robuxIcon = 'https://images.rbxcdn.com/3a9b44283e65ae1ead90defcb0bdcb6e-economy_28x28_dark.svg'
   return (
-    <span
+    <img
+      src="https://images.rbxcdn.com/3a9b44283e65ae1ead90defcb0bdcb6e-economy_28x28_dark.svg"
+      alt=""
       aria-hidden="true"
-      className={cn('inline-block size-4 shrink-0 bg-current', className)}
-      style={{
-        maskImage: `url("${robuxIcon}")`,
-        WebkitMaskImage: `url("${robuxIcon}")`,
-        maskRepeat: 'no-repeat',
-        WebkitMaskRepeat: 'no-repeat',
-        maskPosition: 'center',
-        WebkitMaskPosition: 'center',
-        maskSize: 'contain',
-        WebkitMaskSize: 'contain',
-      }}
+      className={cn('inline-block size-4 shrink-0 object-contain', className)}
     />
   )
 }
