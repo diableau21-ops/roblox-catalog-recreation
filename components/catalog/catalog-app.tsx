@@ -5,6 +5,7 @@ import { SlidersHorizontal } from 'lucide-react'
 import { catalogItems, categories, type Category } from '@/lib/catalog-data'
 import { cn } from '@/lib/utils'
 import { SiteHeader } from './site-header'
+import { LeftNav } from './left-nav'
 import { CategorySidebar, type PriceFilter } from './category-sidebar'
 import { ItemCard } from './item-card'
 import { ItemModal } from './item-modal'
@@ -32,6 +33,7 @@ export function CatalogApp() {
   const [favorites, setFavorites] = useState<Set<number>>(() => new Set())
   const [openId, setOpenId] = useState<number | null>(null)
   const [robuxOpen, setRobuxOpen] = useState(false)
+  const [navOpen, setNavOpen] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
   const toastTimer = useRef<ReturnType<typeof setTimeout>>(null)
 
@@ -94,9 +96,22 @@ export function CatalogApp() {
         onQueryChange={setQuery}
         onBuyRobux={() => setRobuxOpen(true)}
         onNotify={notify}
+        onToggleNav={() => setNavOpen((o) => !o)}
       />
 
-      <main className="mx-auto flex max-w-[1400px] gap-8 px-3 py-6 md:px-6">
+      <LeftNav
+        open={navOpen}
+        onClose={() => setNavOpen(false)}
+        onNotify={notify}
+        onBuyRobux={() => setRobuxOpen(true)}
+      />
+
+      <main
+        className={cn(
+          'mx-auto flex max-w-[1400px] gap-8 px-3 py-6 transition-[padding] md:px-6',
+          navOpen && 'xl:pl-[244px]',
+        )}
+      >
         <CategorySidebar
           category={category}
           subcategory={subcategory}

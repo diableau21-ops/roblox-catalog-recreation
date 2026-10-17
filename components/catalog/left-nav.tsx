@@ -1,0 +1,108 @@
+'use client'
+
+import Image from 'next/image'
+import {
+  BookOpen,
+  Gift,
+  House,
+  MessageSquare,
+  Package,
+  Repeat,
+  Rss,
+  ShoppingBag,
+  Shirt,
+  Users,
+  UsersRound,
+} from 'lucide-react'
+import { cn } from '@/lib/utils'
+
+type Props = {
+  open: boolean
+  onClose: () => void
+  onNotify: (msg: string) => void
+  onBuyRobux: () => void
+}
+
+const links = [
+  { label: 'Home', icon: House },
+  { label: 'Messages', icon: MessageSquare, badge: 3 },
+  { label: 'Friends', icon: Users },
+  { label: 'Avatar', icon: Shirt },
+  { label: 'Inventory', icon: Package },
+  { label: 'Trade', icon: Repeat },
+  { label: 'Communities', icon: UsersRound },
+  { label: 'My Feed', icon: Rss },
+  { label: 'Blog', icon: BookOpen },
+  { label: 'Official Store', icon: ShoppingBag },
+  { label: 'Gift Cards', icon: Gift },
+]
+
+export function LeftNav({ open, onClose, onNotify, onBuyRobux }: Props) {
+  return (
+    <>
+      {open && (
+        <button
+          type="button"
+          aria-label="Close navigation"
+          onClick={onClose}
+          className="fixed inset-0 top-[60px] z-30 bg-black/50 xl:hidden"
+        />
+      )}
+      <nav
+        aria-label="Account"
+        className={cn(
+          'fixed bottom-0 left-0 top-[60px] z-30 flex w-[220px] flex-col overflow-y-auto bg-header px-3 py-3 transition-transform',
+          open ? 'translate-x-0' : '-translate-x-full',
+        )}
+      >
+        <button
+          type="button"
+          onClick={() => onNotify('Opening your profile')}
+          className="mb-2 flex items-center gap-3 rounded-lg px-2 py-2 text-left hover:bg-secondary"
+        >
+          <span className="relative size-9 overflow-hidden rounded-full bg-thumb">
+            <Image src="/avatar.png" alt="" fill sizes="36px" className="object-cover" />
+          </span>
+          <span className="text-base font-bold">Builderman</span>
+        </button>
+        <ul className="flex flex-col gap-0.5">
+          {links.map(({ label, icon: Icon, badge }) => (
+            <li key={label}>
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault()
+                  onNotify(`${label} is coming soon`)
+                }}
+                className="flex items-center gap-3 rounded-lg px-2 py-2 text-base font-medium text-foreground/90 hover:bg-secondary hover:text-foreground"
+              >
+                <Icon className="size-5" aria-hidden="true" />
+                <span className="flex-1">{label}</span>
+                {badge && (
+                  <span className="rounded-full bg-favorite px-1.5 text-xs font-bold text-white">{badge}</span>
+                )}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <button
+          type="button"
+          onClick={onBuyRobux}
+          className="mt-4 rounded-lg bg-foreground px-3 py-2 text-sm font-bold text-background hover:bg-foreground/90"
+        >
+          Get Premium
+        </button>
+        <a
+          href="#"
+          onClick={(e) => {
+            e.preventDefault()
+            onNotify('Events are coming soon')
+          }}
+          className="mt-3 px-2 text-sm font-medium text-muted-foreground hover:text-foreground"
+        >
+          Events
+        </a>
+      </nav>
+    </>
+  )
+}

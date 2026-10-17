@@ -20,26 +20,24 @@ export function ItemCard({ item, owned, favorited, onOpen, onToggleFavorite }: P
       <button
         type="button"
         onClick={onOpen}
-        className="relative aspect-square overflow-hidden rounded-lg bg-thumb focus-visible:outline-2 focus-visible:outline-primary"
+        className="relative aspect-square overflow-hidden rounded-lg bg-thumb transition-shadow group-hover:shadow-[0_0_0_2px_var(--foreground)] focus-visible:outline-2 focus-visible:outline-foreground"
         aria-label={`View ${item.name}`}
       >
         <Image
           src={item.image || '/placeholder.svg'}
           alt=""
           fill
-          sizes="(min-width: 1024px) 200px, (min-width: 640px) 33vw, 50vw"
-          className="object-cover transition-transform duration-200 group-hover:scale-105"
+          sizes="(min-width: 1024px) 180px, (min-width: 640px) 33vw, 50vw"
+          className="object-contain p-1"
         />
         {item.limited && (
-          <span className="absolute bottom-2 left-2 flex items-center overflow-hidden rounded text-[10px] font-bold uppercase">
-            <span className="bg-limited px-1.5 py-0.5 text-black">Limited</span>
-            {item.limited === 'Limited U' && (
-              <span className="bg-foreground px-1.5 py-0.5 text-background">U</span>
-            )}
+          <span className="absolute bottom-1.5 left-1.5 flex items-center overflow-hidden rounded-[4px] text-[11px] font-black uppercase italic leading-none">
+            <span className="bg-limited px-1.5 py-1 text-white">Limited</span>
+            {item.limited === 'Limited U' && <span className="bg-[#fdb92d] px-1.5 py-1 text-black">U</span>}
           </span>
         )}
         {owned && (
-          <span className="absolute left-2 top-2 rounded bg-success px-1.5 py-0.5 text-[10px] font-bold uppercase text-white">
+          <span className="absolute left-1.5 top-1.5 rounded-[4px] bg-success px-1.5 py-1 text-[11px] font-bold leading-none text-white">
             Owned
           </span>
         )}
@@ -50,21 +48,19 @@ export function ItemCard({ item, owned, favorited, onOpen, onToggleFavorite }: P
         aria-pressed={favorited}
         aria-label={favorited ? `Unfavorite ${item.name}` : `Favorite ${item.name}`}
         className={cn(
-          'absolute right-2 top-2 rounded-full bg-background/70 p-1.5 opacity-0 backdrop-blur transition-opacity group-hover:opacity-100 focus-visible:opacity-100',
+          'absolute right-1.5 top-1.5 rounded-full bg-black/55 p-1.5 text-white opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100',
           favorited && 'opacity-100',
         )}
       >
         <Heart className={cn('size-4', favorited && 'fill-favorite text-favorite')} />
       </button>
-      <button type="button" onClick={onOpen} className="mt-2 flex flex-col items-start text-left">
-        <h3 className="line-clamp-2 text-sm font-medium leading-snug text-foreground group-hover:underline">
-          {item.name}
-        </h3>
-        <p className="mt-0.5 flex items-center gap-1 text-xs text-muted-foreground">
-          By <span className="text-foreground/80">{item.creator}</span>
-          {item.verified && <BadgeCheck className="size-3.5 text-primary" aria-label="Verified" />}
+      <button type="button" onClick={onOpen} className="mt-1.5 flex flex-col items-start text-left">
+        <h3 className="line-clamp-2 text-[15px] font-medium leading-tight text-foreground">{item.name}</h3>
+        <p className="mt-1 flex items-center gap-1 text-[13px] text-muted-foreground">
+          By <span className="font-medium text-foreground/80">@{item.creator}</span>
+          {item.verified && <BadgeCheck className="size-3.5 fill-[#335fff] text-header" aria-label="Verified" />}
         </p>
-        <Price price={item.price} className="mt-1 text-sm" />
+        <Price price={item.price} className="mt-1 text-[15px]" />
       </button>
     </article>
   )
