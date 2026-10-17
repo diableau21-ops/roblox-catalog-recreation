@@ -32,7 +32,7 @@ export function ItemCard({ item, owned, favorited, onOpen, onToggleFavorite }: P
           className="object-contain p-1"
         />
         {item.limited && (
-          <span className="absolute left-1.5 top-1.5 inline-flex items-center gap-0.5 text-[11px] font-semibold leading-none drop-shadow-sm">
+          <span className="absolute bottom-1.5 left-1.5 inline-flex items-center gap-0.5 text-[11px] font-semibold leading-none drop-shadow-sm">
             <span className="rounded-[3px] bg-[#00b06f] px-1.5 py-1 text-white">Limited</span>
             {item.limited === 'Limited U' && <span className="rounded-[3px] bg-[#f5a623] px-1.5 py-1 text-[#191919]">U</span>}
           </span>
