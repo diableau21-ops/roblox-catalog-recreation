@@ -88,7 +88,8 @@ export function LeftNav({ open, onClose, onNotify, onBuyRobux }: Props) {
           <Crown className="size-6 shrink-0 text-[#f5b800]" aria-hidden="true" />
           <span className="flex min-w-0 flex-col">
             <span className="text-sm font-bold text-foreground">Get Premium</span>
-            <span className="mt-0.5 text-xs leading-4 text-muted-foreground">More fun. Less limits.</span>
+            <span className="mt-0.5 text-xs leading-4 text-muted-foreground">More fun for less Robux.</span>
+            <span className="mt-1 w-fit text-xs font-semibold text-foreground underline underline-offset-2">Subscribe to Roblox Plus</span>
           </span>
         </button>
       </nav>
