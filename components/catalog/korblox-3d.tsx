@@ -14,6 +14,7 @@ type SketchfabClient = {
       autostart: 1
       autospin: number
       ui_theme: 'dark'
+      ui_controls: 0
       transparent: 0
       success: (api: ViewerApi) => void
       error: () => void
@@ -46,6 +47,7 @@ export function Korblox3D(_props: { rotating?: boolean; tryOn?: boolean }) {
         autostart: 1,
         autospin: 0.5,
         ui_theme: 'dark',
+        ui_controls: 0,
         transparent: 0,
         success: (api) => {
           if (cancelled) return
