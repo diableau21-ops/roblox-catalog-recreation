@@ -2,7 +2,8 @@
 
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
-import { BadgeCheck, Heart, Share2, X } from 'lucide-react'
+import { Heart, Share2, X } from 'lucide-react'
+import { VerifiedBadge } from './verified-badge'
 import { formatCount, resellers, type CatalogItem } from '@/lib/catalog-data'
 import { cn } from '@/lib/utils'
 import { Price, RobuxIcon } from './robux-icon'
@@ -92,7 +93,7 @@ export function ItemModal({
             </h2>
             <p className="mt-1 flex items-center gap-1 text-sm text-muted-foreground">
               By <span className="font-semibold text-foreground">@{item.creator}</span>
-              {item.verified && <BadgeCheck className="size-4 text-primary" aria-label="Verified" />}
+              {item.verified && <VerifiedBadge className="size-4" />}
             </p>
           </div>
 
