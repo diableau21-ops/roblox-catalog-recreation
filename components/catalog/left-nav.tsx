@@ -82,9 +82,10 @@ export function LeftNav({ open, onClose, onNotify, onBuyRobux }: Props) {
         <button
           type="button"
           onClick={onBuyRobux}
-          className="mt-4 rounded-lg bg-foreground px-3 py-2 text-sm font-bold text-background hover:bg-foreground/90"
+          className="mt-4 flex flex-col items-start rounded-xl bg-[#335fff] px-4 py-3 text-left text-white transition-colors hover:bg-[#244ee8]"
         >
-          Get Premium
+          <span className="text-base font-extrabold">Get Premium</span>
+          <span className="mt-0.5 text-xs font-semibold">More fun. Less limits.</span>
         </button>
       </nav>
     </>
