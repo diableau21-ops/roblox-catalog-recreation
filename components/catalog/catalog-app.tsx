@@ -216,7 +216,6 @@ export function CatalogApp() {
               </a>
             ),
           )}
-          <p className="w-full pt-4 text-xs">{'Fan-made recreation for demo purposes. Not affiliated with Roblox Corporation.'}</p>
         </div>
       </footer>
 
