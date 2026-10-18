@@ -76,20 +76,20 @@ export default function BundlePage() {
         </section>
       </div>
 
-      {robuxShopOpen && <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 p-4" onClick={() => setRobuxShopOpen(false)}>
-        <section role="dialog" aria-modal="true" aria-labelledby="robux-title" className="w-full max-w-lg rounded-xl border border-border bg-card p-6 text-foreground shadow-2xl" onClick={(event) => event.stopPropagation()}>
-          <div className="flex items-center justify-between gap-4">
-            <h2 id="robux-title" className="text-2xl font-bold">Choisir des Robux</h2>
-            <button type="button" onClick={() => setRobuxShopOpen(false)} aria-label="Fermer" className="rounded-lg px-3 py-1 text-2xl hover:bg-secondary">×</button>
+      {robuxShopOpen && <div className="fixed right-4 top-[60px] z-[60] w-[min(360px,calc(100vw-2rem))]">
+        <section role="dialog" aria-modal="false" aria-labelledby="robux-title" className="rounded-xl border border-border bg-card p-4 text-foreground shadow-2xl">
+          <div className="flex items-center justify-between gap-3">
+            <h2 id="robux-title" className="text-lg font-bold">Choisir des Robux</h2>
+            <button type="button" onClick={() => setRobuxShopOpen(false)} aria-label="Fermer" className="rounded-lg px-2 py-0.5 text-xl hover:bg-secondary">×</button>
           </div>
-          <p className="mt-2 text-sm text-muted-foreground">Sélectionne la quantité que tu veux.</p>
-          <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
-            {robuxOptions.map((amount) => <button key={amount} type="button" onClick={() => setSelectedRobux(amount)} aria-pressed={selectedRobux === amount} className={`flex min-h-20 flex-col items-center justify-center gap-2 rounded-lg border p-3 font-bold transition hover:bg-secondary ${selectedRobux === amount ? 'border-[#00b06f] bg-[#00b06f]/10 ring-2 ring-[#00b06f]' : 'border-border'}`}>
+          <p className="mt-1 text-xs text-muted-foreground">Sélectionne la quantité que tu veux.</p>
+          <div className="mt-3 grid grid-cols-2 gap-2">
+            {robuxOptions.map((amount) => <button key={amount} type="button" onClick={() => setSelectedRobux(amount)} aria-pressed={selectedRobux === amount} className={`flex min-h-14 flex-col items-center justify-center gap-1 rounded-lg border p-2 text-sm font-bold transition hover:bg-secondary ${selectedRobux === amount ? 'border-[#00b06f] bg-[#00b06f]/10 ring-2 ring-[#00b06f]' : 'border-border'}`}>
               <span className="flex items-center gap-2"><RobuxIcon />{amount}</span>
-              <span className="text-xs font-medium text-muted-foreground">Quantité</span>
+              <span className="text-[10px] font-medium text-muted-foreground">Robux</span>
             </button>)}
           </div>
-          <button type="button" onClick={() => { setBalance((current) => current + selectedRobux); setRobuxShopOpen(false) }} className="mt-5 h-11 w-full rounded-lg bg-[#00b06f] font-bold text-white transition hover:bg-[#009e63]">Ajouter {selectedRobux} Robux</button>
+          <button type="button" onClick={() => { setBalance((current) => current + selectedRobux); setRobuxShopOpen(false) }} className="mt-3 h-10 w-full rounded-lg bg-[#00b06f] text-sm font-bold text-white transition hover:bg-[#009e63]">Ajouter {selectedRobux} Robux</button>
         </section>
       </div>}
 
