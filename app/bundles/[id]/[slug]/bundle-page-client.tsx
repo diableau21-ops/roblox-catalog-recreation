@@ -77,7 +77,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
 
       <div className="ml-[220px] max-w-[calc(100%-220px)] px-4 py-8 md:px-8">
         <section className="flex justify-center">
-          <div className={`flex w-full max-w-[900px] flex-col gap-0 overflow-hidden rounded-xl border border-[#3b3b3b] md:flex-row ${isKorblox ? 'bg-[#232323]' : 'bg-thumb'}`}>
+          <div className={`flex w-full max-w-[900px] flex-col overflow-hidden ${isKorblox ? 'gap-5 border-0 bg-transparent' : 'gap-0 rounded-xl border border-[#3b3b3b] bg-thumb'} md:flex-row`}>
             <div className="relative aspect-square w-full shrink-0 md:w-[400px]">
             <div className={`absolute inset-0 ${show2D || isHeadless ? 'block' : 'hidden'}`}>
               {robloxThumbnail ? (
@@ -93,7 +93,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             </div>}
           </div>
 
-          <div className="flex min-w-0 flex-1 flex-col gap-4 border-t border-white/10 bg-[#181818] p-5 text-white md:border-l md:border-t-0 md:p-6">
+          <div className={`flex min-w-0 flex-1 flex-col gap-4 border-t border-white/10 bg-[#181818] p-5 text-white md:border-l md:border-t-0 md:p-6 ${isKorblox ? 'rounded-xl border border-white/10' : ''}`}>
             <div>
               <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">{isEightBit ? 'Accessory' : 'Bundle'}</p>
               <h1 className="text-3xl font-bold tracking-tight md:text-4xl">{item.name}</h1>
