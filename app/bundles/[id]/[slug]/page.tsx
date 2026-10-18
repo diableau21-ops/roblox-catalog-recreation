@@ -42,7 +42,6 @@ export default function BundlePage() {
         onNotify={notify}
         onBuyRobux={() => notify('Robux purchase is a demo on this site.')}
       />
-      {!isHeadless && <div className="ml-[220px] border-b border-border px-6 py-2 text-sm font-bold"><span className="inline-flex items-center gap-1.5"><Price price={item.price} /></span></div>}
 
       <div className="ml-[220px] max-w-[calc(100%-220px)] px-4 py-8 md:px-8">
         <section className="grid gap-8 md:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
@@ -92,10 +91,13 @@ export default function BundlePage() {
             <div>
               <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">Bundle</p>
               <h1 className="text-3xl font-bold tracking-tight md:text-4xl">{item.name}</h1>
-              <p className="mt-3 flex items-center gap-1.5 text-sm text-muted-foreground">
-                By <span className="font-semibold text-foreground">Roblox</span>
-                <VerifiedBadge className="size-4" />
-              </p>
+              <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1">
+                {!isHeadless && <span className="text-sm font-bold"><Price price={item.price} /></span>}
+                <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                  By <span className="font-semibold text-foreground">Roblox</span>
+                  <VerifiedBadge className="size-4" />
+                </p>
+              </div>
             </div>
 
             {isHeadless && <div className="border-y border-border py-5">
