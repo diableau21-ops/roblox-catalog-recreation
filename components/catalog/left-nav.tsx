@@ -79,7 +79,6 @@ export function LeftNav({ open, onClose, onNotify, onBuyRobux }: Props) {
                 )}
               </a>
             </li>
-
           ))}
         </ul>
         <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-3">
