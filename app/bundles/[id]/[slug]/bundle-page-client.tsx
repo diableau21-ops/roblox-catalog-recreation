@@ -50,7 +50,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     setGiftPlayers([])
     setGiftSelectedPlayer(null)
     try {
-      const response = await fetch(`https://users.roproxy.com/v1/users/search?keyword=${encodeURIComponent(keyword)}&limit=10`)
+      const response = await fetch(`/api/roblox-users?keyword=${encodeURIComponent(keyword)}`)
       if (!response.ok) throw new Error('Player search unavailable')
       const result = await response.json()
       const players = Array.isArray(result.data) ? result.data.filter((player: {id?: number; name?: string; displayName?: string}) => Number.isFinite(player.id) && typeof player.name === 'string').map((player: {id: number; name: string; displayName?: string}) => ({id: player.id, name: player.name, displayName: player.displayName || player.name})) : []
@@ -63,6 +63,18 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
       setGiftSearching(false)
     }
   }
+  useEffect(() => {
+    const keyword = giftUsername.trim()
+    if (keyword.length < 3) {
+      setGiftPlayers([])
+      setGiftSearchMessage('')
+      setGiftSelectedPlayer(null)
+      setGiftSearching(false)
+      return
+    }
+    const timer = window.setTimeout(() => { void searchGiftPlayers() }, 350)
+    return () => window.clearTimeout(timer)
+  }, [giftUsername])
   const [robuxShopOpen, setRobuxShopOpen] = useState(false)
   const [selectedRobux, setSelectedRobux] = useState(800)
   const [customRobux, setCustomRobux] = useState('800')
@@ -222,7 +234,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           </div>
           <p className="mt-2 text-sm text-muted-foreground">Search for the Roblox player you want to gift.</p>
           <form className="mt-4 flex gap-2" onSubmit={(event) => { event.preventDefault(); void searchGiftPlayers() }}>
-            <input value={giftUsername} onChange={(event) => { setGiftUsername(event.target.value); setGiftSearchMessage(''); setGiftPlayers([]); setGiftSelectedPlayer(null) }} placeholder="Search players" aria-label="Roblox player username" className="h-11 min-w-0 flex-1 rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-[#335fff]" />
+            <input value={giftUsername} onChange={(event) => { setGiftUsername(event.target.value); setGiftSearchMessage(''); setGiftPlayers([]); setGiftSelectedPlayer(null) }} placeholder="Search players (type at least 3 characters)" aria-label="Roblox player username" className="h-11 min-w-0 flex-1 rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-[#335fff]" />
             <button type="submit" disabled={!giftUsername.trim() || giftSearching} className="h-11 rounded-lg bg-[#335fff] px-4 text-sm font-semibold text-white disabled:opacity-50">{giftSearching ? 'Searching…' : 'Search'}</button>
           </form>
           {giftPlayers.length > 0 && <div className="mt-4 max-h-64 space-y-2 overflow-y-auto">
