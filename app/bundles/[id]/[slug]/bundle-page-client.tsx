@@ -77,9 +77,9 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
 
       <div className="ml-[220px] max-w-[calc(100%-220px)] px-4 py-8 md:px-8">
         <section className="flex justify-center">
-          <div className={`flex w-full max-w-[900px] flex-col overflow-hidden ${isKorblox ? 'gap-5 rounded-xl border border-[#3b3b3b] bg-[#232323]' : isEightBit ? 'gap-0 rounded-xl border border-[#3b3b3b] bg-black' : 'gap-0 rounded-xl border border-[#3b3b3b] bg-[#232323]'} md:flex-row`}>
+          <div className={`flex w-full max-w-[900px] flex-col overflow-hidden ${isKorblox ? 'gap-5 rounded-xl border border-[#3b3b3b] bg-[#232323]' : isEightBit ? 'gap-0 rounded-xl border border-[#3b3b3b] bg-[#232323]' : 'gap-0 rounded-xl border border-[#3b3b3b] bg-[#232323]'} md:flex-row`}>
             <div className={isKorblox ? "flex w-full shrink-0 flex-col md:w-[400px]" : "contents"}>
-            <div className={`relative aspect-square w-full shrink-0 md:aspect-auto md:h-[400px] ${isKorblox ? 'overflow-hidden rounded-xl border border-[#3b3b3b] bg-[#232323] md:w-[400px]' : isEightBit ? 'overflow-hidden rounded-xl border border-[#3b3b3b] bg-black md:w-[400px]' : 'overflow-hidden rounded-xl border border-[#3b3b3b] bg-[#232323] md:w-[400px]'}`}>
+            <div className={`relative aspect-square w-full shrink-0 md:aspect-auto md:h-[400px] ${isKorblox ? 'overflow-hidden rounded-xl border border-[#3b3b3b] bg-[#232323] md:w-[400px]' : isEightBit ? 'overflow-hidden rounded-xl border border-[#3b3b3b] bg-[#232323] md:w-[400px]' : 'overflow-hidden rounded-xl border border-[#3b3b3b] bg-[#232323] md:w-[400px]'}`}>
             <div className={`absolute inset-0 ${show2D || isHeadless ? 'block' : 'hidden'}`}>
               {robloxThumbnail ? (
                 <img src={robloxThumbnail} alt={item.name} className="absolute inset-0 h-full w-full object-contain p-2" />
@@ -96,7 +96,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             {isKorblox && <div className="mt-2 flex items-center gap-1.5 self-start rounded-md bg-black/60 px-2 py-1 text-sm text-white"><span className="text-xl leading-none text-yellow-400">★</span><span>3.4M</span></div>}
             </div>
 
-          <div className={`flex min-w-0 flex-1 flex-col gap-4 text-white ${isKorblox ? 'bg-[#232323]' : isEightBit ? 'border-t border-white/10 bg-black p-5 md:border-l md:border-t-0 md:p-6' : 'border-t border-white/10 bg-[#232323] p-5 md:border-l md:border-t-0 md:p-6'}`}>
+          <div className={`flex min-w-0 flex-1 flex-col gap-4 text-white ${isKorblox ? 'bg-[#232323]' : isEightBit ? 'border-t border-white/10 bg-[#232323] p-5 md:border-l md:border-t-0 md:p-6' : 'border-t border-white/10 bg-[#232323] p-5 md:border-l md:border-t-0 md:p-6'}`}>
             <div>
               <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">{isEightBit ? 'Accessory' : isKorblox ? '' : 'Bundle'}</p>
               <div className="flex items-center gap-3"><h1 className="text-3xl font-bold tracking-tight md:text-4xl">{item.name}</h1>{isKorblox && <span className="relative mt-2 inline-flex shrink-0"><ShoppingCart aria-label="Shopping cart" className="size-6 text-white" /><span className="absolute -right-2 -top-2 flex size-4 items-center justify-center rounded-full bg-[#335fff] text-[10px] font-bold leading-none text-white">0</span></span>}</div>
