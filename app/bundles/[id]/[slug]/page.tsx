@@ -23,6 +23,7 @@ export default function BundlePage() {
   const [giftOpen, setGiftOpen] = useState(false)
   const [robuxShopOpen, setRobuxShopOpen] = useState(false)
   const [selectedRobux, setSelectedRobux] = useState(800)
+  const [customRobux, setCustomRobux] = useState('800')
   const [show2D, setShow2D] = useState(false)
   const [tryOn, setTryOn] = useState(false)
   const notify = (_msg: string) => {}
@@ -84,11 +85,13 @@ export default function BundlePage() {
           </div>
           <p className="mt-1 text-xs text-muted-foreground">Sélectionne la quantité que tu veux.</p>
           <div className="mt-3 grid grid-cols-2 gap-2">
-            {robuxOptions.map((amount) => <button key={amount} type="button" onClick={() => setSelectedRobux(amount)} aria-pressed={selectedRobux === amount} className={`flex min-h-14 flex-col items-center justify-center gap-1 rounded-lg border p-2 text-sm font-bold transition hover:bg-secondary ${selectedRobux === amount ? 'border-[#00b06f] bg-[#00b06f]/10 ring-2 ring-[#00b06f]' : 'border-border'}`}>
+            {robuxOptions.map((amount) => <button key={amount} type="button" onClick={() => { setSelectedRobux(amount); setCustomRobux(String(amount)) }} aria-pressed={selectedRobux === amount && customRobux === String(amount)} className={`flex min-h-14 flex-col items-center justify-center gap-1 rounded-lg border p-2 text-sm font-bold transition hover:bg-secondary ${selectedRobux === amount ? 'border-[#00b06f] bg-[#00b06f]/10 ring-2 ring-[#00b06f]' : 'border-border'}`}>
               <span className="flex items-center gap-2"><RobuxIcon />{amount}</span>
               <span className="text-[10px] font-medium text-muted-foreground">Robux</span>
             </button>)}
           </div>
+          <label htmlFor="custom-robux" className="mt-3 block text-xs font-semibold text-muted-foreground">Ou écris la quantité souhaitée</label>
+          <input id="custom-robux" type="number" min="1" max="1000000000" step="1" inputMode="numeric" value={customRobux} onChange={(event) => { setCustomRobux(event.target.value); const amount = Number(event.target.value); if (Number.isSafeInteger(amount) && amount > 0) setSelectedRobux(amount) }} placeholder="Ex. 2500" className="mt-1 h-10 w-full rounded-lg border border-border bg-input px-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-[#00b06f]" />
           <button type="button" onClick={() => { setBalance((current) => current + selectedRobux); setRobuxShopOpen(false) }} className="mt-3 h-10 w-full rounded-lg bg-[#00b06f] text-sm font-bold text-white transition hover:bg-[#009e63]">Ajouter {selectedRobux} Robux</button>
         </section>
       </div>}
