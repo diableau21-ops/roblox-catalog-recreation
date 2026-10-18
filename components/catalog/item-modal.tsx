@@ -77,7 +77,7 @@ export function ItemModal({
         </button>
 
         <div className="relative aspect-square w-full shrink-0 bg-thumb md:w-[45%]">
-          <Image src={item.image || '/placeholder.svg'} alt={item.name} fill sizes="400px" className="object-contain p-4" />
+          <Image src={item.image?.startsWith('http') ? item.image : `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${item.image || '/placeholder.svg'}`} alt={item.name} fill sizes="400px" className="object-contain p-4" />
           {item.limited && (
             <span className="absolute bottom-3 left-3 flex overflow-hidden rounded text-xs font-bold uppercase">
               <span className="bg-limited px-2 py-0.5 text-black">Limited</span>
