@@ -69,8 +69,9 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
       <LeftNav onNotify={notify} onBuyRobux={() => setRobuxShopOpen(true)} />
 
       <div className="ml-[220px] max-w-[calc(100%-220px)] px-4 py-8 md:px-8">
-        <section className="grid gap-8 md:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
-          <div className={`relative aspect-square w-full max-w-[420px] justify-self-center overflow-hidden rounded-xl border border-[#3b3b3b] ${!isHeadless ? 'bg-[#232323]' : 'bg-thumb'}`}>
+        <section className="grid gap-4 md:grid-cols-1">
+          <div className={`relative w-full max-w-[560px] justify-self-center overflow-hidden rounded-xl border border-[#3b3b3b] ${!isHeadless ? 'bg-[#232323]' : 'bg-thumb'}`}>
+            <div className="relative aspect-square w-full">
             <div className={`absolute inset-0 ${show2D || isHeadless ? 'block' : 'hidden'}`}>
               {robloxThumbnail ? (
                 <img src={robloxThumbnail} alt={item.name} className="absolute inset-0 h-full w-full object-contain p-6" />
