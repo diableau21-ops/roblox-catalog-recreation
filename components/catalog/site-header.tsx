@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { Bell, Search, Settings, Plus, ChevronDown } from 'lucide-react'
+import { Bell, Search, Settings } from 'lucide-react'
 import { RobloxLogo, RobloxMark, RobuxIcon } from './robux-icon'
 
 type Props = {
