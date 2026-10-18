@@ -25,7 +25,7 @@ export function ItemCard({ item, owned, favorited, onOpen, onToggleFavorite }: P
         aria-label={`View ${item.name}`}
       >
         <Image
-          src={item.image || '/placeholder.svg'}
+          src={item.image?.startsWith('http') ? item.image : `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${item.image || '/placeholder.svg'}`}
           alt=""
           fill
           sizes="(min-width: 1024px) 180px, (min-width: 640px) 33vw, 50vw"
