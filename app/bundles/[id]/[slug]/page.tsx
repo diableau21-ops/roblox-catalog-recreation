@@ -54,7 +54,10 @@ export default function BundlePage() {
             <div>
               <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">Bundle</p>
               <h1 className="text-3xl font-bold tracking-tight md:text-4xl">{item.name}</h1>
-              <p className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">By <span className="font-semibold text-foreground">Roblox</span><VerifiedBadge className="size-4" /></p>
+              <div className="mt-2 flex items-center justify-between text-sm">
+                <p className="flex items-center gap-1.5 text-muted-foreground">By <span className="font-semibold text-foreground">Roblox</span><VerifiedBadge className="size-4" /></p>
+                <Price price={item.price} />
+              </div>
               <div className="mt-3 h-px w-full bg-border" />
             </div>
 
@@ -63,7 +66,6 @@ export default function BundlePage() {
             <div className="mt-2 flex w-full max-w-[400px] flex-col gap-3 self-end">
               <div className="flex w-full items-center justify-between text-sm">
                 <span className="font-medium text-muted-foreground">Price</span>
-                <Price price={item.price} />
               </div>
               <button type="button" onClick={() => {}} className="flex h-11 items-center justify-center rounded-md bg-[#00b06f] px-5 text-base font-bold text-white transition hover:bg-[#009e63]">Owned</button>
               <button type="button" onClick={() => setGiftOpen(true)} className="flex h-11 items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><Gift className="size-4" /> Gift</button>
