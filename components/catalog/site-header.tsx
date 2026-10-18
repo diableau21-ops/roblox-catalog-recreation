@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { Bell, Search, Settings } from 'lucide-react'
+import { Bell, Search, Settings, Plus, ChevronDown } from 'lucide-react'
 import { RobloxLogo, RobloxMark, RobuxIcon } from './robux-icon'
 
 type Props = {
@@ -16,14 +16,14 @@ const navLinks = ['Charts', 'Marketplace', 'Create', 'Robux'] as const
 
 export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify }: Props) {
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-header shadow-sm">
-      <div className="mx-auto flex h-14 w-full items-center gap-3 px-3 sm:gap-4 sm:px-4 lg:px-6">
+    <header className="sticky top-0 z-50 border-b border-border bg-header/95 shadow-sm backdrop-blur-md">
+      <div className="flex h-14 w-full items-center gap-3 px-3 sm:gap-4 sm:px-5 lg:px-6">
         <a href="#" className="flex items-center text-foreground" aria-label="Roblox home">
           <RobloxLogo className="hidden md:inline-flex" />
           <RobloxMark className="md:hidden" />
         </a>
 
-        <nav aria-label="Main" className="hidden shrink-0 items-center md:flex">
+        <nav aria-label="Main" className="hidden shrink-0 items-center gap-0.5 md:flex">
           {navLinks.map((label) => (
             <a
               key={label}
@@ -41,14 +41,14 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
           ))}
         </nav>
 
-        <label className="relative mx-auto flex min-w-0 max-w-[520px] flex-1 items-center">
+        <label className="relative mx-auto flex min-w-0 max-w-[600px] flex-1 items-center">
           <span className="sr-only">Search the Marketplace</span>
           <Search className="pointer-events-none absolute left-3 size-5 text-muted-foreground" />
           <input
             type="search"
             value={query}
             onChange={(e) => onQueryChange(e.target.value)}
-            placeholder="Search"
+            placeholder="Search Marketplace"
             className="h-9 w-full rounded-lg border border-border bg-input pl-10 pr-3 text-sm text-foreground placeholder:text-muted-foreground transition-colors focus:border-foreground/60 focus:outline-none focus:ring-2 focus:ring-foreground/10 sm:h-10 sm:text-base"
           />
         </label>
@@ -70,7 +70,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
             onClick={() => onNotify('No new notifications')}
             className="relative hidden rounded-lg p-2 hover:bg-secondary sm:block"
           >
-            <Bell className="size-6" />
+            <Bell className="size-5" />
             <span className="absolute right-1 top-1 flex size-4 items-center justify-center rounded-full bg-favorite text-[10px] font-bold text-white">
               2
             </span>
@@ -78,7 +78,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
           <button
             type="button"
             onClick={onBuyRobux}
-            className="flex items-center gap-1.5 rounded-lg px-2 py-2 text-base font-bold hover:bg-secondary"
+            className="flex items-center gap-1.5 rounded-lg px-2 py-2 text-sm font-bold transition-colors hover:bg-secondary sm:text-base"
             aria-label={`${balance} Robux, buy more`}
           >
             <RobuxIcon className="size-6" />
@@ -88,9 +88,9 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
             type="button"
             aria-label="Settings"
             onClick={() => onNotify('Settings are coming soon')}
-            className="hidden rounded-lg p-2 hover:bg-secondary sm:block"
+            className="hidden rounded-lg p-2 transition-colors hover:bg-secondary sm:block"
           >
-            <Settings className="size-6" />
+            <Settings className="size-5" />
           </button>
         </div>
       </div>
