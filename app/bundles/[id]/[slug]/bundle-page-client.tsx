@@ -38,10 +38,10 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   }, [balance, balanceReady])
   const [giftOpen, setGiftOpen] = useState(false)
   const [giftUsername, setGiftUsername] = useState('')
-  const [giftPlayers, setGiftPlayers] = useState<{id: number; name: string; displayName: string}[]>([])
+  const [giftPlayers, setGiftPlayers] = useState<{id: number; name: string; displayName: string; avatarUrl: string | null}[]>([])
   const [giftSearching, setGiftSearching] = useState(false)
   const [giftSearchMessage, setGiftSearchMessage] = useState('')
-  const [giftSelectedPlayer, setGiftSelectedPlayer] = useState<{id: number; name: string; displayName: string} | null>(null)
+  const [giftSelectedPlayer, setGiftSelectedPlayer] = useState<{id: number; name: string; displayName: string; avatarUrl: string | null} | null>(null)
   const searchGiftPlayers = async () => {
     const keyword = giftUsername.trim()
     if (!keyword) return
@@ -53,7 +53,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
       const response = await fetch(`/api/roblox-users?keyword=${encodeURIComponent(keyword)}`)
       if (!response.ok) throw new Error('Player search unavailable')
       const result = await response.json()
-      const players = Array.isArray(result.data) ? result.data.filter((player: {id?: number; name?: string; displayName?: string}) => Number.isFinite(player.id) && typeof player.name === 'string').map((player: {id: number; name: string; displayName?: string}) => ({id: player.id, name: player.name, displayName: player.displayName || player.name})) : []
+      const players = Array.isArray(result.data) ? result.data.filter((player: {id?: number; name?: string; displayName?: string; avatarUrl?: string | null}) => Number.isFinite(player.id) && typeof player.name === 'string').map((player: {id: number; name: string; displayName?: string; avatarUrl?: string | null}) => ({id: player.id, name: player.name, displayName: player.displayName || player.name, avatarUrl: player.avatarUrl || null})) : []
       setGiftPlayers(players)
       setGiftSearchMessage(players.length ? '' : `No Roblox players found for “${keyword}”.`)
     } catch {
@@ -239,13 +239,19 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           </form>
           {giftPlayers.length > 0 && <div className="mt-4 max-h-64 space-y-2 overflow-y-auto">
             {giftPlayers.map((player) => <button key={player.id} type="button" onClick={() => setGiftSelectedPlayer(player)} className={`flex w-full items-center justify-between rounded-lg border p-3 text-left transition ${giftSelectedPlayer?.id === player.id ? 'border-[#335fff] bg-[#335fff]/10' : 'border-border hover:bg-secondary'}`}>
-              <span className="min-w-0"><span className="block truncate font-semibold">{player.displayName}</span><span className="block truncate text-sm text-muted-foreground">@{player.name}</span></span>
+              <span className="flex min-w-0 items-center gap-3">
+                {player.avatarUrl ? <img src={player.avatarUrl} alt="" className="size-12 shrink-0 rounded-full bg-secondary object-cover" /> : <span aria-hidden="true" className="flex size-12 shrink-0 items-center justify-center rounded-full bg-secondary text-muted-foreground">👤</span>}
+                <span className="min-w-0"><span className="block truncate font-semibold">{player.displayName}</span><span className="block truncate text-sm text-muted-foreground">@{player.name}</span></span>
+              </span>
               <span className="text-sm font-semibold text-[#335fff]">{giftSelectedPlayer?.id === player.id ? 'Selected' : 'Select'}</span>
             </button>)}
           </div>}
           {giftSearching && <p className="mt-4 text-sm text-muted-foreground">Looking for Roblox players…</p>}
           {!giftSearching && giftSearchMessage && <p role="status" className="mt-4 text-sm text-muted-foreground">{giftSearchMessage}</p>}
-          {giftSelectedPlayer && <div className="mt-4 rounded-lg bg-secondary p-3 text-sm">Selected player: <span className="font-semibold">{giftSelectedPlayer.displayName} (@{giftSelectedPlayer.name})</span><p className="mt-1 text-xs text-muted-foreground">This site can search and select players, but it cannot send Roblox gifts.</p></div>}
+          {giftSelectedPlayer && <div className="mt-4 flex items-center gap-3 rounded-lg bg-secondary p-3 text-sm">
+            {giftSelectedPlayer.avatarUrl ? <img src={giftSelectedPlayer.avatarUrl} alt="" className="size-14 shrink-0 rounded-full object-cover" /> : <span aria-hidden="true" className="flex size-14 shrink-0 items-center justify-center rounded-full bg-background text-muted-foreground">👤</span>}
+            <div className="min-w-0"><p>Selected player: <span className="font-semibold">{giftSelectedPlayer.displayName} (@{giftSelectedPlayer.name})</span></p><p className="mt-1 text-xs text-muted-foreground">This site can search and select players, but it cannot send Roblox gifts.</p></div>
+          </div>}
         </section>
       </div>}
     </main>
