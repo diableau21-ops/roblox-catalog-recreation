@@ -31,9 +31,12 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      - name: Remove server-only route for static hosting
+        run: rm -rf app/api/roblox-users
       - name: Build static export
         run: pnpm build
         env:
+          GITHUB_PAGES: 'true'
           NEXT_PUBLIC_BASE_PATH: /roblox-catalog-recreation
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
