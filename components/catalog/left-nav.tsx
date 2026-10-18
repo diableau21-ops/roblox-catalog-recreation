@@ -47,21 +47,21 @@ export function LeftNav({ open, onClose, onNotify, onBuyRobux }: Props) {
       <nav
         aria-label="Account"
         className={cn(
-          'fixed bottom-0 left-0 top-[60px] z-30 flex w-[220px] flex-col overflow-y-auto bg-header px-3 py-3 transition-transform',
+          'fixed bottom-0 left-0 top-[60px] z-40 flex w-[min(320px,88vw)] flex-col overflow-y-auto border-r border-border bg-header px-4 py-4 shadow-2xl transition-transform duration-200 ease-out',
           open ? 'translate-x-0' : '-translate-x-full',
         )}
       >
         <button
           type="button"
           onClick={() => onNotify('Opening your profile')}
-          className="mb-2 flex items-center gap-3 rounded-lg px-2 py-2 text-left hover:bg-secondary"
+          className="mb-4 flex min-h-14 items-center gap-3 rounded-xl px-3 py-3 text-left hover:bg-secondary"
         >
-          <span className="relative size-9 overflow-hidden rounded-full bg-thumb">
-            <Image src="/avatar.png" alt="" fill sizes="36px" className="object-cover" />
+          <span className="relative size-11 shrink-0 overflow-hidden rounded-full bg-thumb">
+            <Image src="/avatar.png" alt="" fill sizes="44px" className="object-cover" />
           </span>
-          <span className="text-base font-bold">Builderman</span>
+          <span className="text-lg font-bold">Builderman</span>
         </button>
-        <ul className="flex flex-col gap-0.5">
+        <ul className="flex flex-col gap-1">
           {links.map(({ label, icon: Icon, badge }) => (
             <li key={label}>
               <a
@@ -70,34 +70,34 @@ export function LeftNav({ open, onClose, onNotify, onBuyRobux }: Props) {
                   e.preventDefault()
                   onNotify(`${label} is coming soon`)
                 }}
-                className="flex items-center gap-3 rounded-lg px-2 py-2 text-base font-medium text-foreground/90 hover:bg-secondary hover:text-foreground"
+                className="flex min-h-12 items-center gap-4 rounded-xl px-3 py-3 text-lg font-medium text-foreground/90 hover:bg-secondary hover:text-foreground"
               >
-                <Icon className="size-5" aria-hidden="true" />
+                <Icon className="size-6 shrink-0" aria-hidden="true" />
                 <span className="flex-1">{label}</span>
                 {badge && (
-                  <span className="rounded-full bg-favorite px-1.5 text-xs font-bold text-white">{badge}</span>
+                  <span className="rounded-full bg-favorite px-2 py-0.5 text-sm font-bold text-white">{badge}</span>
                 )}
               </a>
             </li>
           ))}
         </ul>
-        <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-3">
-          <div className="mb-3 flex items-center gap-2">
-            <span className="flex size-7 shrink-0 items-center justify-center">
+        <div className="mt-5 rounded-xl border border-border bg-secondary/40 p-4">
+          <div className="mb-3 flex items-center gap-3">
+            <span className="flex size-9 shrink-0 items-center justify-center">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg"
                 alt="Roblox Plus"
-                className="size-7 object-contain brightness-0 invert"
+                className="size-8 object-contain brightness-0 invert"
               />
             </span>
-            <span className="text-sm font-bold leading-5 text-foreground">Roblox Plus</span>
+            <span className="text-base font-bold leading-5 text-foreground">Roblox Plus</span>
           </div>
-          <p className="text-sm font-bold leading-5 text-foreground">More fun for less Robux.</p>
-          <p className="mt-1 text-xs leading-4 text-muted-foreground">Subscribe to Roblox Plus.</p>
+          <p className="text-base font-bold leading-6 text-foreground">More fun for less Robux.</p>
+          <p className="mt-2 text-sm leading-5 text-muted-foreground">Subscribe to Roblox Plus.</p>
           <button
             type="button"
             onClick={onBuyRobux}
-            className="mt-2 text-xs font-semibold text-foreground underline underline-offset-2 hover:text-foreground/80"
+            className="mt-3 text-sm font-semibold text-foreground underline underline-offset-2 hover:text-foreground/80"
           >
             Subscribe
           </button>
