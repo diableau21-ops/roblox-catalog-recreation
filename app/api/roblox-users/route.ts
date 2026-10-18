@@ -36,7 +36,26 @@ export async function GET(request: Request) {
           }))
       : []
 
-    return NextResponse.json({ data })
+    const ids = data.map((player: { id: number }) => player.id).join(',')
+    let thumbnails: { data?: { targetId?: number; imageUrl?: string }[] } = {}
+    if (ids) {
+      try {
+        const thumbResponse = await fetch(
+          `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${ids}&size=150x150&format=Png&isCircular=false`,
+          { headers: { Accept: 'application/json' }, cache: 'no-store', signal: AbortSignal.timeout(8000) },
+        )
+        if (thumbResponse.ok) thumbnails = await thumbResponse.json()
+      } catch {}
+    }
+    const avatarById = new Map(
+      (thumbnails.data ?? []).map((thumbnail) => [thumbnail.targetId, thumbnail.imageUrl]),
+    )
+    return NextResponse.json({
+      data: data.map((player: { id: number; name: string; displayName: string }) => ({
+        ...player,
+        avatarUrl: avatarById.get(player.id) ?? null,
+      })),
+    })
   } catch {
     return NextResponse.json({ error: 'Roblox player search is temporarily unavailable.' }, { status: 502 })
   }
