@@ -44,10 +44,12 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   const [tryOn, setTryOn] = useState(false)
   const notify = (_msg: string) => {}
   const isHeadless = id === '201' || slug.toLowerCase().includes('headless')
-  const item = catalogItems.find((entry) => entry.id === (isHeadless ? 13 : 10))
+  const isEightBit = id === '14' || slug.toLowerCase().includes('8-bit')
+  const isKorblox = !isHeadless && !isEightBit
+  const item = catalogItems.find((entry) => entry.id === (isHeadless ? 13 : isEightBit ? 14 : 10))
 
   useEffect(() => {
-    if (isHeadless) return
+    if (!isKorblox) return
     const controller = new AbortController()
     fetch('https://thumbnails.roblox.com/v1/bundles/thumbnails?bundleIds=192&size=420x420&format=Png&isCircular=false', { signal: controller.signal })
       .then((response) => response.ok ? response.json() : Promise.reject(new Error('Thumbnail unavailable')))
@@ -57,7 +59,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
       })
       .catch(() => {})
     return () => controller.abort()
-  }, [isHeadless])
+  }, [isKorblox])
 
   if (!item) return <main className="min-h-screen bg-background p-8 text-foreground">Bundle not found.</main>
 
@@ -70,7 +72,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
 
       <div className="ml-[220px] max-w-[calc(100%-220px)] px-4 py-8 md:px-8">
         <section className="flex justify-center">
-          <div className={`flex w-full max-w-[900px] flex-col gap-0 overflow-hidden rounded-xl border border-[#3b3b3b] md:flex-row ${!isHeadless ? 'bg-[#232323]' : 'bg-thumb'}`}>
+          <div className={`flex w-full max-w-[900px] flex-col gap-0 overflow-hidden rounded-xl border border-[#3b3b3b] md:flex-row ${isKorblox ? 'bg-[#232323]' : 'bg-thumb'}`}>
             <div className="relative aspect-square w-full shrink-0 md:w-[420px]">
             <div className={`absolute inset-0 ${show2D || isHeadless ? 'block' : 'hidden'}`}>
               {robloxThumbnail ? (
@@ -79,8 +81,8 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                 <Image src={itemImage} alt={item.name} fill priority sizes="(min-width: 768px) 55vw, 100vw" className="object-contain p-6" />
               )}
             </div>
-            {!isHeadless && <div className={`absolute inset-0 ${show2D ? 'invisible' : 'visible'}`}><Korblox3D /></div>}
-            {!isHeadless && <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2">
+            {isKorblox && <div className={`absolute inset-0 ${show2D ? 'invisible' : 'visible'}`}><Korblox3D /></div>}
+            {isKorblox && <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2">
               <button type="button" onClick={() => setTryOn((value) => !value)} aria-pressed={tryOn} className={`rounded-lg px-4 py-2 text-sm font-bold shadow-lg transition ${tryOn ? 'bg-[#00b06f] text-white' : 'bg-white text-[#222] hover:bg-gray-200'}`}>{tryOn ? 'Wearing' : 'Try On'}</button>
               <button type="button" onClick={() => setShow2D((value) => !value)} aria-pressed={!show2D} className="rounded-lg border border-white/20 bg-[#333] px-4 py-2 text-sm font-bold text-white shadow-lg transition hover:bg-[#444]">{show2D ? '3D' : 'Image'}</button>
             </div>}
@@ -94,7 +96,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <div className="mt-3 h-px w-full bg-border" />
             </div>
 
-            {isHeadless && <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>}
+            {(isHeadless || isEightBit) && <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>}
 
             <div className="mt-2 flex w-full max-w-[400px] flex-col gap-3">
               <div className="flex w-full items-center justify-between text-sm">
@@ -111,7 +113,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               </>}
             </div>
 
-            {!isHeadless && <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-8 gap-y-4 border-t border-border pt-5 text-sm">
+            {isKorblox && <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-8 gap-y-4 border-t border-border pt-5 text-sm">
               <dt className="font-semibold">Tradable</dt><dd>No</dd>
               <dt className="font-semibold">Type</dt><dd>Characters</dd>
               <dt className="font-semibold">Placement</dt><dd>Full Body</dd>
