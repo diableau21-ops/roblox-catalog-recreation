@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import { Gift, ShoppingCart, Info, Check } from 'lucide-react'
+import { ShoppingCart, Info, Check } from 'lucide-react'
 import { catalogItems } from '@/lib/catalog-data'
 import { VerifiedBadge } from '@/components/catalog/verified-badge'
 import { Price, RobuxIcon } from '@/components/catalog/robux-icon'
@@ -121,7 +121,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               )}
               {isHeadless ? <>
                 <button type="button" onClick={() => {}} className="flex h-11 w-full items-center justify-center rounded-md bg-[#00b06f] px-5 text-base font-bold text-white transition hover:bg-[#009e63]">Owned</button>
-                <button type="button" onClick={() => setGiftOpen(true)} className="flex h-10 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><Gift className="size-4" /> Gift</button>
+                <button type="button" onClick={() => setGiftOpen(true)} className="flex h-10 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70">Gift</button>
               </> : isEightBit ? <>
                 <a href={itemUrl} target="_blank" rel="noopener noreferrer" className="flex h-11 w-full items-center justify-center rounded-md bg-[#335fff] px-5 text-base font-bold text-white transition hover:bg-[#244be0]">Buy</a>
                 <button type="button" onClick={() => setGiftOpen(true)} className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><Gift className="size-4" /> Gift</button>
