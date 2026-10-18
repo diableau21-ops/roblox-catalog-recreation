@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { SlidersHorizontal } from 'lucide-react'
 import { catalogItems, categories, type Category } from '@/lib/catalog-data'
 import { cn } from '@/lib/utils'
@@ -115,6 +115,26 @@ const translations: Record<string, Record<string, string>> = {
 
 export function CatalogApp() {
   const [balance, setBalance] = useState(1250)
+  const [balanceReady, setBalanceReady] = useState(false)
+
+  // Keep the demo Robux balance when navigating between catalog and bundle pages.
+  useEffect(() => {
+    try {
+      const saved = window.localStorage.getItem('catalog-demo-robux-balance')
+      if (saved !== null) {
+        const parsed = Number(saved)
+        if (Number.isFinite(parsed) && parsed >= 0) setBalance(parsed)
+      }
+    } catch {}
+    setBalanceReady(true)
+  }, [])
+
+  useEffect(() => {
+    if (!balanceReady) return
+    try {
+      window.localStorage.setItem('catalog-demo-robux-balance', String(balance))
+    } catch {}
+  }, [balance, balanceReady])
   const [query, setQuery] = useState('')
   const [language, setLanguage] = useState('English')
   const t = (text: string) => translations[language]?.[text] ?? text
