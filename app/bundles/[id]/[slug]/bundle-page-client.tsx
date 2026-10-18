@@ -123,9 +123,9 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                 <button type="button" onClick={() => setGiftOpen(true)} className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><Gift className="size-4" /> Gift</button>
               </> : <>
                 <button type="button" aria-label="Owned" title="Owned" className="flex h-11 w-full cursor-default items-center justify-center rounded-md bg-[#335fff] text-white transition hover:bg-[#244be0]">
-                  <svg viewBox="0 0 24 24" className="h-6 w-6 fill-current" aria-hidden="true">
-                    <circle cx="12" cy="4.8" r="3" />
-                    <path d="M7.3 9.1c0-.8.6-1.4 1.4-1.4h6.6c.8 0 1.4.6 1.4 1.4l1 6.4c.1.7-.4 1.2-1.1 1.2h-1.4v4.1h-2.4v-5h-2v5H8.4v-4.1H7c-.7 0-1.2-.5-1.1-1.2z" />
+                  <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="4.8" r="2.7" />
+                    <path d="M8.5 9h7c.8 0 1.3.6 1.4 1.4l.8 5.3h-3v4.1h-2.1v-5h-1.2v5H9.3v-4.1h-3l.8-5.3C7.2 9.6 7.7 9 8.5 9Z" />
                     <ellipse cx="12" cy="22" rx="8.5" ry="1.5" />
                   </svg>
                 </button>
