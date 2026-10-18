@@ -95,7 +95,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
 
           <div className={`flex min-w-0 flex-1 flex-col gap-4 border-t border-white/10 bg-[#181818] p-5 text-white md:border-l md:border-t-0 md:p-6 ${isKorblox ? 'rounded-xl border border-white/10' : ''}`}>
             <div>
-              <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">{isEightBit ? 'Accessory' : 'Bundle'}</p>
+              <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">{isEightBit ? 'Accessory' : isKorblox ? '' : 'Bundle'}</p>
               <h1 className="text-3xl font-bold tracking-tight md:text-4xl">{item.name}</h1>
               <p className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">By <span className="font-semibold text-foreground">Roblox</span><VerifiedBadge className="size-4" /></p>
               <div className="mt-3 h-px w-full bg-border" />
