@@ -258,7 +258,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <span className="text-muted-foreground">Price</span>
               <span className="font-bold">{isKorblox ? <Price price={17000} /> : <Price price={item.price} />}</span>
             </div>
-            <button type="button" onClick={() => setGiftDemoMessage('Demo only: no Robux or item was sent. Real gifts must be completed through official Roblox features.')} className="h-11 w-full rounded-lg bg-[#335fff] px-4 text-sm font-bold text-white transition hover:bg-[#244be0]">Confirm Gift (Demo)</button>
+            <button type="button" onClick={() => setGiftDemoMessage('No Robux or item was sent. Real gifts must be completed through official Roblox features.')} className="h-11 w-full rounded-lg bg-[#335fff] px-4 text-sm font-bold text-white transition hover:bg-[#244be0]">Confirm Gift</button>
           </div>}
           {giftDemoMessage && <p role="status" className="mt-3 rounded-lg border border-[#335fff]/40 bg-[#335fff]/10 p-3 text-sm text-foreground">{giftDemoMessage}</p>}
         </section>
