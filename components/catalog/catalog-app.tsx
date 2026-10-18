@@ -202,8 +202,7 @@ export function CatalogApp() {
 
       <main
         className={cn(
-          'mx-auto flex max-w-[1600px] gap-8 px-4 py-7 transition-[padding] md:px-8 lg:gap-10 lg:px-10 lg:py-8',
-          navOpen && 'xl:pl-[244px]',
+          'mx-auto flex max-w-[1600px] gap-8 px-4 py-7 md:px-8 lg:gap-10 lg:px-10 lg:py-8',
         )}
       >
         <section className="min-w-0 flex-1" aria-labelledby="catalog-heading">
