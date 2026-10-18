@@ -80,24 +80,28 @@ export function LeftNav({ open, onClose, onNotify, onBuyRobux }: Props) {
               </a>
             </li>
           ))}
-          <li>
-            <button
-              type="button"
-              onClick={onBuyRobux}
-              className="flex min-h-12 w-full items-center gap-4 rounded-xl px-3 py-3 text-left text-lg font-medium text-foreground/90 hover:bg-secondary hover:text-foreground"
-            >
-              <span className="flex size-6 shrink-0 items-center justify-center">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg"
-                  alt=""
-                  className="size-6 object-contain brightness-0 invert"
-                />
-              </span>
-              <span className="flex-1">Roblox Plus</span>
-            </button>
-          </li>
         </ul>
-
+        <div className="mt-5 rounded-xl border border-border bg-secondary/40 p-4">
+          <div className="mb-3 flex items-center gap-3">
+            <span className="flex size-9 shrink-0 items-center justify-center">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg"
+                alt="Roblox Plus"
+                className="size-8 object-contain brightness-0 invert"
+              />
+            </span>
+            <span className="text-base font-bold leading-5 text-foreground">Roblox Plus</span>
+          </div>
+          <p className="text-base font-bold leading-6 text-foreground">More fun for less Robux.</p>
+          <p className="mt-2 text-sm leading-5 text-muted-foreground">Subscribe to Roblox Plus.</p>
+          <button
+            type="button"
+            onClick={onBuyRobux}
+            className="mt-3 text-sm font-semibold text-foreground underline underline-offset-2 hover:text-foreground/80"
+          >
+            Subscribe
+          </button>
+        </div>
       </nav>
     </>
   )
