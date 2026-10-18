@@ -1,7 +1,6 @@
 'use client'
 
 import { useCallback, useMemo, useRef, useState } from 'react'
-import { SlidersHorizontal } from 'lucide-react'
 import { catalogItems, categories, type Category } from '@/lib/catalog-data'
 import { cn } from '@/lib/utils'
 import { SiteHeader } from './site-header'
@@ -219,21 +218,6 @@ export function CatalogApp() {
                 {t(items.length === 1 ? 'result' : 'results')}
               </p>
             </div>
-            <label className="flex items-center gap-2 text-sm">
-              <SlidersHorizontal className="size-4 text-muted-foreground" aria-hidden="true" />
-              <span className="sr-only">Sort by</span>
-              <select
-                value={sort}
-                onChange={(e) => setSort(e.target.value as Sort)}
-                className="h-9 rounded-lg border border-border bg-input px-3 text-sm text-foreground focus:border-primary focus:outline-none"
-              >
-                {Object.entries(sortLabels).map(([v, l]) => (
-                  <option key={v} value={v}>
-                    {t(l)}
-                  </option>
-                ))}
-              </select>
-            </label>
           </div>
 
           <div className="-mx-3 mt-4 flex gap-2 overflow-x-auto px-3 pb-2 lg:mx-0 lg:mt-5 lg:px-0" role="group" aria-label="Categories">
