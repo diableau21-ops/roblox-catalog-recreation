@@ -45,6 +45,11 @@ jobs:
           path: out
 
   deploy:
+    permissions:
+      actions: read
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
