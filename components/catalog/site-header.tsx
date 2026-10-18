@@ -82,7 +82,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
             aria-label={`${balance} Robux, buy more`}
           >
             <RobuxIcon className="size-6" />
-            <span className="tabular-nums">{balance.toLocaleString('en-US')}</span>
+            <span className="tabular-nums">{balance}</span>
           </button>
           <button
             type="button"
