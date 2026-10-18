@@ -104,23 +104,34 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             {(isHeadless || isEightBit) && <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>}
 
             <div className="mt-2 flex w-full max-w-[400px] flex-col gap-3">
-              <div className="flex w-full items-center justify-between text-sm">
-                <span className="font-medium text-muted-foreground">Price</span>
-                <Price price={item.price} />
-              </div>
-              {!isHeadless ? <>
+              {isKorblox ? (
+                <div className="flex w-full items-center gap-3">
+                  <button type="button" onClick={() => {}} className="flex h-11 flex-1 items-center justify-center rounded-md bg-[#00b06f] px-5 text-base font-bold text-white transition hover:bg-[#009e63]">Owned</button>
+                  <div className="flex shrink-0 items-center gap-2 text-base font-bold"><Price price={17000} /></div>
+                </div>
+              ) : (
+                <div className="flex w-full items-center justify-between text-sm">
+                  <span className="font-medium text-muted-foreground">Price</span>
+                  <Price price={item.price} />
+                </div>
+              )}
+              {isHeadless ? <>
+                <button type="button" onClick={() => {}} className="flex h-11 w-full items-center justify-center rounded-md bg-[#00b06f] px-5 text-base font-bold text-white transition hover:bg-[#009e63]">Owned</button>
+                <button type="button" onClick={() => setGiftOpen(true)} className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><Gift className="size-4" /> Gift</button>
+              </> : isEightBit ? <>
                 <a href={itemUrl} target="_blank" rel="noopener noreferrer" className="flex h-11 w-full items-center justify-center rounded-md bg-[#335fff] px-5 text-base font-bold text-white transition hover:bg-[#244be0]">Buy</a>
-                <a href="https://www.roblox.com/bundles/192/Korblox-Deathspeaker" target="_blank" rel="noopener noreferrer" className="flex h-11 w-full items-center justify-center rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70">Add to cart</a>
                 <button type="button" onClick={() => setGiftOpen(true)} className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><Gift className="size-4" /> Gift</button>
               </> : <>
-                <button type="button" onClick={() => {}} className="flex h-11 w-full items-center justify-center rounded-md bg-[#00b06f] px-5 text-base font-bold text-white transition hover:bg-[#009e63]">Owned</button>
+                <a href={itemUrl} target="_blank" rel="noopener noreferrer" className="flex h-11 w-full items-center justify-center rounded-md bg-[#335fff] px-5 text-base font-bold text-white transition hover:bg-[#244be0]">Buy</a>
+                <a href={itemUrl} target="_blank" rel="noopener noreferrer" className="flex h-11 w-full items-center justify-center rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70">Add to cart</a>
                 <button type="button" onClick={() => setGiftOpen(true)} className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><Gift className="size-4" /> Gift</button>
               </>}
             </div>
 
             {isKorblox && <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-8 gap-y-4 border-t border-border pt-5 text-sm">
+              <dt className="font-semibold">Price</dt><dd><Price price={17000} /></dd>
               <dt className="font-semibold">Tradable</dt><dd>No</dd>
-              <dt className="font-semibold">Type</dt><dd>Characters</dd>
+              <dd>Characters</dd>
               <dt className="font-semibold">Placement</dt><dd>Full Body</dd>
               <dt className="font-semibold">Created</dt><dd>Aug 14, 2018</dd>
               <dt className="font-semibold">Description</dt><dd className="leading-6">His tribe is widely considered the best and strongest of the twelve Korblox tribes. No one dares challenge his authority.</dd>
