@@ -45,12 +45,6 @@ export default function BundlePage() {
       {!isHeadless && <div className="ml-[220px] border-b border-border px-6 py-2 text-sm font-bold"><span className="inline-flex items-center gap-1.5"><Price price={item.price} /></span></div>}
 
       <div className="ml-[220px] max-w-[calc(100%-220px)] px-4 py-8 md:px-8">
-        <nav className="mb-6 text-sm text-muted-foreground">
-          <Link href={`/?q=${encodeURIComponent(query)}`} className="hover:text-foreground">Marketplace</Link>
-          <span className="mx-2">/</span><span>Bundles</span>
-          <span className="mx-2">/</span><span className="text-foreground">{item.name}</span>
-        </nav>
-
         <section className="grid gap-8 md:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
           <div className={`relative aspect-square overflow-hidden rounded-xl border border-[#3b3b3b] ${!isHeadless ? 'bg-[#232323]' : 'bg-thumb'}`}>
             <div className={`absolute inset-0 ${show2D || isHeadless ? 'block' : 'hidden'}`}>
