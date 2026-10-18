@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import { Gift, ShoppingCart } from 'lucide-react'
+import { Gift, ShoppingCart, Info } from 'lucide-react'
 import { catalogItems } from '@/lib/catalog-data'
 import { VerifiedBadge } from '@/components/catalog/verified-badge'
 import { Price, RobuxIcon } from '@/components/catalog/robux-icon'
@@ -135,7 +135,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
 
             {isKorblox && <dl className="mt-2 grid grid-cols-[112px_minmax(0,1fr)] items-start gap-x-5 gap-y-4 border-t border-border pt-5 text-sm sm:grid-cols-[128px_minmax(0,1fr)]">
               <dt className="font-medium text-muted-foreground">Tradable</dt><dd className="min-w-0 text-white">No</dd>
-              <dt className="font-medium text-muted-foreground">Type</dt><dd className="min-w-0 text-white">Characters</dd>
+              <dt className="flex items-center gap-1.5 font-medium text-muted-foreground">Type <span title="The category this item belongs to" className="inline-flex size-4 items-center justify-center rounded-full border border-current text-[10px] font-bold leading-none"><Info className="size-2.5" /></span></dt><dd className="min-w-0 text-white">Characters</dd>
               <dt className="font-medium text-muted-foreground">Placement</dt><dd className="min-w-0 text-white">Full Body</dd>
               <dt className="font-medium text-muted-foreground">Created</dt><dd className="min-w-0 text-white">Dec 26, 2013</dd>
               <dt className="font-medium text-muted-foreground">Description</dt><dd className="min-w-0 break-words leading-6 text-white">His tribe is widely considered the best and strongest of the twelve Korblox tribes. No one dares challenge his authority.</dd>
