@@ -280,9 +280,9 @@ export function CatalogApp() {
                     favorited={favorites.has(item.id)}
                     onOpen={() => {
                       if (item.id === 13) {
-                        window.location.href = '/bundles/201/Headless-Horseman'
+                        window.location.href = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/bundles/201/Headless-Horseman/`
                       } else if (item.id === 10) {
-                        window.location.href = '/bundles/192/Korblox-Deathspeaker'
+                        window.location.href = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/bundles/192/Korblox-Deathspeaker/`
                       } else {
                         setOpenId(item.id)
                       }
