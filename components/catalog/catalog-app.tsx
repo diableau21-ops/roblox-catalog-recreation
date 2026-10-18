@@ -202,17 +202,17 @@ export function CatalogApp() {
 
       <main
         className={cn(
-          'mx-auto flex max-w-[1400px] gap-8 px-3 py-6 transition-[padding] md:px-6',
+          'mx-auto flex max-w-[1600px] gap-8 px-4 py-7 transition-[padding] md:px-8 lg:gap-10 lg:px-10 lg:py-8',
           navOpen && 'xl:pl-[244px]',
         )}
       >
         <section className="min-w-0 flex-1" aria-labelledby="catalog-heading">
-          <div className="flex flex-wrap items-end justify-between gap-3">
+          <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <h1 id="catalog-heading" className="text-2xl font-bold md:text-3xl">
+              <h1 id="catalog-heading" className="text-2xl font-bold md:text-3xl lg:text-4xl">
                 {t('Marketplace')}
               </h1>
-              <p className="mt-1 text-sm text-muted-foreground">
+              <p className="mt-1 text-sm text-muted-foreground lg:text-base">
                 {t(categoryLabel)}
                 {subcategory ? ` / ${subcategory}` : ''} {'·'} {items.length}{' '}
                 {t(items.length === 1 ? 'result' : 'results')}
@@ -255,7 +255,7 @@ export function CatalogApp() {
               </button>
             </div>
           ) : (
-            <ul className="mt-5 grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6">
+            <ul className="mt-6 grid grid-cols-2 gap-x-4 gap-y-7 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 lg:gap-x-6 lg:gap-y-8">
               {items.map((item) => (
                 <li key={item.id}>
                   <ItemCard
@@ -281,7 +281,7 @@ export function CatalogApp() {
       </main>
 
       <footer className="mt-12 border-t border-border">
-        <div className="mx-auto flex max-w-[1400px] flex-wrap gap-x-6 gap-y-2 px-6 py-8 text-sm text-muted-foreground">
+        <div className="mx-auto flex max-w-[1600px] flex-wrap gap-x-6 gap-y-2 px-6 py-8 text-sm text-muted-foreground">
           {['About Us', 'Jobs', 'Blog', 'Parents', 'Gift Cards', 'Help', 'Terms', 'Accessibility', 'Privacy'].map(
             (l) => (
               <a
