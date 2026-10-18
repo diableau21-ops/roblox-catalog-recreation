@@ -293,7 +293,20 @@ export function CatalogApp() {
                     item={item}
                     owned={owned.has(item.id)}
                     favorited={favorites.has(item.id)}
-                    onOpen={() => setOpenId(item.id)}
+                    onOpen={() => {
+                      const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
+                      const pageById: Record<number, string> = {
+                        10: '/bundles/192/Korblox-Deathspeaker',
+                        13: '/bundles/201/Headless-Horseman',
+                        14: '/bundles/14/8-Bit-Royal-Crown',
+                      }
+                      const page = pageById[item.id]
+                      if (page) {
+                        window.location.href = `${basePath}${page}?q=${encodeURIComponent(query)}`
+                      } else {
+                        setOpenId(item.id)
+                      }
+                    }}
                     onToggleFavorite={() => toggleFavorite(item.id)}
                   />
                 </li>
