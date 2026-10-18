@@ -96,7 +96,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             {isKorblox && <div className="mt-2 flex items-center gap-1.5 self-start rounded-md bg-black/60 px-2 py-1 text-sm text-white"><span className="text-xl leading-none text-white">★</span><span>3.4M</span></div>}
             </div>
 
-          <div className={`flex min-w-0 flex-1 flex-col gap-4 text-white ${isKorblox ? '' : isEightBit ? 'rounded-xl border border-[#3b3b3b] bg-[#232323] p-5 md:p-6' : 'border-t border-white/10 bg-[#232323] p-5 md:border-l md:border-t-0 md:p-6'}`}>
+          <div className={`flex min-w-0 flex-1 flex-col gap-4 text-white ${isKorblox || isEightBit ? '' : 'border-t border-white/10 bg-[#232323] p-5 md:border-l md:border-t-0 md:p-6'}`}>
             <div>
               {!isEightBit && <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">{isKorblox ? '' : 'Bundle'}</p>}
               <div className="flex items-center gap-3"><h1 className="text-3xl font-bold tracking-tight md:text-4xl">{item.name}</h1>{isKorblox && <span className="relative mt-2 inline-flex shrink-0"><ShoppingCart aria-label="Shopping cart" className="size-6 text-white" /><span className="absolute -right-2 -top-2 flex size-4 items-center justify-center rounded-full bg-[#335fff] text-[10px] font-bold leading-none text-white">0</span></span>}</div>
