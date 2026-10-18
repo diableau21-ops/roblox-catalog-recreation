@@ -105,8 +105,8 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
 
             <div className="mt-2 flex w-full flex-col gap-3">
               {isKorblox ? (
-                <div className="flex w-full items-center justify-between pb-1 text-sm">
-                  <span className="font-semibold text-white">Price</span>
+                <div className="flex w-full items-center justify-between border-b border-white/10 pb-3 text-sm">
+                  <span className="font-medium text-muted-foreground">Price</span>
                   <span className="text-base font-bold"><Price price={17000} /></span>
                 </div>
               ) : (
@@ -122,8 +122,10 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                 <a href={itemUrl} target="_blank" rel="noopener noreferrer" className="flex h-11 w-full items-center justify-center rounded-md bg-[#335fff] px-5 text-base font-bold text-white transition hover:bg-[#244be0]">Buy</a>
                 <button type="button" onClick={() => setGiftOpen(true)} className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><Gift className="size-4" /> Gift</button>
               </> : <>
-                <a href={itemUrl} target="_blank" rel="noopener noreferrer" className="flex h-11 w-full items-center justify-center rounded-md bg-[#335fff] px-5 text-base font-bold text-white transition hover:bg-[#244be0]">Buy</a>
-                <a href={itemUrl} target="_blank" rel="noopener noreferrer" className="flex h-11 w-full items-center justify-center rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70">Add to cart</a>
+                <div className="grid w-full grid-cols-2 gap-3">
+                  <a href={itemUrl} target="_blank" rel="noopener noreferrer" className="flex h-11 min-w-0 items-center justify-center rounded-md bg-[#335fff] px-3 text-base font-bold text-white transition hover:bg-[#244be0]">Buy</a>
+                  <a href={itemUrl} target="_blank" rel="noopener noreferrer" className="flex h-11 min-w-0 items-center justify-center rounded-md border border-border bg-secondary px-3 text-sm font-semibold transition hover:bg-secondary/70">Add to cart</a>
+                </div>
                 <button type="button" onClick={() => setGiftOpen(true)} className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><Gift className="size-4" /> Gift</button>
               </>}
             </div>
