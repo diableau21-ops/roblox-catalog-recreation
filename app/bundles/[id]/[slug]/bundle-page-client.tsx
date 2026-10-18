@@ -40,19 +40,25 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   const [giftUsername, setGiftUsername] = useState('')
   const [giftPlayers, setGiftPlayers] = useState<{id: number; name: string; displayName: string}[]>([])
   const [giftSearching, setGiftSearching] = useState(false)
+  const [giftSearchMessage, setGiftSearchMessage] = useState('')
   const [giftSelectedPlayer, setGiftSelectedPlayer] = useState<{id: number; name: string; displayName: string} | null>(null)
   const searchGiftPlayers = async () => {
     const keyword = giftUsername.trim()
     if (!keyword) return
     setGiftSearching(true)
+    setGiftSearchMessage('')
+    setGiftPlayers([])
     setGiftSelectedPlayer(null)
     try {
       const response = await fetch(`https://users.roblox.com/v1/users/search?keyword=${encodeURIComponent(keyword)}&limit=10`)
       if (!response.ok) throw new Error('Player search unavailable')
       const result = await response.json()
-      setGiftPlayers((result.data ?? []).map((player: {id: number; name: string; displayName: string}) => ({id: player.id, name: player.name, displayName: player.displayName})))
+      const players = Array.isArray(result.data) ? result.data.filter((player: {id?: number; name?: string; displayName?: string}) => Number.isFinite(player.id) && typeof player.name === 'string').map((player: {id: number; name: string; displayName?: string}) => ({id: player.id, name: player.name, displayName: player.displayName || player.name})) : []
+      setGiftPlayers(players)
+      setGiftSearchMessage(players.length ? '' : `No Roblox players found for “${keyword}”.`)
     } catch {
       setGiftPlayers([])
+      setGiftSearchMessage('Could not load players right now. Please try again.')
     } finally {
       setGiftSearching(false)
     }
@@ -216,7 +222,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           </div>
           <p className="mt-2 text-sm text-muted-foreground">Search for the Roblox player you want to gift.</p>
           <form className="mt-4 flex gap-2" onSubmit={(event) => { event.preventDefault(); void searchGiftPlayers() }}>
-            <input value={giftUsername} onChange={(event) => setGiftUsername(event.target.value)} placeholder="Search players" aria-label="Roblox player username" className="h-11 min-w-0 flex-1 rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-[#335fff]" />
+            <input value={giftUsername} onChange={(event) => { setGiftUsername(event.target.value); setGiftSearchMessage(''); setGiftPlayers([]); setGiftSelectedPlayer(null) }} placeholder="Search players" aria-label="Roblox player username" className="h-11 min-w-0 flex-1 rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-[#335fff]" />
             <button type="submit" disabled={!giftUsername.trim() || giftSearching} className="h-11 rounded-lg bg-[#335fff] px-4 text-sm font-semibold text-white disabled:opacity-50">{giftSearching ? 'Searching…' : 'Search'}</button>
           </form>
           {giftPlayers.length > 0 && <div className="mt-4 max-h-64 space-y-2 overflow-y-auto">
@@ -225,7 +231,8 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <span className="text-sm font-semibold text-[#335fff]">{giftSelectedPlayer?.id === player.id ? 'Selected' : 'Select'}</span>
             </button>)}
           </div>}
-          {!giftSearching && giftUsername.trim() && giftPlayers.length === 0 && <p className="mt-4 text-sm text-muted-foreground">Search for a player to see matching accounts.</p>}
+          {giftSearching && <p className="mt-4 text-sm text-muted-foreground">Looking for Roblox players…</p>}
+          {!giftSearching && giftSearchMessage && <p role="status" className="mt-4 text-sm text-muted-foreground">{giftSearchMessage}</p>}
           {giftSelectedPlayer && <div className="mt-4 rounded-lg bg-secondary p-3 text-sm">Selected player: <span className="font-semibold">{giftSelectedPlayer.displayName} (@{giftSelectedPlayer.name})</span><p className="mt-1 text-xs text-muted-foreground">This site can search and select players, but it cannot send Roblox gifts.</p></div>}
         </section>
       </div>}
