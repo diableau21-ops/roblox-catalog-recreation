@@ -15,8 +15,6 @@ import {
 import { cn } from '@/lib/utils'
 
 type Props = {
-  open: boolean
-  onClose: () => void
   onNotify: (msg: string) => void
   onBuyRobux: () => void
 }
@@ -33,22 +31,13 @@ const links = [
   { label: 'Gift Cards', icon: Gift },
 ]
 
-export function LeftNav({ open, onClose, onNotify, onBuyRobux }: Props) {
+export function LeftNav({ onNotify, onBuyRobux }: Props) {
   return (
     <>
-      {open && (
-        <button
-          type="button"
-          aria-label="Close navigation"
-          onClick={onClose}
-          className="fixed inset-0 top-[60px] z-30 bg-black/50 xl:hidden"
-        />
-      )}
       <nav
         aria-label="Account"
         className={cn(
-          'fixed bottom-0 left-0 top-[60px] z-40 flex w-[min(320px,88vw)] flex-col overflow-y-auto border-r border-border bg-header px-4 py-4 shadow-2xl transition-transform duration-200 ease-out',
-          open ? 'translate-x-0' : '-translate-x-full',
+          'fixed bottom-0 left-0 top-[60px] z-40 flex w-[240px] flex-col overflow-y-auto border-r border-border bg-header px-4 py-4 shadow-2xl',
         )}
       >
         <button
