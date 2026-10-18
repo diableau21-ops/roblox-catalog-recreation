@@ -51,7 +51,7 @@ export const catalogItems: CatalogItem[] = [
     limited: "Limited",
     favorites: 449914,
     createdAt: 16,
-    description: "Perfect for sending adventurers out to save the princess.",
+    description: "",
   },
   {
     id: 10,
