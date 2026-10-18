@@ -64,6 +64,11 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   if (!item) return <main className="min-h-screen bg-background p-8 text-foreground">Bundle not found.</main>
 
   const itemImage = robloxThumbnail ?? (item.image?.startsWith('http') ? item.image : `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${item.image || '/placeholder.svg'}`)
+  const itemUrl = isHeadless
+    ? 'https://www.roblox.com/bundles/201/Headless-Horseman'
+    : isEightBit
+      ? 'https://www.roblox.com/catalog/1365767/8-Bit-Royal-Crown'
+      : 'https://www.roblox.com/bundles/192/Korblox-Deathspeaker'
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -90,7 +95,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
 
           <div className="flex min-w-0 flex-1 flex-col gap-5 border-t border-white/10 bg-[#181818] p-5 text-white md:border-l md:border-t-0">
             <div>
-              <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">Bundle</p>
+              <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">{isEightBit ? 'Accessory' : 'Bundle'}</p>
               <h1 className="text-3xl font-bold tracking-tight md:text-4xl">{item.name}</h1>
               <p className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">By <span className="font-semibold text-foreground">Roblox</span><VerifiedBadge className="size-4" /></p>
               <div className="mt-3 h-px w-full bg-border" />
@@ -104,7 +109,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                 <Price price={item.price} />
               </div>
               {!isHeadless ? <>
-                <a href="https://www.roblox.com/bundles/192/Korblox-Deathspeaker" target="_blank" rel="noopener noreferrer" className="flex h-11 w-full items-center justify-center rounded-md bg-[#335fff] px-5 text-base font-bold text-white transition hover:bg-[#244be0]">Buy</a>
+                <a href={itemUrl} target="_blank" rel="noopener noreferrer" className="flex h-11 w-full items-center justify-center rounded-md bg-[#335fff] px-5 text-base font-bold text-white transition hover:bg-[#244be0]">Buy</a>
                 <a href="https://www.roblox.com/bundles/192/Korblox-Deathspeaker" target="_blank" rel="noopener noreferrer" className="flex h-11 w-full items-center justify-center rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70">Add to cart</a>
                 <button type="button" onClick={() => setGiftOpen(true)} className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><Gift className="size-4" /> Gift</button>
               </> : <>
