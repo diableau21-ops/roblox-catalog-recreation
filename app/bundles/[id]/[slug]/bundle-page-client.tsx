@@ -69,9 +69,9 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
       <LeftNav onNotify={notify} onBuyRobux={() => setRobuxShopOpen(true)} />
 
       <div className="ml-[220px] max-w-[calc(100%-220px)] px-4 py-8 md:px-8">
-        <section className="grid gap-4 md:grid-cols-1">
-          <div className={`relative w-full max-w-[560px] justify-self-center overflow-hidden rounded-xl border border-[#3b3b3b] ${!isHeadless ? 'bg-[#232323]' : 'bg-thumb'}`}>
-            <div className="relative aspect-square w-full">
+        <section className="flex justify-center">
+          <div className={`flex w-full max-w-[900px] flex-col gap-0 overflow-hidden rounded-xl border border-[#3b3b3b] md:flex-row ${!isHeadless ? 'bg-[#232323]' : 'bg-thumb'}`}>
+            <div className="relative aspect-square w-full shrink-0 md:w-[420px]">
             <div className={`absolute inset-0 ${show2D || isHeadless ? 'block' : 'hidden'}`}>
               {robloxThumbnail ? (
                 <img src={robloxThumbnail} alt={item.name} className="absolute inset-0 h-full w-full object-contain p-6" />
@@ -86,7 +86,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             </div>}
           </div>
 
-          <div className="flex flex-col gap-5 border-t border-white/10 bg-[#181818] p-5 text-white">
+          <div className="flex min-w-0 flex-1 flex-col gap-5 border-t border-white/10 bg-[#181818] p-5 text-white md:border-l md:border-t-0">
             <div>
               <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">Bundle</p>
               <h1 className="text-3xl font-bold tracking-tight md:text-4xl">{item.name}</h1>
@@ -96,7 +96,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
 
             {isHeadless && <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>}
 
-            <div className="mt-2 flex w-full max-w-[400px] flex-col gap-3 self-end">
+            <div className="mt-2 flex w-full max-w-[400px] flex-col gap-3">
               <div className="flex w-full items-center justify-between text-sm">
                 <span className="font-medium text-muted-foreground">Price</span>
                 <Price price={item.price} />
