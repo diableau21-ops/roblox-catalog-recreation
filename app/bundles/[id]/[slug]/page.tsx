@@ -60,20 +60,16 @@ export default function BundlePage() {
             <div>
               <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">Bundle</p>
               <h1 className="text-3xl font-bold tracking-tight md:text-4xl">{item.name}</h1>
-              {!isHeadless && <div className="mt-3 text-sm font-bold"><Price price={item.price} /></div>}
               <p className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">
                 By <span className="font-semibold text-foreground">Roblox</span>
                 <VerifiedBadge className="size-4" />
               </p>
             </div>
 
-            {isHeadless && <div className="border-y border-border py-5">
-              <p className="mb-2 text-sm text-muted-foreground">Price</p>
-              <div className="text-2xl font-bold"><Price price={item.price} /></div>
-            </div>}
             {isHeadless && <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>}
 
             <div className="mt-2 flex w-full max-w-[400px] flex-col gap-3 self-end">
+              <div className="text-left text-sm font-bold"><Price price={item.price} /></div>
               <button type="button" onClick={() => setMessage('This is a preview of the Owned button on your demo site.')} className="flex h-11 items-center justify-center rounded-md bg-[#00b06f] px-5 text-base font-bold text-white transition hover:bg-[#009e63]">Owned</button>
               <button type="button" onClick={() => setGiftOpen(true)} className="flex h-11 items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><Gift className="size-4" /> Gift</button>
             </div>
