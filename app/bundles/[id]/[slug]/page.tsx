@@ -66,7 +66,7 @@ export default function BundlePage() {
                 <Price price={item.price} />
               </div>
               <div className="flex w-full max-w-[400px] flex-col gap-3 self-end">
-                <div className="flex h-11 items-center justify-start rounded-md bg-[#00b06f] px-5 text-base font-bold text-white"> <Price price={item.price} /> </div>
+                <button type="button" onClick={() => {}} className="flex h-11 items-center justify-start rounded-md bg-[#00b06f] px-5 text-base font-bold text-white transition hover:bg-[#009e63]"><Price price={item.price} /></button>
                 <button type="button" onClick={() => setGiftOpen(true)} className="flex h-11 items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><Gift className="size-4" /> Gift</button>
               </div>
             </div>
