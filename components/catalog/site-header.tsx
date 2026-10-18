@@ -60,7 +60,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
             className="hidden items-center gap-2 rounded-lg py-1 pl-1 pr-2 transition-colors hover:bg-secondary xl:flex"
           >
             <span className="relative size-8 overflow-hidden rounded-full bg-thumb">
-              <Image src="/avatar.png" alt="" fill sizes="32px" className="object-cover" />
+              <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/avatar.png`} alt="" fill sizes="32px" className="object-cover" />
             </span>
             <span className="text-sm font-bold">Builderman</span>
           </button>
