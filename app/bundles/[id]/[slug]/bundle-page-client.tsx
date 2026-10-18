@@ -165,7 +165,6 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                 <path d={priceRange === '1D' ? 'M0 145 L70 135 L140 150 L210 112 L280 120 L350 95 L420 110 L490 78 L560 92 L630 62 L700 70 L760 48' : priceRange === '1W' ? 'M0 165 L70 140 L140 152 L210 100 L280 125 L350 90 L420 108 L490 65 L560 80 L630 55 L700 68 L760 35' : priceRange === '3M' ? 'M0 180 L70 155 L140 160 L210 130 L280 145 L350 95 L420 120 L490 85 L560 92 L630 48 L700 65 L760 28' : priceRange === '1Y' || priceRange === 'All' ? 'M0 190 L70 175 L140 180 L210 150 L280 158 L350 125 L420 140 L490 95 L560 110 L630 72 L700 60 L760 25' : 'M0 175 L70 155 L140 165 L210 125 L280 140 L350 100 L420 118 L490 82 L560 100 L630 55 L700 68 L760 32'} fill="none" stroke="#00b06f" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </div>
-            <p className="mt-2 text-xs text-gray-500">Historical Roblox price data is not connected; this is a visual recreation.</p>
           </div>}
         </section>
       </div>
@@ -192,7 +191,6 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
       {giftOpen && <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={() => setGiftOpen(false)}>
         <section role="dialog" aria-modal="true" aria-labelledby="gift-title" className="w-full max-w-md rounded-xl border border-border bg-card p-6" onClick={(event) => event.stopPropagation()}>
           <h2 id="gift-title" className="text-xl font-bold">Gift {item.name}</h2>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">The Gift button is a visual demo. Sending real gifts is not connected on this fan-made site.</p>
           <button type="button" onClick={() => setGiftOpen(false)} className="mt-5 h-10 w-full rounded-lg bg-secondary font-semibold hover:bg-secondary/80">Close</button>
         </section>
       </div>}
