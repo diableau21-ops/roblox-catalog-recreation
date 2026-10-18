@@ -58,7 +58,9 @@ export async function GET(request: Request) {
       } catch {}
     }
     const avatarById = new Map(
-      (thumbnails.data ?? []).map((thumbnail) => [thumbnail.targetId, thumbnail.imageUrl]),
+      (thumbnails.data ?? [])
+        .filter((thumbnail) => thumbnail.imageUrl)
+        .map((thumbnail) => [String(thumbnail.targetId), thumbnail.imageUrl as string]),
     )
     return NextResponse.json({
       data: data.map((player: { id: number; name: string; displayName: string }) => ({
