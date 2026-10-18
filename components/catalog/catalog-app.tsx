@@ -126,7 +126,6 @@ export function CatalogApp() {
   const [favorites, setFavorites] = useState<Set<number>>(() => new Set())
   const [openId, setOpenId] = useState<number | null>(null)
   const [robuxOpen, setRobuxOpen] = useState(false)
-  const [navOpen, setNavOpen] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
   const toastTimer = useRef<ReturnType<typeof setTimeout>>(null)
 
@@ -190,19 +189,16 @@ export function CatalogApp() {
         onQueryChange={setQuery}
         onBuyRobux={() => setRobuxOpen(true)}
         onNotify={notify}
-        onToggleNav={() => setNavOpen((o) => !o)}
       />
 
       <LeftNav
-        open={navOpen}
-        onClose={() => setNavOpen(false)}
         onNotify={notify}
         onBuyRobux={() => setRobuxOpen(true)}
       />
 
       <main
         className={cn(
-          'mx-auto flex max-w-[1600px] gap-8 px-4 py-7 md:px-8 lg:gap-10 lg:px-10 lg:py-8',
+          'ml-[240px] flex w-[calc(100%-240px)] max-w-[1600px] gap-8 px-4 py-7 md:px-8 lg:gap-10 lg:px-10 lg:py-8',
         )}
       >
         <section className="min-w-0 flex-1" aria-labelledby="catalog-heading">
