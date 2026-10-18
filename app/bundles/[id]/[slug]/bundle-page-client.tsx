@@ -17,6 +17,23 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     setQuery(new URLSearchParams(window.location.search).get('q') ?? '')
   }, [])
   const [balance, setBalance] = useState(1250)
+  const [balanceReady, setBalanceReady] = useState(false)
+  useEffect(() => {
+    try {
+      const saved = window.localStorage.getItem('catalog-demo-robux-balance')
+      if (saved !== null) {
+        const parsed = Number(saved)
+        if (Number.isFinite(parsed) && parsed >= 0) setBalance(parsed)
+      }
+    } catch {}
+    setBalanceReady(true)
+  }, [])
+  useEffect(() => {
+    if (!balanceReady) return
+    try {
+      window.localStorage.setItem('catalog-demo-robux-balance', String(balance))
+    } catch {}
+  }, [balance, balanceReady])
   const [giftOpen, setGiftOpen] = useState(false)
   const [robuxShopOpen, setRobuxShopOpen] = useState(false)
   const [selectedRobux, setSelectedRobux] = useState(800)
