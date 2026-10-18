@@ -37,6 +37,26 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     } catch {}
   }, [balance, balanceReady])
   const [giftOpen, setGiftOpen] = useState(false)
+  const [giftUsername, setGiftUsername] = useState('')
+  const [giftPlayers, setGiftPlayers] = useState<{id: number; name: string; displayName: string}[]>([])
+  const [giftSearching, setGiftSearching] = useState(false)
+  const [giftSelectedPlayer, setGiftSelectedPlayer] = useState<{id: number; name: string; displayName: string} | null>(null)
+  const searchGiftPlayers = async () => {
+    const keyword = giftUsername.trim()
+    if (!keyword) return
+    setGiftSearching(true)
+    setGiftSelectedPlayer(null)
+    try {
+      const response = await fetch(`https://users.roblox.com/v1/users/search?keyword=${encodeURIComponent(keyword)}&limit=10`)
+      if (!response.ok) throw new Error('Player search unavailable')
+      const result = await response.json()
+      setGiftPlayers((result.data ?? []).map((player: {id: number; name: string; displayName: string}) => ({id: player.id, name: player.name, displayName: player.displayName})))
+    } catch {
+      setGiftPlayers([])
+    } finally {
+      setGiftSearching(false)
+    }
+  }
   const [robuxShopOpen, setRobuxShopOpen] = useState(false)
   const [selectedRobux, setSelectedRobux] = useState(800)
   const [customRobux, setCustomRobux] = useState('800')
@@ -190,8 +210,23 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
 
       {giftOpen && <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={() => setGiftOpen(false)}>
         <section role="dialog" aria-modal="true" aria-labelledby="gift-title" className="w-full max-w-md rounded-xl border border-border bg-card p-6" onClick={(event) => event.stopPropagation()}>
-          <h2 id="gift-title" className="text-xl font-bold">Gift {item.name}</h2>
-          <button type="button" onClick={() => setGiftOpen(false)} className="mt-5 h-10 w-full rounded-lg bg-secondary font-semibold hover:bg-secondary/80">Close</button>
+          <div className="flex items-center justify-between gap-3">
+            <h2 id="gift-title" className="text-xl font-bold">Gift {item.name}</h2>
+            <button type="button" onClick={() => setGiftOpen(false)} aria-label="Close" className="rounded-lg px-2 py-1 text-xl hover:bg-secondary">×</button>
+          </div>
+          <p className="mt-2 text-sm text-muted-foreground">Search for the Roblox player you want to gift.</p>
+          <form className="mt-4 flex gap-2" onSubmit={(event) => { event.preventDefault(); void searchGiftPlayers() }}>
+            <input value={giftUsername} onChange={(event) => setGiftUsername(event.target.value)} placeholder="Search players" aria-label="Roblox player username" className="h-11 min-w-0 flex-1 rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-[#335fff]" />
+            <button type="submit" disabled={!giftUsername.trim() || giftSearching} className="h-11 rounded-lg bg-[#335fff] px-4 text-sm font-semibold text-white disabled:opacity-50">{giftSearching ? 'Searching…' : 'Search'}</button>
+          </form>
+          {giftPlayers.length > 0 && <div className="mt-4 max-h-64 space-y-2 overflow-y-auto">
+            {giftPlayers.map((player) => <button key={player.id} type="button" onClick={() => setGiftSelectedPlayer(player)} className={`flex w-full items-center justify-between rounded-lg border p-3 text-left transition ${giftSelectedPlayer?.id === player.id ? 'border-[#335fff] bg-[#335fff]/10' : 'border-border hover:bg-secondary'}`}>
+              <span className="min-w-0"><span className="block truncate font-semibold">{player.displayName}</span><span className="block truncate text-sm text-muted-foreground">@{player.name}</span></span>
+              <span className="text-sm font-semibold text-[#335fff]">{giftSelectedPlayer?.id === player.id ? 'Selected' : 'Select'}</span>
+            </button>)}
+          </div>}
+          {!giftSearching && giftUsername.trim() && giftPlayers.length === 0 && <p className="mt-4 text-sm text-muted-foreground">Search for a player to see matching accounts.</p>}
+          {giftSelectedPlayer && <div className="mt-4 rounded-lg bg-secondary p-3 text-sm">Selected player: <span className="font-semibold">{giftSelectedPlayer.displayName} (@{giftSelectedPlayer.name})</span><p className="mt-1 text-xs text-muted-foreground">This site can search and select players, but it cannot send Roblox gifts.</p></div>}
         </section>
       </div>}
     </main>
