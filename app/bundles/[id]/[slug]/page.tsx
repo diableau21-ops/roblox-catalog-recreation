@@ -33,17 +33,8 @@ export default function BundlePage() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <SiteHeader
-        balance={balance}
-        query={query}
-        onQueryChange={setQuery}
-        onBuyRobux={() => setRobuxShopOpen(true)}
-        onNotify={notify}
-      />
-      <LeftNav
-        onNotify={notify}
-        onBuyRobux={() => setRobuxShopOpen(true)}
-      />
+      <SiteHeader balance={balance} query={query} onQueryChange={setQuery} onBuyRobux={() => setRobuxShopOpen(true)} onNotify={notify} />
+      <LeftNav onNotify={notify} onBuyRobux={() => setRobuxShopOpen(true)} />
 
       <div className="ml-[220px] max-w-[calc(100%-220px)] px-4 py-8 md:px-8">
         <section className="grid gap-8 md:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
@@ -62,10 +53,7 @@ export default function BundlePage() {
             <div>
               <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">Bundle</p>
               <h1 className="text-3xl font-bold tracking-tight md:text-4xl">{item.name}</h1>
-              <p className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">
-                By <span className="font-semibold text-foreground">Roblox</span>
-                <VerifiedBadge className="size-4" />
-              </p>
+              <p className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">By <span className="font-semibold text-foreground">Roblox</span><VerifiedBadge className="size-4" /></p>
               <div className="mt-3 h-px w-full bg-border" />
             </div>
 
@@ -101,8 +89,7 @@ export default function BundlePage() {
               <span className="text-xs font-medium text-muted-foreground">Quantité</span>
             </button>)}
           </div>
-          <p className="mt-4 text-xs leading-5 text-muted-foreground">Démo seulement : aucun paiement réel n'est effectué.</p>
-          <button type="button" onClick={() => { setBalance((current) => current + selectedRobux); setRobuxShopOpen(false) }} className="mt-4 h-11 w-full rounded-lg bg-[#00b06f] font-bold text-white transition hover:bg-[#009e63]">Ajouter {selectedRobux} Robux (démo)</button>
+          <button type="button" onClick={() => { setBalance((current) => current + selectedRobux); setRobuxShopOpen(false) }} className="mt-5 h-11 w-full rounded-lg bg-[#00b06f] font-bold text-white transition hover:bg-[#009e63]">Ajouter {selectedRobux} Robux</button>
         </section>
       </div>}
 
