@@ -84,6 +84,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               {!isHeadless ? <>
                 <a href="https://www.roblox.com/bundles/192/Korblox-Deathspeaker" target="_blank" rel="noopener noreferrer" className="flex h-11 w-full items-center justify-center rounded-md bg-[#335fff] px-5 text-base font-bold text-white transition hover:bg-[#244be0]">Buy</a>
                 <a href="https://www.roblox.com/bundles/192/Korblox-Deathspeaker" target="_blank" rel="noopener noreferrer" className="flex h-11 w-full items-center justify-center rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70">Add to cart</a>
+                <button type="button" onClick={() => setGiftOpen(true)} className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><Gift className="size-4" /> Gift</button>
               </> : <>
                 <button type="button" onClick={() => {}} className="flex h-11 w-full items-center justify-center rounded-md bg-[#00b06f] px-5 text-base font-bold text-white transition hover:bg-[#009e63]">Owned</button>
                 <button type="button" onClick={() => setGiftOpen(true)} className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><Gift className="size-4" /> Gift</button>
