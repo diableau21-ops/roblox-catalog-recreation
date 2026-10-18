@@ -42,6 +42,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   const [customRobux, setCustomRobux] = useState('800')
   const [show2D, setShow2D] = useState(true)
   const [tryOn, setTryOn] = useState(false)
+  const [priceRange, setPriceRange] = useState('1M')
   const notify = (_msg: string) => {}
   const isHeadless = id === '201' || slug.toLowerCase().includes('headless')
   const isEightBit = id === '14' || slug.toLowerCase().includes('8-bit')
@@ -145,6 +146,27 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             </dl>}
           </div>
           </div>
+          {isEightBit && <div className="mt-8 w-full max-w-[900px] rounded-xl border border-[#3b3b3b] bg-[#232323] p-5 text-white">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <h2 className="text-xl font-bold">Price Chart</h2>
+              <div className="flex flex-wrap gap-1.5">
+                {['1D', '1W', '1M', '3M', '1Y', 'All'].map((range) => <button key={range} type="button" onClick={() => setPriceRange(range)} className={`rounded-md px-3 py-1.5 text-xs font-semibold transition ${priceRange === range ? 'bg-white text-[#222]' : 'bg-[#333] text-gray-300 hover:bg-[#444]'}`}>{range}</button>)}
+              </div>
+            </div>
+            <div className="mt-5 flex items-end justify-between gap-4">
+              <div><p className="text-xs text-gray-400">Current price</p><p className="mt-1 text-2xl font-bold">27,849 <span className="text-sm font-medium text-gray-400">Robux</span></p></div>
+              <p className="text-xs text-gray-400">Illustrative chart preview</p>
+            </div>
+            <div className="mt-4 w-full overflow-hidden">
+              <svg viewBox="0 0 760 220" role="img" aria-label={`Illustrative 8-Bit Royal Crown price chart, range ${priceRange}`} className="h-auto w-full">
+                {[35, 75, 115, 155, 195].map((y) => <line key={y} x1="0" y1={y} x2="760" y2={y} stroke="#444" strokeWidth="1" />)}
+                <defs><linearGradient id="eightBitChartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#00b06f" stopOpacity=".3" /><stop offset="100%" stopColor="#00b06f" stopOpacity="0" /></linearGradient></defs>
+                <path d={priceRange === '1D' ? 'M0 145 L70 135 L140 150 L210 112 L280 120 L350 95 L420 110 L490 78 L560 92 L630 62 L700 70 L760 48 L760 210 L0 210 Z' : priceRange === '1W' ? 'M0 165 L70 140 L140 152 L210 100 L280 125 L350 90 L420 108 L490 65 L560 80 L630 55 L700 68 L760 35 L760 210 L0 210 Z' : priceRange === '3M' ? 'M0 180 L70 155 L140 160 L210 130 L280 145 L350 95 L420 120 L490 85 L560 92 L630 48 L700 65 L760 28 L760 210 L0 210 Z' : priceRange === '1Y' || priceRange === 'All' ? 'M0 190 L70 175 L140 180 L210 150 L280 158 L350 125 L420 140 L490 95 L560 110 L630 72 L700 60 L760 25 L760 210 L0 210 Z' : 'M0 175 L70 155 L140 165 L210 125 L280 140 L350 100 L420 118 L490 82 L560 100 L630 55 L700 68 L760 32 L760 210 L0 210 Z'} fill="url(#eightBitChartFill)" />
+                <path d={priceRange === '1D' ? 'M0 145 L70 135 L140 150 L210 112 L280 120 L350 95 L420 110 L490 78 L560 92 L630 62 L700 70 L760 48' : priceRange === '1W' ? 'M0 165 L70 140 L140 152 L210 100 L280 125 L350 90 L420 108 L490 65 L560 80 L630 55 L700 68 L760 35' : priceRange === '3M' ? 'M0 180 L70 155 L140 160 L210 130 L280 145 L350 95 L420 120 L490 85 L560 92 L630 48 L700 65 L760 28' : priceRange === '1Y' || priceRange === 'All' ? 'M0 190 L70 175 L140 180 L210 150 L280 158 L350 125 L420 140 L490 95 L560 110 L630 72 L700 60 L760 25' : 'M0 175 L70 155 L140 165 L210 125 L280 140 L350 100 L420 118 L490 82 L560 100 L630 55 L700 68 L760 32'} fill="none" stroke="#00b06f" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+            <p className="mt-2 text-xs text-gray-500">Demo visual only — historical Roblox price data is not connected.</p>
+          </div>}
         </section>
       </div>
 
