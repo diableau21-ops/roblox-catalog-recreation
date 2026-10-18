@@ -12,6 +12,7 @@ const robuxOptions = [400, 800, 1700, 4500, 10000, 22500]
 
 export default function BundlePageClient({ id, slug }: { id: string; slug: string }) {
   const [query, setQuery] = useState('')
+  const [robloxThumbnail, setRobloxThumbnail] = useState<string | null>(null)
   useEffect(() => {
     setQuery(new URLSearchParams(window.location.search).get('q') ?? '')
   }, [])
@@ -20,13 +21,28 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   const [robuxShopOpen, setRobuxShopOpen] = useState(false)
   const [selectedRobux, setSelectedRobux] = useState(800)
   const [customRobux, setCustomRobux] = useState('800')
-  const [show2D, setShow2D] = useState(false)
+  const [show2D, setShow2D] = useState(true)
   const [tryOn, setTryOn] = useState(false)
   const notify = (_msg: string) => {}
   const isHeadless = id === '201' || slug.toLowerCase().includes('headless')
   const item = catalogItems.find((entry) => entry.id === (isHeadless ? 13 : 10))
 
+  useEffect(() => {
+    if (isHeadless) return
+    const controller = new AbortController()
+    fetch('https://thumbnails.roblox.com/v1/bundles/thumbnails?bundleIds=192&size=420x420&format=Png&isCircular=false', { signal: controller.signal })
+      .then((response) => response.ok ? response.json() : Promise.reject(new Error('Thumbnail unavailable')))
+      .then((result: { data?: { imageUrl?: string }[] }) => {
+        const imageUrl = result.data?.[0]?.imageUrl
+        if (imageUrl) setRobloxThumbnail(imageUrl)
+      })
+      .catch(() => {})
+    return () => controller.abort()
+  }, [isHeadless])
+
   if (!item) return <main className="min-h-screen bg-background p-8 text-foreground">Bundle not found.</main>
+
+  const itemImage = robloxThumbnail ?? (item.image?.startsWith('http') ? item.image : `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${item.image || '/placeholder.svg'}`)
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -37,12 +53,16 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
         <section className="grid gap-8 md:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
           <div className={`relative aspect-square overflow-hidden rounded-xl border border-[#3b3b3b] ${!isHeadless ? 'bg-[#232323]' : 'bg-thumb'}`}>
             <div className={`absolute inset-0 ${show2D || isHeadless ? 'block' : 'hidden'}`}>
-              <Image src={item.image?.startsWith('http') ? item.image : `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${item.image || '/placeholder.svg'}`} alt={item.name} fill priority sizes="(min-width: 768px) 55vw, 100vw" className="object-contain p-6" />
+              {robloxThumbnail ? (
+                <img src={robloxThumbnail} alt={item.name} className="absolute inset-0 h-full w-full object-contain p-6" />
+              ) : (
+                <Image src={itemImage} alt={item.name} fill priority sizes="(min-width: 768px) 55vw, 100vw" className="object-contain p-6" />
+              )}
             </div>
             {!isHeadless && <div className={`absolute inset-0 ${show2D ? 'invisible' : 'visible'}`}><Korblox3D /></div>}
             {!isHeadless && <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2">
               <button type="button" onClick={() => setTryOn((value) => !value)} aria-pressed={tryOn} className={`rounded-lg px-4 py-2 text-sm font-bold shadow-lg transition ${tryOn ? 'bg-[#00b06f] text-white' : 'bg-white text-[#222] hover:bg-gray-200'}`}>{tryOn ? 'Wearing' : 'Try On'}</button>
-              <button type="button" onClick={() => setShow2D((value) => !value)} aria-pressed={show2D} className="rounded-lg border border-white/20 bg-[#333] px-4 py-2 text-sm font-bold text-white shadow-lg transition hover:bg-[#444]">{show2D ? '3D' : '2D'}</button>
+              <button type="button" onClick={() => setShow2D((value) => !value)} aria-pressed={!show2D} className="rounded-lg border border-white/20 bg-[#333] px-4 py-2 text-sm font-bold text-white shadow-lg transition hover:bg-[#444]">{show2D ? '3D' : 'Image'}</button>
             </div>}
           </div>
 
