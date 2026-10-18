@@ -2,11 +2,21 @@ import { NextResponse } from 'next/server'
 
 export const dynamic = 'force-dynamic'
 
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+}
+
+export async function OPTIONS() {
+  return new Response(null, { status: 204, headers: corsHeaders })
+}
+
 export async function GET(request: Request) {
   const keyword = new URL(request.url).searchParams.get('keyword')?.trim()
 
   if (!keyword || keyword.length < 3) {
-    return NextResponse.json({ data: [] })
+    return NextResponse.json({ data: [] }, { headers: corsHeaders })
   }
 
   try {
@@ -20,7 +30,7 @@ export async function GET(request: Request) {
     )
 
     if (!upstream.ok) {
-      return NextResponse.json({ error: 'Roblox player search is temporarily unavailable.' }, { status: 502 })
+      return NextResponse.json({ error: 'Roblox player search is temporarily unavailable.' }, { status: 502, headers: corsHeaders })
     }
 
     const result = await upstream.json()
@@ -55,7 +65,7 @@ export async function GET(request: Request) {
         ...player,
         avatarUrl: avatarById.get(player.id) ?? null,
       })),
-    })
+    }, { headers: corsHeaders })
   } catch {
     return NextResponse.json({ error: 'Roblox player search is temporarily unavailable.' }, { status: 502 })
   }
