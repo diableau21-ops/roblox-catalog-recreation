@@ -53,7 +53,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     try {
       // GitHub Pages is static, so query Roblox's public APIs directly from the browser.
       const response = await fetch(
-        `https://users.roblox.com/v1/users/search?keyword=${encodeURIComponent(keyword)}&limit=10`,
+        `https://roblox-catalog-recreation.vercel.app/api/roblox-users?keyword=${encodeURIComponent(keyword)}`,
         { headers: { Accept: 'application/json' } },
       )
       if (!response.ok) throw new Error('Player search unavailable')
