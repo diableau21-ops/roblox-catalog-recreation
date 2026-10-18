@@ -275,9 +275,9 @@ export function CatalogApp() {
                     favorited={favorites.has(item.id)}
                     onOpen={() => {
                       if (item.id === 13) {
-                        window.location.href = '/bundles/201/Headless-Horseman' + (query ? '?q=' + encodeURIComponent(query) : '')
+                        window.location.href = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/bundles/201/Headless-Horseman/` + (query ? '?q=' + encodeURIComponent(query) : '')
                       } else if (item.id === 10) {
-                        window.location.href = '/bundles/192/Korblox-Deathspeaker' + (query ? '?q=' + encodeURIComponent(query) : '')
+                        window.location.href = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/bundles/192/Korblox-Deathspeaker/` + (query ? '?q=' + encodeURIComponent(query) : '')
                       } else {
                         setOpenId(item.id)
                       }
