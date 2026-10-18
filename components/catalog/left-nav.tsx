@@ -54,10 +54,12 @@ export function LeftNav({ onNotify, onBuyRobux }: Props) {
           {links.map(({ label, icon: Icon, badge }) => (
             <li key={label}>
               <a
-                href="#"
+                href={label === 'Home' ? (process.env.NEXT_PUBLIC_BASE_PATH ?? '') + '/' : '#'}
                 onClick={(e) => {
-                  e.preventDefault()
-                  onNotify(`${label} is coming soon`)
+                  if (label !== 'Home') {
+                    e.preventDefault()
+                    onNotify(`${label} is coming soon`)
+                  }
                 }}
                 className="flex items-center gap-3 rounded-xl px-2.5 py-2.5 text-[15px] font-medium text-foreground/90 transition-colors hover:bg-secondary hover:text-foreground"
               >
