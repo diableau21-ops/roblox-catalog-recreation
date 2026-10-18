@@ -50,6 +50,17 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
           ))}
         </nav>
 
+        <label className="relative mx-auto flex max-w-[560px] flex-1 items-center">
+          <span className="sr-only">Search the Marketplace</span>
+          <Search className="pointer-events-none absolute left-3 size-5 text-muted-foreground" />
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => onQueryChange(e.target.value)}
+            placeholder="Search"
+            className="h-10 w-full rounded-lg border border-border bg-input pl-10 pr-3 text-base text-foreground placeholder:text-muted-foreground focus:border-foreground/60 focus:outline-none"
+          />
+        </label>
 
         <div className="flex items-center gap-0.5">
           <button
@@ -73,17 +84,6 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
               2
             </span>
           </button>
-          <label className="relative flex w-[150px] shrink-0 items-center">
-            <span className="sr-only">Search the Marketplace</span>
-            <Search className="pointer-events-none absolute left-2 size-4 text-muted-foreground" />
-            <input
-              type="search"
-              value={query}
-              onChange={(e) => onQueryChange(e.target.value)}
-              placeholder="Search"
-              className="h-9 w-full rounded-lg border border-border bg-input pl-7 pr-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-foreground/60 focus:outline-none"
-            />
-          </label>
           <button
             type="button"
             onClick={onBuyRobux}
