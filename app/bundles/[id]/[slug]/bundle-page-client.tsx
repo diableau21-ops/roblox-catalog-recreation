@@ -51,7 +51,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     setGiftPlayers([])
     setGiftSelectedPlayer(null)
     try {
-      const response = await fetch(`/api/roblox-users?keyword=${encodeURIComponent(keyword)}`)
+      const response = await fetch(`https://roblox-catalog-recreation.vercel.app/api/roblox-users?keyword=${encodeURIComponent(keyword)}`)
       if (!response.ok) throw new Error('Player search unavailable')
       const result = await response.json()
       const players = Array.isArray(result.data) ? result.data.filter((player: {id?: number; name?: string; displayName?: string; avatarUrl?: string | null}) => Number.isFinite(player.id) && typeof player.name === 'string').map((player: {id: number; name: string; displayName?: string; avatarUrl?: string | null}) => ({id: player.id, name: player.name, displayName: player.displayName || player.name, avatarUrl: player.avatarUrl || null})) : []
