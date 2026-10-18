@@ -2,18 +2,24 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
+import { useParams, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
-import { ArrowLeft, Gift } from 'lucide-react'
+import { Gift } from 'lucide-react'
 import { catalogItems } from '@/lib/catalog-data'
 import { VerifiedBadge } from '@/components/catalog/verified-badge'
-import { Price, RobloxMark, RobuxIcon } from '@/components/catalog/robux-icon'
+import { Price } from '@/components/catalog/robux-icon'
 import { Korblox3D } from '@/components/catalog/korblox-3d'
+import { SiteHeader } from '@/components/catalog/site-header'
+import { LeftNav } from '@/components/catalog/left-nav'
 
 export default function BundlePage() {
   const params = useParams<{ id: string; slug: string }>()
+  const searchParams = useSearchParams()
+  const [query, setQuery] = useState(searchParams.get('q') ?? '')
+  const [balance, setBalance] = useState(1250)
   const [giftOpen, setGiftOpen] = useState(false)
   const [message, setMessage] = useState('')
+  const notify = (msg: string) => setMessage(msg)
   const [show2D, setShow2D] = useState(false)
   const [tryOn, setTryOn] = useState(false)
   const isHeadless = params.id === '201' || params.slug?.toLowerCase().includes('headless')
@@ -23,18 +29,22 @@ export default function BundlePage() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <header className="flex h-16 items-center gap-4 border-b border-border px-4 md:px-8">
-        <Link href="/" className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold hover:bg-secondary">
-          <ArrowLeft className="size-4" /> Marketplace
-        </Link>
-        <RobloxMark className="size-7" />
-        <span className="text-sm text-muted-foreground">/ Bundles</span>
-        {!isHeadless && <span className="ml-auto inline-flex items-center gap-1.5 text-base font-bold"><RobuxIcon className="size-5" />{item.price?.toLocaleString('en-US')}</span>}
-      </header>
+      <SiteHeader
+        balance={balance}
+        query={query}
+        onQueryChange={setQuery}
+        onBuyRobux={() => notify('Robux purchase is a demo on this site.')}
+        onNotify={notify}
+      />
+      <LeftNav
+        onNotify={notify}
+        onBuyRobux={() => notify('Robux purchase is a demo on this site.')}
+      />
+      {!isHeadless && <div className="ml-[220px] border-b border-border px-6 py-2 text-sm font-bold"><span className="inline-flex items-center gap-1.5"><Price price={item.price} /></span></div>}
 
-      <div className="mx-auto max-w-6xl px-4 py-8 md:px-8">
+      <div className="ml-[220px] max-w-[calc(100%-220px)] px-4 py-8 md:px-8">
         <nav className="mb-6 text-sm text-muted-foreground">
-          <Link href="/" className="hover:text-foreground">Marketplace</Link>
+          <Link href={`/?q=${encodeURIComponent(query)}`} className="hover:text-foreground">Marketplace</Link>
           <span className="mx-2">/</span><span>Bundles</span>
           <span className="mx-2">/</span><span className="text-foreground">{item.name}</span>
         </nav>
