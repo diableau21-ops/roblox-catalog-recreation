@@ -61,38 +61,13 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             .filter((player: { id?: number; name?: string; displayName?: string }) =>
               Number.isFinite(player.id) && typeof player.name === 'string',
             )
-            .map((player: { id: number; name: string; displayName?: string }) => ({
+            .map((player: { id: number; name: string; displayName?: string; avatarUrl?: string | null }) => ({
               id: player.id,
               name: player.name,
               displayName: player.displayName || player.name,
-              avatarUrl: null as string | null,
+              avatarUrl: typeof player.avatarUrl === 'string' ? player.avatarUrl : null,
             }))
         : []
-
-      if (players.length) {
-        try {
-          const ids = players.map((player: { id: number }) => player.id).join(',')
-          const avatarResponse = await fetch(
-            `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${ids}&size=150x150&format=Png&isCircular=false`,
-            { headers: { Accept: 'application/json' } },
-          )
-          if (avatarResponse.ok) {
-            const avatarResult = await avatarResponse.json()
-            const avatarById = new Map<number, string>(
-              (Array.isArray(avatarResult.data) ? avatarResult.data : [])
-                .filter((thumbnail: { targetId?: number; imageUrl?: string }) =>
-                  Number.isFinite(thumbnail.targetId) && typeof thumbnail.imageUrl === 'string',
-                )
-                .map((thumbnail: { targetId: number; imageUrl: string }) => [thumbnail.targetId, thumbnail.imageUrl]),
-            )
-            players.forEach((player: { id: number; avatarUrl: string | null }) => {
-              player.avatarUrl = avatarById.get(player.id) ?? null
-            })
-          }
-        } catch {
-          // Keep the player results even if Roblox thumbnails are temporarily unavailable.
-        }
-      }
 
       setGiftPlayers(players)
       setGiftSearchMessage(players.length ? '' : `No Roblox players found for “${keyword}”.`)
