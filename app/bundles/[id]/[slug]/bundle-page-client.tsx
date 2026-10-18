@@ -42,7 +42,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   const [giftSearching, setGiftSearching] = useState(false)
   const [giftSearchMessage, setGiftSearchMessage] = useState('')
   const [giftSelectedPlayer, setGiftSelectedPlayer] = useState<{id: number; name: string; displayName: string; avatarUrl: string | null} | null>(null)
-  const [giftDemoMessage, setGiftDemoMessage] = useState('')
+  const [giftMessage, setGiftMessage] = useState('')
   const searchGiftPlayers = async () => {
     const keyword = giftUsername.trim()
     if (keyword.length < 3) return
@@ -201,10 +201,10 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               )}
               {isHeadless ? <>
                 <button type="button" onClick={() => {}} className="flex h-11 w-full items-center justify-center rounded-md bg-[#00b06f] px-5 text-base font-bold text-white transition hover:bg-[#009e63]">Owned</button>
-                <button type="button" onClick={() => { setGiftDemoMessage(''); setGiftSelectedPlayer(null); setGiftOpen(true) }} className="flex h-10 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70">Gift</button>
+                <button type="button" onClick={() => { setGiftMessage(''); setGiftSelectedPlayer(null); setGiftOpen(true) }} className="flex h-10 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70">Gift</button>
               </> : isEightBit ? <>
                 <a href={itemUrl} target="_blank" rel="noopener noreferrer" className="flex h-11 w-full items-center justify-center rounded-md bg-[#335fff] px-5 text-base font-bold text-white transition hover:bg-[#244be0]">Buy</a>
-                <button type="button" onClick={() => { setGiftDemoMessage(''); setGiftSelectedPlayer(null); setGiftOpen(true) }} className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"> Gift</button>
+                <button type="button" onClick={() => { setGiftMessage(''); setGiftSelectedPlayer(null); setGiftOpen(true) }} className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"> Gift</button>
               </> : <>
                 <button type="button" aria-label="Owned" title="Owned" className="flex h-10 w-full cursor-default items-center justify-center rounded-md bg-[#335fff] text-white transition hover:bg-[#244be0]">
                   <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -213,7 +213,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                     <ellipse cx="12" cy="22" rx="8.5" ry="1.5" />
                   </svg>
                 </button>
-                <button type="button" onClick={() => { setGiftDemoMessage(''); setGiftSelectedPlayer(null); setGiftOpen(true) }} className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"> Gift</button>
+                <button type="button" onClick={() => { setGiftMessage(''); setGiftSelectedPlayer(null); setGiftOpen(true) }} className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"> Gift</button>
               </>}
             </div>
 
@@ -276,7 +276,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           </div>
           <p className="mt-2 text-sm text-muted-foreground">Search for the Roblox player you want to gift.</p>
           <form className="mt-4 flex gap-2" onSubmit={(event) => { event.preventDefault(); void searchGiftPlayers() }}>
-            <input value={giftUsername} onChange={(event) => { setGiftUsername(event.target.value); setGiftSearchMessage(''); setGiftPlayers([]); setGiftSelectedPlayer(null); setGiftDemoMessage('') }} placeholder="Search players (type at least 3 characters)" aria-label="Roblox player username" className="h-11 min-w-0 flex-1 rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-[#335fff]" />
+            <input value={giftUsername} onChange={(event) => { setGiftUsername(event.target.value); setGiftSearchMessage(''); setGiftPlayers([]); setGiftSelectedPlayer(null); setGiftMessage('') }} placeholder="Search players (type at least 3 characters)" aria-label="Roblox player username" className="h-11 min-w-0 flex-1 rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-[#335fff]" />
             <button type="submit" disabled={!giftUsername.trim() || giftSearching} className="h-11 rounded-lg bg-[#335fff] px-4 text-sm font-semibold text-white disabled:opacity-50">{giftSearching ? 'Searching…' : 'Search'}</button>
           </form>
           {giftPlayers.length > 0 && <div className="mt-4 max-h-64 space-y-2 overflow-y-auto">
@@ -299,9 +299,9 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <span className="text-muted-foreground">Price</span>
               <span className="font-bold">{isKorblox ? <Price price={17000} /> : <Price price={item.price} />}</span>
             </div>
-            <button type="button" onClick={() => setGiftDemoMessage('No Robux or item was sent. Real gifts must be completed through official Roblox features.')} className="h-11 w-full rounded-lg bg-[#335fff] px-4 text-sm font-bold text-white transition hover:bg-[#244be0]">Confirm Gift</button>
+            <button type="button" onClick={() => setGiftMessage('This site cannot send Roblox items. Open the official Roblox item page to check available options.')} className="h-11 w-full rounded-lg bg-[#335fff] px-4 text-sm font-bold text-white transition hover:bg-[#244be0]" >Continue</button>
           </div>}
-          {giftDemoMessage && <p role="status" className="mt-3 rounded-lg border border-[#335fff]/40 bg-[#335fff]/10 p-3 text-sm text-foreground">{giftDemoMessage}</p>}
+          {giftMessage && <div role="status" className="mt-3 space-y-3 rounded-lg border border-[#335fff]/40 bg-[#335fff]/10 p-3 text-sm text-foreground"><p>{giftMessage}</p><a href={itemUrl} target="_blank" rel="noopener noreferrer" className="inline-flex h-10 items-center justify-center rounded-lg bg-[#335fff] px-4 font-semibold text-white hover:bg-[#244be0]">Open Roblox</a></div>}
         </section>
       </div>}
     </main>
