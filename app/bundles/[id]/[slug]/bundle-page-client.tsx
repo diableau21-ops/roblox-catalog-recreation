@@ -87,6 +87,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               )}
             </div>
             {isKorblox && <div className={`absolute inset-0 ${show2D ? 'invisible' : 'visible'}`}><Korblox3D /></div>}
+            {isKorblox && <div className="absolute bottom-4 left-4 z-20 flex items-center gap-1.5 rounded-md bg-black/60 px-2 py-1 text-sm text-white"><span className="text-yellow-400">★</span><span>3.4M</span></div>}
             {isKorblox && <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2">
               <button type="button" onClick={() => setTryOn((value) => !value)} aria-pressed={tryOn} className={`rounded-lg px-4 py-2 text-sm font-bold shadow-lg transition ${tryOn ? 'bg-[#00b06f] text-white' : 'bg-white text-[#222] hover:bg-gray-200'}`}>{tryOn ? 'Wearing' : 'Try On'}</button>
               <button type="button" onClick={() => setShow2D((value) => !value)} aria-pressed={!show2D} className="rounded-lg border border-white/20 bg-[#333] px-4 py-2 text-sm font-bold text-white shadow-lg transition hover:bg-[#444]">{show2D ? '3D' : '2D'}</button>
@@ -98,7 +99,6 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">{isEightBit ? 'Accessory' : isKorblox ? '' : 'Bundle'}</p>
               <div className="flex items-center gap-3"><h1 className="text-3xl font-bold tracking-tight md:text-4xl">{item.name}</h1>{isKorblox && <ShoppingCart aria-label="Shopping cart" className="size-6 shrink-0 text-white" />}</div>
               <p className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">By <span className="font-semibold text-foreground">Roblox</span><VerifiedBadge className="size-4" /></p>
-              {isKorblox && <p className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground"><span className="text-yellow-400">★</span><span>3.4M</span></p>}
               <div className="mt-3 h-px w-full bg-border" />
             </div>
 
@@ -136,7 +136,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
 
             {isKorblox && <dl className="mt-2 grid grid-cols-[112px_minmax(0,1fr)] items-start gap-x-5 gap-y-4 border-t border-border pt-5 text-sm sm:grid-cols-[128px_minmax(0,1fr)]">
               <dt className="font-medium text-muted-foreground">Tradable</dt><dd className="min-w-0 text-white">No</dd>
-              <dt className="flex items-center gap-1.5 font-medium text-muted-foreground">Type <span title="The category this item belongs to" className="inline-flex size-4 items-center justify-center rounded-full border border-current text-[10px] font-bold leading-none"><Info className="size-2.5" /></span></dt><dd className="min-w-0 text-white">Characters</dd>
+              <dt className="flex items-center gap-1.5 font-medium text-muted-foreground">Type <span title="The category this item belongs to" className="inline-flex size-4 items-center justify-center rounded-full border border-current text-[10px] font-semibold leading-none">i</span></dt><dd className="min-w-0 text-white">Characters</dd>
               <dt className="font-medium text-muted-foreground">Placement</dt><dd className="min-w-0 text-white">Full Body</dd>
               <dt className="font-medium text-muted-foreground">Created</dt><dd className="min-w-0 text-white">Dec 26, 2013</dd>
               <dt className="font-medium text-muted-foreground">Description</dt><dd className="min-w-0 break-words leading-6 text-white">His tribe is widely considered the best and strongest of the twelve Korblox tribes. No one dares challenge his authority.</dd>
