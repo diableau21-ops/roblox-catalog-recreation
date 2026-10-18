@@ -2,8 +2,8 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useParams, useSearchParams } from 'next/navigation'
-import { useState } from 'react'
+import { useParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { Gift } from 'lucide-react'
 import { catalogItems } from '@/lib/catalog-data'
 import { VerifiedBadge } from '@/components/catalog/verified-badge'
@@ -14,8 +14,10 @@ import { LeftNav } from '@/components/catalog/left-nav'
 
 export default function BundlePage() {
   const params = useParams<{ id: string; slug: string }>()
-  const searchParams = useSearchParams()
-  const [query, setQuery] = useState(searchParams.get('q') ?? '')
+  const [query, setQuery] = useState('')
+  useEffect(() => {
+    setQuery(new URLSearchParams(window.location.search).get('q') ?? '')
+  }, [])
   const [balance, setBalance] = useState(1250)
   const [giftOpen, setGiftOpen] = useState(false)
   const [message, setMessage] = useState('')
