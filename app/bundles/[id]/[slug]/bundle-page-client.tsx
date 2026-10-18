@@ -103,7 +103,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
 
             {(isHeadless || isEightBit) && <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>}
 
-            <div className="mt-2 flex w-full flex-col gap-3">
+            <div className={`mt-2 flex flex-col gap-3 ${isKorblox ? 'w-full' : 'w-full'}`}>
               {isKorblox ? (
                 <div className="flex w-full items-center justify-between border-b border-white/10 pb-3 text-sm">
                   <span className="font-medium text-muted-foreground">Price</span>
