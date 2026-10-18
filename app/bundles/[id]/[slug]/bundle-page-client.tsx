@@ -77,8 +77,8 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
 
       <div className="ml-[220px] max-w-[calc(100%-220px)] px-4 py-8 md:px-8">
         <section className="flex justify-center">
-          <div className={`flex w-full max-w-[900px] flex-col gap-0 overflow-hidden rounded-xl border border-[#3b3b3b] md:flex-row ${isKorblox ? 'bg-[#232323]' : 'bg-thumb'}`}>
-            <div className="relative aspect-square w-full shrink-0 md:w-[420px]">
+          <div className={`flex w-full max-w-[800px] flex-col gap-0 overflow-hidden rounded-xl border border-[#3b3b3b] md:flex-row ${isKorblox ? 'bg-[#232323]' : 'bg-thumb'}`}>
+            <div className="relative aspect-square w-full shrink-0 md:w-[320px]">
             <div className={`absolute inset-0 ${show2D || isHeadless ? 'block' : 'hidden'}`}>
               {robloxThumbnail ? (
                 <img src={robloxThumbnail} alt={item.name} className="absolute inset-0 h-full w-full object-contain p-6" />
@@ -105,9 +105,8 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
 
             <div className="mt-2 flex w-full max-w-[400px] flex-col gap-3">
               {isKorblox ? (
-                <div className="flex w-full items-center gap-3">
-                  <button type="button" onClick={() => {}} className="flex h-11 flex-1 items-center justify-center rounded-md bg-[#00b06f] px-5 text-base font-bold text-white transition hover:bg-[#009e63]">Owned</button>
-                  <div className="flex shrink-0 items-center gap-2 text-base font-bold"><Price price={17000} /></div>
+                <div className="flex w-full items-center justify-end text-base font-bold">
+                  <Price price={17000} />
                 </div>
               ) : (
                 <div className="flex w-full items-center justify-between text-sm">
