@@ -47,81 +47,35 @@ export default function BundlePage() {
         <section className="grid gap-8 md:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
           <div className={`relative aspect-square overflow-hidden rounded-xl border border-[#3b3b3b] ${!isHeadless ? 'bg-[#232323]' : 'bg-thumb'}`}>
             <div className={`absolute inset-0 ${show2D || isHeadless ? 'block' : 'hidden'}`}>
-              <Image
-                src={item.image || '/placeholder.svg'}
-                alt={item.name}
-                fill
-                priority
-                sizes="(min-width: 768px) 55vw, 100vw"
-                className="object-contain p-6"
-              />
+              <Image src={item.image || '/placeholder.svg'} alt={item.name} fill priority sizes="(min-width: 768px) 55vw, 100vw" className="object-contain p-6" />
             </div>
-            {!isHeadless && (
-              <div className={`absolute inset-0 ${show2D ? 'invisible' : 'visible'}`}>
-                <Korblox3D />
-              </div>
-            )}
-
-            {!isHeadless && (
-              <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setTryOn((value) => !value)
-                    setMessage(tryOn ? 'Try On désactivé.' : 'Try On : aperçu activé sur cette démo.')
-                  }}
-                  aria-pressed={tryOn}
-                  className={`rounded-lg px-4 py-2 text-sm font-bold shadow-lg transition ${tryOn ? 'bg-[#00b06f] text-white' : 'bg-white text-[#222] hover:bg-gray-200'}`}
-                >
-                  {tryOn ? 'Wearing' : 'Try On'}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShow2D((value) => !value)}
-                  aria-pressed={show2D}
-                  className="rounded-lg border border-white/20 bg-[#333] px-4 py-2 text-sm font-bold text-white shadow-lg transition hover:bg-[#444]"
-                >
-                  {show2D ? '3D' : '2D'}
-                </button>
-              </div>
-            )}
+            {!isHeadless && <div className={`absolute inset-0 ${show2D ? 'invisible' : 'visible'}`}><Korblox3D /></div>}
+            {!isHeadless && <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2">
+              <button type="button" onClick={() => { setTryOn((value) => !value); setMessage(tryOn ? 'Try On désactivé.' : 'Try On : aperçu activé sur cette démo.') }} aria-pressed={tryOn} className={`rounded-lg px-4 py-2 text-sm font-bold shadow-lg transition ${tryOn ? 'bg-[#00b06f] text-white' : 'bg-white text-[#222] hover:bg-gray-200'}`}>{tryOn ? 'Wearing' : 'Try On'}</button>
+              <button type="button" onClick={() => setShow2D((value) => !value)} aria-pressed={show2D} className="rounded-lg border border-white/20 bg-[#333] px-4 py-2 text-sm font-bold text-white shadow-lg transition hover:bg-[#444]">{show2D ? '3D' : '2D'}</button>
+            </div>}
           </div>
 
           <div className="flex flex-col gap-5 py-1">
             <div>
               <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">Bundle</p>
               <h1 className="text-3xl font-bold tracking-tight md:text-4xl">{item.name}</h1>
-              <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1">
-                {!isHeadless && <span className="text-sm font-bold"><Price price={item.price} /></span>}
-                <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                  By <span className="font-semibold text-foreground">Roblox</span>
-                  <VerifiedBadge className="size-4" />
-                </p>
-              </div>
+              {!isHeadless && <div className="mt-3 text-sm font-bold"><Price price={item.price} /></div>}
+              <p className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">
+                By <span className="font-semibold text-foreground">Roblox</span>
+                <VerifiedBadge className="size-4" />
+              </p>
             </div>
 
             {isHeadless && <div className="border-y border-border py-5">
               <p className="mb-2 text-sm text-muted-foreground">Price</p>
               <div className="text-2xl font-bold"><Price price={item.price} /></div>
             </div>}
-
             {isHeadless && <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>}
 
             <div className="mt-2 flex flex-col gap-3">
-              <button
-                type="button"
-                onClick={() => setMessage('This is a preview of the Owned button on your demo site.')}
-                className="flex h-12 items-center justify-center rounded-lg bg-[#00b06f] px-5 font-bold text-white transition hover:bg-[#009e63]"
-              >
-                Owned
-              </button>
-              <button
-                type="button"
-                onClick={() => setGiftOpen(true)}
-                className="flex h-12 items-center justify-center gap-2 rounded-lg border border-border bg-secondary px-5 font-semibold transition hover:bg-secondary/70"
-              >
-                <Gift className="size-4" /> Gift
-              </button>
+              <button type="button" onClick={() => setMessage('This is a preview of the Owned button on your demo site.')} className="flex h-12 items-center justify-center rounded-lg bg-[#00b06f] px-5 font-bold text-white transition hover:bg-[#009e63]">Owned</button>
+              <button type="button" onClick={() => setGiftOpen(true)} className="flex h-12 items-center justify-center gap-2 rounded-lg border border-border bg-secondary px-5 font-semibold transition hover:bg-secondary/70"><Gift className="size-4" /> Gift</button>
             </div>
 
             {!isHeadless && <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-8 gap-y-4 border-t border-border pt-5 text-sm">
@@ -135,22 +89,14 @@ export default function BundlePage() {
         </section>
       </div>
 
-      {message && (
-        <div role="status" className="fixed bottom-5 left-1/2 z-50 -translate-x-1/2 rounded-lg bg-foreground px-4 py-3 text-sm font-semibold text-background shadow-lg">
-          {message}
-          <button type="button" onClick={() => setMessage('')} className="ml-3 underline">OK</button>
-        </div>
-      )}
-
-      {giftOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={() => setGiftOpen(false)}>
-          <section role="dialog" aria-modal="true" aria-labelledby="gift-title" className="w-full max-w-md rounded-xl border border-border bg-card p-6" onClick={(event) => event.stopPropagation()}>
-            <h2 id="gift-title" className="text-xl font-bold">Gift {item.name}</h2>
-            <p className="mt-2 text-sm leading-6 text-muted-foreground">The Gift button is a visual demo. Sending real gifts is not connected on this fan-made site.</p>
-            <button type="button" onClick={() => setGiftOpen(false)} className="mt-5 h-10 w-full rounded-lg bg-secondary font-semibold hover:bg-secondary/80">Close</button>
-          </section>
-        </div>
-      )}
+      {message && <div role="status" className="fixed bottom-5 left-1/2 z-50 -translate-x-1/2 rounded-lg bg-foreground px-4 py-3 text-sm font-semibold text-background shadow-lg">{message}<button type="button" onClick={() => setMessage('')} className="ml-3 underline">OK</button></div>}
+      {giftOpen && <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={() => setGiftOpen(false)}>
+        <section role="dialog" aria-modal="true" aria-labelledby="gift-title" className="w-full max-w-md rounded-xl border border-border bg-card p-6" onClick={(event) => event.stopPropagation()}>
+          <h2 id="gift-title" className="text-xl font-bold">Gift {item.name}</h2>
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">The Gift button is a visual demo. Sending real gifts is not connected on this fan-made site.</p>
+          <button type="button" onClick={() => setGiftOpen(false)} className="mt-5 h-10 w-full rounded-lg bg-secondary font-semibold hover:bg-secondary/80">Close</button>
+        </section>
+      </div>}
     </main>
   )
 }
