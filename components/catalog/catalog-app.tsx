@@ -199,16 +199,16 @@ export function CatalogApp() {
 
       <main
         className={cn(
-          'ml-[220px] flex w-[calc(100%-220px)] max-w-[1400px] gap-8 px-3 py-6 md:px-6',
+          'ml-[220px] flex min-h-[calc(100dvh-56px)] w-[calc(100%-220px)] gap-6 px-4 py-7 sm:px-5 lg:gap-8 lg:px-8 xl:px-10',
         )}
       >
         <section className="min-w-0 flex-1" aria-labelledby="catalog-heading">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
-              <h1 id="catalog-heading" className="text-2xl font-bold md:text-3xl">
+              <h1 id="catalog-heading" className="text-2xl font-bold tracking-tight md:text-3xl">
                 {t('Marketplace')}
               </h1>
-              <p className="mt-1 text-sm text-muted-foreground">
+              <p className="mt-1.5 text-sm text-muted-foreground">
                 {t(categoryLabel)}
                 {subcategory ? ` / ${subcategory}` : ''} {'·'} {items.length}{' '}
                 {t(items.length === 1 ? 'result' : 'results')}
@@ -220,7 +220,7 @@ export function CatalogApp() {
               <select
                 value={sort}
                 onChange={(e) => setSort(e.target.value as Sort)}
-                className="h-9 rounded-lg border border-border bg-input px-3 text-sm text-foreground focus:border-primary focus:outline-none"
+                className="h-9 max-w-full rounded-lg border border-border bg-input px-3 text-sm text-foreground transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/15"
               >
                 {Object.entries(sortLabels).map(([v, l]) => (
                   <option key={v} value={v}>
@@ -266,7 +266,7 @@ export function CatalogApp() {
               </button>
             </div>
           ) : (
-            <ul className="mt-5 grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6">
+            <ul className="mt-5 grid grid-cols-2 gap-x-3 gap-y-6 sm:grid-cols-3 sm:gap-x-4 md:grid-cols-4 lg:grid-cols-5 2xl:grid-cols-6">
               {items.map((item) => (
                 <li key={item.id}>
                   <ItemCard
@@ -292,7 +292,7 @@ export function CatalogApp() {
       </main>
 
       <footer className="mt-12 border-t border-border">
-        <div className="mx-auto flex max-w-[1400px] flex-wrap gap-x-6 gap-y-2 px-6 py-8 text-sm text-muted-foreground">
+        <div className="ml-[220px] flex flex-wrap gap-x-6 gap-y-2 px-6 py-8 text-sm text-muted-foreground lg:px-8">
           {['About Us', 'Jobs', 'Blog', 'Parents', 'Gift Cards', 'Help', 'Terms', 'Accessibility', 'Privacy'].map(
             (l) => (
               <a
