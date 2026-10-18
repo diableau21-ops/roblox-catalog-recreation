@@ -1,7 +1,6 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { Gift } from 'lucide-react'
@@ -21,7 +20,7 @@ export default function BundlePage() {
   const [balance, setBalance] = useState(1250)
   const [giftOpen, setGiftOpen] = useState(false)
   const [message, setMessage] = useState('')
-  const notify = (msg: string) => setMessage(msg)
+  const notify = (_msg: string) => {}
   const [show2D, setShow2D] = useState(false)
   const [tryOn, setTryOn] = useState(false)
   const isHeadless = params.id === '201' || params.slug?.toLowerCase().includes('headless')
@@ -35,12 +34,12 @@ export default function BundlePage() {
         balance={balance}
         query={query}
         onQueryChange={setQuery}
-        onBuyRobux={() => notify('Robux purchase is a demo on this site.')}
+        onBuyRobux={() => {}}
         onNotify={notify}
       />
       <LeftNav
         onNotify={notify}
-        onBuyRobux={() => notify('Robux purchase is a demo on this site.')}
+        onBuyRobux={() => {}}
       />
 
       <div className="ml-[220px] max-w-[calc(100%-220px)] px-4 py-8 md:px-8">
@@ -51,7 +50,7 @@ export default function BundlePage() {
             </div>
             {!isHeadless && <div className={`absolute inset-0 ${show2D ? 'invisible' : 'visible'}`}><Korblox3D /></div>}
             {!isHeadless && <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2">
-              <button type="button" onClick={() => { setTryOn((value) => !value); setMessage(tryOn ? 'Try On désactivé.' : 'Try On : aperçu activé sur cette démo.') }} aria-pressed={tryOn} className={`rounded-lg px-4 py-2 text-sm font-bold shadow-lg transition ${tryOn ? 'bg-[#00b06f] text-white' : 'bg-white text-[#222] hover:bg-gray-200'}`}>{tryOn ? 'Wearing' : 'Try On'}</button>
+              <button type="button" onClick={() => { setTryOn((value) => !value); setMessage('') }} aria-pressed={tryOn} className={`rounded-lg px-4 py-2 text-sm font-bold shadow-lg transition ${tryOn ? 'bg-[#00b06f] text-white' : 'bg-white text-[#222] hover:bg-gray-200'}`}>{tryOn ? 'Wearing' : 'Try On'}</button>
               <button type="button" onClick={() => setShow2D((value) => !value)} aria-pressed={show2D} className="rounded-lg border border-white/20 bg-[#333] px-4 py-2 text-sm font-bold text-white shadow-lg transition hover:bg-[#444]">{show2D ? '3D' : '2D'}</button>
             </div>}
           </div>
@@ -71,7 +70,7 @@ export default function BundlePage() {
 
             <div className="mt-2 flex w-full max-w-[400px] flex-col gap-3 self-end">
               <div className="text-left text-sm font-bold"><Price price={item.price} /></div>
-              <button type="button" onClick={() => setMessage('This is a preview of the Owned button on your demo site.')} className="flex h-11 items-center justify-center rounded-md bg-[#00b06f] px-5 text-base font-bold text-white transition hover:bg-[#009e63]">Owned</button>
+              <button type="button" onClick={() => {}} className="flex h-11 items-center justify-center rounded-md bg-[#00b06f] px-5 text-base font-bold text-white transition hover:bg-[#009e63]">Owned</button>
               <button type="button" onClick={() => setGiftOpen(true)} className="flex h-11 items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><Gift className="size-4" /> Gift</button>
             </div>
 
@@ -86,7 +85,6 @@ export default function BundlePage() {
         </section>
       </div>
 
-      {message && <div role="status" className="fixed bottom-5 left-1/2 z-50 -translate-x-1/2 rounded-lg bg-foreground px-4 py-3 text-sm font-semibold text-background shadow-lg">{message}<button type="button" onClick={() => setMessage('')} className="ml-3 underline">OK</button></div>}
       {giftOpen && <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={() => setGiftOpen(false)}>
         <section role="dialog" aria-modal="true" aria-labelledby="gift-title" className="w-full max-w-md rounded-xl border border-border bg-card p-6" onClick={(event) => event.stopPropagation()}>
           <h2 id="gift-title" className="text-xl font-bold">Gift {item.name}</h2>
