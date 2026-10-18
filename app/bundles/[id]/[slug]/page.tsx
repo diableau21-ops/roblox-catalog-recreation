@@ -1,5 +1,7 @@
 import BundlePageClient from './bundle-page-client'
 
+export const dynamicParams = false
+
 export function generateStaticParams() {
   return [
     { id: '192', slug: 'Korblox-Deathspeaker' },
