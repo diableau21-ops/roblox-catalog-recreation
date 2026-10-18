@@ -61,15 +61,15 @@ export default function BundlePage() {
             {isHeadless && <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>}
 
             <div className="mt-2 flex w-full max-w-[400px] flex-col gap-3 self-end">
-              <div className="flex w-full items-center gap-3">
-                <div className="flex min-w-0 flex-1 items-center justify-start"><Price price={item.price} /></div>
-                <button type="button" onClick={() => {}} className="flex h-11 min-w-[140px] flex-1 items-center justify-center rounded-md bg-[#00b06f] px-5 text-base font-bold text-white transition hover:bg-[#009e63]">Owned</button>
+              <div className="flex w-full items-center justify-between text-sm">
+                <span className="font-medium text-muted-foreground">Price</span>
+                <Price price={item.price} />
               </div>
+              <button type="button" onClick={() => {}} className="flex h-11 items-center justify-center rounded-md bg-[#00b06f] px-5 text-base font-bold text-white transition hover:bg-[#009e63]">Owned</button>
               <button type="button" onClick={() => setGiftOpen(true)} className="flex h-11 items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><Gift className="size-4" /> Gift</button>
             </div>
 
             {!isHeadless && <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-8 gap-y-4 border-t border-border pt-5 text-sm">
-              <dt className="font-semibold">Price</dt><dd><Price price={item.price} /></dd>
               <dt className="font-semibold">Tradable</dt><dd>No</dd>
               <dt className="font-semibold">Type</dt><dd>Characters</dd>
               <dt className="font-semibold">Placement</dt><dd>Full Body</dd>
