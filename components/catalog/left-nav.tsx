@@ -46,7 +46,7 @@ export function LeftNav({ onNotify, onBuyRobux }: Props) {
           className="mb-3 flex items-center gap-3 rounded-xl px-2 py-2.5 text-left transition-colors hover:bg-secondary"
         >
           <span className="relative size-9 overflow-hidden rounded-full bg-thumb">
-            <Image src="/avatar.png" alt="" fill sizes="36px" className="object-cover" />
+            <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/avatar.png`} alt="" fill sizes="36px" className="object-cover" />
           </span>
           <span className="text-base font-bold">Builderman</span>
         </button>
