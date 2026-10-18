@@ -212,3 +212,13 @@
   backface-visibility: visible;
   will-change: transform;
 }
+
+
+/* Keep the page from shifting when menus or dialogs open. */
+html {
+  scrollbar-gutter: stable;
+}
+
+body {
+  overflow-anchor: none;
+}
