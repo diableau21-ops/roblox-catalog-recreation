@@ -78,7 +78,8 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
       <div className="ml-[220px] max-w-[calc(100%-220px)] px-4 py-8 md:px-8">
         <section className="flex justify-center">
           <div className={`flex w-full max-w-[900px] flex-col overflow-hidden ${isKorblox ? 'gap-5 border-0 bg-transparent' : 'gap-0 rounded-xl border border-[#3b3b3b] bg-thumb'} md:flex-row`}>
-            <div className={`relative aspect-square w-full shrink-0 md:aspect-auto md:h-[400px] md:w-[400px] ${isKorblox ? 'overflow-hidden rounded-xl border border-[#3b3b3b] bg-[#232323]' : ''}`}>
+            <div className={isKorblox ? "flex w-full shrink-0 flex-col md:w-[400px]" : "contents"}>
+            <div className={`relative aspect-square w-full shrink-0 md:aspect-auto md:h-[400px] ${isKorblox ? 'overflow-hidden rounded-xl border border-[#3b3b3b] bg-[#232323]' : 'md:w-[400px]'}`}>
             <div className={`absolute inset-0 ${show2D || isHeadless ? 'block' : 'hidden'}`}>
               {robloxThumbnail ? (
                 <img src={robloxThumbnail} alt={item.name} className="absolute inset-0 h-full w-full object-contain p-2" />
@@ -87,12 +88,13 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               )}
             </div>
             {isKorblox && <div className={`absolute inset-0 ${show2D ? 'invisible' : 'visible'}`}><Korblox3D /></div>}
-            {isKorblox && <div className="absolute bottom-4 left-4 z-20 flex items-center gap-1.5 rounded-md bg-black/60 px-2 py-1 text-sm text-white"><span className="text-yellow-400">★</span><span>3.4M</span></div>}
             {isKorblox && <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2">
               <button type="button" onClick={() => setTryOn((value) => !value)} aria-pressed={tryOn} className={`rounded-lg px-4 py-2 text-sm font-bold shadow-lg transition ${tryOn ? 'bg-[#00b06f] text-white' : 'bg-white text-[#222] hover:bg-gray-200'}`}>{tryOn ? 'Wearing' : 'Try On'}</button>
               <button type="button" onClick={() => setShow2D((value) => !value)} aria-pressed={!show2D} className="rounded-lg border border-white/20 bg-[#333] px-4 py-2 text-sm font-bold text-white shadow-lg transition hover:bg-[#444]">{show2D ? '3D' : '2D'}</button>
             </div>}
           </div>
+            {isKorblox && <div className="mt-2 flex items-center gap-1.5 self-start rounded-md bg-black/60 px-2 py-1 text-sm text-white"><span className="text-yellow-400">★</span><span>3.4M</span></div>}
+            </div>
 
           <div className={`flex min-w-0 flex-1 flex-col gap-4 text-white ${isKorblox ? '' : 'border-t border-white/10 bg-[#181818] p-5 md:border-l md:border-t-0 md:p-6'}`}>
             <div>
