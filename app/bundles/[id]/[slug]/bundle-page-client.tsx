@@ -51,10 +51,8 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     setGiftPlayers([])
     setGiftSelectedPlayer(null)
     try {
-      // GitHub Pages is static, so query Roblox's public APIs directly from the browser.
       const response = await fetch(
-        `https://roblox-catalog-recreation.vercel.app/api/roblox-users?keyword=${encodeURIComponent(keyword)}`,
-        { headers: { Accept: 'application/json' } },
+        `https://roblox-catalog-recreation.vercel.app/api/roblox-users?keyword=${encodeURIComponent(keyword)}`
       )
       if (!response.ok) throw new Error('Player search unavailable')
       const result = await response.json()
