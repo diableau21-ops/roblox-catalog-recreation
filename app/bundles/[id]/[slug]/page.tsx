@@ -65,8 +65,13 @@ export default function BundlePage() {
                 <span className="font-medium text-muted-foreground">Price</span>
                 <Price price={item.price} />
               </div>
-              <button type="button" onClick={() => {}} className="flex h-11 w-full items-center justify-center rounded-md bg-[#00b06f] px-5 text-base font-bold text-white transition hover:bg-[#009e63]">Owned</button>
-              <button type="button" onClick={() => setGiftOpen(true)} className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><Gift className="size-4" /> Gift</button>
+              {!isHeadless ? <>
+                <a href="https://www.roblox.com/bundles/192/Korblox-Deathspeaker" target="_blank" rel="noopener noreferrer" className="flex h-11 w-full items-center justify-center rounded-md bg-[#335fff] px-5 text-base font-bold text-white transition hover:bg-[#244be0]">Buy</a>
+                <a href="https://www.roblox.com/bundles/192/Korblox-Deathspeaker" target="_blank" rel="noopener noreferrer" className="flex h-11 w-full items-center justify-center rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70">Add to cart</a>
+              </> : <>
+                <button type="button" onClick={() => {}} className="flex h-11 w-full items-center justify-center rounded-md bg-[#00b06f] px-5 text-base font-bold text-white transition hover:bg-[#009e63]">Owned</button>
+                <button type="button" onClick={() => setGiftOpen(true)} className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><Gift className="size-4" /> Gift</button>
+              </>}
             </div>
 
             {!isHeadless && <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-8 gap-y-4 border-t border-border pt-5 text-sm">
