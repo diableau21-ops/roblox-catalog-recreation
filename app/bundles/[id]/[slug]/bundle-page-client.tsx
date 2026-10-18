@@ -128,13 +128,12 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               </>}
             </div>
 
-            {isKorblox && <dl className="mt-2 grid grid-cols-[105px_minmax(0,1fr)] items-start gap-x-4 gap-y-3 border-t border-border pt-4 text-sm sm:grid-cols-[120px_minmax(0,1fr)]">
-              <dt className="font-semibold text-white">Price</dt><dd className="flex justify-start"><Price price={17000} /></dd>
-              <dt className="font-semibold text-white">Tradable</dt><dd>No</dd>
-              <dt className="font-semibold text-white">Type</dt><dd>Characters</dd>
-              <dt className="font-semibold text-white">Placement</dt><dd>Full Body</dd>
-              <dt className="font-semibold text-white">Created</dt><dd>Aug 14, 2018</dd>
-              <dt className="font-semibold text-white">Description</dt><dd className="min-w-0 leading-6">His tribe is widely considered the best and strongest of the twelve Korblox tribes. No one dares challenge his authority.</dd>
+            {isKorblox && <dl className="mt-2 grid grid-cols-[112px_minmax(0,1fr)] items-start gap-x-5 gap-y-4 border-t border-border pt-5 text-sm sm:grid-cols-[128px_minmax(0,1fr)]">
+              <dt className="font-medium text-muted-foreground">Tradable</dt><dd className="min-w-0 text-white">No</dd>
+              <dt className="font-medium text-muted-foreground">Type</dt><dd className="min-w-0 text-white">Characters</dd>
+              <dt className="font-medium text-muted-foreground">Placement</dt><dd className="min-w-0 text-white">Full Body</dd>
+              <dt className="font-medium text-muted-foreground">Created</dt><dd className="min-w-0 text-white">Dec 26, 2013</dd>
+              <dt className="font-medium text-muted-foreground">Description</dt><dd className="min-w-0 break-words leading-6 text-white">His tribe is widely considered the best and strongest of the twelve Korblox tribes. No one dares challenge his authority.</dd>
             </dl>}
           </div>
           </div>
