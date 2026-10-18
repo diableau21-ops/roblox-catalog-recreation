@@ -51,7 +51,7 @@ export async function GET(request: Request) {
     if (ids) {
       try {
         const thumbResponse = await fetch(
-          `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${ids}&size=150x150&format=Png&isCircular=false`,
+          `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${ids}&size=150x150&format=Png&isCircular=false&thumbnailType=HeadShot`,
           { headers: { Accept: 'application/json' }, cache: 'no-store', signal: AbortSignal.timeout(8000) },
         )
         if (thumbResponse.ok) thumbnails = await thumbResponse.json()
