@@ -122,14 +122,12 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                 <a href={itemUrl} target="_blank" rel="noopener noreferrer" className="flex h-11 w-full items-center justify-center rounded-md bg-[#335fff] px-5 text-base font-bold text-white transition hover:bg-[#244be0]">Buy</a>
                 <button type="button" onClick={() => setGiftOpen(true)} className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><Gift className="size-4" /> Gift</button>
               </> : <>
-                <button type="button" onClick={() => setTryOn((value) => !value)} aria-pressed={tryOn} aria-label={tryOn ? 'Stop trying on' : 'Try on avatar'} title={tryOn ? 'Stop trying on' : 'Try on avatar'} className="flex h-11 w-full items-center justify-center rounded-md border border-white/20 bg-[#292929] transition hover:bg-[#383838]">
-                  <span className="relative flex h-8 w-8 items-end justify-center" aria-hidden="true">
-                    <span className="absolute bottom-0 h-[5px] w-8 rounded-[50%] border-2 border-white" />
-                    <svg viewBox="0 0 24 24" className="relative z-10 mb-[3px] h-6 w-6 fill-white" role="presentation">
-                      <circle cx="12" cy="5" r="3.2" />
-                      <path d="M7.2 9.5c0-.8.7-1.5 1.5-1.5h6.6c.8 0 1.5.7 1.5 1.5l1.1 6.2c.1.7-.4 1.3-1.1 1.3h-1.4v4.2h-2.5v-5h-2v5H8.4V17H7c-.7 0-1.2-.6-1.1-1.3z" />
+                <button type="button" aria-label="Owned" title="Owned" className="flex h-11 w-full cursor-default items-center justify-center rounded-md bg-[#335fff] text-white transition hover:bg-[#244be0]">
+                  <svg viewBox="0 0 24 24" className="h-6 w-6 fill-current" aria-hidden="true">
+                    <circle cx="12" cy="4.8" r="3" />
+                    <path d="M7.3 9.1c0-.8.6-1.4 1.4-1.4h6.6c.8 0 1.4.6 1.4 1.4l1 6.4c.1.7-.4 1.2-1.1 1.2h-1.4v4.1h-2.4v-5h-2v5H8.4v-4.1H7c-.7 0-1.2-.5-1.1-1.2z" />
+                    <ellipse cx="12" cy="22" rx="8.5" ry="1.5" />
                   </svg>
-                  </span>
                 </button>
                 <button type="button" onClick={() => setGiftOpen(true)} className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><Gift className="size-4" /> Gift</button>
               </>}
