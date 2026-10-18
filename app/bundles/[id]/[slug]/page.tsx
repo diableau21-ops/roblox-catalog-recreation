@@ -43,7 +43,7 @@ export default function BundlePage() {
           <div className={`relative aspect-square overflow-hidden rounded-xl border border-[#3b3b3b] ${!isHeadless ? 'bg-[#232323]' : 'bg-thumb'}`}>
             <div className={`absolute inset-0 ${show2D || isHeadless ? 'block' : 'hidden'}`}>
               <Image
-                src={item.image || '/placeholder.svg'}
+                src={(item.image || '/placeholder.svg').startsWith('/') ? `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${item.image || '/placeholder.svg'}` : item.image}
                 alt={item.name}
                 fill
                 priority
