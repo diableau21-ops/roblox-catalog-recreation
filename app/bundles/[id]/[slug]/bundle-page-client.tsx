@@ -78,7 +78,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
       <div className="ml-[220px] max-w-[calc(100%-220px)] px-4 py-8 md:px-8">
         <section className="flex justify-center">
           <div className={`flex w-full max-w-[900px] flex-col overflow-hidden ${isKorblox ? 'gap-5 border-0 bg-transparent' : 'gap-0 rounded-xl border border-[#3b3b3b] bg-thumb'} md:flex-row`}>
-            <div className={`relative aspect-square w-full shrink-0 md:w-[400px] ${isKorblox ? 'overflow-hidden rounded-xl border border-[#3b3b3b] bg-[#232323]' : ''}`}>
+            <div className={`relative aspect-square w-full shrink-0 md:aspect-auto md:h-[400px] md:w-[400px] ${isKorblox ? 'overflow-hidden rounded-xl border border-[#3b3b3b] bg-[#232323]' : ''}`}>
             <div className={`absolute inset-0 ${show2D || isHeadless ? 'block' : 'hidden'}`}>
               {robloxThumbnail ? (
                 <img src={robloxThumbnail} alt={item.name} className="absolute inset-0 h-full w-full object-contain p-2" />
