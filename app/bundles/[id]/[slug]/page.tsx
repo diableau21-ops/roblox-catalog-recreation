@@ -73,9 +73,9 @@ export default function BundlePage() {
             </div>}
             {isHeadless && <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>}
 
-            <div className="mt-2 flex flex-col gap-3">
-              <button type="button" onClick={() => setMessage('This is a preview of the Owned button on your demo site.')} className="flex h-12 items-center justify-center rounded-lg bg-[#00b06f] px-5 font-bold text-white transition hover:bg-[#009e63]">Owned</button>
-              <button type="button" onClick={() => setGiftOpen(true)} className="flex h-12 items-center justify-center gap-2 rounded-lg border border-border bg-secondary px-5 font-semibold transition hover:bg-secondary/70"><Gift className="size-4" /> Gift</button>
+            <div className="mt-2 flex w-full max-w-[360px] flex-col gap-2">
+              <button type="button" onClick={() => setMessage('This is a preview of the Owned button on your demo site.')} className="flex h-9 items-center justify-center rounded-md bg-[#00b06f] px-4 text-sm font-bold text-white transition hover:bg-[#009e63]">Owned</button>
+              <button type="button" onClick={() => setGiftOpen(true)} className="flex h-9 items-center justify-center gap-2 rounded-md border border-border bg-secondary px-4 text-sm font-semibold transition hover:bg-secondary/70"><Gift className="size-4" /> Gift</button>
             </div>
 
             {!isHeadless && <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-8 gap-y-4 border-t border-border pt-5 text-sm">
