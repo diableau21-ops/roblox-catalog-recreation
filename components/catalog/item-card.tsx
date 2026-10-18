@@ -28,7 +28,7 @@ export function ItemCard({ item, owned, favorited, onOpen, onToggleFavorite }: P
           src={(item.image || '/placeholder.svg').startsWith('/') ? `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${item.image || '/placeholder.svg'}` : item.image}
           alt=""
           fill
-          sizes="(min-width: 1024px) 180px, (min-width: 640px) 33vw, 50vw"
+          sizes="(min-width: 1536px) 240px, (min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
           className="object-contain p-1"
         />
         {item.limited && (
@@ -56,12 +56,12 @@ export function ItemCard({ item, owned, favorited, onOpen, onToggleFavorite }: P
         <Heart className={cn('size-4', favorited && 'fill-favorite text-favorite')} />
       </button>
       <button type="button" onClick={onOpen} className="mt-1.5 flex flex-col items-start text-left">
-        <h3 className="line-clamp-2 text-[15px] font-medium leading-tight text-foreground">{item.name}</h3>
-        <p className="mt-1 flex items-center gap-1 text-[13px] text-muted-foreground">
+        <h3 className="line-clamp-2 text-[15px] font-medium leading-tight text-foreground lg:text-base">{item.name}</h3>
+        <p className="mt-1 flex items-center gap-1 text-[13px] text-muted-foreground lg:text-sm">
           By <span className="font-medium text-foreground/80">@{item.creator}</span>
           {item.verified && <VerifiedBadge className="size-4" />}
         </p>
-        <Price price={item.price} className="mt-1 text-[15px]" />
+        <Price price={item.price} className="mt-1 text-[15px] lg:text-base" />
       </button>
     </article>
   )
