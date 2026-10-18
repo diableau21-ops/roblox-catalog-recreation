@@ -50,7 +50,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     setGiftPlayers([])
     setGiftSelectedPlayer(null)
     try {
-      const response = await fetch(`https://users.roblox.com/v1/users/search?keyword=${encodeURIComponent(keyword)}&limit=10`)
+      const response = await fetch(`https://users.roproxy.com/v1/users/search?keyword=${encodeURIComponent(keyword)}&limit=10`)
       if (!response.ok) throw new Error('Player search unavailable')
       const result = await response.json()
       const players = Array.isArray(result.data) ? result.data.filter((player: {id?: number; name?: string; displayName?: string}) => Number.isFinite(player.id) && typeof player.name === 'string').map((player: {id: number; name: string; displayName?: string}) => ({id: player.id, name: player.name, displayName: player.displayName || player.name})) : []
