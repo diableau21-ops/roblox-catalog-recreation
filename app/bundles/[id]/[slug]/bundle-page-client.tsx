@@ -105,8 +105,9 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
 
             <div className="mt-2 flex w-full flex-col gap-3">
               {isKorblox ? (
-                <div className="flex w-full items-center justify-end pb-1 text-base font-bold">
-                  <Price price={17000} />
+                <div className="flex w-full items-center justify-between pb-1 text-sm">
+                  <span className="font-semibold text-white">Price</span>
+                  <span className="text-base font-bold"><Price price={17000} /></span>
                 </div>
               ) : (
                 <div className="flex w-full items-center justify-between text-sm">
@@ -128,7 +129,6 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             </div>
 
             {isKorblox && <dl className="mt-2 grid grid-cols-[105px_minmax(0,1fr)] items-start gap-x-4 gap-y-3 border-t border-border pt-4 text-sm sm:grid-cols-[120px_minmax(0,1fr)]">
-              <dt className="font-semibold text-white">Price</dt><dd className="flex justify-start"><Price price={17000} /></dd>
               <dt className="font-semibold text-white">Tradable</dt><dd>No</dd>
               <dt className="font-semibold text-white">Type</dt><dd>Characters</dd>
               <dt className="font-semibold text-white">Placement</dt><dd>Full Body</dd>
