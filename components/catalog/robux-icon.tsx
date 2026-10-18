@@ -44,7 +44,7 @@ export function Price({ price, className }: { price: number | null; className?: 
   return (
     <span className={cn('inline-flex items-center gap-1 font-bold text-foreground', className)}>
       <RobuxIcon />
-      {price.toLocaleString('en-US')}
+      {price}
     </span>
   )
 }
