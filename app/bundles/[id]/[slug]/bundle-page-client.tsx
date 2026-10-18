@@ -77,8 +77,8 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
 
       <div className="ml-[220px] max-w-[calc(100%-220px)] px-4 py-8 md:px-8">
         <section className="flex justify-center">
-          <div className={`flex w-full max-w-[800px] flex-col gap-0 overflow-hidden rounded-xl border border-[#3b3b3b] md:flex-row ${isKorblox ? 'bg-[#232323]' : 'bg-thumb'}`}>
-            <div className="relative aspect-square w-full shrink-0 md:w-[320px]">
+          <div className={`flex w-full max-w-[900px] flex-col gap-0 overflow-hidden rounded-xl border border-[#3b3b3b] md:flex-row ${isKorblox ? 'bg-[#232323]' : 'bg-thumb'}`}>
+            <div className="relative aspect-square w-full shrink-0 md:w-[360px]">
             <div className={`absolute inset-0 ${show2D || isHeadless ? 'block' : 'hidden'}`}>
               {robloxThumbnail ? (
                 <img src={robloxThumbnail} alt={item.name} className="absolute inset-0 h-full w-full object-contain p-6" />
@@ -93,7 +93,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             </div>}
           </div>
 
-          <div className="flex min-w-0 flex-1 flex-col gap-5 border-t border-white/10 bg-[#181818] p-5 text-white md:border-l md:border-t-0">
+          <div className="flex min-w-0 flex-1 flex-col gap-4 border-t border-white/10 bg-[#181818] p-5 text-white md:border-l md:border-t-0 md:p-6">
             <div>
               <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">{isEightBit ? 'Accessory' : 'Bundle'}</p>
               <h1 className="text-3xl font-bold tracking-tight md:text-4xl">{item.name}</h1>
@@ -103,9 +103,9 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
 
             {(isHeadless || isEightBit) && <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>}
 
-            <div className="mt-2 flex w-full max-w-[400px] flex-col gap-3">
+            <div className="mt-2 flex w-full flex-col gap-3">
               {isKorblox ? (
-                <div className="flex w-full items-center justify-end text-base font-bold">
+                <div className="flex w-full items-center justify-end pb-1 text-base font-bold">
                   <Price price={17000} />
                 </div>
               ) : (
@@ -127,13 +127,13 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               </>}
             </div>
 
-            {isKorblox && <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-8 gap-y-4 border-t border-border pt-5 text-sm">
-              <dt className="font-semibold">Price</dt><dd><Price price={17000} /></dd>
-              <dt className="font-semibold">Tradable</dt><dd>No</dd>
-              <dd>Characters</dd>
-              <dt className="font-semibold">Placement</dt><dd>Full Body</dd>
-              <dt className="font-semibold">Created</dt><dd>Aug 14, 2018</dd>
-              <dt className="font-semibold">Description</dt><dd className="leading-6">His tribe is widely considered the best and strongest of the twelve Korblox tribes. No one dares challenge his authority.</dd>
+            {isKorblox && <dl className="mt-2 grid grid-cols-[105px_minmax(0,1fr)] items-start gap-x-4 gap-y-3 border-t border-border pt-4 text-sm sm:grid-cols-[120px_minmax(0,1fr)]">
+              <dt className="font-semibold text-white">Price</dt><dd className="flex justify-start"><Price price={17000} /></dd>
+              <dt className="font-semibold text-white">Tradable</dt><dd>No</dd>
+              <dt className="font-semibold text-white">Type</dt><dd>Characters</dd>
+              <dt className="font-semibold text-white">Placement</dt><dd>Full Body</dd>
+              <dt className="font-semibold text-white">Created</dt><dd>Aug 14, 2018</dd>
+              <dt className="font-semibold text-white">Description</dt><dd className="min-w-0 leading-6">His tribe is widely considered the best and strongest of the twelve Korblox tribes. No one dares challenge his authority.</dd>
             </dl>}
           </div>
           </div>
