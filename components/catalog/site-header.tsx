@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { Bell, Menu, Search, Settings } from 'lucide-react'
+import { Bell, Search, Settings } from 'lucide-react'
 import { RobloxLogo, RobloxMark, RobuxIcon } from './robux-icon'
 
 type Props = {
@@ -10,23 +10,14 @@ type Props = {
   onQueryChange: (q: string) => void
   onBuyRobux: () => void
   onNotify: (msg: string) => void
-  onToggleNav: () => void
 }
 
 const navLinks = ['Charts', 'Marketplace', 'Create', 'Robux'] as const
 
-export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify, onToggleNav }: Props) {
+export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify }: Props) {
   return (
     <header className="sticky top-0 z-40 bg-header shadow-[0_1px_0_0_var(--border)]">
       <div className="flex h-[60px] items-center gap-2 px-3 md:gap-4 md:px-4">
-        <button
-          type="button"
-          aria-label="Toggle navigation"
-          onClick={onToggleNav}
-          className="rounded-lg p-2 text-foreground hover:bg-secondary"
-        >
-          <Menu className="size-6" />
-        </button>
         <a href="#" className="flex items-center text-foreground" aria-label="Roblox home">
           <RobloxLogo className="hidden md:inline-flex" />
           <RobloxMark className="md:hidden" />
