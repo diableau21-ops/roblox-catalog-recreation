@@ -64,6 +64,7 @@ export default function BundlePage() {
                 By <span className="font-semibold text-foreground">Roblox</span>
                 <VerifiedBadge className="size-4" />
               </p>
+              <div className="mt-3 h-px w-full bg-border" />
             </div>
 
             {isHeadless && <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>}
