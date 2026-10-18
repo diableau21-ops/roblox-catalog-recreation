@@ -37,13 +37,13 @@ export function LeftNav({ onNotify, onBuyRobux }: Props) {
       <nav
         aria-label="Account"
         className={cn(
-          'fixed bottom-0 left-0 top-[60px] z-40 flex w-[220px] flex-col overflow-y-auto border-r border-border bg-header px-3 py-3 shadow-xl',
+          'fixed bottom-0 left-0 top-14 z-40 flex w-[220px] flex-col overflow-y-auto border-r border-border bg-header px-3 py-4',
         )}
       >
         <button
           type="button"
           onClick={() => onNotify('Opening your profile')}
-          className="mb-2 flex items-center gap-3 rounded-lg px-2 py-2 text-left hover:bg-secondary"
+          className="mb-3 flex items-center gap-3 rounded-xl px-2 py-2.5 text-left transition-colors hover:bg-secondary"
         >
           <span className="relative size-9 overflow-hidden rounded-full bg-thumb">
             <Image src="/avatar.png" alt="" fill sizes="36px" className="object-cover" />
@@ -59,7 +59,7 @@ export function LeftNav({ onNotify, onBuyRobux }: Props) {
                   e.preventDefault()
                   onNotify(`${label} is coming soon`)
                 }}
-                className="flex items-center gap-3 rounded-lg px-2 py-2 text-base font-medium text-foreground/90 hover:bg-secondary hover:text-foreground"
+                className="flex items-center gap-3 rounded-xl px-2.5 py-2.5 text-[15px] font-medium text-foreground/90 transition-colors hover:bg-secondary hover:text-foreground"
               >
                 <Icon className="size-5" aria-hidden="true" />
                 <span className="flex-1">{label}</span>
@@ -70,7 +70,7 @@ export function LeftNav({ onNotify, onBuyRobux }: Props) {
             </li>
           ))}
         </ul>
-        <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-3">
+        <div className="mt-5 rounded-xl border border-border bg-secondary/40 p-3.5">
           <div className="mb-3 flex items-center gap-2">
             <span className="flex size-7 shrink-0 items-center justify-center">
               <img
