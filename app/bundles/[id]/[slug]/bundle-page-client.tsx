@@ -86,7 +86,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             </div>}
           </div>
 
-          <div className="flex flex-col gap-5 py-1">
+          <div className="flex flex-col gap-5 border-t border-white/10 bg-[#181818] p-5 text-white">
             <div>
               <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">Bundle</p>
               <h1 className="text-3xl font-bold tracking-tight md:text-4xl">{item.name}</h1>
@@ -118,6 +118,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <dt className="font-semibold">Created</dt><dd>Aug 14, 2018</dd>
               <dt className="font-semibold">Description</dt><dd className="leading-6">His tribe is widely considered the best and strongest of the twelve Korblox tribes. No one dares challenge his authority.</dd>
             </dl>}
+          </div>
           </div>
         </section>
       </div>
