@@ -16,14 +16,14 @@ const navLinks = ['Charts', 'Marketplace', 'Create', 'Robux'] as const
 
 export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify }: Props) {
   return (
-    <header className="sticky top-0 z-40 bg-header shadow-[0_1px_0_0_var(--border)]">
-      <div className="flex h-[60px] items-center gap-2 px-3 md:gap-4 md:px-4">
+    <header className="sticky top-0 z-40 border-b border-border bg-header shadow-sm">
+      <div className="mx-auto flex h-14 w-full items-center gap-3 px-3 sm:gap-4 sm:px-4 lg:px-6">
         <a href="#" className="flex items-center text-foreground" aria-label="Roblox home">
           <RobloxLogo className="hidden md:inline-flex" />
           <RobloxMark className="md:hidden" />
         </a>
 
-        <nav aria-label="Main" className="ml-2 hidden items-center lg:flex">
+        <nav aria-label="Main" className="hidden shrink-0 items-center md:flex">
           {navLinks.map((label) => (
             <a
               key={label}
@@ -34,14 +34,14 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
                 else if (label !== 'Marketplace') onNotify(`${label} is coming soon`)
               }}
               aria-current={label === 'Marketplace' ? 'page' : undefined}
-              className="relative px-4 py-[19px] text-base font-bold text-foreground/90 hover:text-foreground aria-[current=page]:text-foreground aria-[current=page]:after:absolute aria-[current=page]:after:inset-x-4 aria-[current=page]:after:bottom-0 aria-[current=page]:after:h-[3px] aria-[current=page]:after:rounded-full aria-[current=page]:after:bg-foreground"
+              className="relative px-2.5 py-[18px] text-sm font-semibold text-foreground/90 transition-colors hover:text-foreground lg:px-3 lg:text-base aria-[current=page]:text-foreground aria-[current=page]:after:absolute aria-[current=page]:after:inset-x-2.5 aria-[current=page]:after:bottom-0 aria-[current=page]:after:h-[3px] aria-[current=page]:after:rounded-full aria-[current=page]:after:bg-foreground lg:aria-[current=page]:after:inset-x-3"
             >
               {label}
             </a>
           ))}
         </nav>
 
-        <label className="relative mx-auto flex max-w-[560px] flex-1 items-center">
+        <label className="relative mx-auto flex min-w-0 max-w-[520px] flex-1 items-center">
           <span className="sr-only">Search the Marketplace</span>
           <Search className="pointer-events-none absolute left-3 size-5 text-muted-foreground" />
           <input
@@ -49,15 +49,15 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
             value={query}
             onChange={(e) => onQueryChange(e.target.value)}
             placeholder="Search"
-            className="h-10 w-full rounded-lg border border-border bg-input pl-10 pr-3 text-base text-foreground placeholder:text-muted-foreground focus:border-foreground/60 focus:outline-none"
+            className="h-9 w-full rounded-lg border border-border bg-input pl-10 pr-3 text-sm text-foreground placeholder:text-muted-foreground transition-colors focus:border-foreground/60 focus:outline-none focus:ring-2 focus:ring-foreground/10 sm:h-10 sm:text-base"
           />
         </label>
 
-        <div className="flex items-center gap-0.5">
+        <div className="flex shrink-0 items-center gap-0.5 sm:gap-1">
           <button
             type="button"
             onClick={() => onNotify('Opening your profile')}
-            className="hidden items-center gap-2 rounded-lg py-1 pl-1 pr-3 hover:bg-secondary md:flex"
+            className="hidden items-center gap-2 rounded-lg py-1 pl-1 pr-2 transition-colors hover:bg-secondary xl:flex"
           >
             <span className="relative size-8 overflow-hidden rounded-full bg-thumb">
               <Image src="/avatar.png" alt="" fill sizes="32px" className="object-cover" />
