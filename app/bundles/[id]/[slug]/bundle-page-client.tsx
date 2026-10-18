@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import { Gift, ShoppingCart, Info } from 'lucide-react'
+import { Gift, ShoppingCart, Info, Check } from 'lucide-react'
 import { catalogItems } from '@/lib/catalog-data'
 import { VerifiedBadge } from '@/components/catalog/verified-badge'
 import { Price, RobuxIcon } from '@/components/catalog/robux-icon'
@@ -100,7 +100,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             <div>
               {!isEightBit && <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">{isKorblox ? '' : 'Bundle'}</p>}
               <div className="flex items-center gap-3"><h1 className="text-3xl font-bold tracking-tight md:text-4xl">{item.name}</h1>{isKorblox && <span className="relative mt-2 inline-flex shrink-0"><ShoppingCart aria-label="Shopping cart" className="size-6 text-white" /><span className="absolute -right-2 -top-2 flex size-4 items-center justify-center rounded-full bg-[#335fff] text-[10px] font-bold leading-none text-white">0</span></span>}</div>
-              <p className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">By <span className="font-semibold text-foreground">Roblox</span><VerifiedBadge className="size-4" /></p>
+              <p className="mt-2 flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground">By <span className="font-semibold text-foreground">Roblox</span><VerifiedBadge className="size-4" />{isKorblox && <span className="ml-2 inline-flex items-center gap-1.5 font-semibold text-[#00b06f]"><Check className="size-4 stroke-[3]" />Item Owned</span>}</p>
               <div className="mt-3 h-px w-full bg-border" />
             </div>
 
