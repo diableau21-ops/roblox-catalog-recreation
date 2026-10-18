@@ -93,7 +93,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <button type="button" onClick={() => setShow2D((value) => !value)} aria-pressed={!show2D} className="rounded-lg border border-white/20 bg-[#333] px-4 py-2 text-sm font-bold text-white shadow-lg transition hover:bg-[#444]">{show2D ? '3D' : '2D'}</button>
             </div>}
           </div>
-            {isKorblox && <div className="mt-2 flex items-center gap-1.5 self-start rounded-md bg-black/60 px-2 py-1 text-sm text-white"><span className="text-yellow-400">★</span><span>3.4M</span></div>}
+            {isKorblox && <div className="mt-2 flex items-center gap-1.5 self-start rounded-md bg-black/60 px-2 py-1 text-sm text-white"><span className="text-xl leading-none text-yellow-400">★</span><span>3.4M</span></div>}
             </div>
 
           <div className={`flex min-w-0 flex-1 flex-col gap-4 text-white ${isKorblox ? '' : 'border-t border-white/10 bg-[#181818] p-5 md:border-l md:border-t-0 md:p-6'}`}>
