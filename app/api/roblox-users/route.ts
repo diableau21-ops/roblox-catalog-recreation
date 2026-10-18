@@ -67,6 +67,6 @@ export async function GET(request: Request) {
       })),
     }, { headers: corsHeaders })
   } catch {
-    return NextResponse.json({ error: 'Roblox player search is temporarily unavailable.' }, { status: 502 })
+    return NextResponse.json({ error: 'Roblox player search is temporarily unavailable.' }, { status: 502, headers: corsHeaders })
   }
 }
