@@ -6,10 +6,12 @@ import { useEffect, useState } from 'react'
 import { Gift } from 'lucide-react'
 import { catalogItems } from '@/lib/catalog-data'
 import { VerifiedBadge } from '@/components/catalog/verified-badge'
-import { Price } from '@/components/catalog/robux-icon'
+import { Price, RobuxIcon } from '@/components/catalog/robux-icon'
 import { Korblox3D } from '@/components/catalog/korblox-3d'
 import { SiteHeader } from '@/components/catalog/site-header'
 import { LeftNav } from '@/components/catalog/left-nav'
+
+const robuxOptions = [400, 800, 1700, 4500, 10000, 22500]
 
 export default function BundlePage() {
   const params = useParams<{ id: string; slug: string }>()
@@ -19,10 +21,11 @@ export default function BundlePage() {
   }, [])
   const [balance, setBalance] = useState(1250)
   const [giftOpen, setGiftOpen] = useState(false)
-  const [message, setMessage] = useState('')
-  const notify = (_msg: string) => {}
+  const [robuxShopOpen, setRobuxShopOpen] = useState(false)
+  const [selectedRobux, setSelectedRobux] = useState(800)
   const [show2D, setShow2D] = useState(false)
   const [tryOn, setTryOn] = useState(false)
+  const notify = (_msg: string) => {}
   const isHeadless = params.id === '201' || params.slug?.toLowerCase().includes('headless')
   const item = catalogItems.find((entry) => entry.id === (isHeadless ? 13 : 10))
 
@@ -34,12 +37,12 @@ export default function BundlePage() {
         balance={balance}
         query={query}
         onQueryChange={setQuery}
-        onBuyRobux={() => {}}
+        onBuyRobux={() => setRobuxShopOpen(true)}
         onNotify={notify}
       />
       <LeftNav
         onNotify={notify}
-        onBuyRobux={() => {}}
+        onBuyRobux={() => setRobuxShopOpen(true)}
       />
 
       <div className="ml-[220px] max-w-[calc(100%-220px)] px-4 py-8 md:px-8">
@@ -50,7 +53,7 @@ export default function BundlePage() {
             </div>
             {!isHeadless && <div className={`absolute inset-0 ${show2D ? 'invisible' : 'visible'}`}><Korblox3D /></div>}
             {!isHeadless && <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2">
-              <button type="button" onClick={() => { setTryOn((value) => !value); setMessage('') }} aria-pressed={tryOn} className={`rounded-lg px-4 py-2 text-sm font-bold shadow-lg transition ${tryOn ? 'bg-[#00b06f] text-white' : 'bg-white text-[#222] hover:bg-gray-200'}`}>{tryOn ? 'Wearing' : 'Try On'}</button>
+              <button type="button" onClick={() => setTryOn((value) => !value)} aria-pressed={tryOn} className={`rounded-lg px-4 py-2 text-sm font-bold shadow-lg transition ${tryOn ? 'bg-[#00b06f] text-white' : 'bg-white text-[#222] hover:bg-gray-200'}`}>{tryOn ? 'Wearing' : 'Try On'}</button>
               <button type="button" onClick={() => setShow2D((value) => !value)} aria-pressed={show2D} className="rounded-lg border border-white/20 bg-[#333] px-4 py-2 text-sm font-bold text-white shadow-lg transition hover:bg-[#444]">{show2D ? '3D' : '2D'}</button>
             </div>}
           </div>
@@ -84,6 +87,24 @@ export default function BundlePage() {
           </div>
         </section>
       </div>
+
+      {robuxShopOpen && <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 p-4" onClick={() => setRobuxShopOpen(false)}>
+        <section role="dialog" aria-modal="true" aria-labelledby="robux-title" className="w-full max-w-lg rounded-xl border border-border bg-card p-6 text-foreground shadow-2xl" onClick={(event) => event.stopPropagation()}>
+          <div className="flex items-center justify-between gap-4">
+            <h2 id="robux-title" className="text-2xl font-bold">Choisir des Robux</h2>
+            <button type="button" onClick={() => setRobuxShopOpen(false)} aria-label="Fermer" className="rounded-lg px-3 py-1 text-2xl hover:bg-secondary">×</button>
+          </div>
+          <p className="mt-2 text-sm text-muted-foreground">Sélectionne la quantité que tu veux.</p>
+          <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
+            {robuxOptions.map((amount) => <button key={amount} type="button" onClick={() => setSelectedRobux(amount)} aria-pressed={selectedRobux === amount} className={`flex min-h-20 flex-col items-center justify-center gap-2 rounded-lg border p-3 font-bold transition hover:bg-secondary ${selectedRobux === amount ? 'border-[#00b06f] bg-[#00b06f]/10 ring-2 ring-[#00b06f]' : 'border-border'}`}>
+              <span className="flex items-center gap-2"><RobuxIcon />{amount}</span>
+              <span className="text-xs font-medium text-muted-foreground">Quantité</span>
+            </button>)}
+          </div>
+          <p className="mt-4 text-xs leading-5 text-muted-foreground">Démo seulement : aucun paiement réel n'est effectué.</p>
+          <button type="button" onClick={() => { setBalance((current) => current + selectedRobux); setRobuxShopOpen(false) }} className="mt-4 h-11 w-full rounded-lg bg-[#00b06f] font-bold text-white transition hover:bg-[#009e63]">Ajouter {selectedRobux} Robux (démo)</button>
+        </section>
+      </div>}
 
       {giftOpen && <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={() => setGiftOpen(false)}>
         <section role="dialog" aria-modal="true" aria-labelledby="gift-title" className="w-full max-w-md rounded-xl border border-border bg-card p-6" onClick={(event) => event.stopPropagation()}>
