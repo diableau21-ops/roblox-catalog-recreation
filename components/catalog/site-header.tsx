@@ -157,7 +157,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, cartCoun
               2
             </span>
           </button>
-          <button type="button" onClick={onBuyRobux} className="hidden h-9 items-center rounded-md bg-[#335fff] px-3 text-sm font-bold text-white transition-colors hover:bg-[#244be0] md:flex">Buy Robux</button>
+          <button type="button" onClick={onBuyRobux} className="flex h-8 items-center rounded-md bg-[#335fff] px-2 text-xs font-bold text-white transition-colors hover:bg-[#244be0] sm:h-9 sm:px-3 sm:text-sm">Buy Robux</button>
           <button type="button" onClick={onCart} aria-label="Shopping cart" className="relative rounded-lg p-2 transition-colors hover:bg-secondary"><ShoppingCart className="size-5" />{cartCount > 0 && <span className="absolute -right-0.5 -top-0.5 flex min-h-4 min-w-4 items-center justify-center rounded-full bg-[#335fff] px-1 text-[10px] font-bold text-white">{cartCount}</span>}</button>
           <button
             type="button"
