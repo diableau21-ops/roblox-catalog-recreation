@@ -43,6 +43,18 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   const [giftSearchMessage, setGiftSearchMessage] = useState('')
   const [giftSelectedPlayer, setGiftSelectedPlayer] = useState<{id: number; name: string; displayName: string; avatarUrl: string | null} | null>(null)
   const [giftMessage, setGiftMessage] = useState('')
+  const [giftSending, setGiftSending] = useState(false)
+  const continueGift = async () => {
+    if (!giftSelectedPlayer || giftSending) return
+    setGiftSending(true)
+    setGiftMessage('')
+    try {
+      await new Promise((resolve) => window.setTimeout(resolve, 900))
+      setGiftMessage('Roblox does not let this unofficial site send an item directly. Open the official Roblox page to check the available options.')
+    } finally {
+      setGiftSending(false)
+    }
+  }
   const searchGiftPlayers = async () => {
     const keyword = giftUsername.trim()
     if (keyword.length < 3) return
@@ -284,7 +296,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <span className="text-muted-foreground">Price</span>
               <span className="font-bold">{isKorblox ? <Price price={17000} /> : <Price price={item.price} />}</span>
             </div>
-            <button type="button" onClick={() => setGiftMessage('This site cannot send Roblox items. Open the official Roblox item page to check available options.')} className="h-11 w-full rounded-lg bg-[#335fff] px-4 text-sm font-bold text-white transition hover:bg-[#244be0]" >Continue</button>
+            <button type="button" onClick={() => void continueGift()} disabled={giftSending} className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[#335fff] px-4 text-sm font-bold text-white transition hover:bg-[#244be0] disabled:cursor-wait disabled:opacity-70">{giftSending && <span aria-hidden="true" className="size-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />}{giftSending ? 'Processing…' : 'Continue to Roblox'}</button>
           </div>}
           {giftMessage && <div role="status" className="mt-3 space-y-3 rounded-lg border border-[#335fff]/40 bg-[#335fff]/10 p-3 text-sm text-foreground"><p>{giftMessage}</p><a href={itemUrl} target="_blank" rel="noopener noreferrer" className="inline-flex h-10 items-center justify-center rounded-lg bg-[#335fff] px-4 font-semibold text-white hover:bg-[#244be0]">Open Roblox</a></div>}
         </section>
