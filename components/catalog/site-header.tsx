@@ -115,8 +115,8 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
             onFocus={() => setSearchOpen(true)}
             onBlur={() => setTimeout(() => setSearchOpen(false), 150)}
             placeholder="Search"
-            style={{ backgroundColor: "#f2f4f5", color: "#393b3d" }}
-            className="h-8 w-full rounded-md border border-[#bdbebe] !bg-[#f2f4f5] pl-9 pr-3 text-sm text-[#393b3d] placeholder:text-[#606162] transition-colors focus:!bg-[#f2f4f5] focus:border-[#bdbebe] focus:outline-none focus:ring-1 focus:ring-[#bdbebe] sm:h-9 sm:text-sm"
+            style={{ backgroundColor: "#2a2b30", color: "#f7f7f8" }}
+            className="h-8 w-full rounded-md border border-[#3a3b40] !bg-[#2a2b30] pl-9 pr-3 text-sm text-[#f7f7f8] placeholder:text-[#a3a5ab] transition-colors focus:!bg-[#2a2b30] focus:border-[#55565d] focus:outline-none focus:ring-1 focus:ring-[#55565d] sm:h-9 sm:text-sm"
           />
           {searchOpen && query.trim() && (
             <div className="absolute left-0 right-0 top-full z-[60] mt-1 overflow-hidden rounded-md border border-[#d5d7d8] bg-white py-1 text-[#393b3d] shadow-xl">
