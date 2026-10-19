@@ -289,6 +289,7 @@ export function CatalogApp() {
                   <ItemCard
                     item={item}
                     owned={owned.has(item.id)}
+                    inCart={cartItems.includes(item.id)}
                     favorited={favorites.has(item.id)}
                     onOpen={() => {
                       const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
@@ -308,11 +309,12 @@ export function CatalogApp() {
                     onAddToCart={() => {
                       setCartInsufficient(false)
                       if (cartItems.includes(item.id)) {
-                        notify(`${item.name} is already in your cart.`)
-                        return
+                        setCartItems((current) => current.filter((id) => id !== item.id))
+                        notify(`${item.name} removed from your cart.`)
+                      } else {
+                        setCartItems((current) => current.includes(item.id) ? current : [...current, item.id])
+                        notify(`${item.name} has been added to your cart.`)
                       }
-                      setCartItems((current) => current.includes(item.id) ? current : [...current, item.id])
-                      notify(`${item.name} has been added to your cart.`)
                     }}
                   />
                 </li>
@@ -360,6 +362,7 @@ export function CatalogApp() {
           key={openItem.id}
           item={openItem}
           owned={owned.has(openItem.id)}
+          inCart={cartItems.includes(openItem.id)}
           favorited={favorites.has(openItem.id)}
           balance={balance}
           onClose={() => setOpenId(null)}
@@ -372,12 +375,12 @@ export function CatalogApp() {
           onAddToCart={() => {
             setCartInsufficient(false)
             if (cartItems.includes(openItem.id)) {
-              notify(`${openItem.name} is already in your cart.`)
-              return
+              setCartItems((items) => items.filter((id) => id !== openItem.id))
+              notify(`${openItem.name} removed from your cart.`)
+            } else {
+              setCartItems((items) => items.includes(openItem.id) ? items : [...items, openItem.id])
+              notify(`${openItem.name} added to cart`)
             }
-            setCartItems((items) => items.includes(openItem.id) ? items : [...items, openItem.id])
-            setOpenId(null)
-            notify(`${openItem.name} added to cart`)
           }}
           onTryOn={() => notify(`Trying on ${openItem.name}`)}
           onBuyRobux={() => setRobuxOpen(true)}
