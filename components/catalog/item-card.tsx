@@ -9,13 +9,14 @@ import { Price } from './robux-icon'
 type Props = {
   item: CatalogItem
   owned: boolean
+  inCart: boolean
   favorited: boolean
   onOpen: () => void
   onAddToCart: () => void
   onToggleFavorite: () => void
 }
 
-export function ItemCard({ item, owned, favorited, onOpen, onAddToCart, onToggleFavorite }: Props) {
+export function ItemCard({ item, owned, inCart, favorited, onOpen, onAddToCart, onToggleFavorite }: Props) {
   return (
     <article className="group relative flex flex-col">
       <div className="relative aspect-square overflow-hidden rounded-lg bg-[#202020] transition-shadow group-hover:shadow-[0_0_0_2px_var(--foreground)]">
@@ -49,9 +50,9 @@ export function ItemCard({ item, owned, favorited, onOpen, onAddToCart, onToggle
             type="button"
             onClick={onAddToCart}
             className="absolute bottom-0 left-0 right-0 z-10 translate-y-full bg-white py-2.5 text-sm font-bold text-[#191919] opacity-0 shadow-md transition-all duration-150 group-hover:translate-y-0 group-hover:opacity-100 focus-visible:translate-y-0 focus-visible:opacity-100"
-            aria-label={`Add ${item.name} to shopping cart`}
+            aria-label={`${inCart ? 'Remove' : 'Add'} ${item.name} ${inCart ? 'from' : 'to'} shopping cart`}
           >
-            Add
+            {inCart ? 'Remove' : 'Add'}
           </button>
         )}
       </div>
