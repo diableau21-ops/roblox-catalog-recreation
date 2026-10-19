@@ -307,7 +307,11 @@ export function CatalogApp() {
                     onToggleFavorite={() => toggleFavorite(item.id)}
                     onAddToCart={() => {
                       setCartInsufficient(false)
-                      setCartItems((current) => [...current, item.id])
+                      if (cartItems.includes(item.id)) {
+                        notify(`${item.name} is already in your cart.`)
+                        return
+                      }
+                      setCartItems((current) => current.includes(item.id) ? current : [...current, item.id])
                       notify(`${item.name} has been added to your cart.`)
                     }}
                   />
@@ -367,7 +371,11 @@ export function CatalogApp() {
           onToggleFavorite={() => toggleFavorite(openItem.id)}
           onAddToCart={() => {
             setCartInsufficient(false)
-            setCartItems((items) => [...items, openItem.id])
+            if (cartItems.includes(openItem.id)) {
+              notify(`${openItem.name} is already in your cart.`)
+              return
+            }
+            setCartItems((items) => items.includes(openItem.id) ? items : [...items, openItem.id])
             setOpenId(null)
             notify(`${openItem.name} added to cart`)
           }}
