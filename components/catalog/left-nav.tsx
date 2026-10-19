@@ -71,7 +71,6 @@ export function LeftNav({ onNotify, onBuyRobux }: Props) {
         >
           <span className="relative size-9 overflow-hidden rounded-full bg-thumb">
             {profile?.avatarUrl ? <img src={profile.avatarUrl} alt="" className="size-9 object-cover" /> : <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/avatar.png`} alt="" fill sizes="36px" className="object-cover" />}
-            <span aria-label="Online on this site" title="Online on this site" className="absolute bottom-0 right-0 size-3 rounded-full border-2 border-header bg-green-500" />
           </span>
           <span className="min-w-0 flex-1 truncate text-base font-bold">{profile?.displayName || 'Builderman'}</span>
         </button>
