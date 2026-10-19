@@ -215,8 +215,6 @@ export function CatalogApp() {
         query={query}
         onQueryChange={setQuery}
         onBuyRobux={() => setRobuxOpen(true)}
-        cartCount={cartItems.length}
-        onCart={() => { setCartInsufficient(false); setCartOpen(true) }}
         onNotify={notify}
       />
 
@@ -243,8 +241,10 @@ export function CatalogApp() {
               </p>
             </div>
             <div className="flex items-center gap-2">
-
-
+              <button type="button" onClick={() => { setCartInsufficient(false); setCartOpen(true) }} aria-label={`Shopping cart, ${cartItems.length} items`} className="relative rounded-lg p-2 transition-colors hover:bg-secondary">
+                <ShoppingCart className="size-5" />
+                <span className="absolute -right-0.5 -top-0.5 flex size-4 items-center justify-center rounded-full bg-[#335fff] text-[10px] font-bold text-white">{cartItems.length}</span>
+              </button>
             </div>
           </div>
 
