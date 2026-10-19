@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
-import { ShoppingCart, SlidersHorizontal, X } from 'lucide-react'
+import { ShoppingCart, X } from 'lucide-react'
 import { catalogItems, categories, type Category } from '@/lib/catalog-data'
 import { cn } from '@/lib/utils'
 import { SiteHeader } from './site-header'
@@ -245,21 +245,7 @@ export function CatalogApp() {
               <span>Cart</span>
               {cartItems.length > 0 && <span className="flex min-w-5 items-center justify-center rounded-full bg-primary px-1 text-xs text-primary-foreground">{cartItems.length}</span>}
             </button>
-            <label className="flex items-center gap-2 text-sm">
-              <SlidersHorizontal className="size-4 text-muted-foreground" aria-hidden="true" />
-              <span className="sr-only">Sort by</span>
-              <select
-                value={sort}
-                onChange={(e) => setSort(e.target.value as Sort)}
-                className="h-9 max-w-full rounded-lg border border-border bg-input px-3 text-sm text-foreground transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/15"
-              >
-                {Object.entries(sortLabels).map(([v, l]) => (
-                  <option key={v} value={v}>
-                    {t(l)}
-                  </option>
-                ))}
-              </select>
-            </label>
+
             </div>
           </div>
 
