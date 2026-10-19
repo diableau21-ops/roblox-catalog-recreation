@@ -319,6 +319,10 @@ export function CatalogApp() {
                       }
                     }}
                     onToggleFavorite={() => toggleFavorite(item.id)}
+                    onAddToCart={() => {
+                      setCartItems((current) => [...current, item.id])
+                      notify(`${item.name} has been added to your cart.`)
+                    }}
                   />
                 </li>
               ))}
@@ -415,9 +419,9 @@ export function CatalogApp() {
         />
       )}
 
-      <div aria-live="polite" className="pointer-events-none fixed inset-x-0 bottom-6 z-[70] flex justify-center px-4">
+      <div aria-live="polite" className="pointer-events-none fixed inset-x-0 top-[72px] z-[100] flex justify-center px-4">
         {toast && (
-          <p className="rounded-lg bg-foreground px-4 py-2.5 text-sm font-semibold text-background shadow-lg">{toast}</p>
+          <p className="rounded-lg bg-[#00b06f] px-4 py-2.5 text-sm font-semibold text-white shadow-lg">{toast}</p>
         )}
       </div>
     </div>
