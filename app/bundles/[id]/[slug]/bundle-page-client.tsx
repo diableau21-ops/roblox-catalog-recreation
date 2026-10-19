@@ -262,8 +262,9 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
         </section>
       </div>}
 
-      {giftOpen && <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-3" onClick={() => setGiftOpen(false)}>
-        <section role="dialog" aria-modal="true" aria-labelledby="gift-title" className="w-full max-w-sm rounded-xl border border-border bg-card p-4" onClick={(event) => event.stopPropagation()}>
+      {giftOpen && <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-black/70 p-3" onClick={() => setGiftOpen(false)}>
+        <div aria-hidden="true" className="gift-galaxy-backdrop pointer-events-none absolute inset-0" />
+        <section role="dialog" aria-modal="true" aria-labelledby="gift-title" className="relative z-10 w-full max-w-sm rounded-xl border border-border bg-card p-4 shadow-2xl" onClick={(event) => event.stopPropagation()}>
           <div className="flex items-center justify-between gap-3">
             <h2 id="gift-title" className="text-lg font-bold">Gift {item.name}</h2>
             <button type="button" onClick={() => setGiftOpen(false)} aria-label="Close" className="rounded-lg px-2 py-1 text-xl hover:bg-secondary">×</button>
