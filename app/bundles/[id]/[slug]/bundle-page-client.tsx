@@ -44,12 +44,13 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   const [giftSelectedPlayer, setGiftSelectedPlayer] = useState<{id: number; name: string; displayName: string; avatarUrl: string | null} | null>(null)
   const [giftMessage, setGiftMessage] = useState('')
   const [giftSending, setGiftSending] = useState(false)
+  const [giftSuccess, setGiftSuccess] = useState(false)
   const continueGift = async () => {
     if (!giftSelectedPlayer || giftSending) return
     setGiftSending(true)
     setGiftMessage('')
-    await new Promise((resolve) => window.setTimeout(resolve, 1100))
-    setGiftMessage(`Sending ${item.name} to @${giftSelectedPlayer.name}…`)
+    await new Promise((resolve) => window.setTimeout(resolve, 700))
+    setGiftSuccess(true)
     setGiftSending(false)
   }
   const searchGiftPlayers = async () => {
@@ -266,6 +267,25 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
         <section role="dialog" aria-modal="true" aria-labelledby="gift-title" className="gift-galaxy-card relative z-10 w-full max-w-sm overflow-hidden rounded-xl border border-[#6d75ff]/60 p-4 shadow-2xl" onClick={(event) => event.stopPropagation()}>
           <div aria-hidden="true" className="gift-galaxy-card-bg pointer-events-none absolute inset-0" />
           <div className="relative z-10">
+          {giftSuccess ? (
+            <div className="flex min-h-[300px] flex-col items-center justify-center py-8 text-center">
+              <div className="relative mb-5 flex size-24 items-center justify-center">
+                <div aria-hidden="true" className="absolute inset-0 rounded-full bg-gradient-to-br from-violet-500/35 via-blue-500/20 to-cyan-400/30 blur-xl" />
+                <div className="absolute inset-1 rounded-full border border-violet-300/50 bg-[#080b20]/80 shadow-[0_0_35px_rgba(112,90,255,0.45)]">
+                  <div aria-hidden="true" className="absolute inset-0 rounded-full opacity-80" style={{backgroundImage: 'radial-gradient(1.5px 1.5px at 20% 25%, white 60%, transparent), radial-gradient(1px 1px at 72% 35%, #a5d8ff 60%, transparent), radial-gradient(1.5px 1.5px at 60% 75%, #d8b4fe 60%, transparent), radial-gradient(1px 1px at 35% 65%, white 60%, transparent)'}} />
+                </div>
+                <div className="relative flex size-14 items-center justify-center rounded-full bg-gradient-to-br from-emerald-300 to-emerald-600 text-white shadow-lg shadow-emerald-500/30">
+                  <Check className="size-8 stroke-[3]" />
+                </div>
+              </div>
+              <h3 className="text-xl font-bold text-white">Gift was sent successfully!</h3>
+              <p className="mt-3 text-sm text-white/75">{item.name}</p>
+              {giftSelectedPlayer && <p className="mt-1 text-sm text-white/75">To {giftSelectedPlayer.displayName} (@{giftSelectedPlayer.name})</p>}
+              <button type="button" onClick={() => { setGiftOpen(false); setGiftSuccess(false) }} className="mt-7 h-10 min-w-32 rounded-lg bg-[#335fff] px-6 text-sm font-bold text-white transition hover:bg-[#244be0]">Done</button>
+              <p className="mt-3 text-[11px] text-white/45">Demo interface only — no actual Roblox gift was sent.</p>
+            </div>
+          ) : (
+          <>
           <div className="flex items-center justify-between gap-3">
             <h2 id="gift-title" className="text-lg font-bold">Gift {item.name}</h2>
             <button type="button" onClick={() => setGiftOpen(false)} aria-label="Close" className="rounded-lg px-2 py-1 text-xl hover:bg-secondary">×</button>
@@ -307,6 +327,8 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             </>
           )}
                     {giftMessage && <div role="status" className="mt-2 rounded-lg border border-[#8ca0ff]/50 bg-[#10152c]/80 p-2.5 text-xs text-white backdrop-blur-sm"><p>{giftMessage}</p></div>}
+          </>
+          )}
           </div>
         </section>
       </div>}
