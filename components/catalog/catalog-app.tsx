@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import Image from 'next/image'
 import { ShoppingCart, SlidersHorizontal, X } from 'lucide-react'
 import { catalogItems, categories, type Category } from '@/lib/catalog-data'
 import { cn } from '@/lib/utils'
@@ -400,7 +401,7 @@ export function CatalogApp() {
               <div className="flex flex-1 flex-col items-center justify-center gap-3 text-center"><ShoppingCart className="size-10 text-muted-foreground" /><p className="font-semibold">Your cart is empty</p><p className="text-sm text-muted-foreground">Open an item and choose Add to Cart to put it here.</p><button type="button" onClick={() => setCartOpen(false)} className="rounded-lg bg-secondary px-4 py-2 text-sm font-semibold hover:bg-secondary/80">Continue shopping</button></div>
             ) : (
               <>
-                <ul className="flex-1 space-y-3 overflow-y-auto py-4">{cartProducts.map((item, index) => <li key={`${item.id}-${index}`} className="flex items-center gap-3 rounded-lg border border-border p-3"><div className="min-w-0 flex-1"><p className="truncate font-semibold">{item.name}</p><p className="text-sm text-muted-foreground">{item.price === null ? 'Off Sale' : `${item.price.toLocaleString('en-US')} Robux`}</p></div><button type="button" onClick={() => setCartItems((items) => items.filter((_, i) => i !== index))} className="rounded-md px-2 py-1 text-sm text-muted-foreground hover:bg-secondary">Remove</button></li>)}</ul>
+                <ul className="flex-1 space-y-3 overflow-y-auto py-4">{cartProducts.map((item, index) => <li key={`${item.id}-${index}`} className="flex items-center gap-3 rounded-lg border border-border p-3"><div className="relative size-20 shrink-0 overflow-hidden rounded-md bg-thumb"><Image src={item.image?.startsWith('http') ? item.image : `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${item.image || '/placeholder.svg'}`} alt={item.name} fill sizes="80px" className="object-contain p-1" /></div><div className="min-w-0 flex-1"><p className="truncate font-semibold">{item.name}</p><p className="text-sm text-muted-foreground">{item.price === null ? 'Off Sale' : `${item.price.toLocaleString('en-US')} Robux`}</p></div><button type="button" onClick={() => setCartItems((items) => items.filter((_, i) => i !== index))} className="rounded-md px-2 py-1 text-sm text-muted-foreground hover:bg-secondary">Remove</button></li>)}</ul>
                 <div className="border-t border-border pt-4"><div className="mb-4 flex items-center justify-between font-bold"><span>Total</span><span>{cartTotal.toLocaleString('en-US')} Robux</span></div><button type="button" onClick={() => { const total = cartProducts.reduce((sum, item) => sum + (item.price ?? 0), 0); if (total > balance) { setCartOpen(false); setRobuxOpen(true); notify('You need more Robux to buy these items'); return } setBalance((value) => value - total); setOwned((previous) => new Set([...previous, ...cartProducts.map((item) => item.id)])); setCartItems([]); setCartOpen(false); notify('Cart purchased successfully') }} className="h-11 w-full rounded-lg bg-success font-bold text-white hover:bg-success/90">Buy all</button></div>
               </>
             )}
