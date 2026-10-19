@@ -12,10 +12,11 @@ type Props = {
   owned: boolean
   favorited: boolean
   onOpen: () => void
+  onAddToCart: () => void
   onToggleFavorite: () => void
 }
 
-export function ItemCard({ item, owned, favorited, onOpen, onToggleFavorite }: Props) {
+export function ItemCard({ item, owned, favorited, onOpen, onAddToCart, onToggleFavorite }: Props) {
   return (
     <article className="group relative flex flex-col">
       <button
@@ -43,6 +44,16 @@ export function ItemCard({ item, owned, favorited, onOpen, onToggleFavorite }: P
           </span>
         )}
       </button>
+      {item.price !== null && !owned && (
+        <button
+          type="button"
+          onClick={(event) => { event.stopPropagation(); onAddToCart() }}
+          className="absolute bottom-0 left-0 right-0 z-10 translate-y-2 bg-white py-2.5 text-sm font-bold text-[#191919] opacity-0 shadow-md transition-all duration-150 group-hover:translate-y-0 group-hover:opacity-100 focus-visible:translate-y-0 focus-visible:opacity-100"
+          aria-label={`Add ${item.name} to shopping cart`}
+        >
+          Add
+        </button>
+      )}
       <button
         type="button"
         onClick={onToggleFavorite}
