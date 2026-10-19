@@ -178,18 +178,6 @@ export function ItemModal({
               </button>
             )}
 
-            {!owned && effectivePrice !== null && !confirming && (
-              <div className="flex flex-col items-center gap-1 rounded-lg border border-border px-3 py-3 text-center">
-                <p className="flex items-center justify-center gap-1.5 text-sm font-semibold">
-                  <span aria-hidden="true" className="flex size-5 items-center justify-center rounded bg-foreground text-[10px] font-black text-background">R+</span>
-                  <span>Get 10% off with Roblox Plus</span>
-                </p>
-                <a href="https://www.roblox.com/plus" target="_blank" rel="noreferrer" className="text-sm font-semibold text-[#335fff] underline underline-offset-2 hover:text-[#244be0]">
-                  Get free trial
-                </a>
-              </div>
-            )}
-
             {!owned && effectivePrice !== null && <button type="button" onClick={onAddToCart} className="h-10 rounded-lg border border-border text-sm font-semibold hover:bg-secondary">Add to Cart</button>}
 
             <div className="flex gap-2">
