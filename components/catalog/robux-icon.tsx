@@ -17,7 +17,7 @@ export function RobloxLogo({ className }: { className?: string }) {
       className={cn('inline-flex items-center text-[22px] font-black leading-none tracking-tight', className)}
       aria-label="Roblox"
     >
-      ROBLOX
+      R<span className="mx-[1px] inline-flex size-[0.72em] rotate-[15deg] items-center justify-center bg-current align-middle"><span className="size-[0.24em] bg-header" /></span>BLOX
     </span>
   )
 }
