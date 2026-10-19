@@ -322,7 +322,6 @@ export function CatalogApp() {
                     onToggleFavorite={() => toggleFavorite(item.id)}
                     onAddToCart={() => {
                       setCartItems((current) => [...current, item.id])
-                      setCartOpen(true)
                       notify(`${item.name} has been added to your cart.`)
                     }}
                   />
@@ -383,7 +382,6 @@ export function CatalogApp() {
           onAddToCart={() => {
             setCartItems((items) => [...items, openItem.id])
             setOpenId(null)
-            setCartOpen(true)
             notify(`${openItem.name} added to cart`)
           }}
           onTryOn={() => notify(`Trying on ${openItem.name}`)}
