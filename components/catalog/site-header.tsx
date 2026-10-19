@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Bell, Search, Settings } from 'lucide-react'
 import { RobloxLogo, RobloxMark, RobuxIcon } from './robux-icon'
 
@@ -17,6 +17,52 @@ const navLinks = ['Charts', 'Marketplace', 'Create', 'Robux'] as const
 
 export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify }: Props) {
   const [searchOpen, setSearchOpen] = useState(false)
+  const [profileOpen, setProfileOpen] = useState(false)
+  const [profileQuery, setProfileQuery] = useState('')
+  const [profileSearching, setProfileSearching] = useState(false)
+  const [profileMessage, setProfileMessage] = useState('')
+  const [profileResults, setProfileResults] = useState<{ id: number; name: string; displayName: string; avatarUrl?: string; hasVerifiedBadge?: boolean }[]>([])
+  const [profile, setProfile] = useState<{ id: number; name: string; displayName: string; avatarUrl?: string; hasVerifiedBadge?: boolean } | null>(null)
+
+  useEffect(() => {
+    try {
+      const saved = window.localStorage.getItem('catalog-demo-profile')
+      if (saved) setProfile(JSON.parse(saved))
+    } catch {}
+  }, [])
+
+  const searchProfile = async () => {
+    const keyword = profileQuery.trim()
+    if (keyword.length < 3) {
+      setProfileMessage('Enter at least 3 characters.')
+      return
+    }
+    setProfileSearching(true)
+    setProfileMessage('')
+    try {
+      const response = await fetch(`/api/roblox-users?keyword=${encodeURIComponent(keyword)}`, { cache: 'no-store' })
+      if (!response.ok) throw new Error('Search failed')
+      const payload = await response.json()
+      const results = Array.isArray(payload.data) ? payload.data : []
+      setProfileResults(results)
+      setProfileMessage(results.length ? '' : 'No Roblox users found.')
+    } catch {
+      setProfileResults([])
+      setProfileMessage('Could not search Roblox users. Try again.')
+    } finally {
+      setProfileSearching(false)
+    }
+  }
+
+  const chooseProfile = (player: { id: number; name: string; displayName: string; avatarUrl?: string; hasVerifiedBadge?: boolean }) => {
+    setProfile(player)
+    try { window.localStorage.setItem('catalog-demo-profile', JSON.stringify(player)) } catch {}
+    setProfileOpen(false)
+    setProfileQuery('')
+    setProfileResults([])
+    setProfileMessage('')
+  }
+
   const searchCategories = ['Games', 'People', 'Marketplace', 'Communities', 'Creator Store']
 
   return (
@@ -84,13 +130,13 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
         <div className="flex shrink-0 items-center gap-0.5 sm:gap-1">
           <button
             type="button"
-            onClick={() => onNotify('Opening your profile')}
+            onClick={() => { setProfileQuery(profile?.name ?? ''); setProfileOpen(true); setProfileMessage(''); setProfileResults([]) }}
             className="hidden items-center gap-2 rounded-lg py-1 pl-1 pr-2 transition-colors hover:bg-secondary xl:flex"
           >
             <span className="relative size-8 overflow-hidden rounded-full bg-thumb">
-              <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/avatar.png`} alt="" fill sizes="32px" className="object-cover" />
+              {profile?.avatarUrl ? <img src={profile.avatarUrl} alt="" className="size-8 object-cover" /> : <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/avatar.png`} alt="" fill sizes="32px" className="object-cover" />}
             </span>
-            <span className="text-sm font-bold">Builderman</span>
+            <span className="text-sm font-bold">{profile?.displayName || 'Builderman'}</span>
           </button>
           <button
             type="button"
@@ -122,6 +168,35 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
           </button>
         </div>
       </div>
+      {profileOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4" onClick={() => setProfileOpen(false)}>
+          <section role="dialog" aria-modal="true" aria-labelledby="profile-title" className="w-full max-w-md rounded-xl border border-border bg-card p-5 text-foreground shadow-2xl" onClick={(event) => event.stopPropagation()}>
+            <div className="flex items-center justify-between gap-3">
+              <h2 id="profile-title" className="text-lg font-bold">Set your Roblox profile</h2>
+              <button type="button" onClick={() => setProfileOpen(false)} aria-label="Close" className="rounded-lg px-2 py-1 text-xl hover:bg-secondary">×</button>
+            </div>
+            {profile && <div className="mt-4 flex items-center gap-3 rounded-lg border border-border p-3">
+              {profile.avatarUrl ? <img src={profile.avatarUrl} alt="" className="size-12 rounded-full object-cover" /> : <span className="flex size-12 items-center justify-center rounded-full bg-secondary">👤</span>}
+              <div className="min-w-0"><p className="truncate font-semibold">{profile.displayName}</p><p className="truncate text-sm text-muted-foreground">@{profile.name}</p></div>
+              <span className="ml-auto text-xs text-muted-foreground">Current profile</span>
+            </div>}
+            <p className="mt-4 text-sm text-muted-foreground">Enter your Roblox username to find your real avatar and profile name.</p>
+            <form className="mt-3 flex gap-2" onSubmit={(event) => { event.preventDefault(); void searchProfile() }}>
+              <input value={profileQuery} onChange={(event) => setProfileQuery(event.target.value)} placeholder="Roblox username" aria-label="Roblox username" className="h-10 min-w-0 flex-1 rounded-lg border border-border bg-background px-3 text-sm outline-none focus:border-[#335fff]" />
+              <button type="submit" disabled={profileSearching} className="h-10 rounded-lg bg-[#335fff] px-4 text-sm font-semibold text-white disabled:opacity-50">{profileSearching ? 'Searching…' : 'Search'}</button>
+            </form>
+            {profileMessage && <p role="status" className="mt-3 text-sm text-muted-foreground">{profileMessage}</p>}
+            {profileResults.length > 0 && <div className="mt-3 max-h-64 space-y-2 overflow-y-auto">
+              {profileResults.map((player) => <button key={player.id} type="button" onClick={() => chooseProfile(player)} className="flex w-full items-center gap-3 rounded-lg border border-border p-3 text-left hover:bg-secondary">
+                {player.avatarUrl ? <img src={player.avatarUrl} alt="" className="size-11 rounded-full object-cover" /> : <span className="flex size-11 items-center justify-center rounded-full bg-secondary">👤</span>}
+                <span className="min-w-0 flex-1"><span className="block truncate font-semibold">{player.displayName}</span><span className="block truncate text-sm text-muted-foreground">@{player.name}</span></span>
+                <span className="text-sm font-semibold text-[#335fff]">Use</span>
+              </button>)}
+            </div>}
+            <p className="mt-4 text-xs text-muted-foreground">This only changes the profile shown on this demo site. It does not sign you in to Roblox.</p>
+          </section>
+        </div>
+      )}
     </header>
   )
 }
