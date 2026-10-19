@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { useState } from 'react'
 import { Bell, Search, Settings } from 'lucide-react'
 import { RobloxLogo, RobloxMark, RobuxIcon } from './robux-icon'
 
@@ -15,6 +16,9 @@ type Props = {
 const navLinks = ['Charts', 'Marketplace', 'Create', 'Robux'] as const
 
 export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify }: Props) {
+  const [searchOpen, setSearchOpen] = useState(false)
+  const searchCategories = ['Games', 'People', 'Marketplace', 'Communities', 'Creator Store']
+
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-header/95 shadow-sm backdrop-blur-md">
       <div className="flex h-14 w-full items-center gap-3 px-3 sm:gap-4 sm:px-5 lg:px-6">
@@ -48,9 +52,32 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
             type="search"
             value={query}
             onChange={(e) => onQueryChange(e.target.value)}
+            onFocus={() => setSearchOpen(true)}
+            onBlur={() => setTimeout(() => setSearchOpen(false), 150)}
             placeholder="Search"
             className="h-8 w-full rounded-md border border-[#bdbebe] bg-[#f2f4f5] pl-9 pr-3 text-sm text-[#393b3d] placeholder:text-[#606162] transition-colors focus:border-[#606162] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#606162] sm:h-9 sm:text-sm"
           />
+          {searchOpen && query.trim() && (
+            <div className="absolute left-0 right-0 top-full z-[60] mt-1 overflow-hidden rounded-md border border-[#d5d7d8] bg-white py-1 text-[#393b3d] shadow-xl">
+              {searchCategories.map((category) => (
+                <button
+                  key={category}
+                  type="button"
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={() => {
+                    onQueryChange(query.trim())
+                    setSearchOpen(false)
+                  }}
+                  className="flex w-full items-center gap-3 px-3 py-2.5 text-left text-sm hover:bg-[#e8e8e8]"
+                >
+                  <Search className="size-4 shrink-0 text-[#606162]" />
+                  <span className="min-w-0 truncate">
+                    <span className="text-[#606162]">in </span>{category}
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
         </label>
 
         <div className="flex shrink-0 items-center gap-0.5 sm:gap-1">
