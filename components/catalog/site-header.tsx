@@ -17,10 +17,13 @@ const navLinks = ['Charts', 'Marketplace', 'Create', 'Robux'] as const
 
 function VerifiedBadge({ className = 'size-4' }: { className?: string }) {
   return (
-    <svg aria-label="Verified Roblox account" role="img" viewBox="0 0 24 24" className={className} fill="none">
-      <path d="M5.1 1.1 23.2 5.8 18.9 23 0.8 18.2Z" fill="#006BFF" />
-      <path d="m6.5 11.7 3.2 3.2 7.1-7.2" stroke="white" strokeWidth="2.35" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <img
+      src="https://cdn3.emoji.gg/emojis/9389-roblox-verified.png"
+      alt="Verified Roblox account"
+      title="Verified Roblox account"
+      className={className}
+      draggable={false}
+    />
   )
 }
 
