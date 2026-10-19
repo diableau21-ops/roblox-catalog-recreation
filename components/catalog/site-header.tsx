@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import { Bell, Search, Settings } from 'lucide-react'
+import { Bell, Search, Settings, ChevronDown } from 'lucide-react'
 import { RobloxLogo, RobloxMark, RobuxIcon } from './robux-icon'
 
 type Props = {
@@ -17,6 +17,7 @@ const navLinks = ['Charts', 'Marketplace', 'Create', 'Robux'] as const
 
 export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify }: Props) {
   const [searchOpen, setSearchOpen] = useState(false)
+  const [settingsOpen, setSettingsOpen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
   const [profileQuery, setProfileQuery] = useState('')
   const [profileSearching, setProfileSearching] = useState(false)
@@ -162,11 +163,20 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
           <button
             type="button"
             aria-label="Settings"
-            onClick={() => onNotify('Settings are coming soon')}
+            onClick={() => setSettingsOpen((open) => !open)}
             className="hidden rounded-lg p-2 transition-colors hover:bg-secondary sm:block"
           >
             <Settings className="size-5" />
           </button>
+          {settingsOpen && (
+            <div className="absolute right-4 top-12 z-[70] w-56 overflow-hidden rounded-lg border border-[#d5d7d8] bg-white py-1 text-[#393b3d] shadow-xl sm:right-5 lg:right-6">
+              {['Settings', 'Quick Sign In', 'Help and Safety', 'Switch Accounts', 'Logout'].map((label) => (
+                <button key={label} type="button" onClick={() => { setSettingsOpen(false); if (label !== 'Settings') onNotify(`${label} is coming soon`) }} className="flex w-full items-center px-4 py-3 text-left text-sm font-medium hover:bg-[#e8e8e8]">
+                  {label}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
       {profileOpen && (
