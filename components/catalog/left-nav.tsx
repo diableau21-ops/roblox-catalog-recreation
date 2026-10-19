@@ -72,7 +72,7 @@ export function LeftNav({ onNotify, onBuyRobux }: Props) {
           <span className="relative size-9 overflow-hidden rounded-full bg-thumb">
             {profile?.avatarUrl ? <img src={profile.avatarUrl} alt="" className="size-9 object-cover" /> : <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/avatar.png`} alt="" fill sizes="36px" className="object-cover" />}
           </span>
-          <span className="min-w-0 flex-1 truncate text-base font-bold">{profile?.displayName || 'Builderman'}</span>
+          <span className="flex min-w-0 flex-1 items-center gap-1 truncate text-base font-bold"><span className="truncate">{profile?.displayName || 'Builderman'}</span>{profile?.hasVerifiedBadge && <img src="https://cdn3.emoji.gg/emojis/9389-roblox-verified.png" alt="Verified Roblox account" title="Verified Roblox account" className="size-4 shrink-0" />}</span>
         </button>
         <ul className="flex flex-col gap-0.5">
           {links.map(({ label, icon: Icon, badge }) => (
