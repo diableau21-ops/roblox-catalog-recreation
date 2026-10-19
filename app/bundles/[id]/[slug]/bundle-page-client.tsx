@@ -48,12 +48,9 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     if (!giftSelectedPlayer || giftSending) return
     setGiftSending(true)
     setGiftMessage('')
-    try {
-      await new Promise((resolve) => window.setTimeout(resolve, 900))
-      setGiftMessage('Roblox does not let this unofficial site send an item directly. Open the official Roblox page to check the available options.')
-    } finally {
-      setGiftSending(false)
-    }
+    await new Promise((resolve) => window.setTimeout(resolve, 1100))
+    setGiftMessage(`Gift sent successfully to @${giftSelectedPlayer.name}! (Demo only — no item was actually sent.)`)
+    setGiftSending(false)
   }
   const searchGiftPlayers = async () => {
     const keyword = giftUsername.trim()
@@ -296,9 +293,9 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <span className="text-muted-foreground">Price</span>
               <span className="font-bold">{isKorblox ? <Price price={17000} /> : <Price price={item.price} />}</span>
             </div>
-            <button type="button" onClick={() => void continueGift()} disabled={giftSending} className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[#335fff] px-4 text-sm font-bold text-white transition hover:bg-[#244be0] disabled:cursor-wait disabled:opacity-70">{giftSending && <span aria-hidden="true" className="size-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />}{giftSending ? 'Processing…' : 'Continue to Roblox'}</button>
+            <button type="button" onClick={() => void continueGift()} disabled={giftSending || !giftSelectedPlayer} className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[#335fff] px-4 text-sm font-bold text-white transition hover:bg-[#244be0] disabled:cursor-wait disabled:opacity-70">{giftSending && <span aria-hidden="true" className="size-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />}{giftSending ? 'Sending gift…' : 'Send Gift'}</button>
           </div>}
-          {giftMessage && <div role="status" className="mt-3 space-y-3 rounded-lg border border-[#335fff]/40 bg-[#335fff]/10 p-3 text-sm text-foreground"><p>{giftMessage}</p><a href={itemUrl} target="_blank" rel="noopener noreferrer" className="inline-flex h-10 items-center justify-center rounded-lg bg-[#335fff] px-4 font-semibold text-white hover:bg-[#244be0]">Open Roblox</a></div>}
+          {giftMessage && <div role="status" className="mt-3 rounded-lg border border-[#335fff]/40 bg-[#335fff]/10 p-3 text-sm text-foreground"><p>{giftMessage}</p></div>}
         </section>
       </div>}
     </main>
