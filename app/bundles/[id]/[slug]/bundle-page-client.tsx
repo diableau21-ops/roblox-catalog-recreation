@@ -220,7 +220,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <dt className="font-medium text-muted-foreground">Tradable</dt><dd className="min-w-0 text-white">{isEightBit ? 'Yes' : 'No'}</dd>
               <dt className="flex items-center gap-1.5 font-medium text-muted-foreground">Type <span title="The category this item belongs to" className="inline-flex size-4 items-center justify-center rounded-full border border-current text-[10px] font-semibold leading-none">i</span></dt><dd className="min-w-0 text-white">{isEightBit ? 'Accessory' : 'Characters'}</dd>
               <dt className="font-medium text-muted-foreground">Placement</dt><dd className="min-w-0 text-white">{isEightBit ? 'Hat' : 'Full Body'}</dd>
-              <dt className="font-medium text-muted-foreground">Created</dt><dd className="min-w-0 text-white">{isHeadless ? 'Oct 31, 2013' : isEightBit ? 'Jun 12, 2009' : 'Dec 26, 2013'}</dd>
+              <dt className="font-medium text-muted-foreground">Created</dt><dd className="min-w-0 text-white">{isHeadless ? 'Oct 31, 2013' : isEightBit ? 'Jun 12, 2009' : 'Aug 14, 2018'}</dd>
               <dt className="font-medium text-muted-foreground">Description</dt><dd className="min-w-0 break-words leading-6 text-white">{item.description || 'A classic Roblox collectible.'}</dd>
             </dl>
           </div>
