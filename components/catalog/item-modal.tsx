@@ -16,6 +16,7 @@ type Props = {
   onClose: () => void
   onBuy: (price: number) => void
   onToggleFavorite: () => void
+  onAddToCart: () => void
   onTryOn: () => void
   onBuyRobux: () => void
   onNotify: (msg: string) => void
@@ -29,6 +30,7 @@ export function ItemModal({
   onClose,
   onBuy,
   onToggleFavorite,
+  onAddToCart,
   onTryOn,
   onBuyRobux,
   onNotify,
@@ -175,6 +177,8 @@ export function ItemModal({
                 {effectivePrice === null ? 'Off Sale' : effectivePrice === 0 ? 'Get' : 'Buy'}
               </button>
             )}
+
+            {!owned && effectivePrice !== null && <button type="button" onClick={onAddToCart} className="h-10 rounded-lg border border-border text-sm font-semibold hover:bg-secondary">Add to Cart</button>}
 
             <div className="flex gap-2">
               <button
