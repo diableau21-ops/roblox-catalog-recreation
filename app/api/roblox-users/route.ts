@@ -62,9 +62,28 @@ export async function GET(request: Request) {
         .filter((thumbnail) => thumbnail.imageUrl)
         .map((thumbnail) => [String(thumbnail.targetId), thumbnail.imageUrl as string]),
     )
+    const verifiedById = new Map<number, boolean>()
+    await Promise.all(data.map(async (player: { id: number }) => {
+      try {
+        const profileResponse = await fetch(`https://users.roblox.com/v1/users/${player.id}`, {
+          headers: { Accept: 'application/json' },
+          cache: 'no-store',
+          signal: AbortSignal.timeout(5000),
+        })
+        if (profileResponse.ok) {
+          const profile = await profileResponse.json()
+          verifiedById.set(player.id, profile.hasVerifiedBadge === true)
+        } else {
+          verifiedById.set(player.id, false)
+        }
+      } catch {
+        verifiedById.set(player.id, false)
+      }
+    }))
     return NextResponse.json({
       data: data.map((player: { id: number; name: string; displayName: string }) => ({
         ...player,
+        hasVerifiedBadge: verifiedById.get(player.id) === true,
         avatarUrl: avatarById.get(String(player.id)) ?? `https://www.roblox.com/headshot-thumbnail/image?userId=${player.id}&width=150&height=150&format=png`,
       })),
     }, { headers: corsHeaders })
