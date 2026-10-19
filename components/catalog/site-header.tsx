@@ -136,7 +136,6 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
           >
             <span className="relative size-8 overflow-hidden rounded-full bg-thumb">
               {profile?.avatarUrl ? <img src={profile.avatarUrl} alt="" className="size-8 object-cover" /> : <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/avatar.png`} alt="" fill sizes="32px" className="object-cover" />}
-              <span aria-label="Online on this site" title="Online on this site" className="absolute bottom-0 right-0 size-2.5 rounded-full border-2 border-header bg-green-500" />
             </span>
             <span className="text-sm font-bold">{profile?.displayName || 'Builderman'}</span>
           </button>
