@@ -179,6 +179,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <button type="button" onClick={() => setTryOn((value) => !value)} aria-pressed={tryOn} className={`rounded-lg px-4 py-2 text-sm font-bold shadow-lg transition ${tryOn ? 'bg-[#00b06f] text-white' : 'bg-white text-[#222] hover:bg-gray-200'}`}>{tryOn ? 'Wearing' : 'Try On'}</button>
               <button type="button" onClick={() => setShow2D((value) => !value)} aria-pressed={!show2D} className="rounded-lg border border-white/20 bg-[#333] px-4 py-2 text-sm font-bold text-white shadow-lg transition hover:bg-[#444]">{show2D ? '3D' : '2D'}</button>
             </div>}
+            {isEightBit && <span className="absolute bottom-4 left-4 z-20 rounded-md bg-[#00b06f] px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-white shadow-lg">Limited</span>}
           </div>
             <div className="mt-2 flex items-center gap-1.5 self-start rounded-md bg-black/60 px-2 py-1 text-sm text-white"><span className="text-xl leading-none text-white">★</span><span>{item.favorites.toLocaleString('en-US')}</span></div>
             </div>
