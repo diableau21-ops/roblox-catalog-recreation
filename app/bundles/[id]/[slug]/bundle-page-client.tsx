@@ -47,9 +47,19 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   const [giftSuccess, setGiftSuccess] = useState(false)
   const continueGift = async () => {
     if (!giftSelectedPlayer || giftSending) return
+    const giftPrice = id === '192' || slug.toLowerCase().includes('korblox')
+      ? 17000
+      : id === '201' || slug.toLowerCase().includes('headless')
+        ? 31000
+        : item?.price ?? 0
+    if (balance < giftPrice) {
+      setGiftMessage(`Not enough Robux. You need ${(giftPrice - balance).toLocaleString('en-US')} more Robux to send this gift.`)
+      return
+    }
     setGiftSending(true)
     setGiftMessage('')
     await new Promise((resolve) => window.setTimeout(resolve, 700))
+    setBalance((current) => current - giftPrice)
     setGiftSuccess(true)
     setGiftSending(false)
   }
@@ -294,6 +304,8 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             <div className="mt-5 flex flex-col items-center text-center">
               <img src={itemImage} alt={item.name} className="size-24 object-contain" />
               <h3 className="mt-2 text-lg font-bold">{item.name}</h3>
+              <p className="mt-1 flex items-center gap-1 text-sm text-white/80"><RobuxIcon className="size-4" /> Gift cost: {(id === '192' || slug.toLowerCase().includes('korblox') ? 17000 : id === '201' || slug.toLowerCase().includes('headless') ? 31000 : item.price ?? 0).toLocaleString('en-US')} Robux</p>
+              <p className="text-xs text-white/60">Your balance: {balance.toLocaleString('en-US')} Robux</p>
               <div className="mt-3 flex items-center gap-3">
                 {giftSelectedPlayer.avatarUrl ? <img src={giftSelectedPlayer.avatarUrl} alt="" className="size-12 rounded-full object-cover" /> : <span aria-hidden="true" className="flex size-12 items-center justify-center rounded-full bg-white/10 text-xl">👤</span>}
                 <div className="text-left">
