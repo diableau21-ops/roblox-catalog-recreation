@@ -164,9 +164,9 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
 
       <div className="ml-[220px] max-w-[calc(100%-220px)] px-4 py-8 md:px-8">
         <section className="flex flex-col items-center">
-          <div className={`flex w-full max-w-[900px] flex-col overflow-hidden ${isKorblox || isEightBit ? 'gap-5 border-0 bg-transparent' : 'gap-0 rounded-xl border border-[#3b3b3b] bg-[#232323]'} md:flex-row`}>
-            <div className={isKorblox ? "flex w-full shrink-0 flex-col md:w-[400px]" : "contents"}>
-            <div className={`relative aspect-square w-full shrink-0 md:aspect-auto md:h-[400px] ${isKorblox ? 'overflow-hidden rounded-xl border border-[#3b3b3b] bg-[#232323] md:w-[400px]' : 'overflow-hidden rounded-none border border-[#3b3b3b] bg-[#232323] md:w-[400px]'}`}>
+          <div className="flex w-full max-w-[900px] flex-col gap-5 overflow-hidden border-0 bg-transparent md:flex-row">
+            <div className="flex w-full shrink-0 flex-col md:w-[400px]">
+            <div className="relative aspect-square w-full shrink-0 overflow-hidden rounded-xl border border-[#3b3b3b] bg-[#232323] md:aspect-auto md:h-[400px] md:w-[400px]">
             <div className={`absolute inset-0 ${show2D || isHeadless ? 'block' : 'hidden'}`}>
               {robloxThumbnail ? (
                 <img src={robloxThumbnail} alt={item.name} className="absolute inset-0 h-full w-full object-contain p-2" />
@@ -180,20 +180,18 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <button type="button" onClick={() => setShow2D((value) => !value)} aria-pressed={!show2D} className="rounded-lg border border-white/20 bg-[#333] px-4 py-2 text-sm font-bold text-white shadow-lg transition hover:bg-[#444]">{show2D ? '3D' : '2D'}</button>
             </div>}
           </div>
-            {isKorblox && <div className="mt-2 flex items-center gap-1.5 self-start rounded-md bg-black/60 px-2 py-1 text-sm text-white"><span className="text-xl leading-none text-white">★</span><span>3.4M</span></div>}
+            <div className="mt-2 flex items-center gap-1.5 self-start rounded-md bg-black/60 px-2 py-1 text-sm text-white"><span className="text-xl leading-none text-white">★</span><span>{item.favorites.toLocaleString('en-US')}</span></div>
             </div>
 
-          <div className={`flex min-w-0 flex-1 flex-col gap-4 text-white ${isKorblox || isEightBit ? '' : 'border-t border-white/10 bg-[#232323] p-5 md:border-l md:border-t-0 md:p-6'}`}>
+          <div className="flex min-w-0 flex-1 flex-col gap-4 text-white">
             <div>
-              {!isEightBit && <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">{isKorblox ? '' : 'Bundle'}</p>}
               <div className="flex items-center gap-2.5"><h1 className="text-3xl font-bold tracking-tight md:text-4xl">{item.name}</h1>{isKorblox && <span className="relative mt-2 inline-flex shrink-0"><ShoppingCart aria-label="Shopping cart" className="size-6 text-white" /><span className="absolute -right-2 -top-2 flex size-4 items-center justify-center rounded-full bg-[#335fff] text-[10px] font-bold leading-none text-white">0</span></span>}</div>
               <div className="mt-2 flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm text-muted-foreground">By <span className="font-semibold text-foreground">Roblox</span><VerifiedBadge className="size-4" />{isKorblox && <span className="ml-2 inline-flex items-center gap-1.5 font-semibold text-[#00b06f]"><span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-[#00b06f] text-white"><Check className="size-3.5 stroke-[3]" /></span>Item Owned</span>}</div>{isKorblox && <p className="mt-1 text-sm text-muted-foreground">This item is available in your inventory</p>}
               <div className="mt-3 h-px w-full bg-border" />
             </div>
 
-            {(isHeadless || isEightBit) && <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>}
 
-            <div className={`mt-2 flex flex-col gap-3 w-full ${isKorblox ? 'max-w-[360px]' : ''}`}>
+            <div className="mt-2 flex w-full max-w-[360px] flex-col gap-3">
               {isKorblox ? (
                 <div className="flex w-full items-center justify-between border-b border-white/10 pb-3 text-sm">
                   <span className="font-medium text-muted-foreground">Price</span>
@@ -223,13 +221,13 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               </>}
             </div>
 
-            {isKorblox && <dl className="mt-2 grid grid-cols-[112px_minmax(0,1fr)] items-start gap-x-5 gap-y-4 border-t border-border pt-5 text-sm sm:grid-cols-[128px_minmax(0,1fr)]">
-              <dt className="font-medium text-muted-foreground">Tradable</dt><dd className="min-w-0 text-white">No</dd>
-              <dt className="flex items-center gap-1.5 font-medium text-muted-foreground">Type <span title="The category this item belongs to" className="inline-flex size-4 items-center justify-center rounded-full border border-current text-[10px] font-semibold leading-none">i</span></dt><dd className="min-w-0 text-white">Characters</dd>
-              <dt className="font-medium text-muted-foreground">Placement</dt><dd className="min-w-0 text-white">Full Body</dd>
-              <dt className="font-medium text-muted-foreground">Created</dt><dd className="min-w-0 text-white">Dec 26, 2013</dd>
-              <dt className="font-medium text-muted-foreground">Description</dt><dd className="min-w-0 break-words leading-6 text-white">His tribe is widely considered the best and strongest of the twelve Korblox tribes. No one dares challenge his authority.</dd>
-            </dl>}
+            <dl className="mt-2 grid grid-cols-[112px_minmax(0,1fr)] items-start gap-x-5 gap-y-4 border-t border-border pt-5 text-sm sm:grid-cols-[128px_minmax(0,1fr)]">
+              <dt className="font-medium text-muted-foreground">Tradable</dt><dd className="min-w-0 text-white">{isEightBit ? 'Yes' : 'No'}</dd>
+              <dt className="flex items-center gap-1.5 font-medium text-muted-foreground">Type <span title="The category this item belongs to" className="inline-flex size-4 items-center justify-center rounded-full border border-current text-[10px] font-semibold leading-none">i</span></dt><dd className="min-w-0 text-white">{isEightBit ? 'Accessory' : 'Characters'}</dd>
+              <dt className="font-medium text-muted-foreground">Placement</dt><dd className="min-w-0 text-white">{isEightBit ? 'Hat' : 'Full Body'}</dd>
+              <dt className="font-medium text-muted-foreground">Created</dt><dd className="min-w-0 text-white">{isHeadless ? 'Oct 31, 2013' : isEightBit ? 'Jun 12, 2009' : 'Dec 26, 2013'}</dd>
+              <dt className="font-medium text-muted-foreground">Description</dt><dd className="min-w-0 break-words leading-6 text-white">{item.description || 'A classic Roblox collectible.'}</dd>
+            </dl>
           </div>
           </div>
           {isEightBit && <div className="mt-8 w-full max-w-[900px] rounded-xl border border-[#3b3b3b] bg-[#232323] p-5 text-white">
