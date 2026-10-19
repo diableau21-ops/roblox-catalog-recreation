@@ -226,31 +226,31 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             </dl>
           </div>
           </div>
-          {isEightBit && <div className="mt-8 w-full max-w-[900px] overflow-hidden bg-[#f7f7f8] text-[#454545]">
+          {isEightBit && <div className="mt-8 w-full max-w-[900px] overflow-hidden bg-[#303030] text-[#e5e5e5]">
             <div className="px-5 pt-4">
-              <h2 className="text-[21px] font-semibold leading-7 text-[#343434]">Price Chart</h2>
+              <h2 className="text-[21px] font-semibold leading-7 text-[#f2f2f2]">Price Chart</h2>
               <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
-                <div className="flex items-center gap-6 text-[13px] text-[#9a9a9a]">
+                <div className="flex items-center gap-6 text-[13px] text-[#a8a8a8]">
                   <span className="flex items-center gap-2"><span className="h-[4px] w-[14px] rounded-full bg-[#00b957]" />Recent Average Price</span>
                   <span className="flex items-center gap-2"><span className="h-[4px] w-[14px] bg-[#dedede]" />Volume</span>
                 </div>
-                <select aria-label="Price chart period" value={priceRange} onChange={(event) => setPriceRange(event.target.value)} className="min-w-[180px] rounded-xl border border-[#c9c9c9] bg-white px-3 py-2 text-base text-[#555] outline-none focus:border-[#999]">
+                <select aria-label="Price chart period" value={priceRange} onChange={(event) => setPriceRange(event.target.value)} className="min-w-[180px] rounded-xl border border-[#555] bg-[#252525] px-3 py-2 text-base text-[#e5e5e5] outline-none focus:border-[#999]">
                   <option value="30 Days">30 Days</option><option value="90 Days">90 Days</option><option value="180 Days">180 Days</option>
                 </select>
               </div>
               <svg viewBox="0 0 960 190" role="img" aria-label={`Price Chart for 8-Bit Royal Crown, ${priceRange}`} className="mt-4 h-auto w-full">
-                {[35,75,115].map(y => <line key={y} x1="64" y1={y} x2="930" y2={y} stroke="#d6d6d6" />)}
-                <g fill="#777" fontSize="12"><text x="50" y="39" textAnchor="end">30K</text><text x="50" y="79" textAnchor="end">28K</text><text x="50" y="119" textAnchor="end">26K</text></g>
-                {Array.from({length:29},(_,i)=><line key={i} x1={70+i*30} y1={153-(i%5===0?18:i%3===0?11:0)} x2={70+i*30} y2="165" stroke="#bdbdbd" strokeWidth="1.5" />)}
-                <line x1="64" y1="165" x2="930" y2="165" stroke="#cbd5e1" />
+                {[35,75,115].map(y => <line key={y} x1="64" y1={y} x2="930" y2={y} stroke="#505050" />)}
+                <g fill="#bdbdbd" fontSize="12"><text x="50" y="39" textAnchor="end">30K</text><text x="50" y="79" textAnchor="end">28K</text><text x="50" y="119" textAnchor="end">26K</text></g>
+                {Array.from({length:29},(_,i)=><line key={i} x1={70+i*30} y1={153-(i%5===0?18:i%3===0?11:0)} x2={70+i*30} y2="165" stroke="#777777" strokeWidth="1.5" />)}
+                <line x1="64" y1="165" x2="930" y2="165" stroke="#5b5b5b" />
                 <path d={priceRange === '30 Days' ? 'M70 91 L100 83 L130 83 L160 94 L190 96 L220 88 L250 88 L280 48 L310 94 L340 103 L370 57 L400 100 L430 95 L460 72 L490 67 L520 74 L550 84 L580 87 L610 91 L640 96 L670 94 L700 83 L730 95 L760 78 L790 87 L820 91 L850 96 L880 87 L910 69 L930 91' : priceRange === '90 Days' ? 'M70 101 L100 91 L130 97 L160 88 L190 93 L220 81 L250 90 L280 63 L310 83 L340 98 L370 68 L400 93 L430 88 L460 74 L490 71 L520 78 L550 82 L580 87 L610 93 L640 89 L670 80 L700 94 L730 75 L760 82 L790 90 L820 85 L850 92 L880 77 L910 69 L930 86' : 'M70 108 L100 98 L130 100 L160 91 L190 96 L220 88 L250 91 L280 65 L310 89 L340 103 L370 72 L400 98 L430 92 L460 76 L490 69 L520 78 L550 85 L580 87 L610 94 L640 97 L670 90 L700 80 L730 94 L760 76 L790 86 L820 90 L850 96 L880 86 L910 71 L930 93'} fill="none" stroke="#00b957" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
                 {[[70,91],[100,83],[130,83],[160,94],[190,96],[220,88],[250,88],[280,48],[310,94],[340,103],[370,57],[400,100],[430,95],[460,72],[490,67],[520,74],[550,84],[580,87],[610,91],[640,96],[670,94],[700,83],[730,95],[760,78],[790,87],[820,91],[850,96],[880,87],[910,69],[930,91]].map(([x,y],i)=><circle key={i} cx={x} cy={y} r="3.6" fill="#00b957" />)}
-                <g fill="#888" fontSize="11">{['03/10','03/12','03/14','03/16','03/18','03/20','03/22','03/24','03/26','03/28','03/30','04/01','04/03','04/05','04/07'].map((d,i)=><text key={d} x={100+i*57} y="139" textAnchor="middle">{d}</text>)}</g>
+                <g fill="#a0a0a0" fontSize="11">{['03/10','03/12','03/14','03/16','03/18','03/20','03/22','03/24','03/26','03/28','03/30','04/01','04/03','04/05','04/07'].map((d,i)=><text key={d} x={100+i*57} y="139" textAnchor="middle">{d}</text>)}</g>
               </svg>
-              <div className="grid grid-cols-3 border-t border-[#cfd3d7] pb-5 pt-3 text-center">
-                <div><div className="text-[16px] font-semibold text-[#444]">Quantity Sold</div><div className="mt-2 text-[17px] text-[#333]">N/A</div></div>
-                <div><div className="text-[16px] font-semibold text-[#444]">Original Price</div><div className="mt-2 text-[17px] text-[#333]">300</div></div>
-                <div><div className="text-[16px] font-semibold text-[#444]">Average Price</div><div className="mt-2 text-[17px] text-[#333]">N/A</div></div>
+              <div className="grid grid-cols-3 border-t border-[#505050] pb-5 pt-3 text-center">
+                <div><div className="text-[16px] font-semibold text-[#e5e5e5]">Quantity Sold</div><div className="mt-2 text-[17px] text-[#f0f0f0]">N/A</div></div>
+                <div><div className="text-[16px] font-semibold text-[#e5e5e5]">Original Price</div><div className="mt-2 text-[17px] text-[#f0f0f0]">300</div></div>
+                <div><div className="text-[16px] font-semibold text-[#e5e5e5]">Average Price</div><div className="mt-2 text-[17px] text-[#f0f0f0]">N/A</div></div>
               </div>
             </div>
           </div>}
