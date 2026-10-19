@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { SlidersHorizontal } from 'lucide-react'
+import { ShoppingCart, SlidersHorizontal, X } from 'lucide-react'
 import { catalogItems, categories, type Category } from '@/lib/catalog-data'
 import { cn } from '@/lib/utils'
 import { SiteHeader } from './site-header'
@@ -147,6 +147,8 @@ export function CatalogApp() {
   const [favorites, setFavorites] = useState<Set<number>>(() => new Set())
   const [openId, setOpenId] = useState<number | null>(null)
   const [robuxOpen, setRobuxOpen] = useState(false)
+  const [cartItems, setCartItems] = useState<number[]>([])
+  const [cartOpen, setCartOpen] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
   const toastTimer = useRef<ReturnType<typeof setTimeout>>(null)
 
@@ -200,6 +202,8 @@ export function CatalogApp() {
   }
 
   const openItem = catalogItems.find((i) => i.id === openId) ?? null
+  const cartProducts = cartItems.map((id) => catalogItems.find((item) => item.id === id)).filter((item): item is (typeof catalogItems)[number] => Boolean(item))
+  const cartTotal = cartProducts.reduce((total, item) => total + (item.price ?? 0), 0)
   const categoryLabel = categories.find((c) => c.id === category)?.label ?? 'All Categories'
 
   return (
@@ -234,6 +238,12 @@ export function CatalogApp() {
                 {t(items.length === 1 ? 'result' : 'results')}
               </p>
             </div>
+            <div className="flex items-center gap-2">
+            <button type="button" onClick={() => setCartOpen(true)} aria-label={`Shopping cart, ${cartItems.length} items`} className="relative flex h-9 items-center gap-2 rounded-lg border border-border bg-input px-3 text-sm font-semibold hover:bg-secondary">
+              <ShoppingCart className="size-4" />
+              <span>Cart</span>
+              {cartItems.length > 0 && <span className="flex min-w-5 items-center justify-center rounded-full bg-primary px-1 text-xs text-primary-foreground">{cartItems.length}</span>}
+            </button>
             <label className="flex items-center gap-2 text-sm">
               <SlidersHorizontal className="size-4 text-muted-foreground" aria-hidden="true" />
               <span className="sr-only">Sort by</span>
@@ -249,6 +259,7 @@ export function CatalogApp() {
                 ))}
               </select>
             </label>
+            </div>
           </div>
 
           <div className="-mx-3 mt-4 flex gap-2 overflow-x-auto px-3 pb-2 lg:mx-0 lg:mt-5 lg:px-0" role="group" aria-label="Categories">
@@ -363,10 +374,34 @@ export function CatalogApp() {
             notify(`You purchased ${openItem.name}!`)
           }}
           onToggleFavorite={() => toggleFavorite(openItem.id)}
+          onAddToCart={() => {
+            setCartItems((items) => [...items, openItem.id])
+            setOpenId(null)
+            notify(`${openItem.name} added to cart`)
+          }}
           onTryOn={() => notify(`Trying on ${openItem.name}`)}
           onBuyRobux={() => setRobuxOpen(true)}
           onNotify={notify}
         />
+      )}
+
+      {cartOpen && (
+        <div className="fixed inset-0 z-[80] flex justify-end bg-black/60" onClick={() => setCartOpen(false)}>
+          <section role="dialog" aria-modal="true" aria-labelledby="cart-title" onClick={(event) => event.stopPropagation()} className="flex h-full w-full max-w-md flex-col border-l border-border bg-card p-5 text-foreground shadow-2xl">
+            <div className="flex items-center justify-between gap-3 border-b border-border pb-4">
+              <h2 id="cart-title" className="text-xl font-bold">Shopping Cart ({cartItems.length})</h2>
+              <button type="button" onClick={() => setCartOpen(false)} aria-label="Close cart" className="rounded-lg p-2 hover:bg-secondary"><X className="size-5" /></button>
+            </div>
+            {cartProducts.length === 0 ? (
+              <div className="flex flex-1 flex-col items-center justify-center gap-3 text-center"><ShoppingCart className="size-10 text-muted-foreground" /><p className="font-semibold">Your cart is empty</p><p className="text-sm text-muted-foreground">Open an item and choose Add to Cart to put it here.</p><button type="button" onClick={() => setCartOpen(false)} className="rounded-lg bg-secondary px-4 py-2 text-sm font-semibold hover:bg-secondary/80">Continue shopping</button></div>
+            ) : (
+              <>
+                <ul className="flex-1 space-y-3 overflow-y-auto py-4">{cartProducts.map((item, index) => <li key={`${item.id}-${index}`} className="flex items-center gap-3 rounded-lg border border-border p-3"><div className="min-w-0 flex-1"><p className="truncate font-semibold">{item.name}</p><p className="text-sm text-muted-foreground">{item.price === null ? 'Off Sale' : `${item.price.toLocaleString('en-US')} Robux`}</p></div><button type="button" onClick={() => setCartItems((items) => items.filter((_, i) => i !== index))} className="rounded-md px-2 py-1 text-sm text-muted-foreground hover:bg-secondary">Remove</button></li>)}</ul>
+                <div className="border-t border-border pt-4"><div className="mb-4 flex items-center justify-between font-bold"><span>Total</span><span>{cartTotal.toLocaleString('en-US')} Robux</span></div><button type="button" onClick={() => { const total = cartProducts.reduce((sum, item) => sum + (item.price ?? 0), 0); if (total > balance) { setCartOpen(false); setRobuxOpen(true); notify('You need more Robux to buy these items'); return } setBalance((value) => value - total); setOwned((previous) => new Set([...previous, ...cartProducts.map((item) => item.id)])); setCartItems([]); setCartOpen(false); notify('Cart purchased successfully') }} className="h-11 w-full rounded-lg bg-success font-bold text-white hover:bg-success/90">Buy all</button></div>
+              </>
+            )}
+          </section>
+        </div>
       )}
 
       {robuxOpen && (
