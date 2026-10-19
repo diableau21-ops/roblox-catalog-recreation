@@ -128,7 +128,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   const [customRobux, setCustomRobux] = useState('800')
   const [show2D, setShow2D] = useState(true)
   const [tryOn, setTryOn] = useState(false)
-  const [priceRange, setPriceRange] = useState('1M')
+  const [priceRange, setPriceRange] = useState('180 Days')
   const notify = (_msg: string) => {}
   const isHeadless = id === '201' || slug.toLowerCase().includes('headless')
   const isEightBit = id === '14' || slug.toLowerCase().includes('8-bit')
@@ -226,25 +226,41 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             </dl>
           </div>
           </div>
-          {isEightBit && <div className="mt-8 w-full max-w-[900px] rounded-xl border border-[#3b3b3b] bg-[#232323] p-5 text-white">
+          {isEightBit && <div className="mt-8 w-full max-w-[900px] rounded-xl border border-[#393b3d] bg-[#232527] p-5 text-white">
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <h2 className="text-xl font-bold">Price Chart</h2>
-              <div className="flex flex-wrap gap-1.5">
-                {['30D', '90D', 'All'].map((range) => <button key={range} type="button" onClick={() => setPriceRange(range)} className={`rounded-md px-3 py-1.5 text-xs font-semibold transition ${priceRange === range ? 'bg-white text-[#222]' : 'bg-[#333] text-gray-300 hover:bg-[#444]'}`}>{range}</button>)}
-              </div>
+              <h2 className="text-lg font-semibold">Price Chart</h2>
+              <label className="flex items-center gap-2 text-sm text-white/80">
+                <span className="sr-only">Chart period</span>
+                <select value={priceRange} onChange={(event) => setPriceRange(event.target.value)} className="rounded-md border border-[#55585b] bg-[#343638] px-3 py-2 text-sm text-white outline-none focus:border-white">
+                  <option value="30 Days">30 Days</option>
+                  <option value="90 Days">90 Days</option>
+                  <option value="180 Days">180 Days</option>
+                </select>
+              </label>
             </div>
-            <div className="mt-5 flex items-end justify-between gap-4">
-              <div><p className="text-xs text-gray-400">Current price</p><p className="mt-1 text-2xl font-bold">27,849 <span className="text-sm font-medium text-gray-400">Robux</span></p></div>
-              <p className="text-xs text-gray-400">Price history</p>
+            <div className="mt-5 grid grid-cols-2 gap-x-5 gap-y-4 border-b border-white/10 pb-5 sm:grid-cols-3">
+              <div><p className="text-xs text-white/55">Recent Average Price</p><p className="mt-1 text-lg font-semibold">27,323 <span className="text-xs font-normal text-white/55">Robux</span></p></div>
+              <div><p className="text-xs text-white/55">Volume</p><p className="mt-1 text-lg font-semibold">111</p></div>
+              <div><p className="text-xs text-white/55">Quantity Sold</p><p className="mt-1 text-lg font-semibold">802</p></div>
             </div>
-            <div className="mt-4 w-full overflow-hidden">
-              <svg viewBox="0 0 760 220" role="img" aria-label={`8-Bit Royal Crown price history, range ${priceRange}`} className="h-auto w-full">
-                {[35, 75, 115, 155, 195].map((y) => <line key={y} x1="0" y1={y} x2="760" y2={y} stroke="#444" strokeWidth="1" />)}
-                <defs><linearGradient id="eightBitChartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#00b06f" stopOpacity=".3" /><stop offset="100%" stopColor="#00b06f" stopOpacity="0" /></linearGradient></defs>
-                <path d={priceRange === '30D' ? 'M0 145 L70 135 L140 150 L210 112 L280 120 L350 95 L420 110 L490 78 L560 92 L630 62 L700 70 L760 48 L760 210 L0 210 Z' : priceRange === '90D' ? 'M0 165 L70 140 L140 152 L210 100 L280 125 L350 90 L420 108 L490 65 L560 80 L630 55 L700 68 L760 35 L760 210 L0 210 Z' : priceRange === '90D' ? 'M0 180 L70 155 L140 160 L210 130 L280 145 L350 95 L420 120 L490 85 L560 92 L630 48 L700 65 L760 28 L760 210 L0 210 Z' : priceRange === 'All' ? 'M0 190 L70 175 L140 180 L210 150 L280 158 L350 125 L420 140 L490 95 L560 110 L630 72 L700 60 L760 25 L760 210 L0 210 Z' : 'M0 175 L70 155 L140 165 L210 125 L280 140 L350 100 L420 118 L490 82 L560 100 L630 55 L700 68 L760 32 L760 210 L0 210 Z'} fill="url(#eightBitChartFill)" />
-                <path d={priceRange === '1D' ? 'M0 145 L70 135 L140 150 L210 112 L280 120 L350 95 L420 110 L490 78 L560 92 L630 62 L700 70 L760 48' : priceRange === '1W' ? 'M0 165 L70 140 L140 152 L210 100 L280 125 L350 90 L420 108 L490 65 L560 80 L630 55 L700 68 L760 35' : priceRange === '3M' ? 'M0 180 L70 155 L140 160 L210 130 L280 145 L350 95 L420 120 L490 85 L560 92 L630 48 L700 65 L760 28' : priceRange === '1Y' || priceRange === 'All' ? 'M0 190 L70 175 L140 180 L210 150 L280 158 L350 125 L420 140 L490 95 L560 110 L630 72 L700 60 L760 25' : 'M0 175 L70 155 L140 165 L210 125 L280 140 L350 100 L420 118 L490 82 L560 100 L630 55 L700 68 L760 32'} fill="none" stroke="#00b06f" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+            <div className="mt-5 grid grid-cols-2 gap-5">
+              <div><p className="text-xs text-white/55">Original Price</p><p className="mt-1 text-base font-semibold">300 <span className="text-xs font-normal text-white/55">Robux</span></p></div>
+              <div><p className="text-xs text-white/55">Average Price</p><p className="mt-1 text-base font-semibold">27,323 <span className="text-xs font-normal text-white/55">Robux</span></p></div>
+            </div>
+            <div className="mt-5 w-full overflow-hidden">
+              <svg viewBox="0 0 760 250" role="img" aria-label={`8-Bit Royal Crown price chart for ${priceRange}`} className="h-auto w-full">
+                {[30, 75, 120, 165, 210].map((y) => <line key={y} x1="55" y1={y} x2="750" y2={y} stroke="#45484a" strokeWidth="1" />)}
+                {[55, 194, 333, 472, 611, 750].map((x) => <line key={x} x1={x} y1="30" x2={x} y2="210" stroke="#36393b" strokeWidth="1" />)}
+                <g fill="#a6a8aa" fontSize="11">
+                  <text x="48" y="34" textAnchor="end">30K</text><text x="48" y="79" textAnchor="end">28K</text><text x="48" y="124" textAnchor="end">26K</text><text x="48" y="169" textAnchor="end">24K</text><text x="48" y="214" textAnchor="end">22K</text>
+                  <text x="55" y="235">Start</text><text x="750" y="235" textAnchor="end">Today</text>
+                </g>
+                <defs><linearGradient id="eightBitChartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#00a2ff" stopOpacity=".25" /><stop offset="100%" stopColor="#00a2ff" stopOpacity="0" /></linearGradient></defs>
+                <path d={priceRange === '30 Days' ? 'M55 150 L105 132 L155 145 L205 108 L255 121 L305 95 L355 114 L405 85 L455 102 L505 68 L555 84 L605 61 L655 73 L705 48 L750 55 L750 210 L55 210 Z' : priceRange === '90 Days' ? 'M55 175 L105 155 L155 163 L205 130 L255 145 L305 112 L355 127 L405 92 L455 105 L505 76 L555 88 L605 60 L655 70 L705 42 L750 50 L750 210 L55 210 Z' : 'M55 190 L105 172 L155 180 L205 150 L255 159 L305 130 L355 145 L405 108 L455 121 L505 91 L555 104 L605 72 L655 81 L705 52 L750 42 L750 210 L55 210 Z'} fill="url(#eightBitChartFill)" />
+                <path d={priceRange === '30 Days' ? 'M55 150 L105 132 L155 145 L205 108 L255 121 L305 95 L355 114 L405 85 L455 102 L505 68 L555 84 L605 61 L655 73 L705 48 L750 55' : priceRange === '90 Days' ? 'M55 175 L105 155 L155 163 L205 130 L255 145 L305 112 L355 127 L405 92 L455 105 L505 76 L555 88 L605 60 L655 70 L705 42 L750 50' : 'M55 190 L105 172 L155 180 L205 150 L255 159 L305 130 L355 145 L405 108 L455 121 L505 91 L555 104 L605 72 L655 81 L705 52 L750 42'} fill="none" stroke="#00a2ff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </div>
+            <p className="mt-2 text-xs text-white/45">Illustrative chart layout; historical values are not connected to Roblox live data.</p>
           </div>}
         </section>
       </div>
