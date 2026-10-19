@@ -43,13 +43,13 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
 
         <label className="relative mx-auto flex min-w-0 max-w-[600px] flex-1 items-center">
           <span className="sr-only">Search the Marketplace</span>
-          <Search className="pointer-events-none absolute left-3 size-5 text-muted-foreground" />
+          <Search className="pointer-events-none absolute left-2.5 size-[18px] text-[#606162]" />
           <input
             type="search"
             value={query}
             onChange={(e) => onQueryChange(e.target.value)}
-            placeholder="Search Marketplace"
-            className="h-9 w-full rounded-lg border border-border bg-input pl-10 pr-3 text-sm text-foreground placeholder:text-muted-foreground transition-colors focus:border-foreground/60 focus:outline-none focus:ring-2 focus:ring-foreground/10 sm:h-10 sm:text-base"
+            placeholder="Search"
+            className="h-8 w-full rounded-md border border-[#bdbebe] bg-[#f2f4f5] pl-9 pr-3 text-sm text-[#393b3d] placeholder:text-[#606162] transition-colors focus:border-[#606162] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#606162] sm:h-9 sm:text-sm"
           />
         </label>
 
