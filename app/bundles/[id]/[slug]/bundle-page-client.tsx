@@ -285,9 +285,15 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           {giftSearching && <p className="mt-4 text-sm text-muted-foreground">Looking for Roblox players…</p>}
           {!giftSearching && giftSearchMessage && <p role="status" className="mt-4 text-sm text-muted-foreground">{giftSearchMessage}</p>}
           {giftSelectedPlayer && <div className="mt-4 space-y-3">
-            <div className="flex items-center gap-3 rounded-lg bg-secondary p-3 text-sm">
-              {giftSelectedPlayer.avatarUrl ? <img src={giftSelectedPlayer.avatarUrl} alt="" className="size-14 shrink-0 rounded-full object-cover" /> : <span aria-hidden="true" className="flex size-14 shrink-0 items-center justify-center rounded-full bg-background text-muted-foreground">👤</span>}
-              <div className="min-w-0"><p>Gift recipient: <span className="font-semibold">{giftSelectedPlayer.displayName} (@{giftSelectedPlayer.name})</span></p><p className="mt-1 text-xs text-muted-foreground">Item: {item.name}</p></div>
+            <div className="flex flex-col gap-3 rounded-lg bg-secondary p-3 text-sm">
+              <div className="flex items-center gap-3">
+                {giftSelectedPlayer.avatarUrl ? <img src={giftSelectedPlayer.avatarUrl} alt="" className="size-14 shrink-0 rounded-full object-cover" /> : <span aria-hidden="true" className="flex size-14 shrink-0 items-center justify-center rounded-full bg-background text-muted-foreground">👤</span>}
+                <div className="min-w-0"><p>Gift recipient: <span className="font-semibold">{giftSelectedPlayer.displayName} (@{giftSelectedPlayer.name})</span></p><p className="mt-1 text-xs text-muted-foreground">Item: {item.name}</p></div>
+              </div>
+              <div className="flex items-center gap-3 border-t border-border/70 pt-3">
+                <img src={itemImage} alt={item.name} className="size-16 shrink-0 rounded-md bg-background object-contain p-1" />
+                <div className="min-w-0"><p className="font-semibold">{item.name}</p><p className="mt-1 text-xs text-muted-foreground">Item you are gifting</p></div>
+              </div>
             </div>
             <div className="flex items-center justify-between rounded-lg border border-border p-3 text-sm">
               <span className="text-muted-foreground">Price</span>
