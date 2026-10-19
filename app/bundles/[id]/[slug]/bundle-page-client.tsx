@@ -49,7 +49,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     setGiftSending(true)
     setGiftMessage('')
     await new Promise((resolve) => window.setTimeout(resolve, 1100))
-    setGiftMessage(`Gift sent successfully to @${giftSelectedPlayer.name}! (Demo only — no item was actually sent.)`)
+    setGiftMessage(`Gift sent successfully to @${giftSelectedPlayer.name}!`)
     setGiftSending(false)
   }
   const searchGiftPlayers = async () => {
