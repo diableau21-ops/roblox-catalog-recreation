@@ -226,41 +226,33 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             </dl>
           </div>
           </div>
-          {isEightBit && <div className="mt-8 w-full max-w-[900px] rounded-xl border border-[#393b3d] bg-[#232527] p-5 text-white">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <h2 className="text-lg font-semibold">Price Chart</h2>
-              <label className="flex items-center gap-2 text-sm text-white/80">
-                <span className="sr-only">Chart period</span>
-                <select value={priceRange} onChange={(event) => setPriceRange(event.target.value)} className="rounded-md border border-[#55585b] bg-[#343638] px-3 py-2 text-sm text-white outline-none focus:border-white">
-                  <option value="30 Days">30 Days</option>
-                  <option value="90 Days">90 Days</option>
-                  <option value="180 Days">180 Days</option>
+          {isEightBit && <div className="mt-8 w-full max-w-[900px] overflow-hidden bg-[#f7f7f8] text-[#454545]">
+            <div className="px-5 pt-4">
+              <h2 className="text-[21px] font-semibold leading-7 text-[#343434]">Price Chart</h2>
+              <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-6 text-[13px] text-[#9a9a9a]">
+                  <span className="flex items-center gap-2"><span className="h-[4px] w-[14px] rounded-full bg-[#00b957]" />Recent Average Price</span>
+                  <span className="flex items-center gap-2"><span className="h-[4px] w-[14px] bg-[#dedede]" />Volume</span>
+                </div>
+                <select aria-label="Price chart period" value={priceRange} onChange={(event) => setPriceRange(event.target.value)} className="min-w-[180px] rounded-xl border border-[#c9c9c9] bg-white px-3 py-2 text-base text-[#555] outline-none focus:border-[#999]">
+                  <option value="30 Days">30 Days</option><option value="90 Days">90 Days</option><option value="180 Days">180 Days</option>
                 </select>
-              </label>
-            </div>
-            <div className="mt-5 grid grid-cols-2 gap-x-5 gap-y-4 border-b border-white/10 pb-5 sm:grid-cols-3">
-              <div><p className="text-xs text-white/55">Recent Average Price</p><p className="mt-1 text-lg font-semibold">27,323 <span className="text-xs font-normal text-white/55">Robux</span></p></div>
-              <div><p className="text-xs text-white/55">Volume</p><p className="mt-1 text-lg font-semibold">111</p></div>
-              <div><p className="text-xs text-white/55">Quantity Sold</p><p className="mt-1 text-lg font-semibold">802</p></div>
-            </div>
-            <div className="mt-5 grid grid-cols-2 gap-5">
-              <div><p className="text-xs text-white/55">Original Price</p><p className="mt-1 text-base font-semibold">300 <span className="text-xs font-normal text-white/55">Robux</span></p></div>
-              <div><p className="text-xs text-white/55">Average Price</p><p className="mt-1 text-base font-semibold">27,323 <span className="text-xs font-normal text-white/55">Robux</span></p></div>
-            </div>
-            <div className="mt-5 w-full overflow-hidden">
-              <svg viewBox="0 0 760 250" role="img" aria-label={`8-Bit Royal Crown price chart for ${priceRange}`} className="h-auto w-full">
-                {[30, 75, 120, 165, 210].map((y) => <line key={y} x1="55" y1={y} x2="750" y2={y} stroke="#45484a" strokeWidth="1" />)}
-                {[55, 194, 333, 472, 611, 750].map((x) => <line key={x} x1={x} y1="30" x2={x} y2="210" stroke="#36393b" strokeWidth="1" />)}
-                <g fill="#a6a8aa" fontSize="11">
-                  <text x="48" y="34" textAnchor="end">30K</text><text x="48" y="79" textAnchor="end">28K</text><text x="48" y="124" textAnchor="end">26K</text><text x="48" y="169" textAnchor="end">24K</text><text x="48" y="214" textAnchor="end">22K</text>
-                  <text x="55" y="235">Start</text><text x="750" y="235" textAnchor="end">Today</text>
-                </g>
-                <defs><linearGradient id="eightBitChartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#00a2ff" stopOpacity=".25" /><stop offset="100%" stopColor="#00a2ff" stopOpacity="0" /></linearGradient></defs>
-                <path d={priceRange === '30 Days' ? 'M55 150 L105 132 L155 145 L205 108 L255 121 L305 95 L355 114 L405 85 L455 102 L505 68 L555 84 L605 61 L655 73 L705 48 L750 55 L750 210 L55 210 Z' : priceRange === '90 Days' ? 'M55 175 L105 155 L155 163 L205 130 L255 145 L305 112 L355 127 L405 92 L455 105 L505 76 L555 88 L605 60 L655 70 L705 42 L750 50 L750 210 L55 210 Z' : 'M55 190 L105 172 L155 180 L205 150 L255 159 L305 130 L355 145 L405 108 L455 121 L505 91 L555 104 L605 72 L655 81 L705 52 L750 42 L750 210 L55 210 Z'} fill="url(#eightBitChartFill)" />
-                <path d={priceRange === '30 Days' ? 'M55 150 L105 132 L155 145 L205 108 L255 121 L305 95 L355 114 L405 85 L455 102 L505 68 L555 84 L605 61 L655 73 L705 48 L750 55' : priceRange === '90 Days' ? 'M55 175 L105 155 L155 163 L205 130 L255 145 L305 112 L355 127 L405 92 L455 105 L505 76 L555 88 L605 60 L655 70 L705 42 L750 50' : 'M55 190 L105 172 L155 180 L205 150 L255 159 L305 130 L355 145 L405 108 L455 121 L505 91 L555 104 L605 72 L655 81 L705 52 L750 42'} fill="none" stroke="#00a2ff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              </div>
+              <svg viewBox="0 0 960 190" role="img" aria-label={`Price Chart for 8-Bit Royal Crown, ${priceRange}`} className="mt-4 h-auto w-full">
+                {[35,75,115].map(y => <line key={y} x1="64" y1={y} x2="930" y2={y} stroke="#d6d6d6" />)}
+                <g fill="#777" fontSize="12"><text x="50" y="39" textAnchor="end">30K</text><text x="50" y="79" textAnchor="end">28K</text><text x="50" y="119" textAnchor="end">26K</text></g>
+                {Array.from({length:29},(_,i)=><line key={i} x1={70+i*30} y1={153-(i%5===0?18:i%3===0?11:0)} x2={70+i*30} y2="165" stroke="#bdbdbd" strokeWidth="1.5" />)}
+                <line x1="64" y1="165" x2="930" y2="165" stroke="#cbd5e1" />
+                <path d={priceRange === '30 Days' ? 'M70 91 L100 83 L130 83 L160 94 L190 96 L220 88 L250 88 L280 48 L310 94 L340 103 L370 57 L400 100 L430 95 L460 72 L490 67 L520 74 L550 84 L580 87 L610 91 L640 96 L670 94 L700 83 L730 95 L760 78 L790 87 L820 91 L850 96 L880 87 L910 69 L930 91' : priceRange === '90 Days' ? 'M70 101 L100 91 L130 97 L160 88 L190 93 L220 81 L250 90 L280 63 L310 83 L340 98 L370 68 L400 93 L430 88 L460 74 L490 71 L520 78 L550 82 L580 87 L610 93 L640 89 L670 80 L700 94 L730 75 L760 82 L790 90 L820 85 L850 92 L880 77 L910 69 L930 86' : 'M70 108 L100 98 L130 100 L160 91 L190 96 L220 88 L250 91 L280 65 L310 89 L340 103 L370 72 L400 98 L430 92 L460 76 L490 69 L520 78 L550 85 L580 87 L610 94 L640 97 L670 90 L700 80 L730 94 L760 76 L790 86 L820 90 L850 96 L880 86 L910 71 L930 93'} fill="none" stroke="#00b957" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
+                {[[70,91],[100,83],[130,83],[160,94],[190,96],[220,88],[250,88],[280,48],[310,94],[340,103],[370,57],[400,100],[430,95],[460,72],[490,67],[520,74],[550,84],[580,87],[610,91],[640,96],[670,94],[700,83],[730,95],[760,78],[790,87],[820,91],[850,96],[880,87],[910,69],[930,91]].map(([x,y],i)=><circle key={i} cx={x} cy={y} r="3.6" fill="#00b957" />)}
+                <g fill="#888" fontSize="11">{['03/10','03/12','03/14','03/16','03/18','03/20','03/22','03/24','03/26','03/28','03/30','04/01','04/03','04/05','04/07'].map((d,i)=><text key={d} x={100+i*57} y="139" textAnchor="middle">{d}</text>)}</g>
               </svg>
+              <div className="grid grid-cols-3 border-t border-[#cfd3d7] pb-5 pt-3 text-center">
+                <div><div className="text-[16px] font-semibold text-[#444]">Quantity Sold</div><div className="mt-2 text-[17px] text-[#333]">N/A</div></div>
+                <div><div className="text-[16px] font-semibold text-[#444]">Original Price</div><div className="mt-2 text-[17px] text-[#333]">300</div></div>
+                <div><div className="text-[16px] font-semibold text-[#444]">Average Price</div><div className="mt-2 text-[17px] text-[#333]">N/A</div></div>
+              </div>
             </div>
-            <p className="mt-2 text-xs text-white/45">Illustrative chart layout; historical values are not connected to Roblox live data.</p>
           </div>}
         </section>
       </div>
