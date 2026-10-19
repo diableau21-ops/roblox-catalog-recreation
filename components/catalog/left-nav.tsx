@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 import {
   Gift,
   House,
@@ -32,6 +33,29 @@ const links = [
 ]
 
 export function LeftNav({ onNotify, onBuyRobux }: Props) {
+  const [profile, setProfile] = useState<{ id: number; name: string; displayName: string; avatarUrl?: string; hasVerifiedBadge?: boolean } | null>(null)
+
+  useEffect(() => {
+    const loadProfile = (event?: Event) => {
+      const eventProfile = (event as CustomEvent | undefined)?.detail
+      if (eventProfile) {
+        setProfile(eventProfile)
+        return
+      }
+      try {
+        const saved = window.localStorage.getItem('catalog-demo-profile')
+        setProfile(saved ? JSON.parse(saved) : null)
+      } catch {}
+    }
+    loadProfile()
+    window.addEventListener('catalog-profile-updated', loadProfile)
+    window.addEventListener('storage', loadProfile)
+    return () => {
+      window.removeEventListener('catalog-profile-updated', loadProfile)
+      window.removeEventListener('storage', loadProfile)
+    }
+  }, [])
+
   return (
     <>
       <nav
@@ -46,9 +70,10 @@ export function LeftNav({ onNotify, onBuyRobux }: Props) {
           className="mb-3 flex items-center gap-3 rounded-xl px-2 py-2.5 text-left transition-colors hover:bg-secondary"
         >
           <span className="relative size-9 overflow-hidden rounded-full bg-thumb">
-            <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/avatar.png`} alt="" fill sizes="36px" className="object-cover" />
+            {profile?.avatarUrl ? <img src={profile.avatarUrl} alt="" className="size-9 object-cover" /> : <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/avatar.png`} alt="" fill sizes="36px" className="object-cover" />}
+            <span aria-label="Online on this site" title="Online on this site" className="absolute bottom-0 right-0 size-3 rounded-full border-2 border-header bg-green-500" />
           </span>
-          <span className="text-base font-bold">Builderman</span>
+          <span className="min-w-0 flex-1 truncate text-base font-bold">{profile?.displayName || 'Builderman'}</span>
         </button>
         <ul className="flex flex-col gap-0.5">
           {links.map(({ label, icon: Icon, badge }) => (
