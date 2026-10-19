@@ -212,7 +212,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
             {profileResults.length > 0 && <div className="mt-3 max-h-64 space-y-2 overflow-y-auto">
               {profileResults.map((player) => <button key={player.id} type="button" onClick={() => chooseProfile(player)} className="flex w-full items-center gap-3 rounded-lg border border-border p-3 text-left hover:bg-secondary">
                 {player.avatarUrl ? <img src={player.avatarUrl} alt="" className="size-11 rounded-full object-cover" /> : <span className="flex size-11 items-center justify-center rounded-full bg-secondary">👤</span>}
-                <span className="min-w-0 flex-1"><span className="flex items-center gap-1 truncate font-semibold">{player.displayName}{player.hasVerifiedBadge && <BadgeCheck aria-label="Verified Roblox account" className="size-4 shrink-0 fill-[#335fff] text-white" />}</span><span className="block truncate text-sm text-muted-foreground">@{player.name}</span></span>
+                <span className="min-w-0 flex-1"><span className="flex items-center gap-1 truncate font-semibold">{player.displayName}{player.hasVerifiedBadge && <VerifiedBadge className="size-4 shrink-0" />}</span><span className="block truncate text-sm text-muted-foreground">@{player.name}</span></span>
                 <span className="text-sm font-semibold text-[#335fff]">Use</span>
               </button>)}
             </div>}
