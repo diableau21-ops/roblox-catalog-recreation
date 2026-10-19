@@ -221,13 +221,6 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                 </button>
                 <button type="button" onClick={() => { setGiftMessage(''); setGiftSelectedPlayer(null); setGiftOpen(true) }} className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"> Gift</button>
               </>}
-              {!isKorblox && <div className="flex flex-col items-center gap-1 rounded-md border border-border px-3 py-3 text-center">
-                <p className="flex items-center justify-center gap-1.5 text-sm font-semibold">
-                  <span aria-hidden="true" className="flex size-5 items-center justify-center rounded bg-white text-[10px] font-black text-[#232323]">R+</span>
-                  <span>Get 10% off with Roblox Plus</span>
-                </p>
-                <a href="https://www.roblox.com/plus" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-[#8ca0ff] underline underline-offset-2 hover:text-white">Get free trial</a>
-              </div>}
             </div>
 
             {isKorblox && <dl className="mt-2 grid grid-cols-[112px_minmax(0,1fr)] items-start gap-x-5 gap-y-4 border-t border-border pt-5 text-sm sm:grid-cols-[128px_minmax(0,1fr)]">
