@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import { Bell, Search, Settings, ChevronDown, ShoppingCart } from 'lucide-react'
+import { Bell, Search, Settings, ShoppingCart } from 'lucide-react'
 import { RobloxLogo, RobloxMark, RobuxIcon } from './robux-icon'
 
 type Props = {
@@ -19,8 +19,6 @@ const navLinks = ['Charts', 'Marketplace', 'Create', 'Robux'] as const
 
 export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, cartCount, onCart, onNotify }: Props) {
   const [searchOpen, setSearchOpen] = useState(false)
-  const [allOpen, setAllOpen] = useState(false)
-  const [searchCategory, setSearchCategory] = useState('All')
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
   const [profileQuery, setProfileQuery] = useState('')
@@ -99,9 +97,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, cartCoun
 
         <label className="relative mx-auto flex min-w-0 max-w-[600px] flex-1 items-center">
           <span className="sr-only">Search the Marketplace</span>
-          <button type="button" onClick={() => { setAllOpen((open) => !open); setSearchOpen(false) }} aria-expanded={allOpen} className="absolute left-0 z-10 flex h-full items-center gap-1 rounded-l-md border-r border-[#bdbebe] px-2.5 text-sm font-semibold text-[#393b3d] hover:bg-[#e6e8e9]">{searchCategory} <ChevronDown className="size-3.5" /></button>
-          {allOpen && <div className="absolute left-0 top-full z-[70] mt-1 w-44 overflow-hidden rounded-md border border-[#d5d7d8] bg-white py-1 text-[#393b3d] shadow-xl">{['All', 'Games', 'People', 'Marketplace', 'Communities', 'Creator Store'].map((category) => <button key={category} type="button" onClick={() => { setSearchCategory(category); setAllOpen(false) }} className="flex w-full items-center px-3 py-2 text-left text-sm hover:bg-[#e8e8e8]">{category}</button>)}</div>}
-          <Search className="pointer-events-none absolute left-[5.5rem] size-[18px] text-[#606162]" />
+          <Search className="pointer-events-none absolute left-2.5 size-[18px] text-[#606162]" />
           <input
             type="search"
             value={query}
@@ -110,9 +106,9 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, cartCoun
             onBlur={() => setTimeout(() => setSearchOpen(false), 150)}
             placeholder="Search"
             style={{ backgroundColor: "#f2f4f5", color: "#393b3d" }}
-            className="h-8 w-full rounded-md border border-[#bdbebe] !bg-[#f2f4f5] pl-[7.25rem] pr-3 text-sm text-[#393b3d] placeholder:text-[#606162] transition-colors focus:!bg-[#f2f4f5] focus:border-[#bdbebe] focus:outline-none focus:ring-1 focus:ring-[#bdbebe] sm:h-9 sm:text-sm"
+            className="h-8 w-full rounded-md border border-[#bdbebe] !bg-[#f2f4f5] pl-9 pr-3 text-sm text-[#393b3d] placeholder:text-[#606162] transition-colors focus:!bg-[#f2f4f5] focus:border-[#bdbebe] focus:outline-none focus:ring-1 focus:ring-[#bdbebe] sm:h-9 sm:text-sm"
           />
-          {searchOpen && query.trim() && !allOpen && (
+          {searchOpen && query.trim() && (
             <div className="absolute left-0 right-0 top-full z-[60] mt-1 overflow-hidden rounded-md border border-[#d5d7d8] bg-white py-1 text-[#393b3d] shadow-xl">
               {searchCategories.map((category) => (
                 <button
@@ -127,7 +123,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, cartCoun
                 >
                   <Search className="size-4 shrink-0 text-[#606162]" />
                   <span className="min-w-0 truncate">
-                    <span className="text-[#606162]">in </span>{category}
+                    <span className="text-[#606162]">In </span>{category}
                   </span>
                 </button>
               ))}
