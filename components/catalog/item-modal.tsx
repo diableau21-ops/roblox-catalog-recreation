@@ -172,10 +172,22 @@ export function ItemModal({
                 type="button"
                 disabled={!canBuy}
                 onClick={() => setConfirming(true)}
-                className="h-11 rounded-lg bg-success font-bold text-white hover:bg-success/90 disabled:cursor-not-allowed disabled:bg-secondary disabled:text-muted-foreground"
+                className="h-11 rounded-lg bg-[#335fff] font-bold text-white hover:bg-[#244be0] disabled:cursor-not-allowed disabled:bg-secondary disabled:text-muted-foreground"
               >
                 {effectivePrice === null ? 'Off Sale' : effectivePrice === 0 ? 'Get' : 'Buy'}
               </button>
+            )}
+
+            {!owned && effectivePrice !== null && !confirming && (
+              <div className="flex flex-col items-center gap-1 rounded-lg border border-border px-3 py-3 text-center">
+                <p className="flex items-center justify-center gap-1.5 text-sm font-semibold">
+                  <span aria-hidden="true" className="flex size-5 items-center justify-center rounded bg-foreground text-[10px] font-black text-background">R+</span>
+                  <span>Get 10% off with Roblox Plus</span>
+                </p>
+                <a href="https://www.roblox.com/plus" target="_blank" rel="noreferrer" className="text-sm font-semibold text-[#335fff] underline underline-offset-2 hover:text-[#244be0]">
+                  Get free trial
+                </a>
+              </div>
             )}
 
             {!owned && effectivePrice !== null && <button type="button" onClick={onAddToCart} className="h-10 rounded-lg border border-border text-sm font-semibold hover:bg-secondary">Add to Cart</button>}
