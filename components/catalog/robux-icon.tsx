@@ -12,17 +12,12 @@ export function RobuxIcon({ className }: { className?: string }) {
 }
 
 export function RobloxLogo({ className }: { className?: string }) {
-  const tilted = (
-    <span className="mx-[1px] inline-flex size-[0.72em] rotate-[15deg] items-center justify-center bg-current">
-      <span className="size-[0.24em] bg-header" />
-    </span>
-  )
   return (
     <span
       className={cn('inline-flex items-center text-[22px] font-black leading-none tracking-tight', className)}
-      aria-hidden="true"
+      aria-label="Roblox"
     >
-      R{tilted}BL{tilted}X
+      ROBLOX
     </span>
   )
 }
