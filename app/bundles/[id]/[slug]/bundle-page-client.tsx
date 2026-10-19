@@ -200,7 +200,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                 </div>
               ) : (
                 <div className="flex w-full items-center justify-between text-sm">
-                  <span className="font-medium text-muted-foreground">Price</span>
+                  <span className="font-medium text-muted-foreground">{isEightBit ? 'Best Price' : 'Price'}</span>
                   <Price price={item.price} />
                 </div>
               )}
