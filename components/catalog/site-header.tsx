@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import { Bell, Search, Settings, ShoppingCart } from 'lucide-react'
+import { Bell, Search, Settings, BadgeCheck } from 'lucide-react'
 import { RobloxLogo, RobloxMark, RobuxIcon } from './robux-icon'
 
 type Props = {
@@ -10,14 +10,12 @@ type Props = {
   query: string
   onQueryChange: (q: string) => void
   onBuyRobux: () => void
-  cartCount: number
-  onCart: () => void
   onNotify: (msg: string) => void
 }
 
 const navLinks = ['Charts', 'Marketplace', 'Create', 'Robux'] as const
 
-export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, cartCount, onCart, onNotify }: Props) {
+export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify }: Props) {
   const [searchOpen, setSearchOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
@@ -140,7 +138,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, cartCoun
             <span className="relative size-8 overflow-hidden rounded-full bg-thumb">
               {profile?.avatarUrl ? <img src={profile.avatarUrl} alt="" className="size-8 object-cover" /> : <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/avatar.png`} alt="" fill sizes="32px" className="object-cover" />}
             </span>
-            <span className="text-sm font-bold">{profile?.displayName || 'Builderman'}</span>
+            <span className="flex items-center gap-1 text-sm font-bold">{profile?.displayName || 'Builderman'}{profile?.hasVerifiedBadge && <BadgeCheck aria-label="Verified Roblox account" className="size-4 fill-[#335fff] text-white" />}</span>
           </button>
           <button
             type="button"
@@ -153,8 +151,6 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, cartCoun
               2
             </span>
           </button>
-          <button type="button" onClick={onBuyRobux} className="flex h-8 items-center rounded-md bg-[#335fff] px-2 text-xs font-bold text-white transition-colors hover:bg-[#244be0] sm:h-9 sm:px-3 sm:text-sm">Buy Robux</button>
-          <button type="button" onClick={onCart} aria-label="Shopping cart" className="relative rounded-lg p-2 transition-colors hover:bg-secondary"><ShoppingCart className="size-5" /><span className="absolute -right-0.5 -top-0.5 flex size-4 items-center justify-center rounded-full bg-[#335fff] text-[10px] font-bold text-white">{cartCount}</span></button>
           <button
             type="button"
             onClick={onBuyRobux}
@@ -192,7 +188,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, cartCoun
             </div>
             {profile && <div className="mt-4 flex items-center gap-3 rounded-lg border border-border p-3">
               {profile.avatarUrl ? <img src={profile.avatarUrl} alt="" className="size-12 rounded-full object-cover" /> : <span className="flex size-12 items-center justify-center rounded-full bg-secondary">👤</span>}
-              <div className="min-w-0"><p className="truncate font-semibold">{profile.displayName}</p><p className="truncate text-sm text-muted-foreground">@{profile.name}</p></div>
+              <div className="min-w-0"><p className="flex items-center gap-1 truncate font-semibold">{profile.displayName}{profile.hasVerifiedBadge && <BadgeCheck aria-label="Verified Roblox account" className="size-4 shrink-0 fill-[#335fff] text-white" />}</p><p className="truncate text-sm text-muted-foreground">@{profile.name}</p></div>
               <span className="ml-auto text-xs text-muted-foreground">Current profile</span>
             </div>}
             <p className="mt-4 text-sm text-muted-foreground">Enter your Roblox username to find your real avatar and profile name.</p>
@@ -204,7 +200,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, cartCoun
             {profileResults.length > 0 && <div className="mt-3 max-h-64 space-y-2 overflow-y-auto">
               {profileResults.map((player) => <button key={player.id} type="button" onClick={() => chooseProfile(player)} className="flex w-full items-center gap-3 rounded-lg border border-border p-3 text-left hover:bg-secondary">
                 {player.avatarUrl ? <img src={player.avatarUrl} alt="" className="size-11 rounded-full object-cover" /> : <span className="flex size-11 items-center justify-center rounded-full bg-secondary">👤</span>}
-                <span className="min-w-0 flex-1"><span className="block truncate font-semibold">{player.displayName}</span><span className="block truncate text-sm text-muted-foreground">@{player.name}</span></span>
+                <span className="min-w-0 flex-1"><span className="flex items-center gap-1 truncate font-semibold">{player.displayName}{player.hasVerifiedBadge && <BadgeCheck aria-label="Verified Roblox account" className="size-4 shrink-0 fill-[#335fff] text-white" />}</span><span className="block truncate text-sm text-muted-foreground">@{player.name}</span></span>
                 <span className="text-sm font-semibold text-[#335fff]">Use</span>
               </button>)}
             </div>}
