@@ -270,40 +270,43 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             <h2 id="gift-title" className="text-lg font-bold">Gift {item.name}</h2>
             <button type="button" onClick={() => setGiftOpen(false)} aria-label="Close" className="rounded-lg px-2 py-1 text-xl hover:bg-secondary">×</button>
           </div>
-          <p className="mt-2 text-sm text-muted-foreground">Search for the Roblox player you want to gift.</p>
-          <form className="mt-4 flex gap-2" onSubmit={(event) => { event.preventDefault(); void searchGiftPlayers() }}>
-            <input value={giftUsername} onChange={(event) => { setGiftUsername(event.target.value); setGiftSearchMessage(''); setGiftPlayers([]); setGiftSelectedPlayer(null); setGiftMessage('') }} placeholder="Search players (type at least 3 characters)" aria-label="Roblox player username" className="h-11 min-w-0 flex-1 rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-[#335fff]" />
-            <button type="submit" disabled={!giftUsername.trim() || giftSearching} className="h-11 rounded-lg bg-[#335fff] px-4 text-sm font-semibold text-white disabled:opacity-50">{giftSearching ? 'Searching…' : 'Search'}</button>
-          </form>
-          {giftPlayers.length > 0 && <div className="mt-4 max-h-64 space-y-2 overflow-y-auto">
-            {giftPlayers.map((player) => <button key={player.id} type="button" onClick={() => setGiftSelectedPlayer(player)} className={`flex w-full items-center justify-between rounded-lg border p-3 text-left transition ${giftSelectedPlayer?.id === player.id ? 'border-[#335fff] bg-[#335fff]/10' : 'border-border hover:bg-secondary'}`}>
-              <span className="flex min-w-0 items-center gap-3">
-                {player.avatarUrl ? <img src={player.avatarUrl} alt="" className="size-12 shrink-0 rounded-full bg-secondary object-cover" /> : <span aria-hidden="true" className="flex size-12 shrink-0 items-center justify-center rounded-full bg-secondary text-muted-foreground">👤</span>}
-                <span className="min-w-0"><span className="block truncate font-semibold">{player.displayName}</span><span className="block truncate text-sm text-muted-foreground">@{player.name}</span></span>
-              </span>
-              <span className="text-sm font-semibold text-[#335fff]">{giftSelectedPlayer?.id === player.id ? 'Selected' : 'Select'}</span>
-            </button>)}
-          </div>}
-          {giftSearching && <p className="mt-4 text-sm text-muted-foreground">Looking for Roblox players…</p>}
-          {!giftSearching && giftSearchMessage && <p role="status" className="mt-4 text-sm text-muted-foreground">{giftSearchMessage}</p>}
-          {giftSelectedPlayer && <div className="mt-4 space-y-3">
-            <div className="flex flex-col gap-2 rounded-lg bg-secondary p-2.5 text-xs">
-              <div className="flex items-center gap-3">
-                {giftSelectedPlayer.avatarUrl ? <img src={giftSelectedPlayer.avatarUrl} alt="" className="size-11 shrink-0 rounded-full object-cover" /> : <span aria-hidden="true" className="flex size-11 shrink-0 items-center justify-center rounded-full bg-background text-muted-foreground">👤</span>}
-                <div className="min-w-0"><p>Gift recipient: <span className="font-semibold">{giftSelectedPlayer.displayName} (@{giftSelectedPlayer.name})</span></p><p className="mt-1 text-xs text-muted-foreground">Item: {item.name}</p></div>
+          {giftSelectedPlayer ? (
+            <div className="mt-5 flex flex-col items-center text-center">
+              <img src={itemImage} alt={item.name} className="size-24 object-contain" />
+              <h3 className="mt-2 text-lg font-bold">{item.name}</h3>
+              <div className="mt-3 flex items-center gap-3">
+                {giftSelectedPlayer.avatarUrl ? <img src={giftSelectedPlayer.avatarUrl} alt="" className="size-12 rounded-full object-cover" /> : <span aria-hidden="true" className="flex size-12 items-center justify-center rounded-full bg-white/10 text-xl">👤</span>}
+                <div className="text-left">
+                  <p className="font-semibold">{giftSelectedPlayer.displayName}</p>
+                  <p className="text-sm text-white/70">@{giftSelectedPlayer.name}</p>
+                </div>
               </div>
-              <div className="flex items-center gap-3 border-t border-border/70 pt-3">
-                <img src={itemImage} alt={item.name} className="size-12 shrink-0 rounded-md bg-background object-contain p-1" />
-                <div className="min-w-0"><p className="font-semibold">{item.name}</p><p className="mt-1 text-xs text-muted-foreground">Item you are gifting</p></div>
-              </div>
+              <button type="button" onClick={() => void continueGift()} disabled={giftSending} className="mt-5 flex h-10 min-w-36 items-center justify-center gap-2 rounded-lg bg-[#335fff] px-6 text-sm font-bold text-white transition hover:bg-[#244be0] disabled:opacity-70">
+                {giftSending ? 'Sending…' : 'Gift'}
+              </button>
+              <button type="button" onClick={() => { setGiftSelectedPlayer(null); setGiftMessage(''); setGiftSearchMessage('') }} className="mt-3 text-xs text-white/70 underline hover:text-white">Choose another player</button>
             </div>
-            <div className="flex items-center justify-between rounded-lg border border-border p-3 text-sm">
-              <span className="text-muted-foreground">Price</span>
-              <span className="font-bold">{isKorblox ? <Price price={17000} /> : <Price price={item.price} />}</span>
-            </div>
-            <button type="button" onClick={() => void continueGift()} disabled={giftSending || !giftSelectedPlayer} className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[#335fff] px-4 text-sm font-bold text-white transition hover:bg-[#244be0] disabled:cursor-wait disabled:opacity-70">{giftSending && <span aria-hidden="true" className="size-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />}{giftSending ? 'Sending gift…' : 'Send Gift'}</button>
-          </div>}
-          {giftMessage && <div role="status" className="mt-2 rounded-lg border border-[#8ca0ff]/50 bg-[#10152c]/80 p-2.5 text-xs text-white backdrop-blur-sm"><p>{giftMessage}</p></div>}
+          ) : (
+            <>
+              <p className="mt-2 text-sm text-muted-foreground">Search for the Roblox player you want to gift.</p>
+              <form className="mt-4 flex gap-2" onSubmit={(event) => { event.preventDefault(); void searchGiftPlayers() }}>
+                <input value={giftUsername} onChange={(event) => { setGiftUsername(event.target.value); setGiftSearchMessage(''); setGiftPlayers([]); setGiftSelectedPlayer(null); setGiftMessage('') }} placeholder="Search players (type at least 3 characters)" aria-label="Roblox player username" className="h-11 min-w-0 flex-1 rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-[#335fff]" />
+                <button type="submit" disabled={!giftUsername.trim() || giftSearching} className="h-11 rounded-lg bg-[#335fff] px-4 text-sm font-semibold text-white disabled:opacity-50">{giftSearching ? 'Searching…' : 'Search'}</button>
+              </form>
+              {giftPlayers.length > 0 && <div className="mt-4 max-h-64 space-y-2 overflow-y-auto">
+                {giftPlayers.map((player) => <button key={player.id} type="button" onClick={() => { setGiftSelectedPlayer(player); setGiftMessage('') }} className="flex w-full items-center justify-between rounded-lg border border-white/15 p-3 text-left transition hover:border-[#335fff] hover:bg-white/5">
+                  <span className="flex min-w-0 items-center gap-3">
+                    {player.avatarUrl ? <img src={player.avatarUrl} alt="" className="size-12 shrink-0 rounded-full bg-white/10 object-cover" /> : <span aria-hidden="true" className="flex size-12 shrink-0 items-center justify-center rounded-full bg-white/10">👤</span>}
+                    <span className="min-w-0"><span className="block truncate font-semibold">{player.displayName}</span><span className="block truncate text-sm text-white/70">@{player.name}</span></span>
+                  </span>
+                  <span className="text-sm font-semibold text-[#8ca0ff]">Select</span>
+                </button>)}
+              </div>}
+              {giftSearching && <p className="mt-4 text-sm text-muted-foreground">Looking for Roblox players…</p>}
+              {!giftSearching && giftSearchMessage && <p role="status" className="mt-4 text-sm text-muted-foreground">{giftSearchMessage}</p>}
+            </>
+          )}
+                    {giftMessage && <div role="status" className="mt-2 rounded-lg border border-[#8ca0ff]/50 bg-[#10152c]/80 p-2.5 text-xs text-white backdrop-blur-sm"><p>{giftMessage}</p></div>}
           </div>
         </section>
       </div>}
