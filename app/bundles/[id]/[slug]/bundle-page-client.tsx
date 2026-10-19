@@ -263,7 +263,6 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
       </div>}
 
       {giftOpen && <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-black/70 p-3" onClick={() => setGiftOpen(false)}>
-        <div aria-hidden="true" className="gift-galaxy-backdrop pointer-events-none absolute inset-0" />
         <section role="dialog" aria-modal="true" aria-labelledby="gift-title" className="gift-galaxy-card relative z-10 w-full max-w-sm overflow-hidden rounded-xl border border-[#6d75ff]/60 p-4 shadow-2xl" onClick={(event) => event.stopPropagation()}>
           <div aria-hidden="true" className="gift-galaxy-card-bg pointer-events-none absolute inset-0" />
           <div className="relative z-10">
