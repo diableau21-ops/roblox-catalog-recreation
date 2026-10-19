@@ -212,3 +212,55 @@
   backface-visibility: visible;
   will-change: transform;
 }
+
+
+@keyframes gift-galaxy-drift {
+  0% { transform: translate3d(-2%, 1%, 0) rotate(0deg) scale(1); }
+  50% { transform: translate3d(2%, -1%, 0) rotate(8deg) scale(1.08); }
+  100% { transform: translate3d(-2%, 1%, 0) rotate(0deg) scale(1); }
+}
+
+@keyframes gift-galaxy-stars {
+  0%, 100% { opacity: 0.45; background-position: 0 0, 40px 60px, 90px 20px; }
+  50% { opacity: 0.9; background-position: 28px 35px, 5px 20px, 130px 65px; }
+}
+
+.gift-galaxy-backdrop {
+  background:
+    radial-gradient(ellipse at 18% 28%, rgb(75 35 180 / 48%), transparent 42%),
+    radial-gradient(ellipse at 82% 72%, rgb(20 105 210 / 40%), transparent 43%),
+    radial-gradient(ellipse at 65% 12%, rgb(150 45 220 / 26%), transparent 38%),
+    #050713;
+  isolation: isolate;
+}
+
+.gift-galaxy-backdrop::before {
+  content: "";
+  position: absolute;
+  inset: -18%;
+  background:
+    radial-gradient(ellipse at 35% 45%, rgb(89 65 255 / 25%), transparent 26%),
+    radial-gradient(ellipse at 70% 58%, rgb(0 190 255 / 18%), transparent 30%),
+    radial-gradient(ellipse at 52% 18%, rgb(255 70 220 / 14%), transparent 24%);
+  filter: blur(24px);
+  animation: gift-galaxy-drift 16s ease-in-out infinite;
+}
+
+.gift-galaxy-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(2px 2px at 20px 30px, rgb(255 255 255 / 95%) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 40px 60px, rgb(170 205 255 / 90%) 50%, transparent 100%),
+    radial-gradient(1px 1px at 90px 20px, rgb(255 255 255 / 85%) 50%, transparent 100%);
+  background-size: 150px 120px;
+  animation: gift-galaxy-stars 9s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gift-galaxy-backdrop::before,
+  .gift-galaxy-backdrop::after {
+    animation: none;
+  }
+}
