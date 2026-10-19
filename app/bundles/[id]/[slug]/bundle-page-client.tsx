@@ -282,7 +282,6 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <p className="mt-3 text-sm text-white/75">{item.name}</p>
               {giftSelectedPlayer && <p className="mt-1 text-sm text-white/75">To {giftSelectedPlayer.displayName} (@{giftSelectedPlayer.name})</p>}
               <button type="button" onClick={() => { setGiftOpen(false); setGiftSuccess(false) }} className="mt-7 h-10 min-w-32 rounded-lg bg-[#335fff] px-6 text-sm font-bold text-white transition hover:bg-[#244be0]">Done</button>
-              <p className="mt-3 text-[11px] text-white/45">Demo interface only — no actual Roblox gift was sent.</p>
             </div>
           ) : (
           <>
