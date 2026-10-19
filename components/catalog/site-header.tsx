@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import { Bell, Search, Settings, BadgeCheck } from 'lucide-react'
+import { Bell, Search, Settings } from 'lucide-react'
 import { RobloxLogo, RobloxMark, RobuxIcon } from './robux-icon'
 
 type Props = {
@@ -14,6 +14,18 @@ type Props = {
 }
 
 const navLinks = ['Charts', 'Marketplace', 'Create', 'Robux'] as const
+
+function VerifiedBadge({ className = 'size-4' }: { className?: string }) {
+  return (
+    <svg aria-label="Verified Roblox account" role="img" viewBox="0 0 24 24" className={className} fill="none">
+      <path
+        d="M12 1.5l2.25 2.1 3.05-.35 1.05 2.88 2.8 1.25-.55 3.02L22.5 12l-1.9 2.25.55 3.02-2.8 1.25-1.05 2.88-3.05-.35L12 23.2l-2.25-2.1-3.05.35-1.05-2.88-2.8-1.25.55-3.02L1.5 12l1.9-2.25-.55-3.02 2.8-1.25L6.7 2.6l3.05.35L12 1.5Z"
+        fill="#335FFF"
+      />
+      <path d="m7.6 12.1 2.8 2.8 6.1-6.1" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
 
 export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify }: Props) {
   const [searchOpen, setSearchOpen] = useState(false)
@@ -138,7 +150,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
             <span className="relative size-8 overflow-hidden rounded-full bg-thumb">
               {profile?.avatarUrl ? <img src={profile.avatarUrl} alt="" className="size-8 object-cover" /> : <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/avatar.png`} alt="" fill sizes="32px" className="object-cover" />}
             </span>
-            <span className="flex items-center gap-1 text-sm font-bold">{profile?.displayName || 'Builderman'}{profile?.hasVerifiedBadge && <BadgeCheck aria-label="Verified Roblox account" className="size-4 fill-[#335fff] text-white" />}</span>
+            <span className="flex items-center gap-1 text-sm font-bold">{profile?.displayName || 'Builderman'}{profile?.hasVerifiedBadge && <VerifiedBadge className="size-4 shrink-0" />}</span>
           </button>
           <button
             type="button"
@@ -188,7 +200,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
             </div>
             {profile && <div className="mt-4 flex items-center gap-3 rounded-lg border border-border p-3">
               {profile.avatarUrl ? <img src={profile.avatarUrl} alt="" className="size-12 rounded-full object-cover" /> : <span className="flex size-12 items-center justify-center rounded-full bg-secondary">👤</span>}
-              <div className="min-w-0"><p className="flex items-center gap-1 truncate font-semibold">{profile.displayName}{profile.hasVerifiedBadge && <BadgeCheck aria-label="Verified Roblox account" className="size-4 shrink-0 fill-[#335fff] text-white" />}</p><p className="truncate text-sm text-muted-foreground">@{profile.name}</p></div>
+              <div className="min-w-0"><p className="flex items-center gap-1 truncate font-semibold">{profile.displayName}{profile.hasVerifiedBadge && <VerifiedBadge className="size-4 shrink-0" />}</p><p className="truncate text-sm text-muted-foreground">@{profile.name}</p></div>
               <span className="ml-auto text-xs text-muted-foreground">Current profile</span>
             </div>}
             <p className="mt-4 text-sm text-muted-foreground">Enter your Roblox username to find your real avatar and profile name.</p>
