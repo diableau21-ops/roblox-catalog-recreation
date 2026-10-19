@@ -11,6 +11,7 @@ import { Price, RobuxIcon } from './robux-icon'
 type Props = {
   item: CatalogItem
   owned: boolean
+  inCart: boolean
   favorited: boolean
   balance: number
   onClose: () => void
@@ -25,6 +26,7 @@ type Props = {
 export function ItemModal({
   item,
   owned,
+  inCart,
   favorited,
   balance,
   onClose,
@@ -178,7 +180,7 @@ export function ItemModal({
               </button>
             )}
 
-            {!owned && effectivePrice !== null && <button type="button" onClick={onAddToCart} className="h-10 rounded-lg border border-border text-sm font-semibold hover:bg-secondary">Add to Cart</button>}
+            {!owned && effectivePrice !== null && <button type="button" onClick={onAddToCart} className="h-10 rounded-lg border border-border text-sm font-semibold hover:bg-secondary">{inCart ? 'Remove from Cart' : 'Add to Cart'}</button>}
 
             <div className="flex gap-2">
               <button
