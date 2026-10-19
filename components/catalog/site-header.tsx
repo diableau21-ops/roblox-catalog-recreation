@@ -19,7 +19,7 @@ function VerifiedBadge({ className = 'size-4' }: { className?: string }) {
   return (
     <svg aria-label="Verified Roblox account" role="img" viewBox="0 0 24 24" className={className} fill="none">
       <path
-        d="M12 1.5l2.25 2.1 3.05-.35 1.05 2.88 2.8 1.25-.55 3.02L22.5 12l-1.9 2.25.55 3.02-2.8 1.25-1.05 2.88-3.05-.35L12 23.2l-2.25-2.1-3.05.35-1.05-2.88-2.8-1.25.55-3.02L1.5 12l1.9-2.25-.55-3.02 2.8-1.25L6.7 2.6l3.05.35L12 1.5Z"
+        d="M5.2 1.5h13.6c1.2 0 2.2.9 2.2 2.1v16.8c0 1.2-1 2.1-2.2 2.1H5.2c-1.2 0-2.2-.9-2.2-2.1V3.6c0-1.2 1-2.1 2.2-2.1Z"
         fill="#335FFF"
       />
       <path d="m7.6 12.1 2.8 2.8 6.1-6.1" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
