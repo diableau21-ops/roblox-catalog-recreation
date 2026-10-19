@@ -193,7 +193,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
                 <span className="text-sm font-semibold text-[#335fff]">Use</span>
               </button>)}
             </div>}
-            <p className="mt-4 text-xs text-muted-foreground">This only changes the profile shown on this demo site. It does not sign you in to Roblox.</p>
+            <p className="mt-4 text-xs text-muted-foreground">This changes the profile shown on this site. It does not sign you in to Roblox.</p>
           </section>
         </div>
       )}
