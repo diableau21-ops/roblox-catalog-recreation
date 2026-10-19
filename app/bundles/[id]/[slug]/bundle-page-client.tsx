@@ -174,7 +174,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           <div className={`flex min-w-0 flex-1 flex-col gap-4 text-white ${isKorblox || isEightBit ? '' : 'border-t border-white/10 bg-[#232323] p-5 md:border-l md:border-t-0 md:p-6'}`}>
             <div>
               {!isEightBit && <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">{isKorblox ? '' : 'Bundle'}</p>}
-              <div className="flex items-center gap-3"><h1 className="text-3xl font-bold tracking-tight md:text-4xl">{item.name}</h1>{isKorblox && <span className="relative mt-2 inline-flex shrink-0"><ShoppingCart aria-label="Shopping cart" className="size-6 text-white" /><span className="absolute -right-2 -top-2 flex size-4 items-center justify-center rounded-full bg-[#335fff] text-[10px] font-bold leading-none text-white">0</span></span>}</div>
+              <div className="flex items-center gap-2.5"><h1 className="text-3xl font-bold tracking-tight md:text-4xl">{item.name}</h1>{isKorblox && <span className="relative mt-2 inline-flex shrink-0"><ShoppingCart aria-label="Shopping cart" className="size-6 text-white" /><span className="absolute -right-2 -top-2 flex size-4 items-center justify-center rounded-full bg-[#335fff] text-[10px] font-bold leading-none text-white">0</span></span>}</div>
               <div className="mt-2 flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm text-muted-foreground">By <span className="font-semibold text-foreground">Roblox</span><VerifiedBadge className="size-4" />{isKorblox && <span className="ml-2 inline-flex items-center gap-1.5 font-semibold text-[#00b06f]"><span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-[#00b06f] text-white"><Check className="size-3.5 stroke-[3]" /></span>Item Owned</span>}</div>{isKorblox && <p className="mt-1 text-sm text-muted-foreground">This item is available in your inventory</p>}
               <div className="mt-3 h-px w-full bg-border" />
             </div>
@@ -262,10 +262,10 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
         </section>
       </div>}
 
-      {giftOpen && <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={() => setGiftOpen(false)}>
-        <section role="dialog" aria-modal="true" aria-labelledby="gift-title" className="w-full max-w-md rounded-xl border border-border bg-card p-6" onClick={(event) => event.stopPropagation()}>
+      {giftOpen && <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-3" onClick={() => setGiftOpen(false)}>
+        <section role="dialog" aria-modal="true" aria-labelledby="gift-title" className="w-full max-w-sm rounded-xl border border-border bg-card p-4" onClick={(event) => event.stopPropagation()}>
           <div className="flex items-center justify-between gap-3">
-            <h2 id="gift-title" className="text-xl font-bold">Gift {item.name}</h2>
+            <h2 id="gift-title" className="text-lg font-bold">Gift {item.name}</h2>
             <button type="button" onClick={() => setGiftOpen(false)} aria-label="Close" className="rounded-lg px-2 py-1 text-xl hover:bg-secondary">×</button>
           </div>
           <p className="mt-2 text-sm text-muted-foreground">Search for the Roblox player you want to gift.</p>
@@ -285,13 +285,13 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           {giftSearching && <p className="mt-4 text-sm text-muted-foreground">Looking for Roblox players…</p>}
           {!giftSearching && giftSearchMessage && <p role="status" className="mt-4 text-sm text-muted-foreground">{giftSearchMessage}</p>}
           {giftSelectedPlayer && <div className="mt-4 space-y-3">
-            <div className="flex flex-col gap-3 rounded-lg bg-secondary p-3 text-sm">
+            <div className="flex flex-col gap-2 rounded-lg bg-secondary p-2.5 text-xs">
               <div className="flex items-center gap-3">
-                {giftSelectedPlayer.avatarUrl ? <img src={giftSelectedPlayer.avatarUrl} alt="" className="size-14 shrink-0 rounded-full object-cover" /> : <span aria-hidden="true" className="flex size-14 shrink-0 items-center justify-center rounded-full bg-background text-muted-foreground">👤</span>}
+                {giftSelectedPlayer.avatarUrl ? <img src={giftSelectedPlayer.avatarUrl} alt="" className="size-11 shrink-0 rounded-full object-cover" /> : <span aria-hidden="true" className="flex size-11 shrink-0 items-center justify-center rounded-full bg-background text-muted-foreground">👤</span>}
                 <div className="min-w-0"><p>Gift recipient: <span className="font-semibold">{giftSelectedPlayer.displayName} (@{giftSelectedPlayer.name})</span></p><p className="mt-1 text-xs text-muted-foreground">Item: {item.name}</p></div>
               </div>
               <div className="flex items-center gap-3 border-t border-border/70 pt-3">
-                <img src={itemImage} alt={item.name} className="size-16 shrink-0 rounded-md bg-background object-contain p-1" />
+                <img src={itemImage} alt={item.name} className="size-12 shrink-0 rounded-md bg-background object-contain p-1" />
                 <div className="min-w-0"><p className="font-semibold">{item.name}</p><p className="mt-1 text-xs text-muted-foreground">Item you are gifting</p></div>
               </div>
             </div>
@@ -301,7 +301,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             </div>
             <button type="button" onClick={() => void continueGift()} disabled={giftSending || !giftSelectedPlayer} className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[#335fff] px-4 text-sm font-bold text-white transition hover:bg-[#244be0] disabled:cursor-wait disabled:opacity-70">{giftSending && <span aria-hidden="true" className="size-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />}{giftSending ? 'Sending gift…' : 'Send Gift'}</button>
           </div>}
-          {giftMessage && <div role="status" className="mt-3 rounded-lg border border-[#335fff]/40 bg-[#335fff]/10 p-3 text-sm text-foreground"><p>{giftMessage}</p></div>}
+          {giftMessage && <div role="status" className="mt-2 rounded-lg border border-[#335fff]/40 bg-[#335fff]/10 p-2.5 text-xs text-foreground"><p>{giftMessage}</p></div>}
         </section>
       </div>}
     </main>
