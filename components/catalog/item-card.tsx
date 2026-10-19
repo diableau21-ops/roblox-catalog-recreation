@@ -1,7 +1,6 @@
 'use client'
 
 import Image from 'next/image'
-import { Heart } from 'lucide-react'
 import { VerifiedBadge } from './verified-badge'
 import type { CatalogItem } from '@/lib/catalog-data'
 import { cn } from '@/lib/utils'
@@ -19,12 +18,13 @@ type Props = {
 export function ItemCard({ item, owned, favorited, onOpen, onAddToCart, onToggleFavorite }: Props) {
   return (
     <article className="group relative flex flex-col">
-      <button
-        type="button"
-        onClick={onOpen}
-        className="relative aspect-square overflow-hidden rounded-lg bg-[#202020] transition-shadow group-hover:shadow-[0_0_0_2px_var(--foreground)] focus-visible:outline-2 focus-visible:outline-foreground"
-        aria-label={`View ${item.name}`}
-      >
+      <div className="relative aspect-square overflow-hidden rounded-lg bg-[#202020] transition-shadow group-hover:shadow-[0_0_0_2px_var(--foreground)]">
+        <button
+          type="button"
+          onClick={onOpen}
+          className="absolute inset-0 h-full w-full focus-visible:outline-2 focus-visible:outline-foreground"
+          aria-label={`View ${item.name}`}
+        >
         <Image
           src={item.image?.startsWith('http') ? item.image : `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${item.image || '/placeholder.svg'}`}
           alt=""
@@ -43,29 +43,18 @@ export function ItemCard({ item, owned, favorited, onOpen, onAddToCart, onToggle
             Owned
           </span>
         )}
-      </button>
-      {item.price !== null && !owned && (
-        <button
-          type="button"
-          onClick={(event) => { event.stopPropagation(); onAddToCart() }}
-          className="absolute bottom-0 left-0 right-0 z-10 translate-y-2 bg-white py-2.5 text-sm font-bold text-[#191919] opacity-0 shadow-md transition-all duration-150 group-hover:translate-y-0 group-hover:opacity-100 focus-visible:translate-y-0 focus-visible:opacity-100"
-          aria-label={`Add ${item.name} to shopping cart`}
-        >
-          Add
         </button>
-      )}
-      <button
-        type="button"
-        onClick={onToggleFavorite}
-        aria-pressed={favorited}
-        aria-label={favorited ? `Unfavorite ${item.name}` : `Favorite ${item.name}`}
-        className={cn(
-          'absolute right-1.5 top-1.5 rounded-full bg-black/55 p-1.5 text-white opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100',
-          favorited && 'opacity-100',
+        {item.price !== null && !owned && (
+          <button
+            type="button"
+            onClick={onAddToCart}
+            className="absolute bottom-0 left-0 right-0 z-10 translate-y-full bg-white py-2.5 text-sm font-bold text-[#191919] opacity-0 shadow-md transition-all duration-150 group-hover:translate-y-0 group-hover:opacity-100 focus-visible:translate-y-0 focus-visible:opacity-100"
+            aria-label={`Add ${item.name} to shopping cart`}
+          >
+            Add
+          </button>
         )}
-      >
-        <Heart className={cn('size-4', favorited && 'fill-favorite text-favorite')} />
-      </button>
+      </div>
       <button type="button" onClick={onOpen} className="mt-1.5 flex flex-col items-start text-left">
         <h3 className="line-clamp-2 text-[15px] font-medium leading-tight text-foreground">{item.name}</h3>
         <p className="mt-1 flex items-center gap-1 text-[13px] text-muted-foreground">
