@@ -378,7 +378,7 @@ export function CatalogApp() {
       )}
 
       {cartOpen && (
-        <div className="fixed inset-0 z-[80] flex justify-end bg-black/45" onClick={() => setCartOpen(false)}>
+        <div className="fixed inset-0 z-[80] flex justify-end bg-black/45 sm:bg-transparent" onClick={() => setCartOpen(false)}>
           <section role="dialog" aria-modal="true" aria-labelledby="cart-title" onClick={(event) => event.stopPropagation()} className="flex h-full max-h-[calc(100dvh-16px)] w-full max-w-[420px] flex-col self-start overflow-hidden rounded-l-xl border border-[#3b3d40] bg-[#232527] p-5 text-[#f7f7f8] shadow-2xl sm:mr-3 sm:mt-2 sm:h-auto sm:max-h-[calc(100dvh-16px)] sm:rounded-xl">
             <div className="flex items-center justify-between gap-3 border-b border-[#45484b] pb-4">
               <h2 id="cart-title" className="text-lg font-bold">Shopping cart ({cartItems.length})</h2>
