@@ -38,10 +38,10 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   }, [balance, balanceReady])
   const [giftOpen, setGiftOpen] = useState(false)
   const [giftUsername, setGiftUsername] = useState('')
-  const [giftPlayers, setGiftPlayers] = useState<{id: number; name: string; displayName: string; avatarUrl: string | null}[]>([])
+  const [giftPlayers, setGiftPlayers] = useState<{id: number; name: string; displayName: string; avatarUrl: string | null; hasVerifiedBadge: boolean}[]>([])
   const [giftSearching, setGiftSearching] = useState(false)
   const [giftSearchMessage, setGiftSearchMessage] = useState('')
-  const [giftSelectedPlayer, setGiftSelectedPlayer] = useState<{id: number; name: string; displayName: string; avatarUrl: string | null} | null>(null)
+  const [giftSelectedPlayer, setGiftSelectedPlayer] = useState<{id: number; name: string; displayName: string; avatarUrl: string | null; hasVerifiedBadge: boolean} | null>(null)
   const [giftMessage, setGiftMessage] = useState('')
   const [giftSending, setGiftSending] = useState(false)
   const [giftSuccess, setGiftSuccess] = useState(false)
@@ -83,11 +83,12 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             .filter((player: { id?: number; name?: string; displayName?: string }) =>
               Number.isFinite(player.id) && typeof player.name === 'string',
             )
-            .map((player: { id: number; name: string; displayName?: string; avatarUrl?: string | null }) => ({
+            .map((player: { id: number; name: string; displayName?: string; avatarUrl?: string | null; hasVerifiedBadge?: boolean }) => ({
               id: player.id,
               name: player.name,
               displayName: player.displayName || player.name,
               avatarUrl: typeof player.avatarUrl === 'string' ? player.avatarUrl : null,
+              hasVerifiedBadge: player.hasVerifiedBadge === true,
             }))
         : []
 
@@ -296,7 +297,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <div className="mt-3 flex items-center gap-3">
                 {giftSelectedPlayer.avatarUrl ? <img src={giftSelectedPlayer.avatarUrl} alt="" className="size-12 rounded-full object-cover" /> : <span aria-hidden="true" className="flex size-12 items-center justify-center rounded-full bg-white/10 text-xl">👤</span>}
                 <div className="text-left">
-                  <p className="font-semibold">{giftSelectedPlayer.displayName}</p>
+                  <p className="flex items-center gap-1.5 font-semibold">{giftSelectedPlayer.displayName}{giftSelectedPlayer.hasVerifiedBadge && <VerifiedBadge className="size-4" />}</p>
                   <p className="text-sm text-white/70">@{giftSelectedPlayer.name}</p>
                 </div>
               </div>
@@ -316,7 +317,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                 {giftPlayers.map((player) => <button key={player.id} type="button" onClick={() => { setGiftSelectedPlayer(player); setGiftMessage('') }} className="flex w-full items-center justify-between rounded-lg border border-white/15 p-3 text-left transition hover:border-[#335fff] hover:bg-white/5">
                   <span className="flex min-w-0 items-center gap-3">
                     {player.avatarUrl ? <img src={player.avatarUrl} alt="" className="size-12 shrink-0 rounded-full bg-white/10 object-cover" /> : <span aria-hidden="true" className="flex size-12 shrink-0 items-center justify-center rounded-full bg-white/10">👤</span>}
-                    <span className="min-w-0"><span className="block truncate font-semibold">{player.displayName}</span><span className="block truncate text-sm text-white/70">@{player.name}</span></span>
+                    <span className="min-w-0"><span className="flex min-w-0 items-center gap-1.5 truncate font-semibold">{player.displayName}{player.hasVerifiedBadge && <VerifiedBadge className="size-4" />}</span><span className="block truncate text-sm text-white/70">@{player.name}</span></span>
                   </span>
                   <span className="text-sm font-semibold text-[#8ca0ff]">Select</span>
                 </button>)}
