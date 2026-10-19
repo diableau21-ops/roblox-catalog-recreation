@@ -65,7 +65,7 @@ export async function GET(request: Request) {
     return NextResponse.json({
       data: data.map((player: { id: number; name: string; displayName: string }) => ({
         ...player,
-        avatarUrl: avatarById.get(String(player.id)) ?? null,
+        avatarUrl: avatarById.get(String(player.id)) ?? `https://www.roblox.com/headshot-thumbnail/image?userId=${player.id}&width=150&height=150&format=png`,
       })),
     }, { headers: corsHeaders })
   } catch {
