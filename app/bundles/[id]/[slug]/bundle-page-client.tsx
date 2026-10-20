@@ -489,7 +489,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                 </div>
               </div>
               <h3 className="text-xl font-bold text-white">{giftPreviewComplete ? 'Aperçu du cadeau terminé' : 'Gift simulation complete'}</h3>
-              {giftPreviewComplete && <p className="mt-2 text-sm text-amber-200">Aucun cadeau réel envoyé et aucun Robux retiré.</p>}
+              {giftPreviewComplete && <p className="mt-2 text-sm text-amber-200">実際のギフトは送信されておらず、Robuxも差し引かれていません。</p>}
               <p className="mt-3 text-sm text-white/75">{item.name}</p>
               {giftSelectedPlayer && <p className="mt-1 text-sm text-white/75">To {giftSelectedPlayer.displayName} (@{giftSelectedPlayer.name})</p>}
               <button type="button" onClick={() => { setGiftSuccess(false); setGiftPreviewComplete(false); setGiftMessage(""); setGiftSearchMessage(""); setGiftUsername(""); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftSending(false); setGiftRunId((value) => value + 1) }} className="mt-7 h-10 min-w-32 rounded-lg bg-[#335fff] px-6 text-sm font-bold text-white transition hover:bg-[#244be0]">Done</button>
