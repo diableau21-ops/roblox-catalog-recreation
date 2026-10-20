@@ -98,8 +98,9 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
               href="#"
               onClick={(e) => {
                 e.preventDefault()
-                if (label === 'Robux') onBuyRobux()
-                else if (label !== 'Marketplace') onNotify(`${label} is coming soon`)
+                if (label === 'Robux') {
+                  window.location.href = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/robux`
+                } else if (label !== 'Marketplace') onNotify(`${label} is coming soon`)
               }}
               aria-current={label === 'Marketplace' ? 'page' : undefined}
               className="relative px-2.5 py-[18px] text-sm font-semibold text-foreground/90 transition-colors hover:text-foreground lg:px-3 lg:text-base aria-[current=page]:text-foreground aria-[current=page]:after:absolute aria-[current=page]:after:inset-x-2.5 aria-[current=page]:after:bottom-0 aria-[current=page]:after:h-[3px] aria-[current=page]:after:rounded-full aria-[current=page]:after:bg-foreground lg:aria-[current=page]:after:inset-x-3"
