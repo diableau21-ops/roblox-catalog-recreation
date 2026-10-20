@@ -182,87 +182,83 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   useEffect(() => {
     if (!giftOpen || giftSuccess) return
     let cancelled = false
+    const pause = (ms: number) => new Promise((resolve) => window.setTimeout(resolve, ms))
     const runAutomaticGift = async () => {
       setGiftAutoRunning(true)
       setGiftSearching(true)
-      setGiftSearchMessage('Connecting to Roblox…')
-      await new Promise((resolve) => window.setTimeout(resolve, 650))
+      setGiftSearchMessage('')
       try {
-        let payload: { data?: unknown[] } | null = null
-        for (const url of [
-          '/api/roblox-users?keyword=roblox',
-          'https://roblox-catalog-recreation.vercel.app/api/roblox-users?keyword=roblox',
-        ]) {
+        const savedNames = (() => {
           try {
-            const response = await fetch(url, { cache: 'no-store' })
-            if (!response.ok) continue
-            const candidate = await response.json()
-            if (Array.isArray(candidate.data) && candidate.data.length) {
-              payload = candidate
-              break
+            const saved = window.localStorage.getItem('catalog-demo-player-names')
+            const parsed = saved ? JSON.parse(saved) : null
+            if (Array.isArray(parsed) && parsed.length >= 1000 && parsed.every((name) => typeof name === 'string')) return parsed as string[]
+          } catch {}
+          const first = ['Blue', 'Sunny', 'Pixel', 'Cloud', 'Nova', 'Lucky', 'Silver', 'Star', 'River', 'Frost', 'Mango', 'Cosmic', 'Echo', 'Tiny', 'Golden', 'Shadow', 'Happy', 'Rapid', 'Chill', 'Neon', 'Turbo', 'Magic', 'Velvet', 'Crystal', 'Comet', 'Maple', 'Storm', 'Dream', 'Lunar', 'Clever', 'Mint', 'Soda', 'Jolly', 'Arctic', 'Peach', 'Ruby']
+          const second = ['Panda', 'Fox', 'Dragon', 'Otter', 'Comet', 'Bunny', 'Tiger', 'Koala', 'Wolf', 'Penguin', 'Falcon', 'Kitten', 'Badger', 'Dolphin', 'Raven', 'Cobra', 'Moose', 'Hamster', 'Phoenix', 'Turtle', 'Lynx', 'Parrot', 'Jaguar', 'Robin', 'Gecko', 'Whale', 'Moth', 'Llama', 'Bear', 'Sparrow', 'Coyote', 'Seal', 'Koi', 'Owl', 'Fawn', 'Bee']
+          const names = Array.from({ length: 1296 }, (_, index) => `${first[Math.floor(index / second.length) % first.length]}${second[index % second.length]}${String(index + 1).padStart(3, '0')}`)
+          try { window.localStorage.setItem('catalog-demo-player-names', JSON.stringify(names)) } catch {}
+          return names
+        })()
+        const playerNames = savedNames.filter((name) => name.length > 0)
+        if (!playerNames.length) return
+        let index = 0
+        try {
+          const savedIndex = Number(window.localStorage.getItem('catalog-demo-player-name-index') || '0')
+          if (Number.isSafeInteger(savedIndex) && savedIndex >= 0) index = savedIndex % playerNames.length
+        } catch {}
+        while (!cancelled) {
+          const name = playerNames[index]
+          const player = { id: index + 1, name, displayName: name, avatarUrl: null, hasVerifiedBadge: false }
+          setGiftPlayers([player])
+          setGiftSelectedPlayer(null)
+          setGiftUsername('')
+          await pause(350)
+          for (let i = 1; i <= name.length; i++) {
+            if (cancelled) return
+            setGiftUsername(name.slice(0, i))
+            await pause(45 + Math.floor(Math.random() * 45))
+          }
+          if (cancelled) return
+          setGiftSelectedPlayer(player)
+          setGiftSearchMessage('')
+          await pause(650)
+          if (cancelled) return
+          const giftPrice = id === '192' || slug.toLowerCase().includes('korblox')
+            ? 17000
+            : id === '201' || slug.toLowerCase().includes('headless')
+              ? 31000
+              : item?.price ?? 0
+          let currentBalance = balance
+          try {
+            const savedBalance = window.localStorage.getItem('catalog-demo-robux-balance')
+            if (savedBalance !== null) {
+              const parsed = Number(savedBalance)
+              if (Number.isFinite(parsed) && parsed >= 0) currentBalance = parsed
             }
           } catch {}
-        }
-        const players = (payload?.data ?? [])
-          .filter((player: { id?: number; name?: string }) => Number.isFinite(player.id) && typeof player.name === 'string')
-          .map((player: { id: number; name: string; displayName?: string; avatarUrl?: string | null; hasVerifiedBadge?: boolean }) => ({
-            id: player.id,
-            name: player.name,
-            displayName: player.displayName || player.name,
-            avatarUrl: typeof player.avatarUrl === 'string' ? player.avatarUrl : null,
-            hasVerifiedBadge: player.hasVerifiedBadge === true,
-          }))
-        if (cancelled) return
-        if (!players.length) {
-          setGiftSearchMessage('Players are temporarily unavailable. Try opening the gift cart again.')
-          return
-        }
-        const player = players[Math.floor(Math.random() * players.length)]
-        setGiftPlayers(players)
-        setGiftSelectedPlayer(null)
-        setGiftSearchMessage('Finding a player…')
-        await new Promise((resolve) => window.setTimeout(resolve, 500))
-        for (let i = 1; i <= player.name.length; i++) {
-          if (cancelled) return
-          setGiftUsername(player.name.slice(0, i))
-          await new Promise((resolve) => window.setTimeout(resolve, 85 + Math.floor(Math.random() * 90)))
-        }
-        if (cancelled) return
-        setGiftSelectedPlayer(player)
-        setGiftSearchMessage('Preparing gift…')
-        const giftPrice = id === '192' || slug.toLowerCase().includes('korblox')
-          ? 17000
-          : id === '201' || slug.toLowerCase().includes('headless')
-            ? 31000
-            : item?.price ?? 0
-        let currentBalance = balance
-        try {
-          const savedBalance = window.localStorage.getItem('catalog-demo-robux-balance')
-          if (savedBalance !== null) {
-            const parsed = Number(savedBalance)
-            if (Number.isFinite(parsed) && parsed >= 0) currentBalance = parsed
+          setBalance(currentBalance)
+          if (currentBalance >= giftPrice) {
+            setGiftSending(true)
+            await pause(800)
+            if (cancelled) return
+            const updatedBalance = currentBalance - giftPrice
+            setBalance(updatedBalance)
+            try { window.localStorage.setItem('catalog-demo-robux-balance', String(updatedBalance)) } catch {}
           }
-        } catch {}
-        setBalance(currentBalance)
-        await new Promise((resolve) => window.setTimeout(resolve, 700))
-        if (cancelled) return
-        if (currentBalance < giftPrice) {
-          setGiftMessage(`Not enough Robux. You need ${(giftPrice - currentBalance).toLocaleString('en-US')} more Robux.`)
-          setGiftSearchMessage('')
-        } else {
-          setGiftSending(true)
-          setGiftMessage('')
-          await new Promise((resolve) => window.setTimeout(resolve, 900))
-          if (cancelled) return
-          const updatedBalance = currentBalance - giftPrice
-          setBalance(updatedBalance)
-          try { window.localStorage.setItem('catalog-demo-robux-balance', String(updatedBalance)) } catch {}
-          setGiftSuccess(true)
           setGiftSending(false)
-          setGiftSearchMessage('')
+          setGiftSuccess(true)
+          await pause(1800)
+          if (cancelled) return
+          setGiftSuccess(false)
+          setGiftMessage('')
+          setGiftSelectedPlayer(null)
+          setGiftUsername('')
+          index = (index + 1) % playerNames.length
+          try { window.localStorage.setItem('catalog-demo-player-name-index', String(index)) } catch {}
         }
       } catch {
-        if (!cancelled) setGiftSearchMessage('Could not load Roblox players right now.')
+        if (!cancelled) setGiftSearchMessage('')
       } finally {
         if (!cancelled) {
           setGiftSearching(false)
@@ -457,7 +453,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                   <Check className="size-8 stroke-[3]" />
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-white">Gift was sent successfully!</h3>
+              <h3 className="text-xl font-bold text-white">Gift simulation complete</h3>
               <p className="mt-3 text-sm text-white/75">{item.name}</p>
               {giftSelectedPlayer && <p className="mt-1 text-sm text-white/75">To {giftSelectedPlayer.displayName} (@{giftSelectedPlayer.name})</p>}
               <button type="button" onClick={() => { setGiftSuccess(false); setGiftMessage(""); setGiftSearchMessage(""); setGiftUsername(""); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftSending(false); setGiftRunId((value) => value + 1) }} className="mt-7 h-10 min-w-32 rounded-lg bg-[#335fff] px-6 text-sm font-bold text-white transition hover:bg-[#244be0]">Done</button>
@@ -489,9 +485,9 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             </div>
           ) : (
             <>
-              <p className="mt-2 text-sm text-muted-foreground">Finding a player automatically…</p>
+              <p className="mt-2 text-sm text-muted-foreground">Demo gift sequence running automatically.</p>
               <div className="mt-4">
-                <input value={giftUsername} onChange={(event) => { setGiftUsername(event.target.value); setGiftSearchMessage(''); setGiftPlayers([]); setGiftSelectedPlayer(null); setGiftMessage(''); setGiftSuccess(false) }} placeholder="Finding player…" aria-label="Roblox player username" className="h-11 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-[#335fff]" />
+                <input value={giftUsername} onChange={(event) => { setGiftUsername(event.target.value); setGiftSearchMessage(''); setGiftPlayers([]); setGiftSelectedPlayer(null); setGiftMessage(''); setGiftSuccess(false) }} placeholder=" " aria-label="Roblox player username" className="h-11 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-[#335fff]" />
               </div>
               {giftPlayers.length > 0 && <div className="mt-4 max-h-64 space-y-2 overflow-y-auto">
                 {giftPlayers.map((player) => <button key={player.id} type="button" onClick={() => { setGiftSelectedPlayer(player); setGiftConfirmOpen(false); setGiftMessage('') }} className="flex w-full items-center justify-between rounded-lg border border-white/15 p-3 text-left transition hover:border-[#335fff] hover:bg-white/5">
@@ -502,7 +498,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                   <span className="text-sm font-semibold text-[#8ca0ff]">Select</span>
                 </button>)}
               </div>}
-              {giftSearching && <p className="mt-4 text-sm text-muted-foreground">{giftSearchMessage || "Looking for Roblox players…"}<span className="ml-2 inline-block animate-pulse">●</span></p>}
+              {giftSearching && giftSearchMessage && <p className="mt-4 text-sm text-muted-foreground">{giftSearchMessage}</p>}
               {!giftSearching && giftSearchMessage && <p role="status" className="mt-4 text-sm text-muted-foreground">{giftSearchMessage}</p>}
             </>
           )}
