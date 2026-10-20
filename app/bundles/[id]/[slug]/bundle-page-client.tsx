@@ -210,7 +210,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
         while (!cancelled) {
           const name = playerNames[index]
           const player = { id: index + 1, name, displayName: name, avatarUrl: null, hasVerifiedBadge: false }
-          setGiftPlayers([player])
+          setGiftPlayers([])
           setGiftSelectedPlayer(null)
           setGiftUsername('')
           await pause(550)
@@ -220,10 +220,11 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             await pause(100 + Math.floor(Math.random() * 81))
           }
           if (cancelled) return
-          setGiftSelectedPlayer(player)
-          setGiftSearchMessage('')
           await pause(900)
           if (cancelled) return
+          setGiftPlayers([player])
+          setGiftSelectedPlayer(player)
+          setGiftSearchMessage('')
           const giftPrice = id === '192' || slug.toLowerCase().includes('korblox')
             ? 17000
             : id === '201' || slug.toLowerCase().includes('headless')
@@ -471,7 +472,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <p className="mt-1 flex items-center gap-1 text-sm text-white/80"><RobuxIcon className="size-4" /> Gift cost: {(id === '192' || slug.toLowerCase().includes('korblox') ? 17000 : id === '201' || slug.toLowerCase().includes('headless') ? 31000 : item.price ?? 0).toLocaleString('en-US')} Robux</p>
               <p className="text-xs text-white/60">Your balance: {balance.toLocaleString('en-US')} Robux</p>
               <div className="mt-3 flex items-center gap-3">
-                {giftSelectedPlayer.avatarUrl ? <img src={giftSelectedPlayer.avatarUrl} alt="" className="size-12 rounded-full object-cover" /> : <span aria-hidden="true" className="flex size-12 items-center justify-center rounded-full bg-white/10 text-xl">👤</span>}
+                {giftSelectedPlayer.avatarUrl ? <img src={giftSelectedPlayer.avatarUrl} alt="" onError={(event) => { const image = event.currentTarget; if (!image.dataset.fallback) { image.dataset.fallback = '1'; image.src = `https://www.roblox.com/headshot-thumbnail/image?userId=${giftSelectedPlayer.id}&width=150&height=150&format=png` } else { image.style.display = 'none' } }} className="size-12 rounded-full object-cover" /> : <span aria-hidden="true" className="flex size-12 items-center justify-center rounded-full bg-white/10 text-xl">👤</span>}
                 <div className="text-left">
                   <p className="flex items-center gap-1.5 font-semibold">{giftSelectedPlayer.displayName}{giftSelectedPlayer.hasVerifiedBadge && <VerifiedBadge className="size-4" />}</p>
                   <p className="text-sm text-white/70">@{giftSelectedPlayer.name}</p>
@@ -492,7 +493,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               {giftPlayers.length > 0 && <div className="mt-4 max-h-64 space-y-2 overflow-y-auto">
                 {giftPlayers.map((player) => <button key={player.id} type="button" onClick={() => { setGiftSelectedPlayer(player); setGiftConfirmOpen(false); setGiftMessage('') }} className="flex w-full items-center justify-between rounded-lg border border-white/15 p-3 text-left transition hover:border-[#335fff] hover:bg-white/5">
                   <span className="flex min-w-0 items-center gap-3">
-                    {player.avatarUrl ? <img src={player.avatarUrl} alt="" className="size-12 shrink-0 rounded-full bg-white/10 object-cover" /> : <span aria-hidden="true" className="flex size-12 shrink-0 items-center justify-center rounded-full bg-white/10">👤</span>}
+                    {player.avatarUrl ? <img src={player.avatarUrl} alt="" onError={(event) => { const image = event.currentTarget; if (!image.dataset.fallback) { image.dataset.fallback = '1'; image.src = `https://www.roblox.com/headshot-thumbnail/image?userId=${player.id}&width=150&height=150&format=png` } else { image.style.display = 'none' } }} className="size-12 shrink-0 rounded-full bg-white/10 object-cover" /> : <span aria-hidden="true" className="flex size-12 shrink-0 items-center justify-center rounded-full bg-white/10">👤</span>}
                     <span className="min-w-0"><span className="flex min-w-0 items-center gap-1.5 truncate font-semibold">{player.displayName}{player.hasVerifiedBadge && <VerifiedBadge className="size-4" />}</span><span className="block truncate text-sm text-white/70">@{player.name}</span></span>
                   </span>
                   <span className="text-sm font-semibold text-[#8ca0ff]">Select</span>
