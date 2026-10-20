@@ -225,7 +225,7 @@ export function CatalogApp() {
 
       <main
         className={cn(
-          'ml-[220px] flex min-h-[calc(100dvh-56px)] w-[calc(100%-220px)] gap-6 px-4 py-7 sm:px-5 lg:gap-8 lg:px-8 xl:px-10',
+          'w-full gap-4 px-3 py-4 pb-24 sm:px-5 sm:py-7 md:ml-[220px] md:min-h-[calc(100dvh-56px)] md:w-[calc(100%-220px)] md:gap-6 lg:gap-8 lg:px-8 xl:px-10',
         )}
       >
         <section className="min-w-0 flex-1" aria-labelledby="catalog-heading">
@@ -325,7 +325,7 @@ export function CatalogApp() {
       </main>
 
       <footer className="mt-12 border-t border-border">
-        <div className="ml-[220px] flex flex-wrap gap-x-6 gap-y-2 px-6 py-8 text-sm text-muted-foreground lg:px-8">
+        <div className="flex flex-wrap gap-x-4 gap-y-3 px-4 pb-24 pt-8 text-sm text-muted-foreground sm:px-6 md:ml-[220px] md:pb-8 lg:px-8">
           {['About Us', 'Jobs', 'Blog', 'Parents', 'Gift Cards', 'Help', 'Terms', 'Accessibility', 'Privacy'].map(
             (l) => (
               <a
