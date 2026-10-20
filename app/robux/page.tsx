@@ -16,6 +16,16 @@ const packages: { amount: string; previous: string; bonus: string; price: string
   { amount: '500', previous: '400', bonus: '+100 more', price: '6.99 $' },
 ]
 
+
+function VerifiedBadge({ className = 'size-4' }: { className?: string }) {
+  return (
+    <svg aria-label="Verified Roblox account" role="img" viewBox="0 0 24 24" className={className} fill="none">
+      <path fill="#00A2FF" d="M12 1.5l3 2 3.6-.1 1.1 3.4 2.8 2.2-1.1 3.4 1.1 3.4-2.8 2.2-1.1 3.4-3.6-.1-3 2-3-2-3.6.1-1.1-3.4-2.8-2.2 1.1-3.4-1.1-3.4 2.8-2.2 1.1-3.4 3.6.1z" />
+      <path stroke="#fff" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.6" d="m7.5 12.2 3 3 6-6.3" />
+    </svg>
+  )
+}
+
 export default function RobuxPage() {
   const [balance, setBalance] = useState(1250)
   const [balanceReady, setBalanceReady] = useState(false)
@@ -211,7 +221,7 @@ export default function RobuxPage() {
                   <div className="py-8 text-center">
                     <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-emerald-500 text-3xl font-black">✓</div>
                     <h2 id="send-robux-title" className="mt-4 text-xl font-extrabold">Robux sent successfully!</h2>
-                    <p className="mt-2 text-sm text-white/75">{sendAmount} Robux sent to {sendPlayer?.displayName}{sendPlayer?.hasVerifiedBadge && <span title="Verified Roblox account" aria-label="Verified account" className="ml-1 inline-flex size-4 items-center justify-center rounded-full bg-[#335fff] text-[10px] font-black text-white">✓</span>} (@{sendPlayer?.name}).</p>
+                    <p className="mt-2 text-sm text-white/75">{sendAmount} Robux sent to {sendPlayer?.displayName}{sendPlayer?.hasVerifiedBadge && <VerifiedBadge className="ml-1 inline-block size-4 shrink-0" />} (@{sendPlayer?.name}).</p>
                     
                     <button type="button" onClick={() => setSendOpen(false)} className="mt-6 h-10 rounded-lg bg-[#335fff] px-7 text-sm font-bold">Done</button>
                   </div>
@@ -225,7 +235,7 @@ export default function RobuxPage() {
                       <div className="mt-5">
                         <div className="flex items-center gap-3 rounded-lg border border-white/15 p-3">
                           {sendPlayer.avatarUrl ? <img src={sendPlayer.avatarUrl} alt="" className="size-12 rounded-full object-cover" /> : <span className="flex size-12 items-center justify-center rounded-full bg-white/10">👤</span>}
-                          <div className="min-w-0"><p className="flex items-center gap-1.5 truncate font-bold">{sendPlayer.displayName}{sendPlayer.hasVerifiedBadge && <span title="Verified Roblox account" aria-label="Verified account" className="inline-flex size-4 shrink-0 items-center justify-center rounded-full bg-[#335fff] text-[10px] font-black text-white">✓</span>}</p><p className="truncate text-sm text-white/65">@{sendPlayer.name}</p></div>
+                          <div className="min-w-0"><p className="flex items-center gap-1.5 truncate font-bold">{sendPlayer.displayName}{sendPlayer.hasVerifiedBadge && <VerifiedBadge className="inline-block size-4 shrink-0" />}</p><p className="truncate text-sm text-white/65">@{sendPlayer.name}</p></div>
                         </div>
                         <label htmlFor="send-robux-amount" className="mt-4 block text-sm font-semibold">Robux amount</label>
                         <input id="send-robux-amount" type="number" min="1" step="1" inputMode="numeric" value={sendAmount} onChange={(event) => setSendAmount(event.target.value)} className="mt-2 h-11 w-full rounded-lg border border-white/20 bg-black/30 px-3 text-white outline-none focus:border-[#7183ff]" />
