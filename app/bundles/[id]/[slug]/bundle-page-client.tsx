@@ -147,7 +147,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   // When the gift window opens, automatically load real Roblox search results.
   // The user can replace this keyword with any name they want to search for.
   useEffect(() => {
-    if (giftOpen && !giftUsername.trim()) setGiftUsername('roblox')
+    if (giftOpen && !giftUsername.trim()) setGiftUsername('alex')
   }, [giftOpen])
 
   const [robuxShopOpen, setRobuxShopOpen] = useState(false)
