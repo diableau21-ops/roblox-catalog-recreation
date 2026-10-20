@@ -20,6 +20,9 @@ export default function RobuxPage() {
   const [sendError, setSendError] = useState('')
   const [sendAmount, setSendAmount] = useState('100')
   const [sendSuccess, setSendSuccess] = useState(false)
+  const [selectedPackage, setSelectedPackage] = useState<(typeof packages)[number] | null>(null)
+  const [paying, setPaying] = useState(false)
+  const [paid, setPaid] = useState(false)
 
   const searchPlayers = async () => {
     const keyword = sendUsername.trim()
@@ -104,7 +107,7 @@ export default function RobuxPage() {
 
               <button
                 type="button"
-                onClick={() => setMessage('Purchases are not processed on this demo site.')}
+                onClick={() => { setSelectedPackage(pack); setPaying(false); setPaid(false) }}
                 className={`min-w-[104px] rounded-lg px-3 py-3 text-sm font-extrabold tabular-nums transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:min-w-[132px] sm:px-5 sm:text-base ${pack.featured ? 'bg-[#335FFF] text-white hover:bg-[#244BE0]' : 'bg-[#34343A] text-white hover:bg-[#45454D]'}`}
               >
                 {pack.price}
@@ -117,6 +120,26 @@ export default function RobuxPage() {
           <p role="status" className="mt-4 rounded-lg border border-[#34343A] bg-[#202024] px-4 py-3 text-sm text-[#D7D7DC]">
             {message}
           </p>
+        )}
+        {selectedPackage && (
+          <div className="fixed inset-0 z-[80] flex items-center justify-center overflow-y-auto bg-black/80 p-3" onClick={() => !paying && setSelectedPackage(null)}>
+            <section role="dialog" aria-modal="true" aria-labelledby="payment-title" className="my-auto w-full max-w-md rounded-2xl border border-[#41414b] bg-[#17171c] p-5 text-[#f7f6f2] shadow-2xl sm:p-6" onClick={(e) => e.stopPropagation()}>
+              <div className="flex items-center justify-between gap-3"><div><p className="text-xs font-bold uppercase tracking-widest text-[#a7a7b3]">Checkout · Demo</p><h2 id="payment-title" className="mt-1 text-2xl font-extrabold">{paid ? 'Payment complete!' : 'Complete your purchase'}</h2></div>{!paying && <button type="button" onClick={() => setSelectedPackage(null)} aria-label="Close" className="rounded-lg px-3 py-1 text-2xl text-white/70 hover:bg-white/10">×</button>}</div>
+              {paid ? (
+                <div className="py-8 text-center"><div className="mx-auto flex size-16 items-center justify-center rounded-full bg-emerald-500/15 text-4xl font-black text-emerald-400">✓</div><h3 className="mt-4 text-xl font-extrabold">Demo payment approved</h3><p className="mt-2 text-sm text-white/65">{selectedPackage.amount} Robux · {selectedPackage.price}</p><p className="mt-3 text-xs text-[#a7a7b3]">Simulation only. No money was charged and no Robux were added.</p><button type="button" onClick={() => setSelectedPackage(null)} className="mt-6 h-11 w-full rounded-lg bg-[#335fff] font-extrabold hover:bg-[#244be0]">Done</button></div>
+              ) : paying ? (
+                <div className="flex min-h-64 flex-col items-center justify-center text-center"><div className="size-12 animate-spin rounded-full border-4 border-white/15 border-t-[#7183ff]" /><h3 className="mt-5 text-lg font-extrabold">Processing demo payment…</h3><p className="mt-2 text-sm text-white/60">Please wait while we simulate checkout.</p><p className="mt-4 text-xs text-white/40">No real payment is being made.</p></div>
+              ) : (
+                <>
+                  <div className="mt-5 flex items-center justify-between gap-3 rounded-xl bg-[#24242c] p-4"><div className="flex items-center gap-3"><RobuxIcon className="size-8" /><div><p className="font-extrabold">{selectedPackage.amount} Robux</p><p className="text-xs text-white/55">Robux package</p></div></div><p className="text-lg font-extrabold">{selectedPackage.price}</p></div>
+                  <div className="mt-5 rounded-xl border border-[#454550] bg-gradient-to-br from-[#333b71] via-[#20243f] to-[#15151b] p-4"><div className="flex justify-between text-xs font-bold uppercase tracking-widest text-white/70"><span>Demo bank card</span><span>DEMO</span></div><div className="mt-6 text-lg font-semibold tracking-[0.15em]">••••  ••••  ••••  4242</div><div className="mt-5 flex items-end justify-between gap-3 text-xs text-white/70"><div><p className="text-[9px] uppercase tracking-widest text-white/45">Cardholder</p><p className="mt-1 font-semibold">DEMO CUSTOMER</p></div><div><p className="text-[9px] uppercase tracking-widest text-white/45">Expires</p><p className="mt-1 font-semibold">MM/YY</p></div><span className="text-lg font-black italic">CARD</span></div></div>
+                  <p className="mt-4 rounded-lg border border-amber-400/30 bg-amber-400/10 px-3 py-2.5 text-xs leading-relaxed text-amber-100">Fake checkout for demonstration only. No card details are requested or saved. No real payment will be made.</p>
+                  <button type="button" onClick={() => { setPaying(true); window.setTimeout(() => { setPaying(false); setPaid(true) }, 1800) }} className="mt-5 flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-[#335fff] font-extrabold hover:bg-[#244be0]">Simulate payment · {selectedPackage.price}</button>
+                  <p className="mt-3 text-center text-[11px] text-white/40">Fictional checkout UI · No payment processor connected</p>
+                </>
+              )}
+            </section>
+          </div>
         )}
 
         {sendOpen && (
