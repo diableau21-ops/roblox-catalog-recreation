@@ -47,6 +47,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   const [giftSuccess, setGiftSuccess] = useState(false)
   const [giftConfirmOpen, setGiftConfirmOpen] = useState(false)
   const [giftAutoRunning, setGiftAutoRunning] = useState(false)
+  const [giftRunId, setGiftRunId] = useState(0)
   const continueGift = async () => {
     if (!giftSelectedPlayer || giftSending) return
     const giftPrice = id === '192' || slug.toLowerCase().includes('korblox')
@@ -257,7 +258,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     }
     void runAutomaticGift()
     return () => { cancelled = true }
-  }, [giftOpen])
+  }, [giftOpen, giftRunId])
 
   useEffect(() => {
     if (giftAutoRunning || giftSuccess || giftSelectedPlayer) return
@@ -445,7 +446,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <h3 className="text-xl font-bold text-white">Gift was sent successfully!</h3>
               <p className="mt-3 text-sm text-white/75">{item.name}</p>
               {giftSelectedPlayer && <p className="mt-1 text-sm text-white/75">To {giftSelectedPlayer.displayName} (@{giftSelectedPlayer.name})</p>}
-              <button type="button" onClick={() => { setGiftOpen(false); setGiftSuccess(false) }} className="mt-7 h-10 min-w-32 rounded-lg bg-[#335fff] px-6 text-sm font-bold text-white transition hover:bg-[#244be0]">Done</button>
+              <button type="button" onClick={() => { setGiftSuccess(false); setGiftMessage(""); setGiftSearchMessage(""); setGiftUsername(""); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftSending(false); setGiftRunId((value) => value + 1) }} className="mt-7 h-10 min-w-32 rounded-lg bg-[#335fff] px-6 text-sm font-bold text-white transition hover:bg-[#244be0]">Done</button>
             </div>
           ) : (
           <>
