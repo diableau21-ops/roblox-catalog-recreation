@@ -46,6 +46,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   const [giftSending, setGiftSending] = useState(false)
   const [giftSuccess, setGiftSuccess] = useState(false)
   const [giftPreviewComplete, setGiftPreviewComplete] = useState(false)
+  const [giftPreviewTyping, setGiftPreviewTyping] = useState(false)
   const [giftConfirmOpen, setGiftConfirmOpen] = useState(false)
   const [giftAutoRunning, setGiftAutoRunning] = useState(false)
   const [giftManualMode, setGiftManualMode] = useState(false)
@@ -190,6 +191,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
       const first = ['Blue', 'Sunny', 'Pixel', 'Cloud', 'Nova', 'Lucky', 'Silver', 'Star', 'River', 'Frost', 'Mango', 'Cosmic', 'Echo', 'Tiny', 'Golden', 'Shadow', 'Happy', 'Rapid', 'Chill', 'Neon', 'Turbo', 'Magic', 'Velvet', 'Crystal', 'Comet', 'Maple', 'Storm', 'Dream', 'Lunar', 'Clever', 'Mint', 'Soda', 'Jolly', 'Arctic', 'Peach', 'Ruby']
       const second = ['Panda', 'Fox', 'Dragon', 'Otter', 'Comet', 'Bunny', 'Tiger', 'Koala', 'Wolf', 'Penguin', 'Falcon', 'Kitten', 'Badger', 'Dolphin', 'Raven', 'Cobra', 'Moose', 'Hamster', 'Phoenix', 'Turtle', 'Lynx', 'Parrot', 'Jaguar', 'Robin', 'Gecko', 'Whale', 'Moth', 'Llama', 'Bear', 'Sparrow', 'Coyote', 'Seal', 'Koi', 'Owl', 'Fawn', 'Bee']
       const name = `${first[Math.floor(Math.random() * first.length)]}${second[Math.floor(Math.random() * second.length)]}${Math.floor(100 + Math.random() * 900)}`
+      setGiftPreviewTyping(true)
       setGiftSearching(true)
       setGiftSearchMessage('ギフトのプレビュー')
       await pause(450)
@@ -203,6 +205,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
       const previewPlayer = { id: 0, name, displayName: name, avatarUrl: null, hasVerifiedBadge: false }
       setGiftPlayers([previewPlayer])
       setGiftSelectedPlayer(previewPlayer)
+      setGiftPreviewTyping(false)
       setGiftSearching(false)
       setGiftSearchMessage('Aperçu fictif sélectionné automatiquement — ce nom n’est pas un compte Roblox réel.')
     }
@@ -303,7 +306,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   }, [giftOpen, giftRunId, giftManualMode])
 
   useEffect(() => {
-    if (giftAutoRunning || giftSuccess || giftSelectedPlayer) return
+    if (giftAutoRunning || giftSuccess || giftPreviewTyping || giftSelectedPlayer) return
     const keyword = giftUsername.trim()
     if (keyword.length < 3) {
       setGiftPlayers([])
@@ -314,7 +317,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     }
     const timer = window.setTimeout(() => { void searchGiftPlayers() }, 350)
     return () => window.clearTimeout(timer)
-  }, [giftUsername, giftAutoRunning, giftSuccess, giftSelectedPlayer])
+  }, [giftUsername, giftAutoRunning, giftSuccess, giftPreviewTyping, giftSelectedPlayer])
   const [robuxShopOpen, setRobuxShopOpen] = useState(false)
   const [selectedRobux, setSelectedRobux] = useState(800)
   const [customRobux, setCustomRobux] = useState('800')
