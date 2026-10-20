@@ -359,12 +359,12 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                 <input value={giftUsername} onChange={(event) => { setGiftUsername(event.target.value); setGiftSearchMessage(''); setGiftPlayers([]); setGiftSelectedPlayer(null); setGiftMessage(''); setGiftSuccess(false) }} placeholder=" " aria-label="Roblox player username" className="h-11 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-[#335fff]" />
               </div>
               {giftPlayers.length > 0 && <div className="mt-4 max-h-64 space-y-2 overflow-y-auto">
-                {giftPlayers.map((player) => <div key={player.id} className="flex w-full items-center justify-between rounded-lg border border-white/15 p-3 text-left">
+                {giftPlayers.map((player) => <button type="button" key={player.id} onClick={() => { setGiftSelectedPlayer(player); setGiftConfirmOpen(false); setGiftMessage('') }} className="flex w-full items-center justify-between rounded-lg border border-white/15 p-3 text-left transition hover:border-[#8ca0ff]/70 hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-[#8ca0ff]">
                   <span className="flex min-w-0 items-center gap-3">
                     {player.avatarUrl ? <img src={player.avatarUrl} alt={`Avatar de ${player.displayName}`} onError={(event) => { const image = event.currentTarget; image.style.display = 'none'; const fallback = image.nextElementSibling as HTMLElement | null; if (fallback) fallback.style.display = 'flex' }} className="size-12 shrink-0 rounded-full bg-white/10 object-cover" /> : null}<span aria-hidden="true" style={{display: player.avatarUrl ? 'none' : 'flex'}} className="size-12 shrink-0 items-center justify-center rounded-full bg-indigo-500/30 text-sm font-bold text-white">{player.displayName.slice(0, 2).toUpperCase()}</span>
                     <span className="min-w-0"><span className="flex min-w-0 items-center gap-1.5 truncate font-semibold">{player.displayName}{player.hasVerifiedBadge && <VerifiedBadge className="size-4" />}</span><span className="block truncate text-sm text-white/70">@{player.name}</span></span>
                   </span>
-                </div>)}
+                </button>)}
               </div>}
               {giftSearching && giftSearchMessage && <p className="mt-4 text-sm text-muted-foreground">{giftSearchMessage}</p>}
               {!giftSearching && giftSearchMessage && <p role="status" className="mt-4 text-sm text-muted-foreground">{giftSearchMessage}</p>}
