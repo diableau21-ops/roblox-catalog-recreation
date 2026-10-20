@@ -39,7 +39,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="roblox">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">{children}<footer style={{ padding: "12px 16px", textAlign: "center", color: "#8b8b8b", fontSize: "12px" }}>デモサイト</footer></body>
     </html>
   )
 }
