@@ -153,8 +153,8 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     const pause = (ms: number) => new Promise<void>((resolve) => {
       activeTimer = window.setTimeout(resolve, ms)
     })
-    // Search username-like phrases with digits; display only real accounts returned by Roblox.
-    const terms = ['alex123', 'gamer123', 'builder2024', 'roblox123', 'coolguy99', 'shadow777', 'dragon123', 'proplayer2025', 'king777', 'pixel2026']
+    // Search broad username fragments, not guessed full usernames; keep only real results whose usernames contain digits.
+    const terms = ['rob', 'the', 'pro', 'xx', 'yt', 'its', 'real', 'king', 'cool', 'play']
     const runCycle = async () => {
       let turn = 0
       while (!cancelled) {
@@ -178,7 +178,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           const payload = await response.json()
           const players = Array.isArray(payload.data)
             ? payload.data.filter((player: { id?: number; name?: string }) =>
-                Number.isFinite(player.id) && typeof player.name === 'string' && /\\d/.test(player.name),
+                Number.isFinite(player.id) && typeof player.name === 'string' && /\d/.test(player.name),
               ).map((player: { id: number; name: string; displayName?: string; avatarUrl?: string | null; hasVerifiedBadge?: boolean }) => ({
                 id: player.id,
                 name: player.name,
@@ -424,9 +424,9 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               ) : (
                 <div className="mt-4 w-full rounded-lg border border-white/15 bg-black/25 p-3 text-left text-sm text-white/85">
                   {giftAutoStage === 'confirm' ? (
-                    <><p className="font-bold">Confirm gift?</p><p className="mt-1">Aperçu automatique pour @{giftSelectedPlayer.name}.</p><p className="mt-2 text-xs text-white/60">Confirmation visuelle seulement.</p></>
+                    <><p className="font-bold">Confirm gift?</p><p className="mt-1">Aperçu : offrir {item.name} à @{giftSelectedPlayer.name}.</p><p className="mt-2 text-xs text-white/60">Étape visuelle seulement — aucun cadeau réel n’est envoyé.</p></>
                   ) : giftAutoStage === 'result' ? (
-                    <><p className="font-bold text-emerald-300">Gift preview complete</p><p className="mt-1">Aucun cadeau réel envoyé et aucun Robux retiré.</p></>
+                    <><p className="font-bold text-emerald-300">{item.name} — cadeau aperçu terminé</p><p className="mt-1">Pour @{giftSelectedPlayer.name}. Aucun cadeau réel envoyé et aucun Robux retiré.</p></>
                   ) : (
                     <p className="text-xs text-white/75">Recherche de comptes Roblox réels dont le nom contient des chiffres…</p>
                   )}
