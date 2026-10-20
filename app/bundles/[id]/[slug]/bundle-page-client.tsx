@@ -47,6 +47,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   const [giftSuccess, setGiftSuccess] = useState(false)
   const [giftConfirmOpen, setGiftConfirmOpen] = useState(false)
   const [giftAutoRunning, setGiftAutoRunning] = useState(false)
+  const [giftManualMode, setGiftManualMode] = useState(false)
   const [giftRunId, setGiftRunId] = useState(0)
   useEffect(() => {
     if (!giftOpen || !giftSuccess) return
@@ -180,7 +181,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     }
   }
   useEffect(() => {
-    if (!giftOpen || giftSuccess) return
+    if (!giftOpen || giftSuccess || giftManualMode) return
     let cancelled = false
     const pause = (ms: number) => new Promise((resolve) => window.setTimeout(resolve, ms))
     const runAutomaticGift = async () => {
@@ -269,7 +270,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     }
     void runAutomaticGift()
     return () => { cancelled = true }
-  }, [giftOpen, giftRunId])
+  }, [giftOpen, giftRunId, giftManualMode])
 
   useEffect(() => {
     if (giftAutoRunning || giftSuccess || giftSelectedPlayer) return
@@ -348,7 +349,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
 
           <div className="flex min-w-0 flex-1 flex-col gap-4 text-white">
             <div>
-              <div className="flex flex-wrap items-center gap-2.5"><h1 className="break-words text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">{item.name}</h1>{isKorblox && <button type="button" onClick={() => { setGiftOpen(true); setGiftSuccess(false); setGiftConfirmOpen(false); setGiftMessage(""); setGiftSearchMessage(""); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftUsername("") }} aria-label="Open gift cart" title="Gift" className="mt-1 inline-flex size-10 shrink-0 items-center justify-center rounded-lg border border-white/15 bg-white/5 text-white transition hover:bg-white/10"><ShoppingCart aria-hidden="true" className="size-5" /></button>}</div>
+              <div className="flex flex-wrap items-center gap-2.5"><h1 className="break-words text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">{item.name}</h1>{isKorblox && <button type="button" onClick={() => { setGiftManualMode(true); setGiftOpen(true); setGiftSuccess(false); setGiftConfirmOpen(false); setGiftMessage(""); setGiftSearchMessage(""); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftUsername("") }} aria-label="Open gift cart" title="Gift" className="mt-1 inline-flex size-10 shrink-0 items-center justify-center rounded-lg border border-white/15 bg-white/5 text-white transition hover:bg-white/10"><ShoppingCart aria-hidden="true" className="size-5" /></button>}</div>
               <div className="mt-2 flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm text-muted-foreground">By <span className="font-semibold text-foreground">Roblox</span><VerifiedBadge className="size-4" /><span className="ml-2 inline-flex items-center gap-1.5 font-semibold text-[#00b06f]"><span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-[#00b06f] text-white"><Check className="size-3.5 stroke-[3]" /></span>Item Owned</span></div><p className="mt-1 text-sm text-muted-foreground">This item is available in your inventory</p>
               <div className="mt-3 h-px w-full bg-border" />
             </div>
@@ -374,7 +375,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                     <ellipse cx="12" cy="22" rx="8.5" ry="1.5" />
                   </svg>
                 </button>
-                <button type="button" onClick={() => { setGiftMessage(''); setGiftSelectedPlayer(null); setGiftOpen(true) }} className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="" aria-hidden="true" className="size-4 brightness-0 invert" /><span>Gift</span></button>
+                <button type="button" onClick={() => { setGiftManualMode(true); setGiftMessage(''); setGiftSelectedPlayer(null); setGiftOpen(true) }} className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="" aria-hidden="true" className="size-4 brightness-0 invert" /><span>Gift</span></button>
               </>
             </div>
 
@@ -439,7 +440,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
         </section>
       </div>}
 
-      {giftOpen && <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-black/70 p-3" onClick={() => setGiftOpen(false)}>
+      {giftOpen && <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-black/70 p-3" onClick={() => { setGiftOpen(false); setGiftManualMode(false) }}>
         <section role="dialog" aria-modal="true" aria-labelledby="gift-title" className="gift-galaxy-card relative z-10 w-full max-w-sm overflow-hidden rounded-xl border border-[#6d75ff]/60 p-4 shadow-2xl" onClick={(event) => event.stopPropagation()}>
           <div aria-hidden="true" className="gift-galaxy-card-bg pointer-events-none absolute inset-0" />
           <div className="relative z-10">
@@ -463,7 +464,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           <>
           <div className="flex items-center justify-between gap-3">
             <h2 id="gift-title" className="text-lg font-bold">Gift {item.name}</h2>
-            <button type="button" onClick={() => setGiftOpen(false)} aria-label="Close" className="rounded-lg px-2 py-1 text-xl hover:bg-secondary">×</button>
+            <button type="button" onClick={() => { setGiftOpen(false); setGiftManualMode(false) }} aria-label="Close" className="rounded-lg px-2 py-1 text-xl hover:bg-secondary">×</button>
           </div>
           {giftSelectedPlayer ? (
             <div className="mt-5 flex flex-col items-center text-center">
