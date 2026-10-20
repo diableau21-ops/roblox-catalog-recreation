@@ -103,26 +103,12 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     setGiftPlayers([])
     setGiftSelectedPlayer(null)
     try {
-      let result: { data?: unknown[] } | null = null
-      const apiUrls = [
-        `/api/roblox-users?keyword=${encodeURIComponent(keyword)}`,
-        `https://roblox-catalog-recreation.vercel.app/api/roblox-users?keyword=${encodeURIComponent(keyword)}`,
-      ]
-      for (const url of apiUrls) {
-        try {
-          const response = await fetch(url, { cache: 'no-store' })
-          if (!response.ok) continue
-          const payload = await response.json()
-          if (Array.isArray(payload.data)) {
-            result = payload
-            break
-          }
-        } catch {}
-      }
-      if (!result) throw new Error('Player search unavailable')
-      const players = Array.isArray(result.data)
-        ? result.data
-            .filter((player: { id?: number; name?: string; displayName?: string }) =>
+      const response = await fetch(`/api/roblox-users?keyword=${encodeURIComponent(keyword)}`, { cache: 'no-store' })
+      if (!response.ok) throw new Error('Player search unavailable')
+      const payload = await response.json()
+      const players = Array.isArray(payload.data)
+        ? payload.data
+            .filter((player: { id?: number; name?: string }) =>
               Number.isFinite(player.id) && typeof player.name === 'string',
             )
             .map((player: { id: number; name: string; displayName?: string; avatarUrl?: string | null; hasVerifiedBadge?: boolean }) => ({
@@ -133,53 +119,18 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               hasVerifiedBadge: player.hasVerifiedBadge === true,
             }))
         : []
-
       setGiftPlayers(players)
-      const exactPlayer = players.find((player) => player.name.toLowerCase() === keyword.toLowerCase())
-      if (exactPlayer) {
-        setGiftSelectedPlayer(exactPlayer)
-        setGiftConfirmOpen(false)
-        setGiftSearchMessage(`Found @${exactPlayer.name}. Sending the visual gift…`)
-        const giftPrice = id === '192' || slug.toLowerCase().includes('korblox')
-          ? 17000
-          : id === '201' || slug.toLowerCase().includes('headless')
-            ? 31000
-            : item?.price ?? 0
-        let currentBalance = balance
-        try {
-          const savedBalance = window.localStorage.getItem('catalog-demo-robux-balance')
-          if (savedBalance !== null) {
-            const parsedBalance = Number(savedBalance)
-            if (Number.isFinite(parsedBalance) && parsedBalance >= 0) currentBalance = parsedBalance
-          }
-        } catch {}
-        setBalance(currentBalance)
-        if (currentBalance < giftPrice) {
-          setGiftMessage(`Not enough Robux. You need ${(giftPrice - currentBalance).toLocaleString('en-US')} more Robux.`)
-          setGiftSearchMessage('')
-        } else {
-          setGiftSending(true)
-          setGiftMessage('')
-          await new Promise((resolve) => window.setTimeout(resolve, 700))
-          const updatedBalance = currentBalance - giftPrice
-          setBalance(updatedBalance)
-          try { window.localStorage.setItem('catalog-demo-robux-balance', String(updatedBalance)) } catch {}
-          setGiftSuccess(true)
-          setGiftSending(false)
-          setGiftSearchMessage('')
-        }
-      } else {
-        setGiftSearchMessage(players.length
-          ? `No exact match for “${keyword}”. Type the player's exact Roblox username.`
-          : `No Roblox players found for “${keyword}”.`)
-      }
+      setGiftSearchMessage(players.length
+        ? `Found ${players.length} real Roblox account(s). Select the correct player.`
+        : `No Roblox players found for “${keyword}”. Try another username.`)
     } catch {
       setGiftPlayers([])
-      setGiftSearchMessage('Could not load players. Roblox may be temporarily unavailable or blocking this request.')
+      setGiftSearchMessage('Could not load real Roblox players. Roblox search may be temporarily unavailable.')
     } finally {
       setGiftSearching(false)
     }
   }
+
   useEffect(() => {
     if (!giftOpen || giftSuccess || giftManualMode) return
     let cancelled = false
