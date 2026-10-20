@@ -86,7 +86,7 @@ export default function RobuxPage() {
       <header className="mx-auto flex w-full max-w-5xl items-center justify-end gap-3">
         <div className="flex items-center gap-2 rounded-lg bg-[#29292E] px-3 py-2.5 text-sm font-extrabold" aria-label={`${balance.toLocaleString()} Robux balance`}>
           <RobuxIcon className="size-5" />
-          <span>{balance.toLocaleString()}</span>
+          <span className="tabular-nums">{balance.toLocaleString()}</span>
         </div>
         <button
           type="button"
