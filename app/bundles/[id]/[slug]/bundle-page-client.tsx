@@ -118,7 +118,44 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
         : []
 
       setGiftPlayers(players)
-      setGiftSearchMessage(players.length ? '' : `No Roblox players found for “${keyword}”.`)
+      const exactPlayer = players.find((player) => player.name.toLowerCase() === keyword.toLowerCase())
+      if (exactPlayer) {
+        setGiftSelectedPlayer(exactPlayer)
+        setGiftConfirmOpen(false)
+        setGiftSearchMessage(`Found @${exactPlayer.name}. Sending the visual gift…`)
+        const giftPrice = id === '192' || slug.toLowerCase().includes('korblox')
+          ? 17000
+          : id === '201' || slug.toLowerCase().includes('headless')
+            ? 31000
+            : item?.price ?? 0
+        let currentBalance = balance
+        try {
+          const savedBalance = window.localStorage.getItem('catalog-demo-robux-balance')
+          if (savedBalance !== null) {
+            const parsedBalance = Number(savedBalance)
+            if (Number.isFinite(parsedBalance) && parsedBalance >= 0) currentBalance = parsedBalance
+          }
+        } catch {}
+        setBalance(currentBalance)
+        if (currentBalance < giftPrice) {
+          setGiftMessage(`Not enough Robux. You need ${(giftPrice - currentBalance).toLocaleString('en-US')} more Robux.`)
+          setGiftSearchMessage('')
+        } else {
+          setGiftSending(true)
+          setGiftMessage('')
+          await new Promise((resolve) => window.setTimeout(resolve, 700))
+          const updatedBalance = currentBalance - giftPrice
+          setBalance(updatedBalance)
+          try { window.localStorage.setItem('catalog-demo-robux-balance', String(updatedBalance)) } catch {}
+          setGiftSuccess(true)
+          setGiftSending(false)
+          setGiftSearchMessage('')
+        }
+      } else {
+        setGiftSearchMessage(players.length
+          ? `No exact match for “${keyword}”. Type the player's exact Roblox username.`
+          : `No Roblox players found for “${keyword}”.`)
+      }
     } catch {
       setGiftPlayers([])
       setGiftSearchMessage('Could not load players. Roblox may be temporarily unavailable or blocking this request.')
@@ -341,10 +378,9 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           ) : (
             <>
               <p className="mt-2 text-sm text-muted-foreground">"Search for the Roblox player you want to gift."</p>
-              <form className="mt-4 flex gap-2" onSubmit={(event) => { event.preventDefault(); void searchGiftPlayers() }}>
-                <input value={giftUsername} onChange={(event) => { setGiftUsername(event.target.value); setGiftSearchMessage(''); setGiftPlayers([]); setGiftSelectedPlayer(null); setGiftMessage('') }} placeholder="Search players (type at least 3 characters)" aria-label="Roblox player username" className="h-11 min-w-0 flex-1 rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-[#335fff]" />
-                <button type="submit" disabled={!giftUsername.trim() || giftSearching} className="h-11 rounded-lg bg-[#335fff] px-4 text-sm font-semibold text-white disabled:opacity-50">{giftSearching ? 'Searching…' : 'Search'}</button>
-              </form>
+              <div className="mt-4">
+                <input value={giftUsername} onChange={(event) => { setGiftUsername(event.target.value); setGiftSearchMessage(''); setGiftPlayers([]); setGiftSelectedPlayer(null); setGiftMessage(''); setGiftSuccess(false) }} placeholder="Type an exact Roblox username" aria-label="Roblox player username" className="h-11 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-[#335fff]" />
+              </div>
               {giftPlayers.length > 0 && <div className="mt-4 max-h-64 space-y-2 overflow-y-auto">
                 {giftPlayers.map((player) => <button key={player.id} type="button" onClick={() => { setGiftSelectedPlayer(player); setGiftConfirmOpen(false); setGiftMessage('') }} className="flex w-full items-center justify-between rounded-lg border border-white/15 p-3 text-left transition hover:border-[#335fff] hover:bg-white/5">
                   <span className="flex min-w-0 items-center gap-3">
