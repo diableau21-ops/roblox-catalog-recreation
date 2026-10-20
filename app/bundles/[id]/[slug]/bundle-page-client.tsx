@@ -191,14 +191,14 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
       try {
         const savedNames = (() => {
           try {
-            const saved = window.localStorage.getItem('catalog-demo-player-names')
+            const saved = window.localStorage.getItem('catalog-demo-player-names-v2')
             const parsed = saved ? JSON.parse(saved) : null
             if (Array.isArray(parsed) && parsed.length >= 1000 && parsed.every((name) => typeof name === 'string')) return parsed as string[]
           } catch {}
           const first = ['Blue', 'Sunny', 'Pixel', 'Cloud', 'Nova', 'Lucky', 'Silver', 'Star', 'River', 'Frost', 'Mango', 'Cosmic', 'Echo', 'Tiny', 'Golden', 'Shadow', 'Happy', 'Rapid', 'Chill', 'Neon', 'Turbo', 'Magic', 'Velvet', 'Crystal', 'Comet', 'Maple', 'Storm', 'Dream', 'Lunar', 'Clever', 'Mint', 'Soda', 'Jolly', 'Arctic', 'Peach', 'Ruby']
           const second = ['Panda', 'Fox', 'Dragon', 'Otter', 'Comet', 'Bunny', 'Tiger', 'Koala', 'Wolf', 'Penguin', 'Falcon', 'Kitten', 'Badger', 'Dolphin', 'Raven', 'Cobra', 'Moose', 'Hamster', 'Phoenix', 'Turtle', 'Lynx', 'Parrot', 'Jaguar', 'Robin', 'Gecko', 'Whale', 'Moth', 'Llama', 'Bear', 'Sparrow', 'Coyote', 'Seal', 'Koi', 'Owl', 'Fawn', 'Bee']
-          const names = Array.from({ length: 1296 }, (_, index) => `${first[Math.floor(index / second.length) % first.length]}${second[index % second.length]}${String(index + 1).padStart(3, '0')}`)
-          try { window.localStorage.setItem('catalog-demo-player-names', JSON.stringify(names)) } catch {}
+          const names = Array.from({ length: 1296 }, (_, index) => `${first[index % first.length]}${second[Math.floor(index / first.length) % second.length]}${String(index + 1).padStart(3, '0')}`).sort(() => Math.random() - 0.5)
+          try { window.localStorage.setItem('catalog-demo-player-names-v2', JSON.stringify(names)) } catch {}
           return names
         })()
         const playerNames = savedNames.filter((name) => name.length > 0)
@@ -473,7 +473,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <p className="mt-1 flex items-center gap-1 text-sm text-white/80"><RobuxIcon className="size-4" /> Gift cost: {(id === '192' || slug.toLowerCase().includes('korblox') ? 17000 : id === '201' || slug.toLowerCase().includes('headless') ? 31000 : item.price ?? 0).toLocaleString('en-US')} Robux</p>
               <p className="text-xs text-white/60">Your balance: {balance.toLocaleString('en-US')} Robux</p>
               <div className="mt-3 flex items-center gap-3">
-                {giftSelectedPlayer.avatarUrl ? <img src={giftSelectedPlayer.avatarUrl} alt="" onError={(event) => { const image = event.currentTarget; if (!image.dataset.fallback) { image.dataset.fallback = '1'; image.src = `https://www.roblox.com/headshot-thumbnail/image?userId=${giftSelectedPlayer.id}&width=150&height=150&format=png` } else { image.style.display = 'none' } }} className="size-12 rounded-full object-cover" /> : <span aria-hidden="true" className="flex size-12 items-center justify-center rounded-full bg-white/10 text-xl">👤</span>}
+                {giftSelectedPlayer.avatarUrl ? <img src={giftSelectedPlayer.avatarUrl} alt={`Avatar de ${giftSelectedPlayer.displayName}`} onError={(event) => { const image = event.currentTarget; image.style.display = 'none'; const fallback = image.nextElementSibling as HTMLElement | null; if (fallback) fallback.style.display = 'flex' }} className="size-12 rounded-full object-cover" /> : null}<span aria-hidden="true" style={{display: giftSelectedPlayer.avatarUrl ? 'none' : 'flex'}} className="size-12 items-center justify-center rounded-full bg-indigo-500/30 text-sm font-bold text-white">{giftSelectedPlayer.displayName.slice(0, 2).toUpperCase()}</span>
                 <div className="text-left">
                   <p className="flex items-center gap-1.5 font-semibold">{giftSelectedPlayer.displayName}{giftSelectedPlayer.hasVerifiedBadge && <VerifiedBadge className="size-4" />}</p>
                   <p className="text-sm text-white/70">@{giftSelectedPlayer.name}</p>
@@ -494,7 +494,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               {giftPlayers.length > 0 && <div className="mt-4 max-h-64 space-y-2 overflow-y-auto">
                 {giftPlayers.map((player) => <button key={player.id} type="button" onClick={() => { setGiftSelectedPlayer(player); setGiftConfirmOpen(false); setGiftMessage('') }} className="flex w-full items-center justify-between rounded-lg border border-white/15 p-3 text-left transition hover:border-[#335fff] hover:bg-white/5">
                   <span className="flex min-w-0 items-center gap-3">
-                    {player.avatarUrl ? <img src={player.avatarUrl} alt="" onError={(event) => { const image = event.currentTarget; if (!image.dataset.fallback) { image.dataset.fallback = '1'; image.src = `https://www.roblox.com/headshot-thumbnail/image?userId=${player.id}&width=150&height=150&format=png` } else { image.style.display = 'none' } }} className="size-12 shrink-0 rounded-full bg-white/10 object-cover" /> : <span aria-hidden="true" className="flex size-12 shrink-0 items-center justify-center rounded-full bg-white/10">👤</span>}
+                    {player.avatarUrl ? <img src={player.avatarUrl} alt={`Avatar de ${player.displayName}`} onError={(event) => { const image = event.currentTarget; image.style.display = 'none'; const fallback = image.nextElementSibling as HTMLElement | null; if (fallback) fallback.style.display = 'flex' }} className="size-12 shrink-0 rounded-full bg-white/10 object-cover" /> : null}<span aria-hidden="true" style={{display: player.avatarUrl ? 'none' : 'flex'}} className="size-12 shrink-0 items-center justify-center rounded-full bg-indigo-500/30 text-sm font-bold text-white">{player.displayName.slice(0, 2).toUpperCase()}</span>
                     <span className="min-w-0"><span className="flex min-w-0 items-center gap-1.5 truncate font-semibold">{player.displayName}{player.hasVerifiedBadge && <VerifiedBadge className="size-4" />}</span><span className="block truncate text-sm text-white/70">@{player.name}</span></span>
                   </span>
                   <span className="text-sm font-semibold text-[#8ca0ff]">Select</span>
