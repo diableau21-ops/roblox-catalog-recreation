@@ -84,7 +84,7 @@ export default function RobuxPage() {
 
   return (
     <main className="min-h-dvh bg-[#0B0B0D] text-[#F7F6F2]">
-      <SiteHeader balance={balance} query={query} onQueryChange={setQuery} onBuyRobux={openPackages} onNotify={notify} onBellClick={() => document.getElementById("new-on-roblox")?.scrollIntoView({ behavior: "smooth", block: "start" })} />
+      <SiteHeader balance={balance} query={query} onQueryChange={setQuery} onBuyRobux={openPackages} onNotify={notify} onSetBalance={(nextBalance) => setBalance(nextBalance)} />
       <LeftNav onNotify={notify} onBuyRobux={openPackages} />
       <div className="ml-0 px-4 pb-12 pt-5 sm:px-6 sm:pt-7 md:ml-[220px] md:px-6">
       <header className="mx-auto flex w-full max-w-5xl items-center justify-end gap-3">
