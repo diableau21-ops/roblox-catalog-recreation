@@ -12,6 +12,7 @@ type Props = {
   onBuyRobux: () => void
   onNotify: (msg: string) => void
   onSetBalance?: (balance: number) => void
+  onBellClick?: () => void
 }
 
 const navLinks = ['Charts', 'Marketplace', 'Create', 'Robux'] as const
@@ -28,7 +29,7 @@ function VerifiedBadge({ className = 'size-4' }: { className?: string }) {
   )
 }
 
-export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify, onSetBalance }: Props) {
+export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify, onSetBalance, onBellClick }: Props) {
   const [searchOpen, setSearchOpen] = useState(false)
   const [robuxPickerOpen, setRobuxPickerOpen] = useState(false)
   const [robuxAmount, setRobuxAmount] = useState(String(balance))
@@ -158,7 +159,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
           <button
             type="button"
             aria-label="Notifications"
-            onClick={() => { if (onSetBalance) { setRobuxAmount(String(balance)); setRobuxPickerOpen(true) } else onNotify('No new notifications') }}
+            onClick={() => { if (onBellClick) onBellClick(); else if (onSetBalance) { setRobuxAmount(String(balance)); setRobuxPickerOpen(true) } else onNotify('No new notifications') }}
             className="relative hidden rounded-lg p-2 hover:bg-secondary sm:block"
           >
             <Bell className="size-5" />
