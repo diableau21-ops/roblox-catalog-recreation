@@ -46,7 +46,6 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   const [giftSending, setGiftSending] = useState(false)
   const [giftSuccess, setGiftSuccess] = useState(false)
   const [giftConfirmOpen, setGiftConfirmOpen] = useState(false)
-  const [giftAutoRunning, setGiftAutoRunning] = useState(false)
   const [giftManualMode, setGiftManualMode] = useState(false)
   const [giftRunId, setGiftRunId] = useState(0)
   useEffect(() => {
@@ -131,100 +130,9 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     }
   }
 
-  useEffect(() => {
-    if (!giftOpen || giftSuccess || giftManualMode) return
-    let cancelled = false
-    const pause = (ms: number) => new Promise((resolve) => window.setTimeout(resolve, ms))
-    const runAutomaticGift = async () => {
-      setGiftAutoRunning(true)
-      setGiftSearching(true)
-      setGiftSearchMessage('')
-      try {
-        const savedNames = (() => {
-          try {
-            const saved = window.localStorage.getItem('catalog-demo-player-names-v2')
-            const parsed = saved ? JSON.parse(saved) : null
-            if (Array.isArray(parsed) && parsed.length >= 1000 && parsed.every((name) => typeof name === 'string')) return parsed as string[]
-          } catch {}
-          const first = ['Blue', 'Sunny', 'Pixel', 'Cloud', 'Nova', 'Lucky', 'Silver', 'Star', 'River', 'Frost', 'Mango', 'Cosmic', 'Echo', 'Tiny', 'Golden', 'Shadow', 'Happy', 'Rapid', 'Chill', 'Neon', 'Turbo', 'Magic', 'Velvet', 'Crystal', 'Comet', 'Maple', 'Storm', 'Dream', 'Lunar', 'Clever', 'Mint', 'Soda', 'Jolly', 'Arctic', 'Peach', 'Ruby']
-          const second = ['Panda', 'Fox', 'Dragon', 'Otter', 'Comet', 'Bunny', 'Tiger', 'Koala', 'Wolf', 'Penguin', 'Falcon', 'Kitten', 'Badger', 'Dolphin', 'Raven', 'Cobra', 'Moose', 'Hamster', 'Phoenix', 'Turtle', 'Lynx', 'Parrot', 'Jaguar', 'Robin', 'Gecko', 'Whale', 'Moth', 'Llama', 'Bear', 'Sparrow', 'Coyote', 'Seal', 'Koi', 'Owl', 'Fawn', 'Bee']
-          const names = Array.from({ length: 1296 }, (_, index) => `${first[index % first.length]}${second[Math.floor(index / first.length) % second.length]}${String(index + 1).padStart(3, '0')}`).sort(() => Math.random() - 0.5)
-          try { window.localStorage.setItem('catalog-demo-player-names-v2', JSON.stringify(names)) } catch {}
-          return names
-        })()
-        const playerNames = savedNames.filter((name) => name.length > 0)
-        if (!playerNames.length) return
-        let index = 0
-        try {
-          const savedIndex = Number(window.localStorage.getItem('catalog-demo-player-name-index') || '0')
-          if (Number.isSafeInteger(savedIndex) && savedIndex >= 0) index = savedIndex % playerNames.length
-        } catch {}
-        while (!cancelled) {
-          const name = playerNames[index]
-          const player = { id: index + 1, name, displayName: name, avatarUrl: null, hasVerifiedBadge: false }
-          setGiftPlayers([])
-          setGiftSelectedPlayer(null)
-          setGiftUsername('')
-          await pause(550)
-          for (let i = 1; i <= name.length; i++) {
-            if (cancelled) return
-            setGiftUsername(name.slice(0, i))
-            await pause(100 + Math.floor(Math.random() * 81))
-          }
-          if (cancelled) return
-          await pause(900)
-          if (cancelled) return
-          setGiftPlayers([player])
-          setGiftSelectedPlayer(player)
-          setGiftSearchMessage('')
-          const giftPrice = id === '192' || slug.toLowerCase().includes('korblox')
-            ? 17000
-            : id === '201' || slug.toLowerCase().includes('headless')
-              ? 31000
-              : item?.price ?? 0
-          let currentBalance = balance
-          try {
-            const savedBalance = window.localStorage.getItem('catalog-demo-robux-balance')
-            if (savedBalance !== null) {
-              const parsed = Number(savedBalance)
-              if (Number.isFinite(parsed) && parsed >= 0) currentBalance = parsed
-            }
-          } catch {}
-          setBalance(currentBalance)
-          if (currentBalance >= giftPrice) {
-            setGiftSending(true)
-            await pause(800)
-            if (cancelled) return
-            const updatedBalance = currentBalance - giftPrice
-            setBalance(updatedBalance)
-            try { window.localStorage.setItem('catalog-demo-robux-balance', String(updatedBalance)) } catch {}
-          }
-          setGiftSending(false)
-          index = (index + 1) % playerNames.length
-          try { window.localStorage.setItem('catalog-demo-player-name-index', String(index)) } catch {}
-          setGiftSuccess(true)
-          await pause(1800)
-          if (cancelled) return
-          setGiftSuccess(false)
-          setGiftMessage('')
-          setGiftSelectedPlayer(null)
-          setGiftUsername('')
-        }
-      } catch {
-        if (!cancelled) setGiftSearchMessage('')
-      } finally {
-        if (!cancelled) {
-          setGiftSearching(false)
-          setGiftAutoRunning(false)
-        }
-      }
-    }
-    void runAutomaticGift()
-    return () => { cancelled = true }
-  }, [giftOpen, giftRunId, giftManualMode])
 
   useEffect(() => {
-    if (giftAutoRunning || giftSuccess || giftSelectedPlayer) return
+    if (giftSuccess || giftSelectedPlayer) return
     const keyword = giftUsername.trim()
     if (keyword.length < 3) {
       setGiftPlayers([])
@@ -235,7 +143,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     }
     const timer = window.setTimeout(() => { void searchGiftPlayers() }, 350)
     return () => window.clearTimeout(timer)
-  }, [giftUsername, giftAutoRunning, giftSuccess, giftSelectedPlayer])
+  }, [giftUsername, giftSuccess, giftSelectedPlayer])
   const [robuxShopOpen, setRobuxShopOpen] = useState(false)
   const [selectedRobux, setSelectedRobux] = useState(800)
   const [customRobux, setCustomRobux] = useState('800')
