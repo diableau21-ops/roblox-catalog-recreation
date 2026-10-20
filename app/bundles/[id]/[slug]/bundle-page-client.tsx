@@ -124,7 +124,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
         : `No Roblox players found for “${keyword}”. Try another username.`)
     } catch {
       setGiftPlayers([])
-      setGiftSearchMessage('Could not load real Roblox players. Roblox search may be temporarily unavailable.')
+      setGiftSearchMessage('')
     } finally {
       setGiftSearching(false)
     }
@@ -141,13 +141,22 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
       setGiftSearching(false)
       return
     }
-    const timer = window.setTimeout(() => { void searchGiftPlayers() }, 350)
+    const timer = window.setTimeout(() => { void searchGiftPlayers() }, 700)
     return () => window.clearTimeout(timer)
   }, [giftUsername, giftSuccess, giftSelectedPlayer])
-  // When the gift window opens, automatically load real Roblox search results.
-  // The user can replace this keyword with any name they want to search for.
+  // Type the starter username gradually, like a person entering a search.
   useEffect(() => {
-    if (giftOpen && !giftUsername.trim()) setGiftUsername('alex')
+    if (!giftOpen || giftUsername.trim()) return
+    const keyword = 'alex'
+    let index = 0
+    const timer = window.setInterval(() => {
+      index += 1
+      setGiftUsername(keyword.slice(0, index))
+      if (index >= keyword.length) window.clearInterval(timer)
+    }, 220)
+    return () => window.clearInterval(timer)
+  // Intentionally run when the gift window opens, not on every typed character.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [giftOpen])
 
   const [robuxShopOpen, setRobuxShopOpen] = useState(false)
