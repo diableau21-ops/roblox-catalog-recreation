@@ -144,6 +144,12 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     const timer = window.setTimeout(() => { void searchGiftPlayers() }, 350)
     return () => window.clearTimeout(timer)
   }, [giftUsername, giftSuccess, giftSelectedPlayer])
+  // When the gift window opens, automatically load real Roblox search results.
+  // The user can replace this keyword with any name they want to search for.
+  useEffect(() => {
+    if (giftOpen && !giftUsername.trim()) setGiftUsername('roblox')
+  }, [giftOpen])
+
   const [robuxShopOpen, setRobuxShopOpen] = useState(false)
   const [selectedRobux, setSelectedRobux] = useState(800)
   const [customRobux, setCustomRobux] = useState('800')
