@@ -213,16 +213,16 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           setGiftPlayers([player])
           setGiftSelectedPlayer(null)
           setGiftUsername('')
-          await pause(350)
+          await pause(550)
           for (let i = 1; i <= name.length; i++) {
             if (cancelled) return
             setGiftUsername(name.slice(0, i))
-            await pause(45 + Math.floor(Math.random() * 45))
+            await pause(100 + Math.floor(Math.random() * 81))
           }
           if (cancelled) return
           setGiftSelectedPlayer(player)
           setGiftSearchMessage('')
-          await pause(650)
+          await pause(900)
           if (cancelled) return
           const giftPrice = id === '192' || slug.toLowerCase().includes('korblox')
             ? 17000
@@ -485,7 +485,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             </div>
           ) : (
             <>
-              <p className="mt-2 text-sm text-muted-foreground">Demo gift sequence running automatically.</p>
+              <p className="mt-2 text-sm text-muted-foreground">ギフトのプレビュー</p>
               <div className="mt-4">
                 <input value={giftUsername} onChange={(event) => { setGiftUsername(event.target.value); setGiftSearchMessage(''); setGiftPlayers([]); setGiftSelectedPlayer(null); setGiftMessage(''); setGiftSuccess(false) }} placeholder=" " aria-label="Roblox player username" className="h-11 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-[#335fff]" />
               </div>
