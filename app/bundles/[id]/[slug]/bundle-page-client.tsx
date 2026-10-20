@@ -247,6 +247,8 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             try { window.localStorage.setItem('catalog-demo-robux-balance', String(updatedBalance)) } catch {}
           }
           setGiftSending(false)
+          index = (index + 1) % playerNames.length
+          try { window.localStorage.setItem('catalog-demo-player-name-index', String(index)) } catch {}
           setGiftSuccess(true)
           await pause(1800)
           if (cancelled) return
@@ -254,8 +256,6 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           setGiftMessage('')
           setGiftSelectedPlayer(null)
           setGiftUsername('')
-          index = (index + 1) % playerNames.length
-          try { window.localStorage.setItem('catalog-demo-player-name-index', String(index)) } catch {}
         }
       } catch {
         if (!cancelled) setGiftSearchMessage('')
