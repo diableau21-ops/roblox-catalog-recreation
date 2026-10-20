@@ -81,8 +81,19 @@ export default function RobuxPage() {
     setSendPlayers([])
     setSendPlayer(null)
     try {
-      const response = await fetch(`/api/roblox-users?keyword=${encodeURIComponent(keyword)}`, { cache: 'no-store' })
-      if (!response.ok) throw new Error('Search failed')
+      let response: Response | null = null
+      // Retry transient Roblox/Vercel network failures before showing an error.
+      for (let attempt = 0; attempt < 3; attempt++) {
+        try {
+          response = await fetch(`/api/roblox-users?keyword=${encodeURIComponent(keyword)}&attempt=${attempt}`, {
+            cache: 'no-store',
+            signal: AbortSignal.timeout(12000),
+          })
+          if (response.ok) break
+        } catch {}
+        if (attempt < 2) await new Promise((resolve) => window.setTimeout(resolve, 500 * (attempt + 1)))
+      }
+      if (!response?.ok) throw new Error('Roblox search is temporarily unavailable')
       const payload = await response.json()
       const players = Array.isArray(payload.data) ? payload.data
         .filter((p: {id?:number;name?:string}) => Number.isFinite(p.id) && typeof p.name === 'string')
@@ -93,7 +104,7 @@ export default function RobuxPage() {
       setSendPlayers(players)
       if (!players.length) setSendError(`No Roblox players found for “${keyword}”.`)
     } catch {
-      setSendError('Could not load players. Please try again.')
+      setSendError('Roblox search is temporarily unavailable. Please wait a moment and try again.')
     } finally {
       setSendSearching(false)
     }
