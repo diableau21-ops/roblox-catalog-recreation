@@ -48,6 +48,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   const [giftConfirmOpen, setGiftConfirmOpen] = useState(false)
   const [giftManualMode, setGiftManualMode] = useState(false)
   const [giftRunId, setGiftRunId] = useState(0)
+  const [giftAutoStage, setGiftAutoStage] = useState<'search' | 'confirm' | 'result'>('search')
   useEffect(() => {
     if (!giftOpen || !giftSuccess) return
     const timer = window.setTimeout(() => {
@@ -152,12 +153,14 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     const pause = (ms: number) => new Promise<void>((resolve) => {
       activeTimer = window.setTimeout(resolve, ms)
     })
-    const terms = ['alex', 'builder', 'cool', 'star', 'dragon', 'happy', 'pro', 'pixel', 'shadow', 'blue']
+    // Search numeric username patterns instead of guessing ordinary names.
+    const terms = ['123', '1234', '2024', '2025', '777', '999', '2009', '2010', '12345', '2026']
     const runCycle = async () => {
       let turn = 0
       while (!cancelled) {
         const keyword = terms[turn % terms.length]
         setGiftSelectedPlayer(null)
+        setGiftAutoStage('search')
         setGiftConfirmOpen(false)
         setGiftPlayers([])
         setGiftSearchMessage('')
@@ -175,7 +178,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           const payload = await response.json()
           const players = Array.isArray(payload.data)
             ? payload.data.filter((player: { id?: number; name?: string }) =>
-                Number.isFinite(player.id) && typeof player.name === 'string',
+                Number.isFinite(player.id) && typeof player.name === 'string' && /\\d/.test(player.name),
               ).map((player: { id: number; name: string; displayName?: string; avatarUrl?: string | null; hasVerifiedBadge?: boolean }) => ({
                 id: player.id,
                 name: player.name,
@@ -187,13 +190,17 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           if (cancelled) break
           setGiftPlayers(players)
           if (players.length) {
-            const chosen = players[Math.floor(Math.random() * players.length)]
-            setGiftSelectedPlayer(chosen)
-            setGiftSearchMessage('Automatic preview: account selected.')
-            await pause(1800)
+            // Pick the first matching real account; no random account or name generation.
+            setGiftSelectedPlayer(players[0])
+            setGiftSearchMessage('')
+            setGiftAutoStage('confirm')
+            await pause(1100)
+            if (cancelled) break
+            setGiftAutoStage('result')
+            await pause(1500)
           } else {
             setGiftSearchMessage('')
-            await pause(700)
+            await pause(500)
           }
         } catch {
           if (!cancelled) {
@@ -415,7 +422,15 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                   {giftConfirmOpen && <div className="mt-4 w-full rounded-lg border border-white/20 bg-black/30 p-3 text-left"><p className="font-bold text-white">Confirm gift?</p><p className="mt-1 text-sm text-white/75">Send {item.name} to @{giftSelectedPlayer.name} for {(id === '192' || slug.toLowerCase().includes('korblox') ? 17000 : id === '201' || slug.toLowerCase().includes('headless') ? 31000 : item.price ?? 0).toLocaleString('en-US')} Robux?</p><div className="mt-3 flex gap-2"><button type="button" onClick={() => setGiftConfirmOpen(false)} className="h-10 flex-1 rounded-lg border border-white/20 text-sm font-semibold">Cancel</button><button type="button" onClick={() => { setGiftConfirmOpen(false); void continueGift() }} disabled={giftSending} className="h-10 flex-1 rounded-lg bg-[#335fff] text-sm font-bold disabled:opacity-60">Confirm</button></div></div>}
                 </>
               ) : (
-                <p className="mt-4 rounded-lg border border-white/15 bg-black/25 p-3 text-xs text-white/75">Sélection automatique en cours. Aperçu seulement : aucun cadeau réel n’est envoyé et aucun Robux n’est retiré.</p>
+                <div className="mt-4 w-full rounded-lg border border-white/15 bg-black/25 p-3 text-left text-sm text-white/85">
+                  {giftAutoStage === 'confirm' ? (
+                    <><p className="font-bold">Confirm gift?</p><p className="mt-1">Aperçu automatique pour @{giftSelectedPlayer.name}.</p><p className="mt-2 text-xs text-white/60">Confirmation visuelle seulement.</p></>
+                  ) : giftAutoStage === 'result' ? (
+                    <><p className="font-bold text-emerald-300">Gift preview complete</p><p className="mt-1">Aucun cadeau réel envoyé et aucun Robux retiré.</p></>
+                  ) : (
+                    <p className="text-xs text-white/75">Recherche de comptes Roblox réels dont le nom contient des chiffres…</p>
+                  )}
+                </div>
               )}
             </div>
           ) : (
