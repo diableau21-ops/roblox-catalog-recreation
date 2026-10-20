@@ -11,6 +11,7 @@ type Props = {
   onQueryChange: (q: string) => void
   onBuyRobux: () => void
   onNotify: (msg: string) => void
+  onSetBalance?: (balance: number) => void
 }
 
 const navLinks = ['Charts', 'Marketplace', 'Create', 'Robux'] as const
@@ -27,8 +28,10 @@ function VerifiedBadge({ className = 'size-4' }: { className?: string }) {
   )
 }
 
-export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify }: Props) {
+export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify, onSetBalance }: Props) {
   const [searchOpen, setSearchOpen] = useState(false)
+  const [robuxPickerOpen, setRobuxPickerOpen] = useState(false)
+  const [robuxAmount, setRobuxAmount] = useState(String(balance))
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
   const [profileQuery, setProfileQuery] = useState('')
@@ -155,7 +158,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
           <button
             type="button"
             aria-label="Notifications"
-            onClick={() => onNotify('No new notifications')}
+            onClick={() => { if (onSetBalance) { setRobuxAmount(String(balance)); setRobuxPickerOpen(true) } else onNotify('No new notifications') }}
             className="relative hidden rounded-lg p-2 hover:bg-secondary sm:block"
           >
             <Bell className="size-5" />
@@ -163,6 +166,20 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
               2
             </span>
           </button>
+          {robuxPickerOpen && onSetBalance && (
+            <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 p-4" onClick={() => setRobuxPickerOpen(false)}>
+              <section role="dialog" aria-modal="true" aria-labelledby="robux-picker-title" className="w-full max-w-sm rounded-2xl border border-border bg-card p-5 text-foreground shadow-2xl" onClick={(event) => event.stopPropagation()}>
+                <div className="flex items-center justify-between gap-3">
+                  <h2 id="robux-picker-title" className="text-xl font-extrabold">Choose your Robux balance</h2>
+                  <button type="button" onClick={() => setRobuxPickerOpen(false)} aria-label="Close" className="rounded-lg px-2 py-1 text-xl hover:bg-secondary">×</button>
+                </div>
+                <p className="mt-2 text-sm text-muted-foreground">Choose 9,000 Robux or more.</p>
+                <label htmlFor="custom-robux-balance" className="mt-4 block text-sm font-semibold">Robux amount</label>
+                <input id="custom-robux-balance" type="number" min="9000" step="1" value={robuxAmount} onChange={(event) => setRobuxAmount(event.target.value)} className="mt-2 h-11 w-full rounded-lg border border-border bg-background px-3 text-foreground outline-none focus:border-[#7183ff]" />
+                <button type="button" disabled={!Number.isSafeInteger(Number(robuxAmount)) || Number(robuxAmount) < 9000} onClick={() => { onSetBalance(Number(robuxAmount)); setRobuxPickerOpen(false) }} className="mt-4 h-11 w-full rounded-lg bg-[#335fff] font-extrabold text-white disabled:cursor-not-allowed disabled:opacity-50">Set balance</button>
+              </section>
+            </div>
+          )}
           <button
             type="button"
             onClick={onBuyRobux}
