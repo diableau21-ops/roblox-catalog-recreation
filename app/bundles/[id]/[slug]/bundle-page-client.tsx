@@ -132,7 +132,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
 
 
   useEffect(() => {
-    if (giftSuccess || giftSelectedPlayer) return
+    if (!giftManualMode || giftSuccess || giftSelectedPlayer) return
     const keyword = giftUsername.trim()
     if (keyword.length < 3) {
       setGiftPlayers([])
@@ -143,7 +143,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     }
     const timer = window.setTimeout(() => { void searchGiftPlayers() }, 700)
     return () => window.clearTimeout(timer)
-  }, [giftUsername, giftSuccess, giftSelectedPlayer])
+  }, [giftUsername, giftSuccess, giftSelectedPlayer, giftManualMode])
   // Automatic preview: cycle through searches and real public Roblox accounts.
   useEffect(() => {
     if (!giftOpen || giftManualMode) return
