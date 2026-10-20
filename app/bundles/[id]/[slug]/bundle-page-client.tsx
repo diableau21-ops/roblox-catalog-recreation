@@ -48,6 +48,20 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   const [giftConfirmOpen, setGiftConfirmOpen] = useState(false)
   const [giftAutoRunning, setGiftAutoRunning] = useState(false)
   const [giftRunId, setGiftRunId] = useState(0)
+  useEffect(() => {
+    if (!giftOpen || !giftSuccess) return
+    const timer = window.setTimeout(() => {
+      setGiftSuccess(false)
+      setGiftMessage('')
+      setGiftSearchMessage('')
+      setGiftUsername('')
+      setGiftSelectedPlayer(null)
+      setGiftPlayers([])
+      setGiftSending(false)
+      setGiftRunId((value) => value + 1)
+    }, 1800)
+    return () => window.clearTimeout(timer)
+  }, [giftOpen, giftSuccess])
   const continueGift = async () => {
     if (!giftSelectedPlayer || giftSending) return
     const giftPrice = id === '192' || slug.toLowerCase().includes('korblox')
