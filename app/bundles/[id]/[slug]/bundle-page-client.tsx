@@ -181,6 +181,34 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     }
   }
   useEffect(() => {
+    if (!giftOpen || !giftManualMode || giftSuccess || giftUsername.trim()) return
+    let cancelled = false
+    const pause = (ms: number) => new Promise((resolve) => window.setTimeout(resolve, ms))
+    const typePreviewName = async () => {
+      const first = ['Blue', 'Sunny', 'Pixel', 'Cloud', 'Nova', 'Lucky', 'Silver', 'Star', 'River', 'Frost', 'Mango', 'Cosmic', 'Echo', 'Tiny', 'Golden', 'Shadow', 'Happy', 'Rapid', 'Chill', 'Neon', 'Turbo', 'Magic', 'Velvet', 'Crystal', 'Comet', 'Maple', 'Storm', 'Dream', 'Lunar', 'Clever', 'Mint', 'Soda', 'Jolly', 'Arctic', 'Peach', 'Ruby']
+      const second = ['Panda', 'Fox', 'Dragon', 'Otter', 'Comet', 'Bunny', 'Tiger', 'Koala', 'Wolf', 'Penguin', 'Falcon', 'Kitten', 'Badger', 'Dolphin', 'Raven', 'Cobra', 'Moose', 'Hamster', 'Phoenix', 'Turtle', 'Lynx', 'Parrot', 'Jaguar', 'Robin', 'Gecko', 'Whale', 'Moth', 'Llama', 'Bear', 'Sparrow', 'Coyote', 'Seal', 'Koi', 'Owl', 'Fawn', 'Bee']
+      const name = `${first[Math.floor(Math.random() * first.length)]}${second[Math.floor(Math.random() * second.length)]}${Math.floor(100 + Math.random() * 900)}`
+      setGiftSearching(true)
+      setGiftSearchMessage('ギフトのプレビュー')
+      await pause(450)
+      for (let i = 1; i <= name.length; i++) {
+        if (cancelled) return
+        setGiftUsername(name.slice(0, i))
+        await pause(110 + Math.floor(Math.random() * 91))
+      }
+      if (cancelled) return
+      await pause(450)
+      const previewPlayer = { id: 0, name, displayName: name, avatarUrl: null, hasVerifiedBadge: false }
+      setGiftPlayers([previewPlayer])
+      setGiftSelectedPlayer(null)
+      setGiftSearching(false)
+      setGiftSearchMessage('Aperçu fictif : ce nom n’est pas un compte Roblox réel.')
+    }
+    void typePreviewName()
+    return () => { cancelled = true }
+  }, [giftOpen, giftManualMode, giftSuccess, giftUsername])
+
+  useEffect(() => {
     if (!giftOpen || giftSuccess || giftManualMode) return
     let cancelled = false
     const pause = (ms: number) => new Promise((resolve) => window.setTimeout(resolve, ms))
