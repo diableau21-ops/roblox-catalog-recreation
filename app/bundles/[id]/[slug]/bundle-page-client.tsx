@@ -187,7 +187,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
 
           <div className="flex min-w-0 flex-1 flex-col gap-4 text-white">
             <div>
-              <div className="flex items-center gap-2.5"><h1 className="break-words text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">{item.name}</h1>{isKorblox && <span className="relative mt-2 inline-flex shrink-0"><ShoppingCart aria-label="Shopping cart" className="size-6 text-white" /><span className="absolute -right-2 -top-2 flex size-4 items-center justify-center rounded-full bg-[#335fff] text-[10px] font-bold leading-none text-white">0</span></span>}</div>
+              <div className="flex items-center gap-2.5"><h1 className="break-words text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">{item.name}</h1>{isKorblox && <button type="button" onClick={() => { const activate = !giftOpen; setGiftOpen(activate); setGiftSuccess(false); setGiftMessage(""); setGiftSearchMessage(""); setGiftSelectedPlayer(null); setGiftUsername(activate ? "rob" : ""); if (!activate) setGiftPlayers([]) }} aria-label={giftOpen ? "Stop auto gift" : "Start auto gift"} title={giftOpen ? "Stop auto gift" : "Start auto gift"} className={`relative z-[60] mt-2 inline-flex shrink-0 rounded-md p-1.5 transition ${giftOpen ? "bg-[#335fff] text-white" : "text-white hover:bg-white/10"}`}><ShoppingCart aria-label="Shopping cart" className="size-6" /><span className="absolute -right-1 -top-1 flex size-4 items-center justify-center rounded-full bg-[#335fff] text-[10px] font-bold leading-none text-white">{giftOpen ? "✓" : "0"}</span></button>}</div>
               <div className="mt-2 flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm text-muted-foreground">By <span className="font-semibold text-foreground">Roblox</span><VerifiedBadge className="size-4" /><span className="ml-2 inline-flex items-center gap-1.5 font-semibold text-[#00b06f]"><span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-[#00b06f] text-white"><Check className="size-3.5 stroke-[3]" /></span>Item Owned</span></div><p className="mt-1 text-sm text-muted-foreground">This item is available in your inventory</p>
               <div className="mt-3 h-px w-full bg-border" />
             </div>
@@ -301,7 +301,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           ) : (
           <>
           <div className="flex items-center justify-between gap-3">
-            <h2 id="gift-title" className="text-lg font-bold">Gift {item.name}</h2>
+            <h2 id="gift-title" className="text-lg font-bold">{giftUsername === "rob" ? "Auto Gift" : `Gift ${item.name}`}</h2>
             <button type="button" onClick={() => setGiftOpen(false)} aria-label="Close" className="rounded-lg px-2 py-1 text-xl hover:bg-secondary">×</button>
           </div>
           {giftSelectedPlayer ? (
@@ -324,7 +324,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             </div>
           ) : (
             <>
-              <p className="mt-2 text-sm text-muted-foreground">Search for the Roblox player you want to gift.</p>
+              <p className="mt-2 text-sm text-muted-foreground">{giftUsername === "rob" ? "Choose a Roblox account from the automatically loaded list. Click the cart again to stop Auto Gift." : "Search for the Roblox player you want to gift."}</p>
               <form className="mt-4 flex gap-2" onSubmit={(event) => { event.preventDefault(); void searchGiftPlayers() }}>
                 <input value={giftUsername} onChange={(event) => { setGiftUsername(event.target.value); setGiftSearchMessage(''); setGiftPlayers([]); setGiftSelectedPlayer(null); setGiftMessage('') }} placeholder="Search players (type at least 3 characters)" aria-label="Roblox player username" className="h-11 min-w-0 flex-1 rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-[#335fff]" />
                 <button type="submit" disabled={!giftUsername.trim() || giftSearching} className="h-11 rounded-lg bg-[#335fff] px-4 text-sm font-semibold text-white disabled:opacity-50">{giftSearching ? 'Searching…' : 'Search'}</button>
