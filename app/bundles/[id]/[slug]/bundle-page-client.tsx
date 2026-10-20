@@ -206,7 +206,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     }
     void typePreviewName()
     return () => { cancelled = true }
-  }, [giftOpen, giftManualMode, giftSuccess, giftUsername])
+  }, [giftOpen, giftManualMode, giftSuccess])
 
   useEffect(() => {
     if (!giftOpen || giftSuccess || giftManualMode) return
