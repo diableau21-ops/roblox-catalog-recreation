@@ -167,14 +167,14 @@ export default function RobuxPage() {
               </ul>
               <button type="button" onClick={() => notify('Roblox Plus subscriptions are not available here yet.')} className="mt-6 min-h-11 rounded-lg bg-[#34343A] px-4 py-3 text-sm font-extrabold hover:bg-[#45454D]">Try it for free</button>
             </article>
-            <article className="flex min-w-0 flex-col rounded-2xl border border-[#38383F] bg-[#19191E] p-5">
+            <article className="flex min-w-[min(85vw,320px)] flex-col rounded-2xl border border-[#38383F] bg-[#19191E] p-5 md:min-w-0">
               <div className="flex items-start justify-between gap-3"><h3 className="text-xl font-extrabold">Plus 500</h3><div className="text-right"><p className="text-sm text-[#A8A8B0] line-through">CA$13.98</p><p className="whitespace-nowrap text-lg font-extrabold">CA$12.49</p></div></div>
               <ul className="mt-5 flex-1 space-y-3 text-sm leading-relaxed text-[#E2E2E7]">
                 <li>✓ Everything in Plus</li><li>✓ +500 Robux every month</li><li>✓ CA$13.98 total value</li>
               </ul>
               <button type="button" onClick={() => notify('Roblox Plus subscriptions are not available here yet.')} className="mt-6 min-h-11 rounded-lg bg-[#34343A] px-4 py-3 text-sm font-extrabold hover:bg-[#45454D]">CA$12.49/month</button>
             </article>
-            <article className="flex min-w-0 flex-col rounded-2xl border border-[#38383F] bg-[#19191E] p-5">
+            <article className="flex min-w-[min(85vw,320px)] flex-col rounded-2xl border border-[#38383F] bg-[#19191E] p-5 md:min-w-0">
               <div className="flex items-start justify-between gap-3"><h3 className="text-xl font-extrabold">Plus 1000</h3><div className="text-right"><p className="text-sm text-[#A8A8B0] line-through">CA$20.98</p><p className="whitespace-nowrap text-lg font-extrabold">CA$17.99</p></div></div>
               <ul className="mt-5 flex-1 space-y-3 text-sm leading-relaxed text-[#E2E2E7]">
                 <li>✓ Everything in Plus</li><li>✓ +1,000 Robux every month</li><li>✓ CA$20.98 total value</li>
