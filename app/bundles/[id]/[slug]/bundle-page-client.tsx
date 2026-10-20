@@ -133,44 +133,9 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
         : []
 
       setGiftPlayers(players)
-      const exactPlayer = players.find((player) => player.name.toLowerCase() === keyword.toLowerCase())
-      if (exactPlayer) {
-        setGiftSelectedPlayer(exactPlayer)
-        setGiftConfirmOpen(false)
-        setGiftSearchMessage(`Found @${exactPlayer.name}. Sending the visual gift…`)
-        const giftPrice = id === '192' || slug.toLowerCase().includes('korblox')
-          ? 17000
-          : id === '201' || slug.toLowerCase().includes('headless')
-            ? 31000
-            : item?.price ?? 0
-        let currentBalance = balance
-        try {
-          const savedBalance = window.localStorage.getItem('catalog-demo-robux-balance')
-          if (savedBalance !== null) {
-            const parsedBalance = Number(savedBalance)
-            if (Number.isFinite(parsedBalance) && parsedBalance >= 0) currentBalance = parsedBalance
-          }
-        } catch {}
-        setBalance(currentBalance)
-        if (currentBalance < giftPrice) {
-          setGiftMessage(`Not enough Robux. You need ${(giftPrice - currentBalance).toLocaleString('en-US')} more Robux.`)
-          setGiftSearchMessage('')
-        } else {
-          setGiftSending(true)
-          setGiftMessage('')
-          await new Promise((resolve) => window.setTimeout(resolve, 700))
-          const updatedBalance = currentBalance - giftPrice
-          setBalance(updatedBalance)
-          try { window.localStorage.setItem('catalog-demo-robux-balance', String(updatedBalance)) } catch {}
-          setGiftSuccess(true)
-          setGiftSending(false)
-          setGiftSearchMessage('')
-        }
-      } else {
-        setGiftSearchMessage(players.length
-          ? `No exact match for “${keyword}”. Type the player's exact Roblox username.`
-          : `No Roblox players found for “${keyword}”.`)
-      }
+      setGiftSearchMessage(players.length
+        ? `${players.length} account(s) found. Choose the account you want from the list.`
+        : `No Roblox players found for “${keyword}”.`)
     } catch {
       setGiftPlayers([])
       setGiftSearchMessage('Could not load players. Roblox may be temporarily unavailable or blocking this request.')
@@ -178,19 +143,6 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
       setGiftSearching(false)
     }
   }
-  useEffect(() => {
-    if (giftSuccess || giftSelectedPlayer) return
-    const keyword = giftUsername.trim()
-    if (keyword.length < 3) {
-      setGiftPlayers([])
-      setGiftSearchMessage('')
-      setGiftSelectedPlayer(null)
-      setGiftSearching(false)
-      return
-    }
-    const timer = window.setTimeout(() => { void searchGiftPlayers() }, 350)
-    return () => window.clearTimeout(timer)
-  }, [giftUsername, giftSuccess, giftSelectedPlayer])
   const [robuxShopOpen, setRobuxShopOpen] = useState(false)
   const [selectedRobux, setSelectedRobux] = useState(800)
   const [customRobux, setCustomRobux] = useState('800')
@@ -364,7 +316,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <h3 className="text-xl font-bold text-white">Gift was sent successfully</h3>
               <p className="mt-3 text-sm text-white/75">{item.name}</p>
               {giftSelectedPlayer && <p className="mt-1 text-sm text-white/75">To {giftSelectedPlayer.displayName} (@{giftSelectedPlayer.name})</p>}
-              <button type="button" onClick={() => { setGiftSuccess(false); setGiftMessage(""); setGiftSearchMessage(""); setGiftUsername(""); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftSending(false); setGiftRunId((value) => value + 1) }} className="mt-7 h-10 min-w-32 rounded-lg bg-[#335fff] px-6 text-sm font-bold text-white transition hover:bg-[#244be0]">Done</button>
+              <button type="button" onClick={() => { setGiftSuccess(false); setGiftMessage(""); setGiftSearchMessage(""); setGiftUsername(""); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftSending(false) }} className="mt-7 h-10 min-w-32 rounded-lg bg-[#335fff] px-6 text-sm font-bold text-white transition hover:bg-[#244be0]">Done</button>
             </div>
           ) : (
           <>
@@ -397,7 +349,8 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             <>
               <p className="mt-2 text-sm text-muted-foreground">Search for a Roblox player to send this gift.</p>
               <div className="mt-4">
-                <input value={giftUsername} onChange={(event) => { setGiftUsername(event.target.value); setGiftSearchMessage(''); setGiftPlayers([]); setGiftSelectedPlayer(null); setGiftMessage(''); setGiftSuccess(false) }} placeholder=" " aria-label="Roblox player username" className="h-11 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-[#335fff]" />
+                <input value={giftUsername} onChange={(event) => { setGiftUsername(event.target.value); setGiftSearchMessage(''); setGiftPlayers([]); setGiftSelectedPlayer(null); setGiftMessage(''); setGiftSuccess(false) }} placeholder="Enter a Roblox username" aria-label="Roblox player username" className="h-11 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-[#335fff]" />
+                <button type="button" onClick={() => { void searchGiftPlayers() }} disabled={giftSearching || giftUsername.trim().length < 3} className="mt-2 h-10 w-full rounded-lg bg-[#335fff] px-4 text-sm font-bold text-white transition hover:bg-[#244be0] disabled:cursor-not-allowed disabled:opacity-50">{giftSearching ? 'Searching…' : 'Search accounts'}</button>
               </div>
               {giftPlayers.length > 0 && <div className="mt-4 max-h-64 space-y-2 overflow-y-auto">
                 {giftPlayers.map((player) => <button key={player.id} type="button" onClick={() => { setGiftSelectedPlayer(player); setGiftConfirmOpen(false); setGiftMessage('') }} className="flex w-full items-center justify-between rounded-lg border border-white/15 p-3 text-left transition hover:border-[#335fff] hover:bg-white/5">
