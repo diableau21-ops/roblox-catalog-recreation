@@ -144,20 +144,73 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     const timer = window.setTimeout(() => { void searchGiftPlayers() }, 700)
     return () => window.clearTimeout(timer)
   }, [giftUsername, giftSuccess, giftSelectedPlayer])
-  // Type the starter username gradually, like a person entering a search.
+  // Automatic preview: cycle through searches and real public Roblox accounts.
   useEffect(() => {
-    if (!giftOpen || giftUsername.trim()) return
-    const keyword = 'alex'
-    let index = 0
-    const timer = window.setInterval(() => {
-      index += 1
-      setGiftUsername(keyword.slice(0, index))
-      if (index >= keyword.length) window.clearInterval(timer)
-    }, 220)
-    return () => window.clearInterval(timer)
-  // Intentionally run when the gift window opens, not on every typed character.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [giftOpen])
+    if (!giftOpen || giftManualMode) return
+    let cancelled = false
+    let activeTimer: number | undefined
+    const pause = (ms: number) => new Promise<void>((resolve) => {
+      activeTimer = window.setTimeout(resolve, ms)
+    })
+    const terms = ['alex', 'builder', 'cool', 'star', 'dragon', 'happy', 'pro', 'pixel', 'shadow', 'blue']
+    const runCycle = async () => {
+      let turn = 0
+      while (!cancelled) {
+        const keyword = terms[turn % terms.length]
+        setGiftSelectedPlayer(null)
+        setGiftConfirmOpen(false)
+        setGiftPlayers([])
+        setGiftSearchMessage('')
+        setGiftMessage('')
+        setGiftUsername('')
+        for (let i = 1; i <= keyword.length && !cancelled; i++) {
+          setGiftUsername(keyword.slice(0, i))
+          await pause(180)
+        }
+        if (cancelled) break
+        await pause(500)
+        try {
+          const response = await fetch(`/api/roblox-users?keyword=${encodeURIComponent(keyword)}`, { cache: 'no-store' })
+          if (!response.ok) throw new Error('Search unavailable')
+          const payload = await response.json()
+          const players = Array.isArray(payload.data)
+            ? payload.data.filter((player: { id?: number; name?: string }) =>
+                Number.isFinite(player.id) && typeof player.name === 'string',
+              ).map((player: { id: number; name: string; displayName?: string; avatarUrl?: string | null; hasVerifiedBadge?: boolean }) => ({
+                id: player.id,
+                name: player.name,
+                displayName: player.displayName || player.name,
+                avatarUrl: typeof player.avatarUrl === 'string' ? player.avatarUrl : null,
+                hasVerifiedBadge: player.hasVerifiedBadge === true,
+              }))
+            : []
+          if (cancelled) break
+          setGiftPlayers(players)
+          if (players.length) {
+            const chosen = players[Math.floor(Math.random() * players.length)]
+            setGiftSelectedPlayer(chosen)
+            setGiftSearchMessage('Automatic preview: account selected.')
+            await pause(1800)
+          } else {
+            setGiftSearchMessage('')
+            await pause(700)
+          }
+        } catch {
+          if (!cancelled) {
+            setGiftPlayers([])
+            setGiftSelectedPlayer(null)
+            await pause(900)
+          }
+        }
+        turn++
+      }
+    }
+    void runCycle()
+    return () => {
+      cancelled = true
+      if (activeTimer !== undefined) window.clearTimeout(activeTimer)
+    }
+  }, [giftOpen, giftManualMode])
 
   const [robuxShopOpen, setRobuxShopOpen] = useState(false)
   const [selectedRobux, setSelectedRobux] = useState(800)
@@ -223,7 +276,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
 
           <div className="flex min-w-0 flex-1 flex-col gap-4 text-white">
             <div>
-              <div className="flex flex-wrap items-center gap-2.5"><h1 className="break-words text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">{item.name}</h1>{isKorblox && <button type="button" onClick={() => { setGiftManualMode(true); setGiftOpen(true); setGiftSuccess(false); setGiftConfirmOpen(false); setGiftMessage(""); setGiftSearchMessage(""); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftUsername("") }} aria-label="Open gift cart" title="Gift" className="mt-1 inline-flex size-10 shrink-0 items-center justify-center rounded-lg border border-white/15 bg-white/5 text-white transition hover:bg-white/10"><ShoppingCart aria-hidden="true" className="size-5" /></button>}</div>
+              <div className="flex flex-wrap items-center gap-2.5"><h1 className="break-words text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">{item.name}</h1>{isKorblox && <button type="button" onClick={() => { setGiftManualMode(false); setGiftOpen(true); setGiftSuccess(false); setGiftConfirmOpen(false); setGiftMessage(""); setGiftSearchMessage(""); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftUsername("") }} aria-label="Open gift cart" title="Gift" className="mt-1 inline-flex size-10 shrink-0 items-center justify-center rounded-lg border border-white/15 bg-white/5 text-white transition hover:bg-white/10"><ShoppingCart aria-hidden="true" className="size-5" /></button>}</div>
               <div className="mt-2 flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm text-muted-foreground">By <span className="font-semibold text-foreground">Roblox</span><VerifiedBadge className="size-4" /><span className="ml-2 inline-flex items-center gap-1.5 font-semibold text-[#00b06f]"><span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-[#00b06f] text-white"><Check className="size-3.5 stroke-[3]" /></span>Item Owned</span></div><p className="mt-1 text-sm text-muted-foreground">This item is available in your inventory</p>
               <div className="mt-3 h-px w-full bg-border" />
             </div>
@@ -249,7 +302,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                     <ellipse cx="12" cy="22" rx="8.5" ry="1.5" />
                   </svg>
                 </button>
-                <button type="button" onClick={() => { setGiftManualMode(true); setGiftMessage(''); setGiftSelectedPlayer(null); setGiftOpen(true) }} className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="" aria-hidden="true" className="size-4 brightness-0 invert" /><span>Gift</span></button>
+                <button type="button" onClick={() => { setGiftManualMode(false); setGiftMessage(''); setGiftSelectedPlayer(null); setGiftOpen(true) }} className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="" aria-hidden="true" className="size-4 brightness-0 invert" /><span>Gift</span></button>
               </>
             </div>
 
@@ -353,13 +406,17 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                   <p className="text-sm text-white/70">@{giftSelectedPlayer.name}</p>
                 </div>
               </div>
-              <>
+{giftManualMode ? (
+                <>
                   <button type="button" onClick={() => { setGiftConfirmOpen(true); setGiftMessage('') }} disabled={giftSending} className="mt-5 flex h-10 min-w-36 items-center justify-center gap-2 rounded-lg bg-[#335fff] px-6 text-sm font-bold text-white transition hover:bg-[#244be0] disabled:opacity-70">
                     {giftSending ? 'Sending…' : <><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="" aria-hidden="true" className="size-4 brightness-0 invert" /><span>Continue</span></>}
                   </button>
                   <button type="button" onClick={() => { setGiftSelectedPlayer(null); setGiftConfirmOpen(false); setGiftMessage(''); setGiftSearchMessage('') }} className="mt-3 text-xs text-white/70 underline hover:text-white">Choose another player</button>
-              </>
-              {giftConfirmOpen && <div className="mt-4 w-full rounded-lg border border-white/20 bg-black/30 p-3 text-left"><p className="font-bold text-white">Confirm gift?</p><p className="mt-1 text-sm text-white/75">Send {item.name} to @{giftSelectedPlayer.name} for {(id === '192' || slug.toLowerCase().includes('korblox') ? 17000 : id === '201' || slug.toLowerCase().includes('headless') ? 31000 : item.price ?? 0).toLocaleString('en-US')} Robux?</p><div className="mt-3 flex gap-2"><button type="button" onClick={() => setGiftConfirmOpen(false)} className="h-10 flex-1 rounded-lg border border-white/20 text-sm font-semibold">Cancel</button><button type="button" onClick={() => { setGiftConfirmOpen(false); void continueGift() }} disabled={giftSending} className="h-10 flex-1 rounded-lg bg-[#335fff] text-sm font-bold disabled:opacity-60">Confirm</button></div></div>}
+                  {giftConfirmOpen && <div className="mt-4 w-full rounded-lg border border-white/20 bg-black/30 p-3 text-left"><p className="font-bold text-white">Confirm gift?</p><p className="mt-1 text-sm text-white/75">Send {item.name} to @{giftSelectedPlayer.name} for {(id === '192' || slug.toLowerCase().includes('korblox') ? 17000 : id === '201' || slug.toLowerCase().includes('headless') ? 31000 : item.price ?? 0).toLocaleString('en-US')} Robux?</p><div className="mt-3 flex gap-2"><button type="button" onClick={() => setGiftConfirmOpen(false)} className="h-10 flex-1 rounded-lg border border-white/20 text-sm font-semibold">Cancel</button><button type="button" onClick={() => { setGiftConfirmOpen(false); void continueGift() }} disabled={giftSending} className="h-10 flex-1 rounded-lg bg-[#335fff] text-sm font-bold disabled:opacity-60">Confirm</button></div></div>}
+                </>
+              ) : (
+                <p className="mt-4 rounded-lg border border-white/15 bg-black/25 p-3 text-xs text-white/75">Sélection automatique en cours. Aperçu seulement : aucun cadeau réel n’est envoyé et aucun Robux n’est retiré.</p>
+              )}
             </div>
           ) : (
             <>
