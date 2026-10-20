@@ -83,7 +83,11 @@ export default function RobuxPage() {
       <SiteHeader balance={balance} query={query} onQueryChange={setQuery} onBuyRobux={openPackages} onNotify={notify} />
       <LeftNav onNotify={notify} onBuyRobux={openPackages} />
       <div className="ml-0 px-4 pb-12 pt-5 sm:px-6 sm:pt-7 md:ml-[220px] md:px-6">
-      <header className="mx-auto flex w-full max-w-5xl items-center justify-end gap-4">
+      <header className="mx-auto flex w-full max-w-5xl items-center justify-end gap-3">
+        <div className="flex items-center gap-2 rounded-lg bg-[#29292E] px-3 py-2.5 text-sm font-extrabold" aria-label={`${balance.toLocaleString()} Robux balance`}>
+          <RobuxIcon className="size-5" />
+          <span>{balance.toLocaleString()}</span>
+        </div>
         <button
           type="button"
           onClick={() => { setSendOpen(true); setSendSuccess(false); setSendError(''); setSendPlayer(null); setSendPlayers([]) }}
