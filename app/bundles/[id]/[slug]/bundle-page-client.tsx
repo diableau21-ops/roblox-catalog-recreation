@@ -53,14 +53,28 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
       : id === '201' || slug.toLowerCase().includes('headless')
         ? 31000
         : item?.price ?? 0
-    if (balance < giftPrice) {
-      setGiftMessage(`Not enough Robux. You need ${(giftPrice - balance).toLocaleString('en-US')} more Robux to send this gift.`)
+
+    // Read the shared balance at confirmation time so this page doesn't use a stale value.
+    let currentBalance = balance
+    try {
+      const savedBalance = window.localStorage.getItem('catalog-demo-robux-balance')
+      if (savedBalance !== null) {
+        const parsedBalance = Number(savedBalance)
+        if (Number.isFinite(parsedBalance) && parsedBalance >= 0) currentBalance = parsedBalance
+      }
+    } catch {}
+    setBalance(currentBalance)
+
+    if (currentBalance < giftPrice) {
+      setGiftMessage(`Not enough Robux. You need ${(giftPrice - currentBalance).toLocaleString('en-US')} more Robux to send this gift.`)
       return
     }
     setGiftSending(true)
     setGiftMessage('')
     await new Promise((resolve) => window.setTimeout(resolve, 700))
-    setBalance((current) => current - giftPrice)
+    const updatedBalance = currentBalance - giftPrice
+    setBalance(updatedBalance)
+    try { window.localStorage.setItem('catalog-demo-robux-balance', String(updatedBalance)) } catch {}
     setGiftSuccess(true)
     setGiftSending(false)
   }
