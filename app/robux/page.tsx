@@ -169,7 +169,25 @@ export default function RobuxPage() {
               ) : (
                 <>
                   <div className="mt-5 flex items-center justify-between gap-3 rounded-xl bg-[#24242c] p-4"><div className="flex items-center gap-3"><RobuxIcon className="size-8" /><div><p className="font-extrabold">{selectedPackage.amount} Robux</p><p className="text-xs text-white/55">Robux package</p></div></div><p className="text-lg font-extrabold">{selectedPackage.price}</p></div>
-                  <div className="mt-5 rounded-xl border border-[#454550] bg-gradient-to-br from-[#333b71] via-[#20243f] to-[#15151b] p-4"><div className="flex justify-between text-xs font-bold uppercase tracking-widest text-white/70"><span>Bank card preview</span><span>PREVIEW</span></div><div className="mt-6 text-lg font-semibold tracking-[0.15em]">••••  ••••  ••••  4242</div><div className="mt-5 flex items-end justify-between gap-3 text-xs text-white/70"><div><p className="text-[9px] uppercase tracking-widest text-white/45">Cardholder</p><p className="mt-1 font-semibold">YOUR NAME</p></div><div><p className="text-[9px] uppercase tracking-widest text-white/45">Expires</p><p className="mt-1 font-semibold">MM/YY</p></div><span className="text-lg font-black italic">CARD</span></div></div>
+                  <div className="relative mt-5 min-h-[190px] overflow-hidden rounded-2xl border border-white/20 bg-gradient-to-br from-[#1768b5] via-[#12458e] to-[#071b49] p-5 shadow-xl shadow-blue-950/40">
+                    <div aria-hidden="true" className="pointer-events-none absolute -right-8 -top-12 size-48 rounded-full border-[28px] border-white/10" />
+                    <div aria-hidden="true" className="pointer-events-none absolute -bottom-20 right-16 size-48 rounded-full border-[24px] border-cyan-300/10" />
+                    <div className="relative flex items-start justify-between">
+                      <div><p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/65">Bank card</p><p className="mt-1 text-xs font-semibold text-white/80">VISA</p></div>
+                      <span className="text-3xl font-black italic tracking-tight text-white">VISA</span>
+                    </div>
+                    <div className="relative mt-5 flex items-center gap-3">
+                      <div className="flex h-8 w-11 items-center justify-center rounded-md border border-yellow-100/60 bg-gradient-to-br from-yellow-200 via-yellow-400 to-yellow-600">
+                        <div className="grid h-5 w-7 grid-cols-2 grid-rows-2 overflow-hidden rounded-sm border border-yellow-900/40"><span className="border-r border-b border-yellow-900/40" /><span className="border-b border-yellow-900/40" /><span className="border-r border-yellow-900/40" /><span /></div>
+                      </div>
+                      <span className="text-xl text-white/80">)))</span>
+                    </div>
+                    <div className="relative mt-4 text-lg font-semibold tracking-[0.16em] text-white sm:text-xl">•••• &nbsp; •••• &nbsp; •••• &nbsp; 4242</div>
+                    <div className="relative mt-4 flex items-end justify-between gap-3 text-xs text-white/80">
+                      <div><p className="text-[9px] uppercase tracking-widest text-white/55">Cardholder</p><p className="mt-1 font-bold tracking-wide">YOUR NAME</p></div>
+                      <div><p className="text-[9px] uppercase tracking-widest text-white/55">Expires</p><p className="mt-1 font-bold">MM/YY</p></div>
+                    </div>
+                  </div>
                   <p className="mt-4 text-center text-xs text-white/45">Purchases are currently unavailable.</p>
                   <button type="button" onClick={() => { setPaying(true); window.setTimeout(() => { setBalance((current) => current + Number(selectedPackage.amount.replace(/,/g, ''))); setPaying(false); setPaid(true) }, 1800) }} className="mt-5 flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-[#335fff] font-extrabold hover:bg-[#244be0]">Simulate payment · {selectedPackage.price}</button>
                   <p className="mt-3 text-center text-[11px] text-white/40">Checkout preview</p>
