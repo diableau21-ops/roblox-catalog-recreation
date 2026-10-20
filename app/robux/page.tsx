@@ -54,6 +54,7 @@ export default function RobuxPage() {
   const [sendError, setSendError] = useState('')
   const [sendAmount, setSendAmount] = useState('100')
   const [sendSuccess, setSendSuccess] = useState(false)
+  const [sendProcessing, setSendProcessing] = useState(false)
   const [selectedPackage, setSelectedPackage] = useState<(typeof packages)[number] | null>(null)
   const [paying, setPaying] = useState(false)
   const [paid, setPaid] = useState(false)
@@ -210,7 +211,7 @@ export default function RobuxPage() {
                   <div className="py-8 text-center">
                     <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-emerald-500 text-3xl font-black">✓</div>
                     <h2 id="send-robux-title" className="mt-4 text-xl font-extrabold">Robux sent successfully!</h2>
-                    <p className="mt-2 text-sm text-white/75">{sendAmount} Robux sent to {sendPlayer?.displayName} (@{sendPlayer?.name}).</p>
+                    <p className="mt-2 text-sm text-white/75">{sendAmount} Robux sent to {sendPlayer?.displayName}{sendPlayer?.hasVerifiedBadge && <span title="Verified Roblox account" aria-label="Verified account" className="ml-1 inline-flex size-4 items-center justify-center rounded-full bg-[#335fff] text-[10px] font-black text-white">✓</span>} (@{sendPlayer?.name}).</p>
                     
                     <button type="button" onClick={() => setSendOpen(false)} className="mt-6 h-10 rounded-lg bg-[#335fff] px-7 text-sm font-bold">Done</button>
                   </div>
@@ -224,11 +225,11 @@ export default function RobuxPage() {
                       <div className="mt-5">
                         <div className="flex items-center gap-3 rounded-lg border border-white/15 p-3">
                           {sendPlayer.avatarUrl ? <img src={sendPlayer.avatarUrl} alt="" className="size-12 rounded-full object-cover" /> : <span className="flex size-12 items-center justify-center rounded-full bg-white/10">👤</span>}
-                          <div className="min-w-0"><p className="truncate font-bold">{sendPlayer.displayName}</p><p className="truncate text-sm text-white/65">@{sendPlayer.name}</p></div>
+                          <div className="min-w-0"><p className="flex items-center gap-1.5 truncate font-bold">{sendPlayer.displayName}{sendPlayer.hasVerifiedBadge && <span title="Verified Roblox account" aria-label="Verified account" className="inline-flex size-4 shrink-0 items-center justify-center rounded-full bg-[#335fff] text-[10px] font-black text-white">✓</span>}</p><p className="truncate text-sm text-white/65">@{sendPlayer.name}</p></div>
                         </div>
                         <label htmlFor="send-robux-amount" className="mt-4 block text-sm font-semibold">Robux amount</label>
                         <input id="send-robux-amount" type="number" min="1" step="1" inputMode="numeric" value={sendAmount} onChange={(event) => setSendAmount(event.target.value)} className="mt-2 h-11 w-full rounded-lg border border-white/20 bg-black/30 px-3 text-white outline-none focus:border-[#7183ff]" />
-                        <button type="button" disabled={!Number.isSafeInteger(Number(sendAmount)) || Number(sendAmount) < 1} onClick={() => { const amount = Number(sendAmount); if (!Number.isSafeInteger(amount) || amount < 1) return; if (amount > balance) { setSendError('Not enough Robux in your balance.'); return; } setBalance((current) => current - amount); setSendError(''); setSendSuccess(true) }} className="mt-4 h-11 w-full rounded-lg bg-[#335fff] text-sm font-extrabold disabled:cursor-not-allowed disabled:opacity-50">Send Robux</button>
+                        <button type="button" disabled={!Number.isSafeInteger(Number(sendAmount)) || Number(sendAmount) < 1} onClick={() => { const amount = Number(sendAmount); if (!Number.isSafeInteger(amount) || amount < 1 || sendProcessing) return; if (amount > balance) { setSendError('Not enough Robux in your balance.'); return; } setSendError(''); setSendProcessing(true); window.setTimeout(() => { setBalance((current) => current - amount); setSendProcessing(false); setSendSuccess(true) }, 1000) }} disabled={sendProcessing || !Number.isSafeInteger(Number(sendAmount)) || Number(sendAmount) < 1} className="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[#335fff] text-sm font-extrabold disabled:cursor-not-allowed disabled:opacity-60">{sendProcessing && <span aria-hidden="true" className="size-4 animate-spin rounded-full border-2 border-white/35 border-t-white" />}{sendProcessing ? 'Sending…' : 'Send Robux'}</button>
                         <button type="button" onClick={() => { setSendPlayer(null); setSendError('') }} className="mt-3 w-full text-xs text-white/65 underline">Choose another player</button>
                       </div>
                     ) : (
@@ -242,7 +243,7 @@ export default function RobuxPage() {
                         {sendPlayers.length > 0 && <div className="mt-4 max-h-60 space-y-2 overflow-y-auto">
                           {sendPlayers.map((player) => <button key={player.id} type="button" onClick={() => setSendPlayer(player)} className="flex w-full items-center gap-3 rounded-lg border border-white/15 p-3 text-left hover:border-[#7183ff] hover:bg-white/5">
                             {player.avatarUrl ? <img src={player.avatarUrl} alt="" className="size-11 rounded-full object-cover" /> : <span className="flex size-11 items-center justify-center rounded-full bg-white/10">👤</span>}
-                            <span className="min-w-0 flex-1"><span className="block truncate font-semibold">{player.displayName}</span><span className="block truncate text-sm text-white/60">@{player.name}</span></span>
+                            <span className="min-w-0 flex-1"><span className="flex items-center gap-1.5 truncate font-semibold">{player.displayName}{player.hasVerifiedBadge && <span title="Verified Roblox account" aria-label="Verified account" className="inline-flex size-4 shrink-0 items-center justify-center rounded-full bg-[#335fff] text-[10px] font-black text-white">✓</span>}</span><span className="block truncate text-sm text-white/60">@{player.name}</span></span>
                             <span className="text-sm font-bold text-[#9eafff]">Select</span>
                           </button>)}
                         </div>}
