@@ -168,29 +168,37 @@ export default function RobuxPage() {
                 <div className="flex min-h-64 flex-col items-center justify-center text-center"><div className="size-12 animate-spin rounded-full border-4 border-white/15 border-t-[#7183ff]" /><h3 className="mt-5 text-lg font-extrabold">Processing your order…</h3><p className="mt-2 text-sm text-white/60">Please wait…</p></div>
               ) : (
                 <>
-                  <div className="mt-5 flex items-center justify-between gap-3 rounded-xl bg-[#24242c] p-4"><div className="flex items-center gap-3"><RobuxIcon className="size-8" /><div><p className="font-extrabold">{selectedPackage.amount} Robux</p><p className="text-xs text-white/55">Robux package</p></div></div><p className="text-lg font-extrabold">{selectedPackage.price}</p></div>
-                  <div className="relative mt-5 min-h-[190px] overflow-hidden rounded-2xl border border-white/20 bg-gradient-to-br from-[#1768b5] via-[#12458e] to-[#071b49] p-5 shadow-xl shadow-blue-950/40">
-                    <div aria-hidden="true" className="pointer-events-none absolute -right-8 -top-12 size-48 rounded-full border-[28px] border-white/10" />
-                    <div aria-hidden="true" className="pointer-events-none absolute -bottom-20 right-16 size-48 rounded-full border-[24px] border-cyan-300/10" />
-                    <div className="relative flex items-start justify-between">
-                      <div><p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/65">Bank card</p><p className="mt-1 text-xs font-semibold text-white/80">VISA</p></div>
-                      <span className="text-3xl font-black italic tracking-tight text-white">VISA</span>
-                    </div>
-                    <div className="relative mt-5 flex items-center gap-3">
-                      <div className="flex h-8 w-11 items-center justify-center rounded-md border border-yellow-100/60 bg-gradient-to-br from-yellow-200 via-yellow-400 to-yellow-600">
-                        <div className="grid h-5 w-7 grid-cols-2 grid-rows-2 overflow-hidden rounded-sm border border-yellow-900/40"><span className="border-r border-b border-yellow-900/40" /><span className="border-b border-yellow-900/40" /><span className="border-r border-yellow-900/40" /><span /></div>
-                      </div>
-                      <span className="text-xl text-white/80">)))</span>
-                    </div>
-                    <div className="relative mt-4 text-lg font-semibold tracking-[0.16em] text-white sm:text-xl">•••• &nbsp; •••• &nbsp; •••• &nbsp; 4242</div>
-                    <div className="relative mt-4 flex items-end justify-between gap-3 text-xs text-white/80">
-                      <div><p className="text-[9px] uppercase tracking-widest text-white/55">Cardholder</p><p className="mt-1 font-bold tracking-wide">YOUR NAME</p></div>
-                      <div><p className="text-[9px] uppercase tracking-widest text-white/55">Expires</p><p className="mt-1 font-bold">MM/YY</p></div>
+                  <div className="mt-5 rounded-xl border border-[#34343b] bg-[#202024] p-4">
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-3"><RobuxIcon className="size-9" /><div><p className="font-extrabold">{selectedPackage.amount} Robux</p><p className="text-xs text-white/55">Robux package</p></div></div>
+                      <p className="text-lg font-extrabold">{selectedPackage.price}</p>
                     </div>
                   </div>
-                  <p className="mt-4 text-center text-xs text-white/45">Purchases are currently unavailable.</p>
-                  <button type="button" onClick={() => { setPaying(true); window.setTimeout(() => { setBalance((current) => current + Number(selectedPackage.amount.replace(/,/g, ''))); setPaying(false); setPaid(true) }, 1800) }} className="mt-5 flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-[#335fff] font-extrabold hover:bg-[#244be0]">Simulate payment · {selectedPackage.price}</button>
-                  <p className="mt-3 text-center text-[11px] text-white/40">Checkout preview</p>
+                  <div className="mt-5">
+                    <h3 className="text-base font-extrabold">Payment method</h3>
+                    <div className="mt-3 rounded-xl border-2 border-[#335fff] bg-[#22232b] p-3">
+                      <div className="flex items-center gap-3">
+                        <span className="flex size-11 items-center justify-center rounded-lg bg-white text-[#17479e]"><span className="text-sm font-black italic">VISA</span></span>
+                        <div className="min-w-0 flex-1"><p className="font-bold">Credit or debit card</p><p className="text-xs text-white/55">Visa · Mastercard · American Express</p></div>
+                        <span className="flex size-5 items-center justify-center rounded-full bg-[#335fff] text-xs font-black">✓</span>
+                      </div>
+                    </div>
+                    <div className="mt-2 flex items-center gap-3 rounded-xl border border-[#3b3b44] bg-[#1d1d22] p-3 opacity-70">
+                      <span className="flex size-11 items-center justify-center rounded-lg bg-white text-[#123b80]"><span className="text-sm font-black italic">P</span></span>
+                      <div><p className="font-bold">PayPal</p><p className="text-xs text-white/55">Unavailable in demo</p></div>
+                    </div>
+                  </div>
+                  <div className="mt-4 rounded-xl border border-dashed border-[#555561] bg-[#1c1c22] p-3">
+                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-amber-200"><span aria-hidden="true">ⓘ</span> Demo checkout only</div>
+                    <p className="mt-1.5 text-xs leading-relaxed text-white/60">This is a visual mockup. No real payment is taken. Do not enter real card details.</p>
+                  </div>
+                  <div className="mt-5 space-y-3 rounded-xl bg-[#202024] p-4 text-sm">
+                    <div className="flex items-center justify-between text-white/65"><span>Subtotal</span><span>{selectedPackage.price}</span></div>
+                    <div className="flex items-center justify-between text-white/65"><span>Taxes</span><span>Not calculated</span></div>
+                    <div className="border-t border-white/10 pt-3"><div className="flex items-center justify-between font-extrabold"><span>Total</span><span>{selectedPackage.price}</span></div></div>
+                  </div>
+                  <button type="button" onClick={() => { setPaying(true); window.setTimeout(() => { setBalance((current) => current + Number(selectedPackage.amount.replace(/,/g, ''))); setPaying(false); setPaid(true) }, 1200) }} className="mt-5 flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-[#335fff] font-extrabold hover:bg-[#244be0]">Simulate purchase · {selectedPackage.price}</button>
+                  <p className="mt-3 text-center text-[11px] text-white/40">Visual replica · No real-money transaction</p>
                 </>
               )}
             </section>
