@@ -159,8 +159,8 @@ export default function RobuxPage() {
               <button type="button" aria-label="Scroll to more Roblox offers" onClick={() => document.getElementById('roblox-plus-cards')?.scrollBy({ left: 320, behavior: 'smooth' })} className="flex size-9 shrink-0 items-center justify-center rounded-full border border-[#414148] bg-[#25252B] hover:bg-[#34343B]"><span aria-hidden="true" className="text-lg">↻</span></button>
             </div>
           </div>
-          <div id="roblox-plus-cards" className="grid grid-cols-1 gap-4 md:grid-cols-3">
-            <article className="flex min-w-0 flex-col rounded-2xl border border-[#38383F] bg-[#19191E] p-5">
+          <div id="roblox-plus-cards" className="flex gap-4 overflow-x-auto pb-2 md:grid md:grid-cols-3 md:overflow-visible">
+            <article className="flex min-w-[min(85vw,320px)] flex-col rounded-2xl border border-[#38383F] bg-[#19191E] p-5 md:min-w-0">
               <div className="flex items-start justify-between gap-3"><h3 className="text-xl font-extrabold">Roblox Plus</h3><p className="whitespace-nowrap text-lg font-extrabold">CA$6.99</p></div>
               <ul className="mt-5 flex-1 space-y-3 text-sm leading-relaxed text-[#E2E2E7]">
                 <li>✓ Up to 20% off on items and avatars</li><li>✓ Free private servers</li><li>✓ Send Robux for free</li><li>✓ Customize profile and app theme</li>
