@@ -104,7 +104,7 @@ export default function RobuxPage() {
       setSendPlayers(players)
       if (!players.length) setSendError(`No Roblox players found for “${keyword}”.`)
     } catch {
-      setSendError('Roblox search is temporarily unavailable. Please wait a moment and try again.')
+      setSendError('No results right now. Check the Roblox username and try again.')
     } finally {
       setSendSearching(false)
     }
@@ -250,7 +250,7 @@ export default function RobuxPage() {
                         </div>
                         <label htmlFor="send-robux-amount" className="mt-4 block text-sm font-semibold">Robux amount</label>
                         <input id="send-robux-amount" type="number" min="1" step="1" inputMode="numeric" value={sendAmount} onChange={(event) => setSendAmount(event.target.value)} className="mt-2 h-11 w-full rounded-lg border border-white/20 bg-black/30 px-3 text-white outline-none focus:border-[#7183ff]" />
-                        <button type="button" disabled={!Number.isSafeInteger(Number(sendAmount)) || Number(sendAmount) < 1} onClick={() => { const amount = Number(sendAmount); if (!Number.isSafeInteger(amount) || amount < 1 || sendProcessing) return; if (amount > balance) { setSendError('Not enough Robux in your balance.'); return; } setSendError(''); setSendProcessing(true); window.setTimeout(() => { setBalance((current) => current - amount); setSendProcessing(false); setSendSuccess(true) }, 1000) }} disabled={sendProcessing || !Number.isSafeInteger(Number(sendAmount)) || Number(sendAmount) < 1} className="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[#335fff] text-sm font-extrabold disabled:cursor-not-allowed disabled:opacity-60">{sendProcessing && <span aria-hidden="true" className="size-4 animate-spin rounded-full border-2 border-white/35 border-t-white" />}{sendProcessing ? 'Sending…' : 'Send Robux'}</button>
+                        <button type="button" onClick={() => { const amount = Number(sendAmount); if (!Number.isSafeInteger(amount) || amount < 1 || sendProcessing) return; if (amount > balance) { setSendError('Not enough Robux in your balance.'); return; } setSendError(''); setSendProcessing(true); window.setTimeout(() => { setBalance((current) => current - amount); setSendProcessing(false); setSendSuccess(true) }, 1000) }} disabled={sendProcessing || !Number.isSafeInteger(Number(sendAmount)) || Number(sendAmount) < 1 className="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[#335fff] text-sm font-extrabold disabled:cursor-not-allowed disabled:opacity-60">{sendProcessing && <span aria-hidden="true" className="size-4 animate-spin rounded-full border-2 border-white/35 border-t-white" />}{sendProcessing ? 'Sending…' : 'Send Robux'}</button>
                         <button type="button" onClick={() => { setSendPlayer(null); setSendError('') }} className="mt-3 w-full text-xs text-white/65 underline">Choose another player</button>
                       </div>
                     ) : (
