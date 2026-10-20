@@ -45,17 +45,14 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   const [giftMessage, setGiftMessage] = useState('')
   const [giftSending, setGiftSending] = useState(false)
   const [giftSuccess, setGiftSuccess] = useState(false)
-  const [giftPreviewComplete, setGiftPreviewComplete] = useState(false)
-  const [giftPreviewTyping, setGiftPreviewTyping] = useState(false)
   const [giftConfirmOpen, setGiftConfirmOpen] = useState(false)
   const [giftAutoRunning, setGiftAutoRunning] = useState(false)
   const [giftManualMode, setGiftManualMode] = useState(false)
   const [giftRunId, setGiftRunId] = useState(0)
   useEffect(() => {
-    if (!giftOpen || (!giftSuccess && !giftPreviewComplete)) return
+    if (!giftOpen || !giftSuccess) return
     const timer = window.setTimeout(() => {
       setGiftSuccess(false)
-      setGiftPreviewComplete(false)
       setGiftMessage('')
       setGiftSearchMessage('')
       setGiftUsername('')
@@ -65,7 +62,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
       setGiftRunId((value) => value + 1)
     }, 1800)
     return () => window.clearTimeout(timer)
-  }, [giftOpen, giftSuccess, giftPreviewComplete])
+  }, [giftOpen, giftSuccess])
   const continueGift = async () => {
     if (!giftSelectedPlayer || giftSending) return
     const giftPrice = id === '192' || slug.toLowerCase().includes('korblox')
@@ -184,36 +181,6 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     }
   }
   useEffect(() => {
-    if (!giftOpen || !giftManualMode || giftSuccess || giftUsername.trim()) return
-    let cancelled = false
-    const pause = (ms: number) => new Promise((resolve) => window.setTimeout(resolve, ms))
-    const typePreviewName = async () => {
-      const first = ['Blue', 'Sunny', 'Pixel', 'Cloud', 'Nova', 'Lucky', 'Silver', 'Star', 'River', 'Frost', 'Mango', 'Cosmic', 'Echo', 'Tiny', 'Golden', 'Shadow', 'Happy', 'Rapid', 'Chill', 'Neon', 'Turbo', 'Magic', 'Velvet', 'Crystal', 'Comet', 'Maple', 'Storm', 'Dream', 'Lunar', 'Clever', 'Mint', 'Soda', 'Jolly', 'Arctic', 'Peach', 'Ruby']
-      const second = ['Panda', 'Fox', 'Dragon', 'Otter', 'Comet', 'Bunny', 'Tiger', 'Koala', 'Wolf', 'Penguin', 'Falcon', 'Kitten', 'Badger', 'Dolphin', 'Raven', 'Cobra', 'Moose', 'Hamster', 'Phoenix', 'Turtle', 'Lynx', 'Parrot', 'Jaguar', 'Robin', 'Gecko', 'Whale', 'Moth', 'Llama', 'Bear', 'Sparrow', 'Coyote', 'Seal', 'Koi', 'Owl', 'Fawn', 'Bee']
-      const name = `${first[Math.floor(Math.random() * first.length)]}${second[Math.floor(Math.random() * second.length)]}${Math.floor(100 + Math.random() * 900)}`
-      setGiftPreviewTyping(true)
-      setGiftSearching(true)
-      setGiftSearchMessage('ギフトのプレビュー')
-      await pause(450)
-      for (let i = 1; i <= name.length; i++) {
-        if (cancelled) return
-        setGiftUsername(name.slice(0, i))
-        await pause(110 + Math.floor(Math.random() * 91))
-      }
-      if (cancelled) return
-      await pause(450)
-      const previewPlayer = { id: 0, name, displayName: name, avatarUrl: null, hasVerifiedBadge: false }
-      setGiftPlayers([previewPlayer])
-      setGiftSelectedPlayer(previewPlayer)
-      setGiftPreviewTyping(false)
-      setGiftSearching(false)
-      setGiftSearchMessage('Aperçu fictif sélectionné automatiquement — ce nom n’est pas un compte Roblox réel.')
-    }
-    void typePreviewName()
-    return () => { cancelled = true }
-  }, [giftOpen, giftManualMode, giftSuccess])
-
-  useEffect(() => {
     if (!giftOpen || giftSuccess || giftManualMode) return
     let cancelled = false
     const pause = (ms: number) => new Promise((resolve) => window.setTimeout(resolve, ms))
@@ -306,7 +273,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   }, [giftOpen, giftRunId, giftManualMode])
 
   useEffect(() => {
-    if (giftAutoRunning || giftSuccess || giftPreviewTyping || giftSelectedPlayer) return
+    if (giftAutoRunning || giftSuccess || giftSelectedPlayer) return
     const keyword = giftUsername.trim()
     if (keyword.length < 3) {
       setGiftPlayers([])
@@ -317,7 +284,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     }
     const timer = window.setTimeout(() => { void searchGiftPlayers() }, 350)
     return () => window.clearTimeout(timer)
-  }, [giftUsername, giftAutoRunning, giftSuccess, giftPreviewTyping, giftSelectedPlayer])
+  }, [giftUsername, giftAutoRunning, giftSuccess, giftSelectedPlayer])
   const [robuxShopOpen, setRobuxShopOpen] = useState(false)
   const [selectedRobux, setSelectedRobux] = useState(800)
   const [customRobux, setCustomRobux] = useState('800')
@@ -477,7 +444,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
         <section role="dialog" aria-modal="true" aria-labelledby="gift-title" className="gift-galaxy-card relative z-10 w-full max-w-sm overflow-hidden rounded-xl border border-[#6d75ff]/60 p-4 shadow-2xl" onClick={(event) => event.stopPropagation()}>
           <div aria-hidden="true" className="gift-galaxy-card-bg pointer-events-none absolute inset-0" />
           <div className="relative z-10">
-          {(giftSuccess || giftPreviewComplete) ? (
+          {giftSuccess ? (
             <div className="flex min-h-[300px] flex-col items-center justify-center py-8 text-center">
               <div className="relative mb-5 flex size-24 items-center justify-center">
                 <div aria-hidden="true" className="absolute inset-0 rounded-full bg-gradient-to-br from-violet-500/35 via-blue-500/20 to-cyan-400/30 blur-xl" />
@@ -488,11 +455,10 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                   <Check className="size-8 stroke-[3]" />
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-white">{giftPreviewComplete ? 'Aperçu du cadeau terminé' : 'Gift simulation complete'}</h3>
-              {giftPreviewComplete && <p className="mt-2 text-sm text-amber-200">実際のギフトは送信されておらず、Robuxも差し引かれていません。</p>}
+              <h3 className="text-xl font-bold text-white">Gift was sent successfully</h3>
               <p className="mt-3 text-sm text-white/75">{item.name}</p>
               {giftSelectedPlayer && <p className="mt-1 text-sm text-white/75">To {giftSelectedPlayer.displayName} (@{giftSelectedPlayer.name})</p>}
-              <button type="button" onClick={() => { setGiftSuccess(false); setGiftPreviewComplete(false); setGiftMessage(""); setGiftSearchMessage(""); setGiftUsername(""); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftSending(false); setGiftRunId((value) => value + 1) }} className="mt-7 h-10 min-w-32 rounded-lg bg-[#335fff] px-6 text-sm font-bold text-white transition hover:bg-[#244be0]">Done</button>
+              <button type="button" onClick={() => { setGiftSuccess(false); setGiftMessage(""); setGiftSearchMessage(""); setGiftUsername(""); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftSending(false); setGiftRunId((value) => value + 1) }} className="mt-7 h-10 min-w-32 rounded-lg bg-[#335fff] px-6 text-sm font-bold text-white transition hover:bg-[#244be0]">Done</button>
             </div>
           ) : (
           <>
@@ -513,24 +479,17 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                   <p className="text-sm text-white/70">@{giftSelectedPlayer.name}</p>
                 </div>
               </div>
-              {giftSelectedPlayer.id === 0 ? (
-                <>
-                  <p className="mt-3 rounded-lg border border-amber-300/30 bg-amber-300/10 p-2 text-xs text-amber-100">Profil fictif pour l’aperçu seulement. Ce n’est pas un compte Roblox.</p>
-                  <button type="button" onClick={() => setGiftPreviewComplete(true)} className="mt-5 flex h-10 min-w-36 items-center justify-center gap-2 rounded-lg bg-[#335fff] px-6 text-sm font-bold text-white transition hover:bg-[#244be0]">Voir l’aperçu du cadeau</button>
-                </>
-              ) : (
-                <>
+              <>
                   <button type="button" onClick={() => { setGiftConfirmOpen(true); setGiftMessage('') }} disabled={giftSending} className="mt-5 flex h-10 min-w-36 items-center justify-center gap-2 rounded-lg bg-[#335fff] px-6 text-sm font-bold text-white transition hover:bg-[#244be0] disabled:opacity-70">
                     {giftSending ? 'Sending…' : <><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="" aria-hidden="true" className="size-4 brightness-0 invert" /><span>Continue</span></>}
                   </button>
                   <button type="button" onClick={() => { setGiftSelectedPlayer(null); setGiftConfirmOpen(false); setGiftMessage(''); setGiftSearchMessage('') }} className="mt-3 text-xs text-white/70 underline hover:text-white">Choose another player</button>
-                </>
-              )}
-              {giftConfirmOpen && giftSelectedPlayer.id !== 0 && <div className="mt-4 w-full rounded-lg border border-white/20 bg-black/30 p-3 text-left"><p className="font-bold text-white">Confirm gift?</p><p className="mt-1 text-sm text-white/75">Send {item.name} to @{giftSelectedPlayer.name} for {(id === '192' || slug.toLowerCase().includes('korblox') ? 17000 : id === '201' || slug.toLowerCase().includes('headless') ? 31000 : item.price ?? 0).toLocaleString('en-US')} Robux?</p><div className="mt-3 flex gap-2"><button type="button" onClick={() => setGiftConfirmOpen(false)} className="h-10 flex-1 rounded-lg border border-white/20 text-sm font-semibold">Cancel</button><button type="button" onClick={() => { setGiftConfirmOpen(false); void continueGift() }} disabled={giftSending} className="h-10 flex-1 rounded-lg bg-[#335fff] text-sm font-bold disabled:opacity-60">Confirm</button></div></div>}
+              </>
+              {giftConfirmOpen && <div className="mt-4 w-full rounded-lg border border-white/20 bg-black/30 p-3 text-left"><p className="font-bold text-white">Confirm gift?</p><p className="mt-1 text-sm text-white/75">Send {item.name} to @{giftSelectedPlayer.name} for {(id === '192' || slug.toLowerCase().includes('korblox') ? 17000 : id === '201' || slug.toLowerCase().includes('headless') ? 31000 : item.price ?? 0).toLocaleString('en-US')} Robux?</p><div className="mt-3 flex gap-2"><button type="button" onClick={() => setGiftConfirmOpen(false)} className="h-10 flex-1 rounded-lg border border-white/20 text-sm font-semibold">Cancel</button><button type="button" onClick={() => { setGiftConfirmOpen(false); void continueGift() }} disabled={giftSending} className="h-10 flex-1 rounded-lg bg-[#335fff] text-sm font-bold disabled:opacity-60">Confirm</button></div></div>}
             </div>
           ) : (
             <>
-              <p className="mt-2 text-sm text-muted-foreground">ギフトのプレビュー</p>
+              <p className="mt-2 text-sm text-muted-foreground">Search for a Roblox player to send this gift.</p>
               <div className="mt-4">
                 <input value={giftUsername} onChange={(event) => { setGiftUsername(event.target.value); setGiftSearchMessage(''); setGiftPlayers([]); setGiftSelectedPlayer(null); setGiftMessage(''); setGiftSuccess(false) }} placeholder=" " aria-label="Roblox player username" className="h-11 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-[#335fff]" />
               </div>
