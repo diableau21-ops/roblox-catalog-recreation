@@ -1,7 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { RobuxIcon } from '@/components/catalog/robux-icon'
+import { SiteHeader } from '@/components/catalog/site-header'
+import { LeftNav } from '@/components/catalog/left-nav'
 
 const packages = [
   { amount: '24,000', previous: '22,500', bonus: '+1,500 more', price: '279.99 $' },
@@ -11,7 +13,30 @@ const packages = [
 ]
 
 export default function RobuxPage() {
+  const [balance, setBalance] = useState(1250)
+  const [balanceReady, setBalanceReady] = useState(false)
+  const [query, setQuery] = useState('')
   const [message, setMessage] = useState('')
+
+  useEffect(() => {
+    try {
+      const savedBalance = window.localStorage.getItem('catalog-demo-robux-balance')
+      if (savedBalance !== null) {
+        const parsed = Number(savedBalance)
+        if (Number.isFinite(parsed) && parsed >= 0) setBalance(parsed)
+      }
+      setQuery(new URLSearchParams(window.location.search).get('q') ?? '')
+    } catch {}
+    setBalanceReady(true)
+  }, [])
+
+  useEffect(() => {
+    if (!balanceReady) return
+    try { window.localStorage.setItem('catalog-demo-robux-balance', String(balance)) } catch {}
+  }, [balance, balanceReady])
+
+  const notify = (text: string) => setMessage(text)
+  const openPackages = () => document.getElementById('robux-packages')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   const [sendOpen, setSendOpen] = useState(false)
   const [sendUsername, setSendUsername] = useState('')
   const [sendPlayers, setSendPlayers] = useState<{id:number;name:string;displayName:string;avatarUrl?:string|null;hasVerifiedBadge?:boolean}[]>([])
@@ -54,12 +79,11 @@ export default function RobuxPage() {
   }
 
   return (
-    <main className="min-h-dvh bg-[#0B0B0D] px-4 pb-12 pt-5 text-[#F7F6F2] sm:px-6 sm:pt-7">
+    <main className="min-h-dvh bg-[#0B0B0D] text-[#F7F6F2]">
+      <SiteHeader balance={balance} query={query} onQueryChange={setQuery} onBuyRobux={openPackages} onNotify={notify} />
+      <LeftNav onNotify={notify} onBuyRobux={openPackages} />
+      <div className="ml-0 px-4 pb-12 pt-5 sm:px-6 sm:pt-7 md:ml-[220px] md:px-6">
       <header className="mx-auto flex w-full max-w-5xl items-center justify-end gap-4">
-        <div className="flex items-center gap-2 text-base font-extrabold tabular-nums">
-          <RobuxIcon className="size-6" />
-          <span>0</span>
-        </div>
         <button
           type="button"
           onClick={() => { setSendOpen(true); setSendSuccess(false); setSendError(''); setSendPlayer(null); setSendPlayers([]) }}
@@ -69,7 +93,7 @@ export default function RobuxPage() {
         </button>
       </header>
 
-      <section className="mx-auto mt-12 w-full max-w-3xl sm:mt-16">
+      <section id="robux-packages" className="mx-auto mt-12 w-full max-w-3xl scroll-mt-20 sm:mt-16">
         <h1 className="text-center text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl md:text-5xl">
           Enjoy up to 25% more Robux
         </h1>
@@ -196,6 +220,7 @@ export default function RobuxPage() {
           </div>
         )}
       </section>
+      </div>
     </main>
   )
 }
