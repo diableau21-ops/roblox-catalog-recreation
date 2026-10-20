@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import {
   Gift,
+  Search,
   House,
   MessageSquare,
   Package,
@@ -58,10 +59,16 @@ export function LeftNav({ onNotify, onBuyRobux }: Props) {
 
   return (
     <>
+      <nav aria-label="Mobile navigation" className="fixed inset-x-0 bottom-0 z-40 flex items-center justify-around border-t border-border bg-header/95 px-2 pb-[env(safe-area-inset-bottom)] pt-2 shadow-[0_-4px_20px_rgba(0,0,0,0.18)] backdrop-blur-md md:hidden">
+        <a href={(process.env.NEXT_PUBLIC_BASE_PATH ?? '') + '/'} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><House className="size-5" /><span>Home</span></a>
+        <a href={(process.env.NEXT_PUBLIC_BASE_PATH ?? '') + '/'} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><Search className="size-5" /><span>Marketplace</span></a>
+        <button type="button" onClick={() => onNotify('Avatar is coming soon')} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><Shirt className="size-5" /><span>Avatar</span></button>
+        <button type="button" onClick={onBuyRobux} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><Package className="size-5" /><span>Robux</span></button>
+      </nav>
       <nav
         aria-label="Account"
         className={cn(
-          'fixed bottom-0 left-0 top-14 z-40 flex w-[220px] flex-col overflow-y-auto border-r border-border bg-header px-3 py-4',
+          'fixed bottom-0 left-0 top-14 z-40 hidden w-[220px] flex-col overflow-y-auto border-r border-border bg-header px-3 py-4 md:flex',
         )}
       >
         <button
