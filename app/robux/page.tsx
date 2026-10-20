@@ -228,7 +228,7 @@ export default function RobuxPage() {
                         </div>
                         <label htmlFor="send-robux-amount" className="mt-4 block text-sm font-semibold">Robux amount</label>
                         <input id="send-robux-amount" type="number" min="1" step="1" inputMode="numeric" value={sendAmount} onChange={(event) => setSendAmount(event.target.value)} className="mt-2 h-11 w-full rounded-lg border border-white/20 bg-black/30 px-3 text-white outline-none focus:border-[#7183ff]" />
-                        <button type="button" disabled={!Number.isSafeInteger(Number(sendAmount)) || Number(sendAmount) < 1} onClick={() => setSendSuccess(true)} className="mt-4 h-11 w-full rounded-lg bg-[#335fff] text-sm font-extrabold disabled:cursor-not-allowed disabled:opacity-50">Send Robux</button>
+                        <button type="button" disabled={!Number.isSafeInteger(Number(sendAmount)) || Number(sendAmount) < 1} onClick={() => { const amount = Number(sendAmount); if (!Number.isSafeInteger(amount) || amount < 1) return; if (amount > balance) { setSendError('Not enough Robux in your balance.'); return; } setBalance((current) => current - amount); setSendError(''); setSendSuccess(true) }} className="mt-4 h-11 w-full rounded-lg bg-[#335fff] text-sm font-extrabold disabled:cursor-not-allowed disabled:opacity-50">Send Robux</button>
                         <button type="button" onClick={() => { setSendPlayer(null); setSendError('') }} className="mt-3 w-full text-xs text-white/65 underline">Choose another player</button>
                       </div>
                     ) : (
