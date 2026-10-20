@@ -214,13 +214,13 @@ export function CatalogApp() {
         balance={balance}
         query={query}
         onQueryChange={setQuery}
-        onBuyRobux={() => setRobuxOpen(true)}
+        onBuyRobux={() => { window.location.href = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/robux` }}
         onNotify={notify}
       />
 
       <LeftNav
         onNotify={notify}
-        onBuyRobux={() => setRobuxOpen(true)}
+        onBuyRobux={() => { window.location.href = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/robux` }}
       />
 
       <main
@@ -383,7 +383,7 @@ export function CatalogApp() {
             }
           }}
           onTryOn={() => notify(`Trying on ${openItem.name}`)}
-          onBuyRobux={() => setRobuxOpen(true)}
+          onBuyRobux={() => { window.location.href = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/robux` }}
           onNotify={notify}
         />
       )}
