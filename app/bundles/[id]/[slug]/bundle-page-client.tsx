@@ -260,7 +260,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   }, [giftOpen])
 
   useEffect(() => {
-    if (giftAutoRunning) return
+    if (giftAutoRunning || giftSuccess || giftSelectedPlayer) return
     const keyword = giftUsername.trim()
     if (keyword.length < 3) {
       setGiftPlayers([])
@@ -271,7 +271,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     }
     const timer = window.setTimeout(() => { void searchGiftPlayers() }, 350)
     return () => window.clearTimeout(timer)
-  }, [giftUsername, giftAutoRunning])
+  }, [giftUsername, giftAutoRunning, giftSuccess, giftSelectedPlayer])
   const [robuxShopOpen, setRobuxShopOpen] = useState(false)
   const [selectedRobux, setSelectedRobux] = useState(800)
   const [customRobux, setCustomRobux] = useState('800')
