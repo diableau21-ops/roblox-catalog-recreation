@@ -23,7 +23,12 @@ export default function RobuxPage() {
       const savedBalance = window.localStorage.getItem('catalog-demo-robux-balance')
       if (savedBalance !== null) {
         const parsed = Number(savedBalance)
-        if (Number.isFinite(parsed) && parsed >= 0) setBalance(parsed)
+        if (Number.isFinite(parsed) && parsed >= 0) {
+          // Repair balances saved by the earlier string-concatenation bug.
+          const priorPackageAmounts = [24000, 11000, 5250, 3625]
+          const corruptedSuffix = priorPackageAmounts.find((amount) => savedBalance === `1250${amount}`)
+          setBalance(corruptedSuffix ? 1250 + corruptedSuffix : parsed)
+        }
       }
       setQuery(new URLSearchParams(window.location.search).get('q') ?? '')
     } catch {}
@@ -84,9 +89,9 @@ export default function RobuxPage() {
       <LeftNav onNotify={notify} onBuyRobux={openPackages} />
       <div className="ml-0 px-4 pb-12 pt-5 sm:px-6 sm:pt-7 md:ml-[220px] md:px-6">
       <header className="mx-auto flex w-full max-w-5xl items-center justify-end gap-3">
-        <div className="flex items-center gap-2 rounded-lg bg-[#29292E] px-3 py-2.5 text-sm font-extrabold" aria-label={`${balance.toLocaleString()} Robux balance`}>
+        <div className="flex items-center gap-2 rounded-lg bg-[#29292E] px-3 py-2.5 text-sm font-extrabold" aria-label={`${balance.toLocaleString('en-US')} Robux balance`}>
           <RobuxIcon className="size-5" />
-          <span className="tabular-nums">{balance.toLocaleString()}</span>
+          <span className="tabular-nums">{balance.toLocaleString('en-US')}</span>
         </div>
         <button
           type="button"
@@ -162,7 +167,7 @@ export default function RobuxPage() {
                   <div className="mt-5 flex items-center justify-between gap-3 rounded-xl bg-[#24242c] p-4"><div className="flex items-center gap-3"><RobuxIcon className="size-8" /><div><p className="font-extrabold">{selectedPackage.amount} Robux</p><p className="text-xs text-white/55">Robux package</p></div></div><p className="text-lg font-extrabold">{selectedPackage.price}</p></div>
                   <div className="mt-5 rounded-xl border border-[#454550] bg-gradient-to-br from-[#333b71] via-[#20243f] to-[#15151b] p-4"><div className="flex justify-between text-xs font-bold uppercase tracking-widest text-white/70"><span>Bank card preview</span><span>PREVIEW</span></div><div className="mt-6 text-lg font-semibold tracking-[0.15em]">••••  ••••  ••••  4242</div><div className="mt-5 flex items-end justify-between gap-3 text-xs text-white/70"><div><p className="text-[9px] uppercase tracking-widest text-white/45">Cardholder</p><p className="mt-1 font-semibold">YOUR NAME</p></div><div><p className="text-[9px] uppercase tracking-widest text-white/45">Expires</p><p className="mt-1 font-semibold">MM/YY</p></div><span className="text-lg font-black italic">CARD</span></div></div>
                   <p className="mt-4 text-center text-xs text-white/45">Purchases are currently unavailable.</p>
-                  <button type="button" onClick={() => { setPaying(true); window.setTimeout(() => { setBalance((current) => current + selectedPackage.amount); setPaying(false); setPaid(true) }, 1800) }} className="mt-5 flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-[#335fff] font-extrabold hover:bg-[#244be0]">Simulate payment · {selectedPackage.price}</button>
+                  <button type="button" onClick={() => { setPaying(true); window.setTimeout(() => { setBalance((current) => current + Number(selectedPackage.amount)); setPaying(false); setPaid(true) }, 1800) }} className="mt-5 flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-[#335fff] font-extrabold hover:bg-[#244be0]">Simulate payment · {selectedPackage.price}</button>
                   <p className="mt-3 text-center text-[11px] text-white/40">Checkout preview</p>
                 </>
               )}
