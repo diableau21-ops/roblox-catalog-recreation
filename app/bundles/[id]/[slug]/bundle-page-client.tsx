@@ -163,10 +163,10 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
       <SiteHeader balance={balance} query={query} onQueryChange={setQuery} onBuyRobux={() => setRobuxShopOpen(true)} onNotify={notify} />
       <LeftNav onNotify={notify} onBuyRobux={() => setRobuxShopOpen(true)} />
 
-      <div className="ml-[220px] max-w-[calc(100%-220px)] px-4 py-8 md:px-8">
+      <div className="w-full px-3 py-4 pb-24 sm:px-5 sm:py-6 md:ml-[220px] md:max-w-[calc(100%-220px)] md:px-8 md:py-8">
         <section className="flex flex-col items-center">
-          <div className="flex w-full max-w-[900px] flex-col gap-5 overflow-hidden border-0 bg-transparent md:flex-row">
-            <div className="flex w-full shrink-0 flex-col md:w-[400px]">
+          <div className="flex w-full max-w-[900px] flex-col gap-5 overflow-hidden border-0 bg-transparent sm:gap-6 md:flex-row">
+            <div className="flex w-full min-w-0 shrink-0 flex-col md:w-[400px]">
             <div className="relative aspect-square w-full shrink-0 overflow-hidden rounded-xl border border-[#3b3b3b] bg-[#232323] md:aspect-auto md:h-[400px] md:w-[400px]">
             <div className={`absolute inset-0 ${show2D || isHeadless ? 'block' : 'hidden'}`}>
               {robloxThumbnail ? (
@@ -187,7 +187,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
 
           <div className="flex min-w-0 flex-1 flex-col gap-4 text-white">
             <div>
-              <div className="flex items-center gap-2.5"><h1 className="text-3xl font-bold tracking-tight md:text-4xl">{item.name}</h1>{isKorblox && <span className="relative mt-2 inline-flex shrink-0"><ShoppingCart aria-label="Shopping cart" className="size-6 text-white" /><span className="absolute -right-2 -top-2 flex size-4 items-center justify-center rounded-full bg-[#335fff] text-[10px] font-bold leading-none text-white">0</span></span>}</div>
+              <div className="flex items-center gap-2.5"><h1 className="break-words text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">{item.name}</h1>{isKorblox && <span className="relative mt-2 inline-flex shrink-0"><ShoppingCart aria-label="Shopping cart" className="size-6 text-white" /><span className="absolute -right-2 -top-2 flex size-4 items-center justify-center rounded-full bg-[#335fff] text-[10px] font-bold leading-none text-white">0</span></span>}</div>
               <div className="mt-2 flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm text-muted-foreground">By <span className="font-semibold text-foreground">Roblox</span><VerifiedBadge className="size-4" /><span className="ml-2 inline-flex items-center gap-1.5 font-semibold text-[#00b06f]"><span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-[#00b06f] text-white"><Check className="size-3.5 stroke-[3]" /></span>Item Owned</span></div><p className="mt-1 text-sm text-muted-foreground">This item is available in your inventory</p>
               <div className="mt-3 h-px w-full bg-border" />
             </div>
