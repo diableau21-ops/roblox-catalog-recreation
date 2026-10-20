@@ -159,8 +159,8 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
           <button
             type="button"
             aria-label="Notifications"
-            onClick={() => { if (onBellClick) onBellClick(); else if (onSetBalance) { setRobuxAmount(String(balance)); setRobuxPickerOpen(true) } else onNotify('No new notifications') }}
-            className="relative hidden rounded-lg p-2 hover:bg-secondary sm:block"
+            onClick={() => { if (onSetBalance) { setRobuxAmount(String(balance)); setRobuxPickerOpen(true) } else if (onBellClick) onBellClick(); else onNotify('No new notifications') }}
+            className="relative rounded-lg p-2 hover:bg-secondary"
           >
             <Bell className="size-5" />
             <span className="absolute right-1 top-1 flex size-4 items-center justify-center rounded-full bg-favorite text-[10px] font-bold text-white">
