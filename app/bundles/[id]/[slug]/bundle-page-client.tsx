@@ -109,7 +109,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
       const players = Array.isArray(payload.data)
         ? payload.data
             .filter((player: { id?: number; name?: string }) =>
-              Number.isFinite(player.id) && typeof player.name === 'string',
+                Number.isFinite(player.id) && typeof player.name === 'string' && /\d/.test(player.name),
             )
             .map((player: { id: number; name: string; displayName?: string; avatarUrl?: string | null; hasVerifiedBadge?: boolean }) => ({
               id: player.id,
@@ -153,8 +153,8 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     const pause = (ms: number) => new Promise<void>((resolve) => {
       activeTimer = window.setTimeout(resolve, ms)
     })
-    // Search numeric username patterns instead of guessing ordinary names.
-    const terms = ['123', '1234', '2024', '2025', '777', '999', '2009', '2010', '12345', '2026']
+    // Search username-like phrases with digits; display only real accounts returned by Roblox.
+    const terms = ['alex123', 'gamer123', 'builder2024', 'roblox123', 'coolguy99', 'shadow777', 'dragon123', 'proplayer2025', 'king777', 'pixel2026']
     const runCycle = async () => {
       let turn = 0
       while (!cancelled) {
