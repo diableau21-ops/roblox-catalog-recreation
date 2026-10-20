@@ -57,6 +57,7 @@ export default function RobuxPage() {
   const [selectedPackage, setSelectedPackage] = useState<(typeof packages)[number] | null>(null)
   const [paying, setPaying] = useState(false)
   const [paid, setPaid] = useState(false)
+  const [paymentMethod, setPaymentMethod] = useState<'card' | 'paypal'>('card')
 
   const searchPlayers = async () => {
     const keyword = sendUsername.trim()
@@ -144,7 +145,7 @@ export default function RobuxPage() {
 
               <button
                 type="button"
-                onClick={() => { setSelectedPackage(pack); setPaying(false); setPaid(false) }}
+                onClick={() => { setSelectedPackage(pack); setPaying(false); setPaid(false); setPaymentMethod('card') }}
                 className={`min-w-[104px] rounded-lg px-3 py-3 text-sm font-extrabold tabular-nums transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:min-w-[132px] sm:px-5 sm:text-base ${pack.featured ? 'bg-[#335FFF] text-white hover:bg-[#244BE0]' : 'bg-[#34343A] text-white hover:bg-[#45454D]'}`}
               >
                 {pack.price}
@@ -176,17 +177,16 @@ export default function RobuxPage() {
                   </div>
                   <div className="mt-5">
                     <h3 className="text-base font-extrabold">Payment method</h3>
-                    <div className="mt-3 rounded-xl border-2 border-[#335fff] bg-[#22232b] p-3">
-                      <div className="flex items-center gap-3">
-                        <span className="flex size-11 items-center justify-center rounded-lg bg-white text-[#17479e]"><span className="text-sm font-black italic">VISA</span></span>
-                        <div className="min-w-0 flex-1"><p className="font-bold">Credit or debit card</p><p className="text-xs text-white/55">Visa · Mastercard · American Express</p></div>
-                        <span className="flex size-5 items-center justify-center rounded-full bg-[#335fff] text-xs font-black">✓</span>
-                      </div>
-                    </div>
-                    <div className="mt-2 flex items-center gap-3 rounded-xl border border-[#3b3b44] bg-[#1d1d22] p-3 opacity-70">
+                    <button type="button" onClick={() => setPaymentMethod('card')} aria-pressed={paymentMethod === 'card'} className={`mt-3 flex w-full items-center gap-3 rounded-xl border-2 p-3 text-left ${paymentMethod === 'card' ? 'border-[#335fff] bg-[#22232b]' : 'border-[#3b3b44] bg-[#1d1d22]'}`}>
+                      <span className="flex size-11 items-center justify-center rounded-lg bg-white text-[#17479e]"><span className="text-sm font-black italic">VISA</span></span>
+                      <span className="min-w-0 flex-1"><span className="block font-bold">Credit or debit card</span><span className="block text-xs text-white/55">Visa · Mastercard · American Express</span></span>
+                      {paymentMethod === 'card' && <span className="flex size-5 items-center justify-center rounded-full bg-[#335fff] text-xs font-black">✓</span>}
+                    </button>
+                    <button type="button" onClick={() => setPaymentMethod('paypal')} aria-pressed={paymentMethod === 'paypal'} className={`mt-2 flex w-full items-center gap-3 rounded-xl border-2 p-3 text-left ${paymentMethod === 'paypal' ? 'border-[#335fff] bg-[#22232b]' : 'border-[#3b3b44] bg-[#1d1d22]'}`}>
                       <span className="flex size-11 items-center justify-center rounded-lg bg-white text-[#123b80]"><span className="text-sm font-black italic">P</span></span>
-                      <div><p className="font-bold">PayPal</p><p className="text-xs text-white/55">Unavailable in demo</p></div>
-                    </div>
+                      <span className="flex-1 font-bold">PayPal</span>
+                      {paymentMethod === 'paypal' && <span className="flex size-5 items-center justify-center rounded-full bg-[#335fff] text-xs font-black">✓</span>}
+                    </button>
                   </div>
                   <div className="mt-5 space-y-3 rounded-xl bg-[#202024] p-4 text-sm">
                     <div className="flex items-center justify-between text-white/65"><span>Subtotal</span><span>{selectedPackage.price}</span></div>
