@@ -19,9 +19,9 @@ const packages: { amount: string; previous: string; bonus: string; price: string
 
 function VerifiedBadge({ className = 'size-4' }: { className?: string }) {
   return (
-    <svg aria-label="Verified Roblox account" role="img" viewBox="0 0 24 24" className={className} fill="none">
-      <path fill="#00A2FF" d="M12 1.5l3 2 3.6-.1 1.1 3.4 2.8 2.2-1.1 3.4 1.1 3.4-2.8 2.2-1.1 3.4-3.6-.1-3 2-3-2-3.6.1-1.1-3.4-2.8-2.2 1.1-3.4-1.1-3.4 2.8-2.2 1.1-3.4 3.6.1z" />
-      <path stroke="#fff" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.6" d="m7.5 12.2 3 3 6-6.3" />
+    <svg aria-label="Verified Roblox account" role="img" viewBox="0 0 24 24" className={className} xmlns="http://www.w3.org/2000/svg">
+      <path fill="#00A2FF" d="M12 1.2 15 3l3.5-.1 1.2 3.3 3 2-1 3.8 1 3.5-3 2.4-1.2 3.2-3.5-.1-3 1.9-3-1.9-3.5.1-1.2-3.2-3-2.4 1-3.5-1-3.8 3-2L5.5 2.9 9 3z"/>
+      <path fill="#fff" d="m10.1 15.9-3.3-3.3 1.7-1.7 1.6 1.6 4.8-4.8 1.7 1.7z"/>
     </svg>
   )
 }
