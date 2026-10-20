@@ -92,18 +92,18 @@ export default function RobuxPage() {
       <SiteHeader balance={balance} query={query} onQueryChange={setQuery} onBuyRobux={openPackages} onNotify={notify} onSetBalance={setBalance} />
       <LeftNav onNotify={notify} onBuyRobux={openPackages} />
       <div className="ml-0 px-4 pb-12 pt-5 sm:px-6 sm:pt-7 md:ml-[220px] md:px-6">
-      <header className="mx-auto flex w-full max-w-5xl items-center justify-end gap-3">
-        <div className="flex items-center gap-2 rounded-lg bg-[#29292E] px-3 py-2.5 text-sm font-extrabold" aria-label={`${balance.toLocaleString('en-US')} Robux balance`}>
+      <header className="mx-auto flex w-full max-w-5xl items-center justify-end">
+        <div className="flex items-center gap-3 rounded-lg bg-[#29292E] p-1.5 pl-3 text-sm font-extrabold" aria-label={`${balance.toLocaleString('en-US')} Robux balance`}>
           <RobuxIcon className="size-5" />
           <span className="tabular-nums">{balance.toLocaleString('en-US')}</span>
+          <button
+            type="button"
+            onClick={() => { setSendOpen(true); setSendSuccess(false); setSendError(''); setSendPlayer(null); setSendPlayers([]) }}
+            className="rounded-md bg-[#38383F] px-4 py-2 transition-colors hover:bg-[#484850] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          >
+            Send
+          </button>
         </div>
-        <button
-          type="button"
-          onClick={() => { setSendOpen(true); setSendSuccess(false); setSendError(''); setSendPlayer(null); setSendPlayers([]) }}
-          className="rounded-lg bg-[#29292E] px-5 py-2.5 text-sm font-extrabold transition-colors hover:bg-[#38383F] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-        >
-          Send
-        </button>
       </header>
 
       <section id="robux-packages" className="mx-auto mt-12 w-full max-w-3xl scroll-mt-20 sm:mt-16">
