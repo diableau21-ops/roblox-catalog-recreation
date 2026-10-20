@@ -190,7 +190,7 @@ export default function RobuxPage() {
                   </div>
                   <div className="mt-4 rounded-xl border border-dashed border-[#555561] bg-[#1c1c22] p-3">
                     <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-amber-200"><span aria-hidden="true">ⓘ</span> Checkout information</div>
-                    <p className="mt-1.5 text-xs leading-relaxed text-white/60">No payment is processed on this page. Do not enter real card details.</p>
+                    <p className="mt-1.5 text-xs leading-relaxed text-white/60">No payment processed.</p>
                   </div>
                   <div className="mt-5 space-y-3 rounded-xl bg-[#202024] p-4 text-sm">
                     <div className="flex items-center justify-between text-white/65"><span>Subtotal</span><span>{selectedPackage.price}</span></div>
