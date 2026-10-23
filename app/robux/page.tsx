@@ -64,6 +64,7 @@ export default function RobuxPage() {
   const [sendError, setSendError] = useState('')
   const [sendAmount, setSendAmount] = useState('100')
   const [sendSuccess, setSendSuccess] = useState(false)
+  const [sendReview, setSendReview] = useState(false)
   const [sendProcessing, setSendProcessing] = useState(false)
   const [selectedPackage, setSelectedPackage] = useState<(typeof packages)[number] | null>(null)
   const [paying, setPaying] = useState(false)
@@ -121,7 +122,7 @@ export default function RobuxPage() {
           <span className="tabular-nums">{balance.toLocaleString('en-US')}</span>
           <button
             type="button"
-            onClick={() => { setSendOpen(true); setSendSuccess(false); setSendError(''); setSendPlayer(null); setSendPlayers([]) }}
+            onClick={() => { setSendOpen(true); setSendSuccess(false); setSendReview(false); setSendError(''); setSendPlayer(null); setSendPlayers([]) }}
             className="rounded-md bg-[#38383F] px-4 py-2 transition-colors hover:bg-[#484850] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
           >
             Send
@@ -234,7 +235,7 @@ export default function RobuxPage() {
                     <h2 id="send-robux-title" className="mt-4 text-xl font-extrabold">Robux sent successfully!</h2>
                     <p className="mt-2 text-sm text-white/75">{sendAmount} Robux sent to {sendPlayer?.displayName}{sendPlayer?.hasVerifiedBadge && <VerifiedBadge className="ml-1 inline-block size-4 shrink-0" />} (@{sendPlayer?.name}).</p>
                     
-                    <button type="button" onClick={() => setSendOpen(false)} className="mt-6 h-10 rounded-lg bg-[#335fff] px-7 text-sm font-bold">Done</button>
+                    <button type="button" onClick={() => {setSendOpen(false);setSendReview(false)}} className="mt-6 h-10 rounded-lg bg-[#335fff] px-7 text-sm font-bold">Done</button>
                   </div>
                 ) : (
                   <>
@@ -242,7 +243,30 @@ export default function RobuxPage() {
                       <h2 id="send-robux-title" className="text-2xl font-extrabold">Send Robux</h2><span className="ml-auto flex items-center gap-2 text-lg text-white/65"><RobuxIcon className="size-5"/>{balance.toLocaleString("en-US")}</span>
                       <button type="button" onClick={() => setSendOpen(false)} aria-label="Close" className="rounded-lg px-2 py-1 text-xl text-white/75 hover:bg-white/10">×</button>
                     </div>
-                    {sendPlayer ? (
+                    {sendPlayer && sendReview ? (
+                      <div className="mt-6">
+                        <div className="flex items-center gap-3">
+                          {sendPlayer.avatarUrl ? <img src={sendPlayer.avatarUrl} alt="" className="size-16 rounded-full bg-[#303030] object-cover" /> : <span className="flex size-16 items-center justify-center rounded-full bg-[#303030] text-xl font-bold">{sendPlayer.displayName.slice(0,2).toUpperCase()}</span>}
+                          <div className="min-w-0 flex-1">
+                            <p className="flex items-center gap-1.5 text-lg font-bold">{sendPlayer.displayName}{sendPlayer.hasVerifiedBadge && <VerifiedBadge className="size-4" />}</p>
+                            <p className="text-sm text-white/60">@{sendPlayer.name}</p>
+                            <p className="mt-1 text-xs text-white/55">0 mutual Connections · Joined in {sendPlayer.name.toLowerCase()==='jordanfafard'?'2017':'recent years'}</p>
+                          </div>
+                        </div>
+                        <div className="mt-6 border-t border-white/10 pt-5">
+                          <div className="flex items-center justify-between rounded-xl bg-[#292929] p-4">
+                            <span className="text-sm font-semibold">Robux</span>
+                            <span className="flex items-center gap-2 text-2xl font-extrabold"><RobuxIcon className="size-6"/>{Number(sendAmount||0).toLocaleString('en-US')}</span>
+                          </div>
+                          <div className="mt-4 flex gap-3">
+                            <button type="button" onClick={()=>setSendReview(false)} className="h-12 flex-1 rounded-xl border border-white/20 text-base font-bold">Edit</button>
+                            <button type="button" onClick={()=>setSendError('You need an age check or parental consent to send Robux. This is only a visual preview; no Robux were sent.')} className="h-12 flex-1 rounded-xl bg-[#146bff] text-base font-extrabold">Send</button>
+                          </div>
+                          <p role="status" className="mt-5 rounded-xl border border-white/10 bg-[#292929] p-4 text-sm leading-6 text-white/75">You need an age check or parental consent to send Robux. Once you send, you cannot cancel.</p>
+                          {sendError && <p role="status" className="mt-3 text-sm leading-5 text-amber-200">{sendError}</p>}
+                        </div>
+                      </div>
+                    ) : sendPlayer ? (
                       <div className="mt-5">
                         <div className="flex flex-col items-center border-b border-white/10 pb-5 text-center">
                           {sendPlayer.avatarUrl ? <img src={sendPlayer.avatarUrl} alt="" className="size-28 rounded-full bg-[#303030] object-cover" /> : <span className="flex size-28 items-center justify-center rounded-full bg-[#303030] text-2xl font-bold">{sendPlayer.displayName.slice(0,2).toUpperCase()}</span>}
@@ -256,7 +280,7 @@ export default function RobuxPage() {
                         <label htmlFor="send-robux-amount" className="mt-4 block text-sm font-semibold text-white/70">Custom amount</label>
                         <input id="send-robux-amount" type="number" min="1" step="1" inputMode="numeric" value={sendAmount} onChange={(event) => setSendAmount(event.target.value)} className="mt-2 h-11 w-full rounded-lg border border-white/20 bg-[#292929] px-3 text-white outline-none focus:border-[#146bff]" />
                         {sendError && <p role="status" className="mt-2 text-sm text-red-300">{sendError}</p>}
-                        <button type="button" onClick={() => { const amount=Number(sendAmount); if(!Number.isSafeInteger(amount)||amount<1||sendProcessing)return; if(amount>balance){setSendError('Not enough Robux in your balance.');return;} setSendError('');setSendProcessing(true);window.setTimeout(()=>{setBalance((current)=>current-amount);setSendProcessing(false);setSendSuccess(true)},1000)}} disabled={sendProcessing||!Number.isSafeInteger(Number(sendAmount))||Number(sendAmount)<1} className="mt-5 flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-[#146bff] text-xl font-extrabold disabled:cursor-not-allowed disabled:opacity-60">{sendProcessing?'Sending…':'Next'}</button>
+                        <button type="button" onClick={() => {const amount=Number(sendAmount);if(!Number.isSafeInteger(amount)||amount<1)return;if(amount>balance){setSendError('Not enough Robux in your balance.');return;}setSendError('');setSendReview(true)}} disabled={!Number.isSafeInteger(Number(sendAmount))||Number(sendAmount)<1} className="mt-5 flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-[#146bff] text-xl font-extrabold disabled:cursor-not-allowed disabled:opacity-60">Send</button>
                         <p className="mt-4 text-center text-sm text-white/55">Robux are sent instantly with no fees</p>
                         <button type="button" onClick={() => {setSendPlayer(null);setSendError('')}} className="mt-3 w-full text-xs text-white/65 underline">Choose another player</button>
                       </div>
