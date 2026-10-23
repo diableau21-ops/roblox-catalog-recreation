@@ -82,7 +82,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     }
     setGiftSending(true)
     setGiftMessage('')
-    await new Promise((resolve) => window.setTimeout(resolve, 700))
+    await new Promise((resolve) => window.setTimeout(resolve, 3500))
     const updatedBalance = currentBalance - giftPrice
     setBalance(updatedBalance)
     try { window.localStorage.setItem('catalog-demo-robux-balance', String(updatedBalance)) } catch {}
@@ -314,8 +314,20 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               {giftSelectedPlayer && <p className="mt-1 text-sm text-white/75">To {giftSelectedPlayer.displayName} (@{giftSelectedPlayer.name})</p>}
               <button type="button" onClick={() => { setGiftSuccess(false); setGiftMessage(""); setGiftSearchMessage(""); setGiftUsername(""); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftSending(false) }} className="mt-7 h-10 min-w-32 rounded-lg bg-[#335fff] px-6 text-sm font-bold text-white transition hover:bg-[#244be0]">Done</button>
             </div>
-          ) : (
-          <>
+          ) : giftSending ? (
+            <div className="flex min-h-[390px] flex-col items-center justify-center px-4 py-10 text-center">
+              <div className="relative flex size-28 items-center justify-center">
+                <div className="absolute inset-0 animate-pulse rounded-full bg-[#335fff]/20 blur-xl" />
+                <div className="absolute inset-1 animate-spin rounded-full border-4 border-white/10 border-t-[#335fff]" />
+                <div className="absolute inset-4 animate-spin rounded-full border-4 border-[#335fff]/25 border-b-white/80" style={{animationDirection:'reverse',animationDuration:'1.8s'}} />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="" aria-hidden="true" className="size-9 brightness-0 invert" />
+              </div>
+              <h3 className="mt-7 text-2xl font-extrabold text-white">Sending your gift…</h3>
+              <p className="mt-2 max-w-xs text-sm leading-6 text-white/65">Please wait while we prepare your gift for @{giftSelectedPlayer?.name}.</p>
+              <div className="mt-6 h-2 w-full max-w-xs overflow-hidden rounded-full bg-white/10"><div className="h-full w-2/3 animate-pulse rounded-full bg-[#335fff]" /></div>
+              <p className="mt-3 text-xs text-white/45">This is a visual preview. No real Roblox gift is sent.</p>
+            </div>
+
           <div className="flex items-center justify-between gap-3">
             <h2 id="gift-title" className="text-lg font-bold">Gift {item.name}</h2>
             <button type="button" onClick={() => { setGiftOpen(false); setGiftManualMode(false) }} aria-label="Close" className="rounded-lg px-2 py-1 text-xl hover:bg-secondary">×</button>
