@@ -244,7 +244,7 @@ export default function RobuxPage() {
                   <div className="py-3">
                     <div className="flex items-center justify-between gap-4">
                       <div className="flex items-center gap-2.5">
-                        <img src="https://robux-send-fake-creator-iker.lovable.app/__l5e/assets-v1/1aea3764-f82d-470c-b9d7-fc4c6220088e/robux-menu-icon.png" alt="Robux" className="size-9 shrink-0 object-contain" />
+                        <img src="https://robux-send-fake-creator-iker.lovable.app/__l5e/assets-v1/1aea3764-f82d-470c-b9d7-fc4c6220088e/robux-menu-icon.png" alt="Robux" className="size-6 shrink-0 object-contain" />
                         <h2 id="send-robux-title" className="text-xl font-extrabold">Send Robux</h2>
                       </div>
                       <span className="flex shrink-0 items-center gap-2 text-lg font-bold text-white/80"><RobuxIcon className="size-5"/>{balance.toLocaleString('en-US')}</span>
@@ -256,7 +256,7 @@ export default function RobuxPage() {
                 ) : (
                   <>
                     <div className="flex items-center justify-between gap-3">
-                      <div className="flex min-w-0 items-center gap-2.5"><img src="https://robux-send-fake-creator-iker.lovable.app/__l5e/assets-v1/1aea3764-f82d-470c-b9d7-fc4c6220088e/robux-menu-icon.png" alt="Robux" className="size-9 shrink-0 object-contain" /><h2 id="send-robux-title" className="text-2xl font-extrabold">Send Robux</h2></div><span className="ml-auto flex items-center gap-2 text-lg text-white/65"><RobuxIcon className="size-5"/>{balance.toLocaleString("en-US")}</span>
+                      <div className="flex min-w-0 items-center gap-2.5"><img src="https://robux-send-fake-creator-iker.lovable.app/__l5e/assets-v1/1aea3764-f82d-470c-b9d7-fc4c6220088e/robux-menu-icon.png" alt="Robux" className="size-6 shrink-0 object-contain" /><h2 id="send-robux-title" className="text-2xl font-extrabold">Send Robux</h2></div><span className="ml-auto flex items-center gap-2 text-lg text-white/65"><RobuxIcon className="size-5"/>{balance.toLocaleString("en-US")}</span>
                       <button type="button" onClick={() => setSendOpen(false)} aria-label="Close" className="rounded-lg px-2 py-1 text-xl text-white/75 hover:bg-white/10">×</button>
                     </div>
                     {sendPlayer && sendReview ? (
