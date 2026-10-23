@@ -251,7 +251,7 @@ export default function RobuxPage() {
                         </svg>
                         <h2 id="send-robux-title" className="text-xl font-extrabold">Send Robux</h2>
                       </div>
-                      <span className="flex shrink-0 items-center gap-2 text-lg font-bold text-white/80"><RobuxIcon className="size-5"/>{Number(sendAmount || 0).toLocaleString('en-US')}</span>
+                      <span className="flex shrink-0 items-center gap-2 text-lg font-bold text-white/80"><RobuxIcon className="size-5"/>{balance.toLocaleString('en-US')}</span>
                     </div>
                     <div className="mx-auto mt-8 flex size-16 items-center justify-center rounded-full border-2 border-white bg-transparent text-3xl font-semibold text-white"><svg viewBox="0 0 24 24" className="size-8" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6" /></svg></div>
                     <p className="mt-4 text-center text-sm text-white/75">You sent {Number(sendAmount || 0).toLocaleString("en-US")} Robux</p>
