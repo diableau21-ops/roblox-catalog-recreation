@@ -321,10 +321,14 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                 {giftSelectedPlayer.avatarUrl ? <img src={giftSelectedPlayer.avatarUrl} alt="" className="size-16 rounded-full bg-[#303030] object-cover" /> : <span className="flex size-16 items-center justify-center rounded-full bg-[#303030] text-xl font-bold">{giftSelectedPlayer.displayName.slice(0,2).toUpperCase()}</span>}
                 <div className="text-left"><p className="flex items-center gap-1.5 text-lg font-bold">{giftSelectedPlayer.displayName}{giftSelectedPlayer.hasVerifiedBadge && <VerifiedBadge className="size-4" />}</p><p className="text-sm text-white/60">@{giftSelectedPlayer.name}</p></div>
               </div>
-              <div className="mt-5 w-full rounded-xl border border-white/10 bg-[#202020] p-4 text-left">
-                <p className="text-xs font-semibold uppercase tracking-wide text-white/50">Selected item</p>
-                <p className="mt-2 text-lg font-bold">{giftBundle === 'korblox' ? 'Korblox Deathspeaker' : 'Headless Horseman'}</p>
-                <p className="mt-1 text-sm text-white/60">Recipient: @{giftSelectedPlayer.name}</p>
+              <div className="mt-5 w-full overflow-hidden rounded-xl border border-white/10 bg-[#202020] text-left">
+                <div className="flex aspect-[16/9] w-full items-center justify-center bg-[#171717]">
+                  <img src={giftBundle === 'korblox' ? '/items/korblox.png' : '/items/headless.png'} alt={giftBundle === 'korblox' ? 'Korblox Deathspeaker' : 'Headless Horseman'} loading="eager" fetchPriority="high" className="h-full w-full object-contain p-3" />
+                </div>
+                <div className="p-4">
+                  <p className="text-lg font-bold">{giftBundle === 'korblox' ? 'Korblox Deathspeaker' : 'Headless Horseman'}</p>
+                  <p className="mt-1 text-sm text-white/60">Recipient: @{giftSelectedPlayer.name}</p>
+                </div>
               </div>
               <button type="button" onClick={() => { setGiftMessage(''); void continueGift() }} disabled={giftSending} className="mt-5 h-12 w-full rounded-xl bg-[#335fff] text-base font-bold text-white hover:bg-[#244be0] disabled:opacity-50">Send</button>
               <button type="button" onClick={() => {setGiftSelectedPlayer(null);setGiftMessage('')}} className="mt-3 text-xs text-white/65 underline">Choose another player</button>
