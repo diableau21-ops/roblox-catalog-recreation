@@ -246,7 +246,7 @@ export default function RobuxPage() {
                     <h2 id="send-robux-title" className="mt-4 text-xl font-extrabold">Robux sent successfully!</h2>
                     <p className="mt-2 text-sm text-white/75">{sendAmount} Robux sent to {sendPlayer?.displayName}{sendPlayer?.hasVerifiedBadge && <VerifiedBadge className="ml-1 inline-block size-4 shrink-0" />} (@{sendPlayer?.name}).</p>
                     
-                    <button type="button" onClick={() => {setSendOpen(false);setSendReview(false)}} className="mt-6 h-10 rounded-lg bg-[#335fff] px-7 text-sm font-bold">Done</button>
+                    <button type="button" onClick={() => {setSendOpen(false);setSendReview(false)}} className="mt-6 h-14 w-full rounded-xl bg-[#335fff] px-7 text-2xl font-extrabold">OK</button>
                   </div>
                 ) : (
                   <>
