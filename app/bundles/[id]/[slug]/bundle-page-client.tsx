@@ -232,6 +232,28 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             </dl>
           </div>
           </div>
+          {isKorblox && <section className="mt-8 w-full max-w-[900px] text-white">
+            <h2 className="mb-4 text-xl font-bold">Korblox Recommendations</h2>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+              {[
+                { id: '154', name: 'Korblox Lord of Death', price: '4,230', image: 'https://tr.rbxcdn.com/30DAY-Avatar-E130600A8A15FA27C8DD03FE92687684-Png/150/150/Avatar/Webp/noFilter', href: 'https://www.roblox.com/bundles/154/Korblox-Lord-of-Death' },
+                { id: '295', name: 'Skeleton', price: '470', image: 'https://tr.rbxcdn.com/30DAY-Avatar-9CB20F0A583EFE53F52F18CC445ED252-Png/150/150/Avatar/Webp/noFilter', href: 'https://www.roblox.com/bundles/295/Skeleton' },
+                { id: '306', name: 'Pirate Swashbuckler', price: '376', image: 'https://tr.rbxcdn.com/30DAY-Avatar-36E71AFFC4409FB8948630D44D631338-Png/150/150/Avatar/Webp/noFilter', href: 'https://www.roblox.com/bundles/306/Pirate-Swashbuckler' },
+                { id: '501', name: 'Oinan Thickhoof', price: '235', image: 'https://tr.rbxcdn.com/30DAY-Avatar-9F3055134576927E4B4F5D6BC93F6B27-Png/150/150/Avatar/Webp/noFilter', href: 'https://www.roblox.com/bundles/501/Oinan-Thickhoof' },
+                { id: '591', name: 'Mr. Toilet', price: '329', image: 'https://tr.rbxcdn.com/30DAY-Avatar-F292BDA4BD92D143B4C9397E0DEE6108-Png/150/150/Avatar/Webp/noFilter', href: 'https://www.roblox.com/bundles/591/Mr-Toilet' },
+                { id: '870', name: 'Iron Bulb', price: '250', image: 'https://tr.rbxcdn.com/30DAY-Avatar-CCEE2D8513B25B66957A137905454A8B-Png/150/150/Avatar/Webp/noFilter', href: 'https://www.roblox.com/bundles/870/Iron-Bulb' },
+                { id: '1628', name: 'Doll Avatar (Fashion)', price: '', image: 'https://tr.rbxcdn.com/30DAY-Avatar-78A1C588B417A08956AA29A097AB0974-Png/150/150/Avatar/Webp/noFilter', href: 'https://www.roblox.com/bundles/1628/Doll-Avatar-Fashion' },
+              ].map((recommendation) => <a key={recommendation.id} href={recommendation.href} target="_blank" rel="noreferrer" className="group min-w-0 overflow-hidden rounded-lg bg-[#232323] transition hover:bg-[#303030]">
+                <div className="aspect-square overflow-hidden bg-[#303030]">
+                  <img src={recommendation.image} alt={recommendation.name} loading="lazy" className="h-full w-full object-cover transition group-hover:scale-[1.03]" />
+                </div>
+                <div className="p-3">
+                  <p className="line-clamp-2 min-h-10 text-sm font-semibold text-white">{recommendation.name}</p>
+                  {recommendation.price && <p className="mt-2 flex items-center gap-1.5 text-sm font-bold text-white"><RobuxIcon />{recommendation.price}</p>}
+                </div>
+              </a>)}
+            </div>
+          </section>}
           {isEightBit && <div className="mt-8 w-full max-w-[900px] overflow-hidden bg-[#303030] text-[#e5e5e5]">
             <div className="px-5 pt-4">
               <h2 className="text-[21px] font-semibold leading-7 text-[#f2f2f2]">Price Chart</h2>
