@@ -47,22 +47,6 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   const [giftSuccess, setGiftSuccess] = useState(false)
   const [giftManualMode, setGiftManualMode] = useState(false)
   const [giftBundle, setGiftBundle] = useState<'korblox' | 'headless'>('korblox')
-  const [giftBundleImages, setGiftBundleImages] = useState<{korblox: string | null; headless: string | null}>({korblox: null, headless: null})
-  useEffect(() => {
-    const controller = new AbortController()
-    const loadBundleImage = async (bundleId: number) => {
-      try {
-        const response = await fetch(`https://thumbnails.roblox.com/v1/bundles/thumbnails?bundleIds=${bundleId}&size=420x420&format=Png&isCircular=false`, {signal: controller.signal})
-        if (!response.ok) return null
-        const data = await response.json()
-        return typeof data.data?.[0]?.imageUrl === 'string' ? data.data[0].imageUrl : null
-      } catch { return null }
-    }
-    void Promise.all([loadBundleImage(192), loadBundleImage(201)]).then(([korblox, headless]) => {
-      if (!controller.signal.aborted) setGiftBundleImages({korblox, headless})
-    })
-    return () => controller.abort()
-  }, [])
   useEffect(() => {
     if (!giftOpen || !giftSuccess) return
     const timer = window.setTimeout(() => {
@@ -351,13 +335,13 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <div className="mt-4 grid grid-cols-2 gap-3">
                 <button type="button" onClick={() => setGiftBundle('korblox')} aria-pressed={giftBundle === 'korblox'} className={`overflow-hidden rounded-xl border text-left transition ${giftBundle === 'korblox' ? 'border-[#335fff] bg-[#335fff]/15 ring-1 ring-[#335fff]' : 'border-white/15 bg-white/[0.03] hover:bg-white/[0.07]'}`}>
                   <div className="flex aspect-square w-full items-center justify-center bg-[#202020]">
-                    {giftBundleImages.korblox ? <img src={giftBundleImages.korblox} alt="Korblox Deathspeaker" className="h-full w-full object-contain p-2" /> : <span className="text-xs text-white/45">Loading image…</span>}
+                    <img src="/items/korblox.png" alt="Korblox Deathspeaker" loading="eager" fetchPriority="high" className="h-full w-full object-contain p-2" />
                   </div>
                   <span className="block px-3 pb-3 pt-2 text-sm font-bold">Korblox Deathspeaker</span>
                 </button>
                 <button type="button" onClick={() => setGiftBundle('headless')} aria-pressed={giftBundle === 'headless'} className={`overflow-hidden rounded-xl border text-left transition ${giftBundle === 'headless' ? 'border-[#335fff] bg-[#335fff]/15 ring-1 ring-[#335fff]' : 'border-white/15 bg-white/[0.03] hover:bg-white/[0.07]'}`}>
                   <div className="flex aspect-square w-full items-center justify-center bg-[#202020]">
-                    {giftBundleImages.headless ? <img src={giftBundleImages.headless} alt="Headless Horseman" className="h-full w-full object-contain p-2" /> : <span className="text-xs text-white/45">Loading image…</span>}
+                    <img src="/items/headless.png" alt="Headless Horseman" loading="eager" fetchPriority="high" className="h-full w-full object-contain p-2" />
                   </div>
                   <span className="block px-3 pb-3 pt-2 text-sm font-bold">Headless Horseman</span>
                 </button>
