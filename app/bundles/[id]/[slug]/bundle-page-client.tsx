@@ -339,7 +339,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
       </div>}
 
       {giftOpen && <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-black/70 p-3" onClick={() => { setGiftOpen(false); setGiftManualMode(false) }}>
-        <section role="dialog" aria-modal="true" aria-labelledby="gift-title" className="relative z-10 w-full max-w-sm overflow-hidden rounded-xl border border-border bg-card p-4 text-foreground shadow-2xl" onClick={(event) => event.stopPropagation()}>
+        <section role="dialog" aria-modal="true" aria-labelledby="gift-title" className="relative z-10 my-auto w-full max-w-md overflow-hidden rounded-2xl border border-[#41414b] bg-[#17171c] p-5 text-[#f7f6f2] shadow-2xl sm:p-6" onClick={(event) => event.stopPropagation()}>
           <div className="relative z-10">
           {giftSuccess ? (
             <div className="flex min-h-[300px] flex-col items-center justify-center py-8 text-center">
@@ -367,7 +367,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           ) : (
           <>
           <div className="flex items-center justify-between gap-3">
-            <h2 id="gift-title" className="text-lg font-bold">Send an item</h2>
+            <div><p className="text-xs font-bold uppercase tracking-widest text-[#a7a7b3]">Gift</p><h2 id="gift-title" className="mt-1 text-2xl font-extrabold">Send an item</h2></div>
             <button type="button" onClick={() => { setGiftOpen(false); setGiftManualMode(false) }} aria-label="Close" className="rounded-lg px-2 py-1 text-xl hover:bg-secondary">×</button>
           </div>
           {giftSelectedPlayer ? (
@@ -385,12 +385,12 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                   <p className="mt-1 text-sm text-white/60">Recipient: @{giftSelectedPlayer.name}</p>
                 </div>
               </div>
-              <button type="button" onClick={() => { setGiftMessage(''); void continueGift() }} disabled={giftSending} className="mt-5 h-12 w-full rounded-xl bg-[#335fff] text-base font-bold text-white hover:bg-[#244be0] disabled:opacity-50">Send</button>
+              <button type="button" onClick={() => { setGiftMessage(''); void continueGift() }} disabled={giftSending} className="mt-5 h-12 w-full rounded-lg bg-[#335fff] text-base font-extrabold text-white transition-colors hover:bg-[#244be0] disabled:opacity-50">Send gift</button>
               <button type="button" onClick={() => {setGiftSelectedPlayer(null);setGiftMessage('')}} className="mt-3 text-xs text-white/65 underline">Choose another player</button>
             </div>
           ) : (
             <>
-              <p className="mt-2 text-sm text-muted-foreground">Choose an item, then search for the Roblox player.</p>
+              <p className="mt-2 text-sm text-[#a8a8b0]">Choose an item, then select the Roblox player.</p>
               <div className="mt-4 grid grid-cols-2 gap-3">
                 <button type="button" onClick={() => setGiftBundle('korblox')} aria-pressed={giftBundle === 'korblox'} className={`overflow-hidden rounded-xl border text-left transition ${giftBundle === 'korblox' ? 'border-[#335fff] bg-[#335fff]/15 ring-1 ring-[#335fff]' : 'border-white/15 bg-white/[0.03] hover:bg-white/[0.07]'}`}>
                   <div className="flex aspect-square w-full items-center justify-center bg-[#202020]">
@@ -406,7 +406,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                 </button>
               </div>
               <div className="mt-4">
-                <input value={giftUsername} onChange={(event) => { setGiftUsername(event.target.value); setGiftSearchMessage(''); setGiftPlayers([]); setGiftSelectedPlayer(null); setGiftMessage(''); setGiftSuccess(false) }} placeholder="Enter a Roblox username" aria-label="Roblox player username" className="h-11 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-[#335fff]" />
+                <input value={giftUsername} onChange={(event) => { setGiftUsername(event.target.value); setGiftSearchMessage(''); setGiftPlayers([]); setGiftSelectedPlayer(null); setGiftMessage(''); setGiftSuccess(false) }} placeholder="Enter a Roblox username" aria-label="Roblox player username" className="h-12 w-full rounded-lg border border-[#34343b] bg-[#202024] px-3 text-sm text-[#f7f6f2] outline-none placeholder:text-[#85858f] focus:border-[#7183ff] focus:ring-2 focus:ring-[#335fff]/30" />
               </div>
               {giftPlayers.length > 0 && <div className="mt-4 max-h-64 space-y-2 overflow-y-auto">
                 {giftPlayers.map((player) => <button key={player.id} type="button" onClick={() => { setGiftSelectedPlayer(player); setGiftMessage('') }} className="flex w-full items-center justify-between rounded-lg border border-white/15 p-3 text-left transition hover:border-[#335fff] hover:bg-white/5">
