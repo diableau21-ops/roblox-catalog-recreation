@@ -232,7 +232,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             </dl>
           </div>
           </div>
-          {isKorblox && <section className="mt-8 w-full max-w-[900px] text-white">
+          {isKorblox && <section className="mt-8 w-full max-w-[900px] overflow-hidden rounded-xl border border-white/10 bg-[#202020] p-4 text-white">
             <h2 className="mb-4 text-xl font-bold">Recommendations</h2>
             <div className="grid grid-cols-4 gap-2 sm:grid-cols-7">
               {[
@@ -254,7 +254,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               </a>)}
             </div>
           </section>}
-          {isKorblox && <section className="mt-8 w-full max-w-[900px] text-white">
+          {isKorblox && <section className="mt-8 w-full max-w-[900px] overflow-hidden rounded-xl border border-white/10 bg-[#202020] p-4 text-white">
             <h2 className="mb-4 text-xl font-bold">Sponsored</h2>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
               {[
@@ -271,7 +271,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               </a>)}
             </div>
           </section>}
-          {isKorblox && <section className="mt-8 w-full max-w-[900px] text-white">
+          {isKorblox && <section className="mt-8 w-full max-w-[900px] overflow-hidden rounded-xl border border-white/10 bg-[#202020] p-4 text-white">
             <h2 className="mb-4 text-xl font-bold">Included Items</h2>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
               {[
