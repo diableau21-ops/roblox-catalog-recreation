@@ -243,7 +243,8 @@ export default function RobuxPage() {
                 ) : sendSuccess ? (
                   <div className="py-8 text-center">
                     <div className="mx-auto flex size-16 items-center justify-center rounded-full border-2 border-white bg-transparent text-3xl font-semibold text-white"><svg viewBox="0 0 24 24" className="size-8" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6" /></svg></div>
-                    <h2 id="send-robux-title" className="mt-4 text-xl font-extrabold">You sent {Number(sendAmount || 0).toLocaleString("en-US")} Robux</h2>
+                    <div className="mt-4 flex items-center justify-center gap-2"><h2 id="send-robux-title" className="text-xl font-extrabold">Send Robux</h2><svg viewBox="0 0 24 24" className="size-6 shrink-0" aria-label="Roblox Plus" role="img" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.25" stroke="currentColor" strokeWidth="1.5"/><path d="M12 6.5v11M6.5 12h11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg></div>
+                    <p className="mt-2 text-sm text-white/75">You sent {Number(sendAmount || 0).toLocaleString("en-US")} Robux</p>
                     
                     <button type="button" onClick={() => {setSendOpen(false);setSendReview(false)}} className="mt-6 h-14 w-full rounded-xl bg-[#335fff] px-7 text-2xl font-extrabold">OK</button>
                   </div>
