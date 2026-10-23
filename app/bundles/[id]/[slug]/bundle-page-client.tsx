@@ -74,10 +74,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     setGiftLoadingStep(0)
     setGiftMessage('')
     const stages = [
-      { step: 1, delay: 900 },
-      { step: 2, delay: 1100 },
-      { step: 3, delay: 1200 },
-      { step: 4, delay: 900 },
+      { step: 4, delay: 1800 },
     ]
     for (const stage of stages) {
       await new Promise((resolve) => window.setTimeout(resolve, stage.delay))
@@ -385,7 +382,6 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               </div>
               <div className="mx-auto mt-8 size-12 animate-spin rounded-full border-4 border-white/15 border-t-[#146bff]" role="status" aria-label="Sending" />
               <p className="mt-4 text-sm text-white/65">Sending gift to @{giftSelectedPlayer?.name}…</p>
-              <p className="mt-2 text-xs text-white/40">Visual preview only — no real Roblox gift is sent.</p>
             </div>
           ) : (
           <>
