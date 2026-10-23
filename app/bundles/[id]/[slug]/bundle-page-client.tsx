@@ -376,33 +376,16 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <button type="button" onClick={() => { setGiftOpen(false); setGiftSuccess(false); setGiftMessage(''); setGiftSearchMessage(''); setGiftUsername(''); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftSending(false); setGiftReview(false); setGiftManualMode(false) }} className="mt-6 h-14 w-full rounded-xl bg-[#335fff] px-7 text-2xl font-extrabold text-white transition hover:bg-[#244be0]">OK</button>
             </div>
           ) : giftSending ? (
-            <div className="flex min-h-[390px] flex-col items-center justify-center px-4 py-10 text-center">
-              <div className="relative flex size-24 items-center justify-center">
-                <div className="absolute inset-0 animate-pulse rounded-full bg-[#335fff]/20 blur-xl" />
-                <div className="absolute inset-1 animate-spin rounded-full border-[3px] border-white/10 border-t-[#335fff]" />
-                <img src={giftSelectedPlayer?.avatarUrl || "https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg"} alt="" aria-hidden="true" className={giftSelectedPlayer?.avatarUrl ? "size-16 rounded-full border-2 border-white/20 object-cover" : "size-9 brightness-0 invert"} />
+            <div className="py-8 text-center">
+              <h2 id="gift-title" className="text-2xl font-extrabold">Sending</h2>
+              <div className="mt-7 flex flex-col items-center">
+                {giftSelectedPlayer?.avatarUrl ? <img src={giftSelectedPlayer.avatarUrl} alt="" className="size-24 rounded-full bg-[#303030] object-cover" /> : <span className="flex size-24 items-center justify-center rounded-full bg-[#303030] text-2xl font-bold">{(giftSelectedPlayer?.displayName || giftSelectedPlayer?.name || '?').slice(0,2).toUpperCase()}</span>}
+                <p className="mt-3 flex items-center justify-center gap-1.5 text-xl font-bold">{giftSelectedPlayer?.displayName}{giftSelectedPlayer?.hasVerifiedBadge && <VerifiedBadge className="size-4" />}</p>
+                <p className="text-sm text-white/60">@{giftSelectedPlayer?.name}</p>
               </div>
-              <h3 className="mt-7 text-2xl font-extrabold text-white">Sending your gift…</h3>
-              <p className="mt-2 max-w-xs text-sm leading-6 text-white/65">Please wait while we prepare your gift for @{giftSelectedPlayer?.name}.</p>
-              <div className="mt-6 w-full max-w-xs space-y-3 text-left">
-                {[
-                  'Checking recipient',
-                  'Preparing item details',
-                  'Processing gift request',
-                  'Finishing up',
-                ].map((label, index) => (
-                  <div key={label} className="flex items-center gap-3 text-sm">
-                    <span className={giftLoadingStep > index ? "flex size-5 shrink-0 items-center justify-center rounded-full bg-[#00b06f] text-white" : giftLoadingStep === index ? "size-5 shrink-0 animate-spin rounded-full border-2 border-white/20 border-t-[#335fff]" : "size-5 shrink-0 rounded-full border border-white/15"}>
-                      {giftLoadingStep > index ? <Check className="size-3.5 stroke-[3]" /> : null}
-                    </span>
-                    <span className={giftLoadingStep > index ? "text-white" : giftLoadingStep === index ? "text-white" : "text-white/40"}>{label}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-5 h-1.5 w-full max-w-xs overflow-hidden rounded-full bg-white/10">
-                <div className="h-full rounded-full bg-[#335fff] transition-all duration-700 ease-out" style={{ width: `${Math.min(100, giftLoadingStep * 25)}%` }} />
-              </div>
-              <p className="mt-3 text-xs text-white/45">This is a visual preview. No real Roblox gift is sent.</p>
+              <div className="mx-auto mt-8 size-12 animate-spin rounded-full border-4 border-white/15 border-t-[#146bff]" role="status" aria-label="Sending" />
+              <p className="mt-4 text-sm text-white/65">Sending {giftBundle === 'korblox' ? 'Korblox Deathspeaker' : 'Headless Horseman'}…</p>
+              <p className="mt-2 text-xs text-white/40">Visual preview only — no real Roblox gift is sent.</p>
             </div>
           ) : (
           <>
