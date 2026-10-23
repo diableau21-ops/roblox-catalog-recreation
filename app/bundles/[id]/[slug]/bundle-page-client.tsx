@@ -369,7 +369,6 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                 <svg viewBox="0 0 24 24" className="size-8" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6" /></svg>
               </div>
               <p className="mt-4 text-center text-sm text-white/75">You sent {giftBundle === 'korblox' ? 'Korblox Deathspeaker' : 'Headless Horseman'} to @{giftSelectedPlayer?.name}</p>
-              <p className="mt-1 text-center text-xs text-white/45">Visual preview only — no real Roblox gift was sent.</p>
               <button type="button" onClick={() => { setGiftOpen(false); setGiftSuccess(false); setGiftMessage(''); setGiftSearchMessage(''); setGiftUsername(''); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftSending(false); setGiftReview(false); setGiftManualMode(false) }} className="mt-6 h-14 w-full rounded-xl bg-[#335fff] px-7 text-2xl font-extrabold text-white transition hover:bg-[#244be0]">OK</button>
             </div>
           ) : giftSending ? (
