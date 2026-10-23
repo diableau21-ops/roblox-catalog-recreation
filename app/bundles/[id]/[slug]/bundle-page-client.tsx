@@ -254,6 +254,39 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               </a>)}
             </div>
           </section>}
+          {isKorblox && <section className="mt-8 w-full max-w-[900px] text-white">
+            <h2 className="mb-4 text-xl font-bold">Sponsored</h2>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
+              {[
+                { id: '139571479624081', name: 'Sam Shoulder Pal', creator: 'past tense.', price: '60', image: 'https://tr.rbxcdn.com/180DAY-2105baff9f1be3577e1d6819a08e09fe/150/150/ShoulderAccessory/Webp/noFilter', href: 'https://www.roblox.com/catalog/139571479624081/Sam-Shoulder-Pal' },
+                { id: '113170671801700', name: 'Alien with a Cap', creator: 'Little Luxe Co.', price: '135', image: 'https://tr.rbxcdn.com/180DAY-aca8845fc60bf7e0c37501515327ec4c/150/150/BackAccessory/Webp/noFilter', href: 'https://www.roblox.com/catalog/113170671801700/Alien-with-a-Cap' },
+                { id: '18529518454', name: '🍀Yellow Duck RainCoat', creator: 'LILY & LIFFY', price: '65', image: 'https://tr.rbxcdn.com/180DAY-f3c03a35f845c1b5738db45b68edd465/150/150/JacketAccessory/Webp/noFilter', href: 'https://www.roblox.com/catalog/18529518454/Yellow-Duck-RainCoat' },
+                { id: '131251657230383', name: 'Unkept Spiky Vkei Anime Boy Hair (Black)', creator: 'angelvamp', price: '60', image: 'https://tr.rbxcdn.com/180DAY-b6e3563fbf077c1e6f9084f113275f1e/150/150/HairAccessory/Webp/noFilter', href: 'https://www.roblox.com/catalog/131251657230383/Unkept-Spiky-Vkei-Anime-Boy-Hair-Black' },
+                { id: '137694910373760', name: 'Christmas', creator: "Peachieb's Christmas", price: '60', image: 'https://tr.rbxcdn.com/180DAY-10c7f793260f21f7a1f3aac264cb6a68/150/150/HairAccessory/Webp/noFilter', href: 'https://www.roblox.com/catalog/137694910373760/Christmas' },
+                { id: '106888386738089', name: 'Black Cat', creator: 'The Greatest UGC', price: '60', image: 'https://tr.rbxcdn.com/180DAY-66d4687db750357bf57589d5b59dbdb/150/150/WaistAccessory/Webp/noFilter', href: 'https://www.roblox.com/catalog/106888386738089/Black-Cat' },
+                { id: '120455941297782', name: 'Animated Rainbow Prism Devil Horns (Glowing)', creator: 'SEE GOD', price: '500', image: 'https://tr.rbxcdn.com/180DAY-21aa1c362485ddc86f4a11d77c4c6e5a/150/150/Hat/Webp/noFilter', href: 'https://www.roblox.com/catalog/120455941297782/Animated-Rainbow-Prism-Devil-Horns-Glowing' },
+              ].map((sponsored) => <a key={sponsored.id} href={sponsored.href} target="_blank" rel="noreferrer" className="group min-w-0 overflow-hidden rounded-lg bg-[#232323] transition hover:bg-[#303030]">
+                <div className="aspect-square overflow-hidden bg-[#303030]"><img src={sponsored.image} alt={sponsored.name} loading="lazy" className="h-full w-full object-cover transition group-hover:scale-[1.03]" /></div>
+                <div className="p-2"><p className="line-clamp-2 min-h-8 text-xs font-semibold">{sponsored.name}</p><p className="mt-1 truncate text-[10px] text-white/60">By {sponsored.creator}</p><p className="mt-1 flex items-center gap-1 text-xs font-bold"><RobuxIcon />{sponsored.price}</p></div>
+              </a>)}
+            </div>
+          </section>}
+          {isKorblox && <section className="mt-8 w-full max-w-[900px] text-white">
+            <h2 className="mb-4 text-xl font-bold">Included Items</h2>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+              {[
+                { id: '139607570', name: 'Korblox Deathspeaker Left Arm', type: 'Left Arm', image: 'https://tr.rbxcdn.com/180DAY-a1bf01bc29296997905589e5a283c48a/150/150/LeftArm/Webp/noFilter', href: 'https://www.roblox.com/catalog/139607570/Korblox-Deathspeaker-Left-Arm' },
+                { id: '139607625', name: 'Korblox Deathspeaker Right Arm', type: 'Right Arm', image: 'https://tr.rbxcdn.com/180DAY-9e3bf01696f41c56d3dac309336e7b0e/150/150/RightArm/Webp/noFilter', href: 'https://www.roblox.com/catalog/139607625/Korblox-Deathspeaker-Right-Arm' },
+                { id: '139607673', name: 'Korblox Deathspeaker Left Leg', type: 'Left Leg', image: 'https://tr.rbxcdn.com/180DAY-f51cd53ee6a4553a20cd755f756df418/150/150/LeftLeg/Webp/noFilter', href: 'https://www.roblox.com/catalog/139607673/Korblox-Deathspeaker-Left-Leg' },
+                { id: '139607718', name: 'Korblox Deathspeaker Right Leg', type: 'Right Arm', image: 'https://tr.rbxcdn.com/180DAY-143642d519de55c2cfa50b3473a0ecc6/150/150/RightLeg/Webp/noFilter', href: 'https://www.roblox.com/catalog/139607718/Korblox-Deathspeaker-Right-Leg' },
+                { id: '139607770', name: 'Korblox Deathspeaker Torso', type: 'Torso', image: 'https://tr.rbxcdn.com/180DAY-f79a974f6df791c33572eff9cb247345/150/150/Torso/Webp/noFilter', href: 'https://www.roblox.com/catalog/139607770/Korblox-Deathspeaker-Torso' },
+                { id: '139610147', name: 'Korblox Deathspeaker Hood', type: 'Hat · Off Sale', image: 'https://tr.rbxcdn.com/180DAY-06b054ae2a3be5025665371a146c3add/150/150/Hat/Webp/noFilter', href: 'https://www.roblox.com/catalog/139610147/Korblox-Deathspeaker-Hood' },
+              ].map((included) => <a key={included.id} href={included.href} target="_blank" rel="noreferrer" className="group min-w-0 overflow-hidden rounded-lg bg-[#232323] transition hover:bg-[#303030]">
+                <div className="aspect-square overflow-hidden bg-[#303030]"><img src={included.image} alt={included.name} loading="lazy" className="h-full w-full object-cover transition group-hover:scale-[1.03]" /></div>
+                <div className="p-2"><p className="line-clamp-2 min-h-8 text-xs font-semibold">{included.name}</p><p className="mt-1 text-[10px] text-white/60">{included.type}</p></div>
+              </a>)}
+            </div>
+          </section>}
           {isEightBit && <div className="mt-8 w-full max-w-[900px] overflow-hidden bg-[#303030] text-[#e5e5e5]">
             <div className="px-5 pt-4">
               <h2 className="text-[21px] font-semibold leading-7 text-[#f2f2f2]">Price Chart</h2>
