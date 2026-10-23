@@ -234,7 +234,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           </div>
           {isKorblox && <section className="mt-8 w-full max-w-[900px] text-white">
             <h2 className="mb-4 text-xl font-bold">Recommendations</h2>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+            <div className="grid grid-cols-4 gap-2 sm:grid-cols-7">
               {[
                 { id: '154', name: 'Korblox Lord of Death', price: '4,230', image: 'https://tr.rbxcdn.com/30DAY-Avatar-E130600A8A15FA27C8DD03FE92687684-Png/150/150/Avatar/Webp/noFilter', href: 'https://www.roblox.com/bundles/154/Korblox-Lord-of-Death' },
                 { id: '295', name: 'Skeleton', price: '470', image: 'https://tr.rbxcdn.com/30DAY-Avatar-9CB20F0A583EFE53F52F18CC445ED252-Png/150/150/Avatar/Webp/noFilter', href: 'https://www.roblox.com/bundles/295/Skeleton' },
@@ -247,9 +247,9 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                 <div className="aspect-square overflow-hidden bg-[#303030]">
                   <img src={recommendation.image} alt={recommendation.name} loading="lazy" className="h-full w-full object-cover transition group-hover:scale-[1.03]" />
                 </div>
-                <div className="p-3">
-                  <p className="line-clamp-2 min-h-10 text-sm font-semibold text-white">{recommendation.name}</p>
-                  {recommendation.price && <p className="mt-2 flex items-center gap-1.5 text-sm font-bold text-white"><RobuxIcon />{recommendation.price}</p>}
+                <div className="p-2">
+                  <p className="line-clamp-2 min-h-8 text-xs font-semibold text-white">{recommendation.name}</p>
+                  {recommendation.price && <p className="mt-1 flex items-center gap-1 text-xs font-bold text-white"><RobuxIcon />{recommendation.price}</p>}
                 </div>
               </a>)}
             </div>
