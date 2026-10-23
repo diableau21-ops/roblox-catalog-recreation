@@ -103,13 +103,28 @@ export default function RobuxPage() {
           avatarUrl:p.avatarUrl || null, hasVerifiedBadge:p.hasVerifiedBadge === true
         })) : []
       setSendPlayers(players)
-      if (!players.length) setSendError(`No Roblox players found for “${keyword}”.`)
+      const exactMatch = players.find((player) => player.name.toLowerCase() === keyword.toLowerCase())
+      if (exactMatch) {
+        setSendPlayer(exactMatch)
+      } else if (!players.length) {
+        setSendError(`No Roblox players found for “${keyword}”.`)
+      }
     } catch {
       setSendError('No results right now. Check the Roblox username and try again.')
     } finally {
       setSendSearching(false)
     }
   }
+
+  useEffect(() => {
+    if (!sendOpen || sendPlayer) return
+    const keyword = sendUsername.trim()
+    if (keyword.length < 3) return
+    const timer = window.setTimeout(() => {
+      void searchPlayers()
+    }, 500)
+    return () => window.clearTimeout(timer)
+  }, [sendUsername, sendOpen, sendPlayer])
 
   return (
     <main className="min-h-dvh bg-[#0B0B0D] text-[#F7F6F2]">
@@ -300,10 +315,10 @@ export default function RobuxPage() {
                     ) : (
                       <>
                         <p className="mt-2 text-sm text-white/70">Search for the Roblox player you want to send Robux to.</p>
-                        <form className="mt-4 flex gap-2" onSubmit={(event) => { event.preventDefault(); void searchPlayers() }}>
-                          <input value={sendUsername} onChange={(event) => { setSendUsername(event.target.value); setSendError(''); setSendPlayers([]) }} placeholder="Roblox username" aria-label="Roblox player username" className="h-12 min-w-0 flex-1 rounded-xl border-2 border-[#146bff] bg-[#292929] px-4 text-base text-white outline-none focus:border-[#146bff]" />
-                          <button type="submit" disabled={sendSearching || sendUsername.trim().length < 3} className="h-12 rounded-xl bg-[#146bff] px-4 text-sm font-bold disabled:opacity-50">{sendSearching ? 'Searching…' : 'Search'}</button>
+                        <form className="mt-4" onSubmit={(event) => { event.preventDefault(); void searchPlayers() }}>
+                          <input value={sendUsername} onChange={(event) => { setSendUsername(event.target.value); setSendError(''); setSendPlayers([]); setSendPlayer(null) }} placeholder="Roblox username" aria-label="Roblox player username" className="h-12 w-full rounded-xl border-2 border-[#146bff] bg-[#292929] px-4 text-base text-white outline-none focus:border-[#146bff]" />
                         </form>
+                        {sendSearching && <p className="mt-3 text-sm text-white/60">Searching for player…</p>}
                         {sendError && <p role="status" className="mt-3 text-sm text-white/70">{sendError}</p>}
                         {sendPlayers.length > 0 && <div className="mt-4 max-h-60 space-y-2 overflow-y-auto">
                           {sendPlayers.map((player) => <button key={player.id} type="button" onClick={() => setSendPlayer(player)} className="flex w-full items-center gap-3 rounded-lg border border-white/15 p-3 text-left hover:border-[#7183ff] hover:bg-white/5">
