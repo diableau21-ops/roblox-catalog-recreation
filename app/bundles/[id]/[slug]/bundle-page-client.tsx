@@ -62,11 +62,17 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     }, 1800)
     return () => window.clearTimeout(timer)
   }, [giftOpen, giftSuccess])
+  const giftCost = giftBundle === 'korblox' ? 17000 : 31000
   const continueGift = async () => {
     if (!giftSelectedPlayer || giftSending) return
+    if (balance < giftCost) {
+      setGiftMessage(`Not enough Robux. This item costs ${giftCost.toLocaleString('en-US')} Robux, and your balance is ${balance.toLocaleString('en-US')}.`)
+      return
+    }
     setGiftSending(true)
     setGiftMessage('')
-    await new Promise((resolve) => window.setTimeout(resolve, 2500))
+    await new Promise((resolve) => window.setTimeout(resolve, 1800))
+    setBalance((current) => current - giftCost)
     setGiftSuccess(true)
     setGiftSending(false)
   }
@@ -381,12 +387,13 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <div className="mt-6 border-t border-white/10 pt-5">
                 <div className="flex items-center gap-4 rounded-xl bg-[#292929] p-3">
                   <img src={giftBundle === 'korblox' ? '/items/korblox.png' : '/items/headless.png'} alt="" className="size-16 rounded-lg bg-[#202020] object-contain p-1" />
-                  <div className="min-w-0"><p className="font-bold">{giftBundle === 'korblox' ? 'Korblox Deathspeaker' : 'Headless Horseman'}</p><p className="mt-1 text-sm text-white/60">Gift for @{giftSelectedPlayer.name}</p></div>
+                  <div className="min-w-0 flex-1"><p className="font-bold">{giftBundle === 'korblox' ? 'Korblox Deathspeaker' : 'Headless Horseman'}</p><p className="mt-1 text-sm text-white/60">Gift for @{giftSelectedPlayer.name}</p><p className="mt-2 flex items-center gap-1.5 text-sm font-extrabold"><RobuxIcon className="size-4" />{giftCost.toLocaleString('en-US')} Robux</p></div>
                 </div>
                 <div className="mt-4 flex gap-3">
                   <button type="button" disabled={giftSending} onClick={() => { setGiftMessage(''); void continueGift() }} className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-[#146bff] text-base font-extrabold disabled:cursor-wait disabled:opacity-80">{giftSending ? 'Sending…' : 'Send'}</button>
                   <button type="button" onClick={() => {setGiftReview(false);setGiftMessage('')}} className="h-12 flex-1 rounded-xl border border-white/20 text-base font-bold">Edit</button>
                 </div>
+                {giftMessage && <p role="status" className="mt-3 rounded-lg bg-red-500/10 p-3 text-sm text-red-300">{giftMessage}</p>}
               </div>
             </div>
           ) : giftSelectedPlayer ? (
