@@ -63,11 +63,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   }, [giftOpen, giftSuccess])
   const continueGift = async () => {
     if (!giftSelectedPlayer || giftSending) return
-    const giftPrice = id === '192' || slug.toLowerCase().includes('korblox')
-      ? 17000
-      : id === '201' || slug.toLowerCase().includes('headless')
-        ? 31000
-        : item?.price ?? 0
+    const giftPrice = selectedRobux
 
     // Read the shared balance at confirmation time so this page doesn't use a stale value.
     let currentBalance = balance
@@ -326,24 +322,21 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           </div>
           {giftSelectedPlayer ? (
             <div className="mt-5 flex flex-col items-center text-center">
-              <img src={itemImage} alt={item.name} className="size-24 object-contain" />
-              <h3 className="mt-2 text-lg font-bold">{item.name}</h3>
-              <p className="mt-1 flex items-center gap-1 text-sm text-white/80"><RobuxIcon className="size-4" /> Gift cost: {(id === '192' || slug.toLowerCase().includes('korblox') ? 17000 : id === '201' || slug.toLowerCase().includes('headless') ? 31000 : item.price ?? 0).toLocaleString('en-US')} Robux</p>
-              <p className="text-xs text-white/60">Your balance: {balance.toLocaleString('en-US')} Robux</p>
-              <div className="mt-3 flex items-center gap-3">
-                {giftSelectedPlayer.avatarUrl ? <img src={giftSelectedPlayer.avatarUrl} alt={`Avatar de ${giftSelectedPlayer.displayName}`} onError={(event) => { const image = event.currentTarget; image.style.display = 'none'; const fallback = image.nextElementSibling as HTMLElement | null; if (fallback) fallback.style.display = 'flex' }} className="size-12 rounded-full object-cover" /> : null}<span aria-hidden="true" style={{display: giftSelectedPlayer.avatarUrl ? 'none' : 'flex'}} className="size-12 items-center justify-center rounded-full bg-indigo-500/30 text-sm font-bold text-white">{giftSelectedPlayer.displayName.slice(0, 2).toUpperCase()}</span>
-                <div className="text-left">
-                  <p className="flex items-center gap-1.5 font-semibold">{giftSelectedPlayer.displayName}{giftSelectedPlayer.hasVerifiedBadge && <VerifiedBadge className="size-4" />}</p>
-                  <p className="text-sm text-white/70">@{giftSelectedPlayer.name}</p>
-                </div>
+              <div className="flex w-full items-center justify-center gap-3 border-b border-white/10 pb-5">
+                {giftSelectedPlayer.avatarUrl ? <img src={giftSelectedPlayer.avatarUrl} alt="" className="size-16 rounded-full bg-[#303030] object-cover" /> : <span className="flex size-16 items-center justify-center rounded-full bg-[#303030] text-xl font-bold">{giftSelectedPlayer.displayName.slice(0,2).toUpperCase()}</span>}
+                <div className="text-left"><p className="flex items-center gap-1.5 text-lg font-bold">{giftSelectedPlayer.displayName}{giftSelectedPlayer.hasVerifiedBadge && <VerifiedBadge className="size-4" />}</p><p className="text-sm text-white/60">@{giftSelectedPlayer.name}</p></div>
               </div>
-              <>
-                  <button type="button" onClick={() => { setGiftConfirmOpen(true); setGiftMessage('') }} disabled={giftSending} className="mt-5 flex h-10 min-w-36 items-center justify-center gap-2 rounded-lg bg-[#335fff] px-6 text-sm font-bold text-white transition hover:bg-[#244be0] disabled:opacity-70">
-                    {giftSending ? 'Sending…' : <><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="" aria-hidden="true" className="size-4 brightness-0 invert" /><span>Continue</span></>}
-                  </button>
-                  <button type="button" onClick={() => { setGiftSelectedPlayer(null); setGiftConfirmOpen(false); setGiftMessage(''); setGiftSearchMessage('') }} className="mt-3 text-xs text-white/70 underline hover:text-white">Choose another player</button>
-              </>
-              {giftConfirmOpen && <div className="mt-4 w-full rounded-lg border border-white/20 bg-black/30 p-3 text-left"><p className="font-bold text-white">Confirm gift?</p><p className="mt-1 text-sm text-white/75">Send {item.name} to @{giftSelectedPlayer.name} for {(id === '192' || slug.toLowerCase().includes('korblox') ? 17000 : id === '201' || slug.toLowerCase().includes('headless') ? 31000 : item.price ?? 0).toLocaleString('en-US')} Robux?</p><div className="mt-3 flex gap-2"><button type="button" onClick={() => setGiftConfirmOpen(false)} className="h-10 flex-1 rounded-lg border border-white/20 text-sm font-semibold">Cancel</button><button type="button" onClick={() => { setGiftConfirmOpen(false); void continueGift() }} disabled={giftSending} className="h-10 flex-1 rounded-lg bg-[#335fff] text-sm font-bold disabled:opacity-60">Confirm</button></div></div>}
+              <div className="mt-5 flex items-center justify-center gap-3 text-5xl font-extrabold"><RobuxIcon className="size-10" />{selectedRobux.toLocaleString('en-US')}</div>
+              <p className="mt-2 text-sm text-white/60">Tap an amount to choose how much to send</p>
+              <div className="mt-5 grid w-full grid-cols-4 gap-2">
+                {[25,50,100,200].map((amount) => <button key={amount} type="button" onClick={() => {setSelectedRobux(amount);setCustomRobux(String(amount))}} className={`flex h-12 items-center justify-center gap-1 rounded-full text-sm font-bold transition ${selectedRobux===amount?'border-2 border-[#335fff] bg-[#172b50]':'bg-[#292929] hover:bg-[#383838]'}`}><RobuxIcon className="size-4" />{amount}</button>)}
+              </div>
+              <label htmlFor="gift-custom-amount" className="mt-4 text-xs text-white/60">Custom amount</label>
+              <input id="gift-custom-amount" type="number" min="1" value={customRobux} onChange={(event)=>{setCustomRobux(event.target.value);const amount=Number(event.target.value);if(Number.isSafeInteger(amount)&&amount>0)setSelectedRobux(amount)}} className="mt-1 h-10 w-full rounded-lg border border-white/15 bg-[#252525] px-3 text-center text-white outline-none focus:border-[#335fff]" />
+              <p className="mt-3 text-xs text-white/55">Balance: {balance.toLocaleString('en-US')} Robux</p>
+              <button type="button" onClick={() => { setGiftConfirmOpen(true); setGiftMessage('') }} disabled={giftSending || !Number.isSafeInteger(selectedRobux) || selectedRobux<1} className="mt-5 h-12 w-full rounded-xl bg-[#335fff] text-base font-bold text-white hover:bg-[#244be0] disabled:opacity-50">Next</button>
+              <button type="button" onClick={() => {setGiftSelectedPlayer(null);setGiftConfirmOpen(false);setGiftMessage('')}} className="mt-3 text-xs text-white/65 underline">Choose another player</button>
+              {giftConfirmOpen && <div className="mt-4 w-full rounded-lg border border-white/15 bg-[#252525] p-3 text-left"><p className="font-bold">Confirm gift?</p><p className="mt-1 text-sm text-white/70">Confirm this visual gift to @{giftSelectedPlayer.name} for {selectedRobux.toLocaleString('en-US')} Robux.</p><div className="mt-3 flex gap-2"><button type="button" onClick={()=>setGiftConfirmOpen(false)} className="h-10 flex-1 rounded-lg border border-white/20 text-sm font-semibold">Cancel</button><button type="button" onClick={()=>{setGiftConfirmOpen(false);void continueGift()}} disabled={giftSending} className="h-10 flex-1 rounded-lg bg-[#335fff] text-sm font-bold">{giftSending?'Sending…':'Confirm'}</button></div></div>}
             </div>
           ) : (
             <>
