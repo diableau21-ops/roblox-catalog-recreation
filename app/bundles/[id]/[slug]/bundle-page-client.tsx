@@ -45,7 +45,6 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   const [giftMessage, setGiftMessage] = useState('')
   const [giftSending, setGiftSending] = useState(false)
   const [giftSuccess, setGiftSuccess] = useState(false)
-  const [giftConfirmOpen, setGiftConfirmOpen] = useState(false)
   const [giftManualMode, setGiftManualMode] = useState(false)
   useEffect(() => {
     if (!giftOpen || !giftSuccess) return
@@ -212,7 +211,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
 
           <div className="flex min-w-0 flex-1 flex-col gap-4 text-white">
             <div>
-              <div className="flex flex-wrap items-center gap-2.5"><h1 className="break-words text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">{item.name}</h1>{canGift && <button type="button" onClick={() => { setGiftManualMode(true); setGiftOpen(true); setGiftSuccess(false); setGiftConfirmOpen(false); setGiftMessage(""); setGiftSearchMessage(""); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftUsername("") }} aria-label="Open gift cart" title="Gift" className="mt-1 inline-flex size-10 shrink-0 items-center justify-center rounded-lg border border-white/15 bg-white/5 text-white transition hover:bg-white/10"><ShoppingCart aria-hidden="true" className="size-5" /></button>}</div>
+              <div className="flex flex-wrap items-center gap-2.5"><h1 className="break-words text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">{item.name}</h1>{canGift && <button type="button" onClick={() => { setGiftManualMode(true); setGiftOpen(true); setGiftSuccess(false); setGiftMessage(""); setGiftSearchMessage(""); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftUsername("") }} aria-label="Open gift cart" title="Gift" className="mt-1 inline-flex size-10 shrink-0 items-center justify-center rounded-lg border border-white/15 bg-white/5 text-white transition hover:bg-white/10"><ShoppingCart aria-hidden="true" className="size-5" /></button>}</div>
               <div className="mt-2 flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm text-muted-foreground">By <span className="font-semibold text-foreground">Roblox</span><VerifiedBadge className="size-4" /><span className="ml-2 inline-flex items-center gap-1.5 font-semibold text-[#00b06f]"><span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-[#00b06f] text-white"><Check className="size-3.5 stroke-[3]" /></span>Item Owned</span></div><p className="mt-1 text-sm text-muted-foreground">This item is available in your inventory</p>
               <div className="mt-3 h-px w-full bg-border" />
             </div>
@@ -349,9 +348,8 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <label htmlFor="gift-custom-amount" className="mt-4 text-xs text-white/60">Custom amount</label>
               <input id="gift-custom-amount" type="number" min="1" value={customRobux} onChange={(event)=>{setCustomRobux(event.target.value);const amount=Number(event.target.value);if(Number.isSafeInteger(amount)&&amount>0)setSelectedRobux(amount)}} className="mt-1 h-10 w-full rounded-lg border border-white/15 bg-[#252525] px-3 text-center text-white outline-none focus:border-[#335fff]" />
               <p className="mt-3 text-xs text-white/55">Balance: {balance.toLocaleString('en-US')} Robux</p>
-              <button type="button" onClick={() => { setGiftConfirmOpen(true); setGiftMessage('') }} disabled={giftSending || !Number.isSafeInteger(selectedRobux) || selectedRobux<1} className="mt-5 h-12 w-full rounded-xl bg-[#335fff] text-base font-bold text-white hover:bg-[#244be0] disabled:opacity-50">Next</button>
-              <button type="button" onClick={() => {setGiftSelectedPlayer(null);setGiftConfirmOpen(false);setGiftMessage('')}} className="mt-3 text-xs text-white/65 underline">Choose another player</button>
-              {giftConfirmOpen && <div className="mt-4 w-full rounded-lg border border-white/15 bg-[#252525] p-3 text-left"><p className="font-bold">Confirm gift?</p><p className="mt-1 text-sm text-white/70">Confirm this visual gift to @{giftSelectedPlayer.name} for {selectedRobux.toLocaleString('en-US')} Robux.</p><div className="mt-3 flex gap-2"><button type="button" onClick={()=>setGiftConfirmOpen(false)} className="h-10 flex-1 rounded-lg border border-white/20 text-sm font-semibold">Cancel</button><button type="button" onClick={()=>{setGiftConfirmOpen(false);void continueGift()}} disabled={giftSending} className="h-10 flex-1 rounded-lg bg-[#335fff] text-sm font-bold">{giftSending?'Sending…':'Confirm'}</button></div></div>}
+              <button type="button" onClick={() => { setGiftMessage(''); void continueGift() }} disabled={giftSending || !Number.isSafeInteger(selectedRobux) || selectedRobux<1} className="mt-5 h-12 w-full rounded-xl bg-[#335fff] text-base font-bold text-white hover:bg-[#244be0] disabled:opacity-50">Next</button>
+              <button type="button" onClick={() => {setGiftSelectedPlayer(null);setGiftMessage('')}} className="mt-3 text-xs text-white/65 underline">Choose another player</button>
             </div>
           ) : (
             <>
