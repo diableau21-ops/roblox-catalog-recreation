@@ -427,20 +427,37 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           </div>
         </section>
       </div>}
-      <footer className="mt-12 w-full border-t border-white/10 bg-[#191919] px-5 py-8 text-white/70">
-        <nav aria-label="Footer" className="mx-auto flex max-w-[1100px] flex-wrap items-center justify-center gap-x-5 gap-y-3 text-xs font-semibold">
-          <a className="hover:text-white" href="https://www.roblox.com/info/about-us?locale=en_us" target="_blank" rel="noreferrer">About Us</a>
-          <a className="hover:text-white" href="https://www.roblox.com/info/jobs?locale=en_us" target="_blank" rel="noreferrer">Jobs</a>
-          <a className="hover:text-white" href="https://www.roblox.com/info/blog?locale=en_us" target="_blank" rel="noreferrer">Newsroom</a>
-          <a className="hover:text-white" href="https://www.roblox.com/info/parents?locale=en_us" target="_blank" rel="noreferrer">Parents</a>
-          <a className="hover:text-white" href="https://www.roblox.com/giftcards?locale=en_us" target="_blank" rel="noreferrer">Buy Gift Cards</a>
-          <a className="hover:text-white" href="https://www.roblox.com/info/help?locale=en_us" target="_blank" rel="noreferrer">Help</a>
-          <a className="hover:text-white" href="https://www.roblox.com/info/terms?locale=en_us" target="_blank" rel="noreferrer">Terms</a>
-          <a className="hover:text-white" href="https://www.roblox.com/info/accessibility?locale=en_us" target="_blank" rel="noreferrer">Accessibility</a>
-          <a className="hover:text-white" href="https://www.roblox.com/info/privacy?locale=en_us" target="_blank" rel="noreferrer">Privacy</a>
-          <button type="button" className="hover:text-white" onClick={() => window.open('https://www.roblox.com/info/privacy?locale=en_us', '_blank', 'noopener,noreferrer')}>Your Privacy Choices <span aria-hidden="true">▧</span></button>
-          <a className="hover:text-white" href="https://www.roblox.com/sitemap?locale=en_us" target="_blank" rel="noreferrer">Sitemap</a>
-        </nav>
+      <footer className="mt-12 w-full border-t border-white/10 bg-[#191919] px-5 py-10 text-white/75">
+        <div className="mx-auto max-w-[1100px]">
+          <nav aria-label="Footer" className="flex flex-wrap items-center justify-center gap-x-6 gap-y-4 text-sm font-semibold sm:text-base">
+            <a className="hover:text-white" href="https://www.roblox.com/info/about-us?locale=en_us" target="_blank" rel="noreferrer">About Us</a>
+            <a className="hover:text-white" href="https://www.roblox.com/info/jobs?locale=en_us" target="_blank" rel="noreferrer">Jobs</a>
+            <a className="hover:text-white" href="https://www.roblox.com/info/blog?locale=en_us" target="_blank" rel="noreferrer">Newsroom</a>
+            <a className="hover:text-white" href="https://www.roblox.com/info/parents?locale=en_us" target="_blank" rel="noreferrer">Parents</a>
+            <a className="hover:text-white" href="https://www.roblox.com/giftcards?locale=en_us" target="_blank" rel="noreferrer">Buy Gift Cards</a>
+            <a className="hover:text-white" href="https://www.roblox.com/info/help?locale=en_us" target="_blank" rel="noreferrer">Help</a>
+            <a className="hover:text-white" href="https://www.roblox.com/info/terms?locale=en_us" target="_blank" rel="noreferrer">Terms</a>
+            <a className="hover:text-white" href="https://www.roblox.com/info/accessibility?locale=en_us" target="_blank" rel="noreferrer">Accessibility</a>
+            <a className="hover:text-white" href="https://www.roblox.com/info/privacy?locale=en_us" target="_blank" rel="noreferrer">Privacy</a>
+            <button type="button" className="hover:text-white" onClick={() => window.open('https://www.roblox.com/info/privacy?locale=en_us', '_blank', 'noopener,noreferrer')}>Your Privacy Choices <span aria-hidden="true">▧</span></button>
+            <a className="hover:text-white" href="https://www.roblox.com/sitemap?locale=en_us" target="_blank" rel="noreferrer">Sitemap</a>
+          </nav>
+          <div className="mt-7 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-5 sm:flex-row">
+            <label htmlFor="footer-language" className="text-sm font-semibold text-white/80">Language</label>
+            <select id="footer-language" aria-label="Change language" defaultValue="en-us" onChange={(event) => { const locale = event.target.value; const url = new URL(window.location.href); url.searchParams.set('locale', locale); window.location.href = url.toString() }} className="min-w-48 rounded-lg border border-white/15 bg-[#252525] px-3 py-2.5 text-sm text-white outline-none focus:border-white/40">
+              <option value="en-us">English (United States)</option>
+              <option value="fr-ca">Français (Canada)</option>
+              <option value="fr-fr">Français (France)</option>
+              <option value="es-es">Español</option>
+              <option value="pt-br">Português (Brasil)</option>
+              <option value="de-de">Deutsch</option>
+              <option value="ja-jp">日本語</option>
+              <option value="ko-kr">한국어</option>
+              <option value="zh-cn">简体中文</option>
+            </select>
+          </div>
+          <p className="mt-5 text-center text-xs leading-5 text-white/55 sm:text-left sm:text-sm">©2026 Roblox Corporation. Roblox, the Roblox logo and Powering Imagination are among our registered and unregistered trademarks in the U.S. and other countries.</p>
+        </div>
       </footer>
     </main>
   )
