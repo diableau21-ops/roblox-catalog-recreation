@@ -225,7 +225,7 @@ export default function RobuxPage() {
 
         {sendOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-3" onClick={() => setSendOpen(false)}>
-            <section role="dialog" aria-modal="true" aria-labelledby="send-robux-title" className="relative w-full max-w-sm overflow-hidden rounded-xl border border-[#626bff]/60 bg-[#101322] p-5 text-white shadow-2xl" onClick={(event) => event.stopPropagation()}>
+            <section role="dialog" aria-modal="true" aria-labelledby="send-robux-title" className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-[#383838] bg-[#1f1f1f] p-5 text-white shadow-2xl sm:p-6" onClick={(event) => event.stopPropagation()}>
               <div className="pointer-events-none absolute inset-0 opacity-40" aria-hidden="true" style={{backgroundImage:'radial-gradient(1.5px 1.5px at 15% 20%, white 60%, transparent), radial-gradient(1px 1px at 78% 26%, #a5d8ff 60%, transparent), radial-gradient(1.5px 1.5px at 64% 75%, #d8b4fe 60%, transparent)'}} />
               <div className="relative z-10">
                 {sendSuccess ? (
@@ -239,26 +239,33 @@ export default function RobuxPage() {
                 ) : (
                   <>
                     <div className="flex items-center justify-between gap-3">
-                      <h2 id="send-robux-title" className="text-xl font-extrabold">Send Robux</h2>
+                      <h2 id="send-robux-title" className="text-2xl font-extrabold">Send Robux</h2><span className="ml-auto flex items-center gap-2 text-lg text-white/65"><RobuxIcon className="size-5"/>{balance.toLocaleString("en-US")}</span>
                       <button type="button" onClick={() => setSendOpen(false)} aria-label="Close" className="rounded-lg px-2 py-1 text-xl text-white/75 hover:bg-white/10">×</button>
                     </div>
                     {sendPlayer ? (
                       <div className="mt-5">
-                        <div className="flex items-center gap-3 rounded-lg border border-white/15 p-3">
-                          {sendPlayer.avatarUrl ? <img src={sendPlayer.avatarUrl} alt="" className="size-12 rounded-full object-cover" /> : <span className="flex size-12 items-center justify-center rounded-full bg-white/10">👤</span>}
-                          <div className="min-w-0"><p className="flex items-center gap-1.5 truncate font-bold">{sendPlayer.displayName}{sendPlayer.hasVerifiedBadge && <VerifiedBadge className="inline-block size-4 shrink-0" />}</p><p className="truncate text-sm text-white/65">@{sendPlayer.name}</p></div>
+                        <div className="flex flex-col items-center border-b border-white/10 pb-5 text-center">
+                          {sendPlayer.avatarUrl ? <img src={sendPlayer.avatarUrl} alt="" className="size-28 rounded-full bg-[#303030] object-cover" /> : <span className="flex size-28 items-center justify-center rounded-full bg-[#303030] text-2xl font-bold">{sendPlayer.displayName.slice(0,2).toUpperCase()}</span>}
+                          <p className="mt-3 flex items-center gap-2 text-2xl font-extrabold">{sendPlayer.displayName}{sendPlayer.hasVerifiedBadge && <VerifiedBadge className="size-5" />}</p><p className="text-sm text-white/60">@{sendPlayer.name}</p>
                         </div>
-                        <label htmlFor="send-robux-amount" className="mt-4 block text-sm font-semibold">Robux amount</label>
-                        <input id="send-robux-amount" type="number" min="1" step="1" inputMode="numeric" value={sendAmount} onChange={(event) => setSendAmount(event.target.value)} className="mt-2 h-11 w-full rounded-lg border border-white/20 bg-black/30 px-3 text-white outline-none focus:border-[#7183ff]" />
-                        <button type="button" onClick={() => { const amount = Number(sendAmount); if (!Number.isSafeInteger(amount) || amount < 1 || sendProcessing) return; if (amount > balance) { setSendError('Not enough Robux in your balance.'); return; } setSendError(''); setSendProcessing(true); window.setTimeout(() => { setBalance((current) => current - amount); setSendProcessing(false); setSendSuccess(true) }, 1000) }} disabled={sendProcessing || !Number.isSafeInteger(Number(sendAmount)) || Number(sendAmount) < 1} className="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[#335fff] text-sm font-extrabold disabled:cursor-not-allowed disabled:opacity-60">{sendProcessing && <span aria-hidden="true" className="size-4 animate-spin rounded-full border-2 border-white/35 border-t-white" />}{sendProcessing ? 'Sending…' : 'Send Robux'}</button>
-                        <button type="button" onClick={() => { setSendPlayer(null); setSendError('') }} className="mt-3 w-full text-xs text-white/65 underline">Choose another player</button>
+                        <div className="mt-5 flex items-center justify-center gap-3 text-5xl font-extrabold"><RobuxIcon className="size-10" />{Number(sendAmount||0).toLocaleString('en-US')}</div>
+                        <p className="mt-2 text-center text-sm text-white/60">Tap the number to enter a custom amount</p>
+                        <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                          {[25,50,100,200].map((amount)=> <button key={amount} type="button" onClick={()=>setSendAmount(String(amount))} className={`flex h-14 items-center justify-center gap-2 rounded-full text-base font-bold transition ${Number(sendAmount)===amount?'border-2 border-[#146bff] bg-[#172b50]':'bg-[#292929] hover:bg-[#383838]'}`}><RobuxIcon className="size-5"/>{amount}</button>)}
+                        </div>
+                        <label htmlFor="send-robux-amount" className="mt-4 block text-sm font-semibold text-white/70">Custom amount</label>
+                        <input id="send-robux-amount" type="number" min="1" step="1" inputMode="numeric" value={sendAmount} onChange={(event) => setSendAmount(event.target.value)} className="mt-2 h-11 w-full rounded-lg border border-white/20 bg-[#292929] px-3 text-white outline-none focus:border-[#146bff]" />
+                        {sendError && <p role="status" className="mt-2 text-sm text-red-300">{sendError}</p>}
+                        <button type="button" onClick={() => { const amount=Number(sendAmount); if(!Number.isSafeInteger(amount)||amount<1||sendProcessing)return; if(amount>balance){setSendError('Not enough Robux in your balance.');return;} setSendError('');setSendProcessing(true);window.setTimeout(()=>{setBalance((current)=>current-amount);setSendProcessing(false);setSendSuccess(true)},1000)}} disabled={sendProcessing||!Number.isSafeInteger(Number(sendAmount))||Number(sendAmount)<1} className="mt-5 flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-[#146bff] text-xl font-extrabold disabled:cursor-not-allowed disabled:opacity-60">{sendProcessing?'Sending…':'Next'}</button>
+                        <p className="mt-4 text-center text-sm text-white/55">Robux are sent instantly with no fees</p>
+                        <button type="button" onClick={() => {setSendPlayer(null);setSendError('')}} className="mt-3 w-full text-xs text-white/65 underline">Choose another player</button>
                       </div>
                     ) : (
                       <>
                         <p className="mt-2 text-sm text-white/70">Search for the Roblox player you want to send Robux to.</p>
                         <form className="mt-4 flex gap-2" onSubmit={(event) => { event.preventDefault(); void searchPlayers() }}>
-                          <input value={sendUsername} onChange={(event) => { setSendUsername(event.target.value); setSendError(''); setSendPlayers([]) }} placeholder="Roblox username" aria-label="Roblox player username" className="h-11 min-w-0 flex-1 rounded-lg border border-white/20 bg-black/30 px-3 text-sm text-white outline-none focus:border-[#7183ff]" />
-                          <button type="submit" disabled={sendSearching || sendUsername.trim().length < 3} className="h-11 rounded-lg bg-[#335fff] px-4 text-sm font-bold disabled:opacity-50">{sendSearching ? 'Searching…' : 'Search'}</button>
+                          <input value={sendUsername} onChange={(event) => { setSendUsername(event.target.value); setSendError(''); setSendPlayers([]) }} placeholder="Roblox username" aria-label="Roblox player username" className="h-12 min-w-0 flex-1 rounded-xl border-2 border-[#146bff] bg-[#292929] px-4 text-base text-white outline-none focus:border-[#146bff]" />
+                          <button type="submit" disabled={sendSearching || sendUsername.trim().length < 3} className="h-12 rounded-xl bg-[#146bff] px-4 text-sm font-bold disabled:opacity-50">{sendSearching ? 'Searching…' : 'Search'}</button>
                         </form>
                         {sendError && <p role="status" className="mt-3 text-sm text-white/70">{sendError}</p>}
                         {sendPlayers.length > 0 && <div className="mt-4 max-h-60 space-y-2 overflow-y-auto">
