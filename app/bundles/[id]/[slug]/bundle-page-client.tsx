@@ -309,8 +309,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           {giftSuccess ? (
             <div className="flex min-h-[300px] flex-col items-center justify-center py-8 text-center">
               <div className="mb-5 flex size-14 items-center justify-center rounded-full bg-[#00b06f] text-white">
-                  <Check className="size-8 stroke-[3]" />
-                </div>
+                <Check className="size-8 stroke-[3]" />
               </div>
               <h3 className="text-xl font-bold">Gift was sent successfully</h3>
               <p className="mt-3 text-sm text-muted-foreground">{item.name}</p>
