@@ -242,7 +242,7 @@ export default function RobuxPage() {
                   </div>
                 ) : sendSuccess ? (
                   <div className="py-8 text-center">
-                    <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-emerald-500 text-3xl font-black">✓</div>
+                    <div className="mx-auto flex size-16 items-center justify-center rounded-full border-2 border-white bg-transparent text-3xl font-semibold text-white"><svg viewBox="0 0 24 24" className="size-8" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6" /></svg></div>
                     <h2 id="send-robux-title" className="mt-4 text-xl font-extrabold">Robux sent successfully!</h2>
                     <p className="mt-2 text-sm text-white/75">{sendAmount} Robux sent to {sendPlayer?.displayName}{sendPlayer?.hasVerifiedBadge && <VerifiedBadge className="ml-1 inline-block size-4 shrink-0" />} (@{sendPlayer?.name}).</p>
                     
