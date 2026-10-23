@@ -46,6 +46,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   const [giftSending, setGiftSending] = useState(false)
   const [giftSuccess, setGiftSuccess] = useState(false)
   const [giftManualMode, setGiftManualMode] = useState(false)
+  const [giftBundle, setGiftBundle] = useState<'korblox' | 'headless'>('korblox')
   useEffect(() => {
     if (!giftOpen || !giftSuccess) return
     const timer = window.setTimeout(() => {
@@ -62,29 +63,9 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   }, [giftOpen, giftSuccess])
   const continueGift = async () => {
     if (!giftSelectedPlayer || giftSending) return
-    const giftPrice = selectedRobux
-
-    // Read the shared balance at confirmation time so this page doesn't use a stale value.
-    let currentBalance = balance
-    try {
-      const savedBalance = window.localStorage.getItem('catalog-demo-robux-balance')
-      if (savedBalance !== null) {
-        const parsedBalance = Number(savedBalance)
-        if (Number.isFinite(parsedBalance) && parsedBalance >= 0) currentBalance = parsedBalance
-      }
-    } catch {}
-    setBalance(currentBalance)
-
-    if (currentBalance < giftPrice) {
-      setGiftMessage(`Not enough Robux. You need ${(giftPrice - currentBalance).toLocaleString('en-US')} more Robux to send this gift.`)
-      return
-    }
     setGiftSending(true)
     setGiftMessage('')
-    await new Promise((resolve) => window.setTimeout(resolve, 3500))
-    const updatedBalance = currentBalance - giftPrice
-    setBalance(updatedBalance)
-    try { window.localStorage.setItem('catalog-demo-robux-balance', String(updatedBalance)) } catch {}
+    await new Promise((resolve) => window.setTimeout(resolve, 2500))
     setGiftSuccess(true)
     setGiftSending(false)
   }
@@ -310,8 +291,8 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <div className="mb-5 flex size-14 items-center justify-center rounded-full bg-[#00b06f] text-white">
                 <Check className="size-8 stroke-[3]" />
               </div>
-              <h3 className="text-xl font-bold">Gift was sent successfully</h3>
-              <p className="mt-3 text-sm text-muted-foreground">{item.name}</p>
+              <h3 className="text-xl font-bold">Gift preview complete</h3>
+              <p className="mt-3 text-sm text-muted-foreground">{giftBundle === 'korblox' ? 'Korblox Deathspeaker' : 'Headless Horseman'}</p>
               {giftSelectedPlayer && <p className="mt-1 text-sm text-muted-foreground">To {giftSelectedPlayer.displayName} (@{giftSelectedPlayer.name})</p>}
               <button type="button" onClick={() => { setGiftSuccess(false); setGiftMessage(""); setGiftSearchMessage(""); setGiftUsername(""); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftSending(false) }} className="mt-7 h-10 min-w-32 rounded-lg bg-[#335fff] px-6 text-sm font-bold text-white transition hover:bg-[#244be0]">Done</button>
             </div>
@@ -331,7 +312,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           ) : (
           <>
           <div className="flex items-center justify-between gap-3">
-            <h2 id="gift-title" className="text-lg font-bold">Gift {item.name}</h2>
+            <h2 id="gift-title" className="text-lg font-bold">Send an item</h2>
             <button type="button" onClick={() => { setGiftOpen(false); setGiftManualMode(false) }} aria-label="Close" className="rounded-lg px-2 py-1 text-xl hover:bg-secondary">×</button>
           </div>
           {giftSelectedPlayer ? (
@@ -340,25 +321,26 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                 {giftSelectedPlayer.avatarUrl ? <img src={giftSelectedPlayer.avatarUrl} alt="" className="size-16 rounded-full bg-[#303030] object-cover" /> : <span className="flex size-16 items-center justify-center rounded-full bg-[#303030] text-xl font-bold">{giftSelectedPlayer.displayName.slice(0,2).toUpperCase()}</span>}
                 <div className="text-left"><p className="flex items-center gap-1.5 text-lg font-bold">{giftSelectedPlayer.displayName}{giftSelectedPlayer.hasVerifiedBadge && <VerifiedBadge className="size-4" />}</p><p className="text-sm text-white/60">@{giftSelectedPlayer.name}</p></div>
               </div>
-              <div className="mt-5 flex items-center justify-center gap-3 text-5xl font-extrabold"><RobuxIcon className="size-10" />{selectedRobux.toLocaleString('en-US')}</div>
-              <p className="mt-2 text-sm text-white/60">Tap an amount to choose how much to send</p>
-              <div className="mt-5 grid w-full grid-cols-4 gap-2">
-                {[25,50,100,200].map((amount) => <button key={amount} type="button" onClick={() => {setSelectedRobux(amount);setCustomRobux(String(amount))}} className={`flex h-12 items-center justify-center gap-1 rounded-full text-sm font-bold transition ${selectedRobux===amount?'border-2 border-[#335fff] bg-[#172b50]':'bg-[#292929] hover:bg-[#383838]'}`}><RobuxIcon className="size-4" />{amount}</button>)}
+              <div className="mt-5 w-full rounded-xl border border-white/10 bg-[#202020] p-4 text-left">
+                <p className="text-xs font-semibold uppercase tracking-wide text-white/50">Selected item</p>
+                <p className="mt-2 text-lg font-bold">{giftBundle === 'korblox' ? 'Korblox Deathspeaker' : 'Headless Horseman'}</p>
+                <p className="mt-1 text-sm text-white/60">Recipient: @{giftSelectedPlayer.name}</p>
               </div>
-              <label htmlFor="gift-custom-amount" className="mt-4 text-xs text-white/60">Custom amount</label>
-              <input id="gift-custom-amount" type="number" min="1" value={customRobux} onChange={(event)=>{setCustomRobux(event.target.value);const amount=Number(event.target.value);if(Number.isSafeInteger(amount)&&amount>0)setSelectedRobux(amount)}} className="mt-1 h-10 w-full rounded-lg border border-white/15 bg-[#252525] px-3 text-center text-white outline-none focus:border-[#335fff]" />
-              <p className="mt-3 text-xs text-white/55">Balance: {balance.toLocaleString('en-US')} Robux</p>
-              <button type="button" onClick={() => { setGiftMessage(''); void continueGift() }} disabled={giftSending || !Number.isSafeInteger(selectedRobux) || selectedRobux<1} className="mt-5 h-12 w-full rounded-xl bg-[#335fff] text-base font-bold text-white hover:bg-[#244be0] disabled:opacity-50">Next</button>
+              <button type="button" onClick={() => { setGiftMessage(''); void continueGift() }} disabled={giftSending} className="mt-5 h-12 w-full rounded-xl bg-[#335fff] text-base font-bold text-white hover:bg-[#244be0] disabled:opacity-50">Send</button>
               <button type="button" onClick={() => {setGiftSelectedPlayer(null);setGiftMessage('')}} className="mt-3 text-xs text-white/65 underline">Choose another player</button>
             </div>
           ) : (
             <>
-              <p className="mt-2 text-sm text-muted-foreground">Search for a Roblox player to send this gift.</p>
+              <p className="mt-2 text-sm text-muted-foreground">Choose an item, then search for the Roblox player.</p>
+              <div className="mt-4 grid grid-cols-2 gap-2">
+                <button type="button" onClick={() => setGiftBundle('korblox')} aria-pressed={giftBundle === 'korblox'} className={`rounded-xl border p-3 text-left transition ${giftBundle === 'korblox' ? 'border-[#335fff] bg-[#335fff]/15' : 'border-white/15 bg-white/[0.03] hover:bg-white/[0.07]'}`}><span className="block text-sm font-bold">Korblox</span><span className="mt-1 block text-xs text-white/55">Deathspeaker</span></button>
+                <button type="button" onClick={() => setGiftBundle('headless')} aria-pressed={giftBundle === 'headless'} className={`rounded-xl border p-3 text-left transition ${giftBundle === 'headless' ? 'border-[#335fff] bg-[#335fff]/15' : 'border-white/15 bg-white/[0.03] hover:bg-white/[0.07]'}`}><span className="block text-sm font-bold">Headless</span><span className="mt-1 block text-xs text-white/55">Horseman</span></button>
+              </div>
               <div className="mt-4">
                 <input value={giftUsername} onChange={(event) => { setGiftUsername(event.target.value); setGiftSearchMessage(''); setGiftPlayers([]); setGiftSelectedPlayer(null); setGiftMessage(''); setGiftSuccess(false) }} placeholder="Enter a Roblox username" aria-label="Roblox player username" className="h-11 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-[#335fff]" />
               </div>
               {giftPlayers.length > 0 && <div className="mt-4 max-h-64 space-y-2 overflow-y-auto">
-                {giftPlayers.map((player) => <button key={player.id} type="button" onClick={() => { setGiftSelectedPlayer(player); setGiftConfirmOpen(false); setGiftMessage('') }} className="flex w-full items-center justify-between rounded-lg border border-white/15 p-3 text-left transition hover:border-[#335fff] hover:bg-white/5">
+                {giftPlayers.map((player) => <button key={player.id} type="button" onClick={() => { setGiftSelectedPlayer(player); setGiftMessage('') }} className="flex w-full items-center justify-between rounded-lg border border-white/15 p-3 text-left transition hover:border-[#335fff] hover:bg-white/5">
                   <span className="flex min-w-0 items-center gap-3">
                     {player.avatarUrl ? <img src={player.avatarUrl} alt={`Avatar de ${player.displayName}`} onError={(event) => { const image = event.currentTarget; image.style.display = 'none'; const fallback = image.nextElementSibling as HTMLElement | null; if (fallback) fallback.style.display = 'flex' }} className="size-12 shrink-0 rounded-full bg-white/10 object-cover" /> : null}<span aria-hidden="true" style={{display: player.avatarUrl ? 'none' : 'flex'}} className="size-12 shrink-0 items-center justify-center rounded-full bg-indigo-500/30 text-sm font-bold text-white">{player.displayName.slice(0, 2).toUpperCase()}</span>
                     <span className="min-w-0"><span className="flex min-w-0 items-center gap-1.5 truncate font-semibold">{player.displayName}{player.hasVerifiedBadge && <VerifiedBadge className="size-4" />}</span><span className="block truncate text-sm text-white/70">@{player.name}</span></span>
