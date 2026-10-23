@@ -245,13 +245,11 @@ export default function RobuxPage() {
                     </div>
                     {sendPlayer && sendReview ? (
                       <div className="mt-6">
-                        <div className="flex items-center gap-3">
-                          {sendPlayer.avatarUrl ? <img src={sendPlayer.avatarUrl} alt="" className="size-16 rounded-full bg-[#303030] object-cover" /> : <span className="flex size-16 items-center justify-center rounded-full bg-[#303030] text-xl font-bold">{sendPlayer.displayName.slice(0,2).toUpperCase()}</span>}
-                          <div className="min-w-0 flex-1">
-                            <p className="flex items-center gap-1.5 text-lg font-bold">{sendPlayer.displayName}{sendPlayer.hasVerifiedBadge && <VerifiedBadge className="size-4" />}</p>
-                            <p className="text-sm text-white/60">@{sendPlayer.name}</p>
-                            <p className="mt-1 text-xs text-white/55">0 mutual Connections · Joined in {sendPlayer.name.toLowerCase()==='jordanfafard'?'2017':'recent years'}</p>
-                          </div>
+                        <div className="flex flex-col items-center text-center">
+                          {sendPlayer.avatarUrl ? <img src={sendPlayer.avatarUrl} alt="" className="size-24 rounded-full bg-[#303030] object-cover" /> : <span className="flex size-24 items-center justify-center rounded-full bg-[#303030] text-2xl font-bold">{sendPlayer.displayName.slice(0,2).toUpperCase()}</span>}
+                          <p className="mt-3 flex items-center justify-center gap-1.5 text-xl font-bold">{sendPlayer.displayName}{sendPlayer.hasVerifiedBadge && <VerifiedBadge className="size-4" />}</p>
+                          <p className="text-sm text-white/60">@{sendPlayer.name}</p>
+                          <p className="mt-1 text-xs text-white/55">0 mutual Connections · Joined in {sendPlayer.name.toLowerCase()==='jordanfafard'?'2017':'recent years'}</p>
                         </div>
                         <div className="mt-6 border-t border-white/10 pt-5">
                           <div className="flex items-center justify-between rounded-xl bg-[#292929] p-4">
@@ -259,8 +257,8 @@ export default function RobuxPage() {
                             <span className="flex items-center gap-2 text-2xl font-extrabold"><RobuxIcon className="size-6"/>{Number(sendAmount||0).toLocaleString('en-US')}</span>
                           </div>
                           <div className="mt-4 flex gap-3">
-                            <button type="button" onClick={()=>setSendReview(false)} className="h-12 flex-1 rounded-xl border border-white/20 text-base font-bold">Edit</button>
                             <button type="button" onClick={()=>setSendError('You need an age check or parental consent to send Robux. This is only a visual preview; no Robux were sent.')} className="h-12 flex-1 rounded-xl bg-[#146bff] text-base font-extrabold">Send</button>
+                            <button type="button" onClick={()=>{setSendReview(false);setSendError('')}} className="h-12 flex-1 rounded-xl border border-white/20 text-base font-bold">Edit</button>
                           </div>
                           <p role="status" className="mt-5 rounded-xl border border-white/10 bg-[#292929] p-4 text-sm leading-6 text-white/75">You need an age check or parental consent to send Robux. Once you send, you cannot cancel.</p>
                           {sendError && <p role="status" className="mt-3 text-sm leading-5 text-amber-200">{sendError}</p>}
