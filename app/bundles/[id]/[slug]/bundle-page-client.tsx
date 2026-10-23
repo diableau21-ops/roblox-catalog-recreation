@@ -327,7 +327,8 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <div className="mt-6 h-2 w-full max-w-xs overflow-hidden rounded-full bg-white/10"><div className="h-full w-2/3 animate-pulse rounded-full bg-[#335fff]" /></div>
               <p className="mt-3 text-xs text-white/45">This is a visual preview. No real Roblox gift is sent.</p>
             </div>
-
+          ) : (
+          <>
           <div className="flex items-center justify-between gap-3">
             <h2 id="gift-title" className="text-lg font-bold">Gift {item.name}</h2>
             <button type="button" onClick={() => { setGiftOpen(false); setGiftManualMode(false) }} aria-label="Close" className="rounded-lg px-2 py-1 text-xl hover:bg-secondary">×</button>
