@@ -139,6 +139,14 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
       setGiftSearching(false)
     }
   }
+  useEffect(() => {
+    if (!giftOpen || giftSelectedPlayer || giftSuccess || giftSending) return
+    const keyword = giftUsername.trim()
+    if (keyword.length < 3) return
+    const timer = window.setTimeout(() => { void searchGiftPlayers() }, 500)
+    return () => window.clearTimeout(timer)
+  }, [giftUsername, giftOpen, giftSelectedPlayer, giftSuccess, giftSending])
+
   const [robuxShopOpen, setRobuxShopOpen] = useState(false)
   const [selectedRobux, setSelectedRobux] = useState(800)
   const [customRobux, setCustomRobux] = useState('800')
@@ -150,6 +158,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   const isHeadless = id === '201' || slug.toLowerCase().includes('headless')
   const isEightBit = id === '14' || slug.toLowerCase().includes('8-bit')
   const isKorblox = !isHeadless && !isEightBit
+  const canGift = !isEightBit
   const item = catalogItems.find((entry) => entry.id === (isHeadless ? 13 : isEightBit ? 14 : 10))
 
   useEffect(() => {
@@ -203,7 +212,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
 
           <div className="flex min-w-0 flex-1 flex-col gap-4 text-white">
             <div>
-              <div className="flex flex-wrap items-center gap-2.5"><h1 className="break-words text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">{item.name}</h1>{isKorblox && <button type="button" onClick={() => { setGiftManualMode(true); setGiftOpen(true); setGiftSuccess(false); setGiftConfirmOpen(false); setGiftMessage(""); setGiftSearchMessage(""); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftUsername("") }} aria-label="Open gift cart" title="Gift" className="mt-1 inline-flex size-10 shrink-0 items-center justify-center rounded-lg border border-white/15 bg-white/5 text-white transition hover:bg-white/10"><ShoppingCart aria-hidden="true" className="size-5" /></button>}</div>
+              <div className="flex flex-wrap items-center gap-2.5"><h1 className="break-words text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">{item.name}</h1>{canGift && <button type="button" onClick={() => { setGiftManualMode(true); setGiftOpen(true); setGiftSuccess(false); setGiftConfirmOpen(false); setGiftMessage(""); setGiftSearchMessage(""); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftUsername("") }} aria-label="Open gift cart" title="Gift" className="mt-1 inline-flex size-10 shrink-0 items-center justify-center rounded-lg border border-white/15 bg-white/5 text-white transition hover:bg-white/10"><ShoppingCart aria-hidden="true" className="size-5" /></button>}</div>
               <div className="mt-2 flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm text-muted-foreground">By <span className="font-semibold text-foreground">Roblox</span><VerifiedBadge className="size-4" /><span className="ml-2 inline-flex items-center gap-1.5 font-semibold text-[#00b06f]"><span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-[#00b06f] text-white"><Check className="size-3.5 stroke-[3]" /></span>Item Owned</span></div><p className="mt-1 text-sm text-muted-foreground">This item is available in your inventory</p>
               <div className="mt-3 h-px w-full bg-border" />
             </div>
@@ -295,23 +304,17 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
       </div>}
 
       {giftOpen && <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-black/70 p-3" onClick={() => { setGiftOpen(false); setGiftManualMode(false) }}>
-        <section role="dialog" aria-modal="true" aria-labelledby="gift-title" className="gift-galaxy-card relative z-10 w-full max-w-sm overflow-hidden rounded-xl border border-[#6d75ff]/60 p-4 shadow-2xl" onClick={(event) => event.stopPropagation()}>
-          <div aria-hidden="true" className="gift-galaxy-card-bg pointer-events-none absolute inset-0" />
+        <section role="dialog" aria-modal="true" aria-labelledby="gift-title" className="relative z-10 w-full max-w-sm overflow-hidden rounded-xl border border-border bg-card p-4 text-foreground shadow-2xl" onClick={(event) => event.stopPropagation()}>
           <div className="relative z-10">
           {giftSuccess ? (
             <div className="flex min-h-[300px] flex-col items-center justify-center py-8 text-center">
-              <div className="relative mb-5 flex size-24 items-center justify-center">
-                <div aria-hidden="true" className="absolute inset-0 rounded-full bg-gradient-to-br from-violet-500/35 via-blue-500/20 to-cyan-400/30 blur-xl" />
-                <div className="absolute inset-1 rounded-full border border-violet-300/50 bg-[#080b20]/80 shadow-[0_0_35px_rgba(112,90,255,0.45)]">
-                  <div aria-hidden="true" className="absolute inset-0 rounded-full opacity-80" style={{backgroundImage: 'radial-gradient(1.5px 1.5px at 20% 25%, white 60%, transparent), radial-gradient(1px 1px at 72% 35%, #a5d8ff 60%, transparent), radial-gradient(1.5px 1.5px at 60% 75%, #d8b4fe 60%, transparent), radial-gradient(1px 1px at 35% 65%, white 60%, transparent)'}} />
-                </div>
-                <div className="relative flex size-14 items-center justify-center rounded-full bg-gradient-to-br from-emerald-300 to-emerald-600 text-white shadow-lg shadow-emerald-500/30">
+              <div className="mb-5 flex size-14 items-center justify-center rounded-full bg-[#00b06f] text-white">
                   <Check className="size-8 stroke-[3]" />
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-white">Gift was sent successfully</h3>
-              <p className="mt-3 text-sm text-white/75">{item.name}</p>
-              {giftSelectedPlayer && <p className="mt-1 text-sm text-white/75">To {giftSelectedPlayer.displayName} (@{giftSelectedPlayer.name})</p>}
+              <h3 className="text-xl font-bold">Gift was sent successfully</h3>
+              <p className="mt-3 text-sm text-muted-foreground">{item.name}</p>
+              {giftSelectedPlayer && <p className="mt-1 text-sm text-muted-foreground">To {giftSelectedPlayer.displayName} (@{giftSelectedPlayer.name})</p>}
               <button type="button" onClick={() => { setGiftSuccess(false); setGiftMessage(""); setGiftSearchMessage(""); setGiftUsername(""); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftSending(false) }} className="mt-7 h-10 min-w-32 rounded-lg bg-[#335fff] px-6 text-sm font-bold text-white transition hover:bg-[#244be0]">Done</button>
             </div>
           ) : giftSending ? (
@@ -356,7 +359,6 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <p className="mt-2 text-sm text-muted-foreground">Search for a Roblox player to send this gift.</p>
               <div className="mt-4">
                 <input value={giftUsername} onChange={(event) => { setGiftUsername(event.target.value); setGiftSearchMessage(''); setGiftPlayers([]); setGiftSelectedPlayer(null); setGiftMessage(''); setGiftSuccess(false) }} placeholder="Enter a Roblox username" aria-label="Roblox player username" className="h-11 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-[#335fff]" />
-                <button type="button" onClick={() => { void searchGiftPlayers() }} disabled={giftSearching || giftUsername.trim().length < 3} className="mt-2 h-10 w-full rounded-lg bg-[#335fff] px-4 text-sm font-bold text-white transition hover:bg-[#244be0] disabled:cursor-not-allowed disabled:opacity-50">{giftSearching ? 'Searching…' : 'Search accounts'}</button>
               </div>
               {giftPlayers.length > 0 && <div className="mt-4 max-h-64 space-y-2 overflow-y-auto">
                 {giftPlayers.map((player) => <button key={player.id} type="button" onClick={() => { setGiftSelectedPlayer(player); setGiftConfirmOpen(false); setGiftMessage('') }} className="flex w-full items-center justify-between rounded-lg border border-white/15 p-3 text-left transition hover:border-[#335fff] hover:bg-white/5">
