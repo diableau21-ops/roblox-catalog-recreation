@@ -46,6 +46,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   const [giftSending, setGiftSending] = useState(false)
   const [giftSuccess, setGiftSuccess] = useState(false)
   const [giftManualMode, setGiftManualMode] = useState(false)
+  const [giftReview, setGiftReview] = useState(false)
   const [giftBundle, setGiftBundle] = useState<'korblox' | 'headless'>('korblox')
   useEffect(() => {
     if (!giftOpen || !giftSuccess) return
@@ -349,7 +350,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <h3 className="text-xl font-bold">Gift preview complete</h3>
               <p className="mt-3 text-sm text-muted-foreground">{giftBundle === 'korblox' ? 'Korblox Deathspeaker' : 'Headless Horseman'}</p>
               {giftSelectedPlayer && <p className="mt-1 text-sm text-muted-foreground">To {giftSelectedPlayer.displayName} (@{giftSelectedPlayer.name})</p>}
-              <button type="button" onClick={() => { setGiftSuccess(false); setGiftMessage(""); setGiftSearchMessage(""); setGiftUsername(""); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftSending(false) }} className="mt-7 h-10 min-w-32 rounded-lg bg-[#335fff] px-6 text-sm font-bold text-white transition hover:bg-[#244be0]">Done</button>
+              <button type="button" onClick={() => { setGiftSuccess(false); setGiftMessage(""); setGiftSearchMessage(""); setGiftUsername(""); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftSending(false); setGiftReview(false) }} className="mt-7 h-10 min-w-32 rounded-lg bg-[#335fff] px-6 text-sm font-bold text-white transition hover:bg-[#244be0]">Done</button>
             </div>
           ) : giftSending ? (
             <div className="flex min-h-[390px] flex-col items-center justify-center px-4 py-10 text-center">
@@ -370,7 +371,27 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             <div><p className="text-xs font-bold uppercase tracking-widest text-[#a7a7b3]">Gift</p><h2 id="gift-title" className="mt-1 text-2xl font-extrabold">Send an item</h2></div>
             <button type="button" onClick={() => { setGiftOpen(false); setGiftManualMode(false) }} aria-label="Close" className="rounded-lg px-2 py-1 text-xl hover:bg-secondary">×</button>
           </div>
-          {giftSelectedPlayer ? (
+          {giftSelectedPlayer && giftReview ? (
+            <div className="mt-6">
+              <div className="flex flex-col items-center text-center">
+                {giftSelectedPlayer.avatarUrl ? <img src={giftSelectedPlayer.avatarUrl} alt="" className="size-24 rounded-full bg-[#303030] object-cover" /> : <span className="flex size-24 items-center justify-center rounded-full bg-[#303030] text-2xl font-bold">{giftSelectedPlayer.displayName.slice(0,2).toUpperCase()}</span>}
+                <p className="mt-3 flex items-center justify-center gap-1.5 text-xl font-bold">{giftSelectedPlayer.displayName}{giftSelectedPlayer.hasVerifiedBadge && <VerifiedBadge className="size-4" />}</p>
+                <p className="text-sm text-white/60">@{giftSelectedPlayer.name}</p>
+                <p className="mt-1 text-xs text-white/55">0 mutual Connections · Roblox account</p>
+              </div>
+              <div className="mt-6 border-t border-white/10 pt-5">
+                <div className="flex items-center gap-4 rounded-xl bg-[#292929] p-3">
+                  <img src={giftBundle === 'korblox' ? '/items/korblox.png' : '/items/headless.png'} alt="" className="size-16 rounded-lg bg-[#202020] object-contain p-1" />
+                  <div className="min-w-0"><p className="font-bold">{giftBundle === 'korblox' ? 'Korblox Deathspeaker' : 'Headless Horseman'}</p><p className="mt-1 text-sm text-white/60">Gift for @{giftSelectedPlayer.name}</p></div>
+                </div>
+                <div className="mt-4 flex gap-3">
+                  <button type="button" disabled={giftSending} onClick={() => { setGiftMessage(''); void continueGift() }} className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-[#146bff] text-base font-extrabold disabled:cursor-wait disabled:opacity-80">{giftSending ? 'Sending…' : 'Send'}</button>
+                  <button type="button" onClick={() => {setGiftReview(false);setGiftMessage('')}} className="h-12 flex-1 rounded-xl border border-white/20 text-base font-bold">Edit</button>
+                </div>
+                <p className="mt-4 rounded-lg bg-[#292929] p-3 text-xs leading-5 text-white/65">This is a visual preview. No real Roblox item or Robux is sent.</p>
+              </div>
+            </div>
+          ) : giftSelectedPlayer ? (
             <div className="mt-5 flex flex-col items-center text-center">
               <div className="flex w-full items-center justify-center gap-3 border-b border-white/10 pb-5">
                 {giftSelectedPlayer.avatarUrl ? <img src={giftSelectedPlayer.avatarUrl} alt="" className="size-16 rounded-full bg-[#303030] object-cover" /> : <span className="flex size-16 items-center justify-center rounded-full bg-[#303030] text-xl font-bold">{giftSelectedPlayer.displayName.slice(0,2).toUpperCase()}</span>}
@@ -385,8 +406,8 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                   <p className="mt-1 text-sm text-white/60">Recipient: @{giftSelectedPlayer.name}</p>
                 </div>
               </div>
-              <button type="button" onClick={() => { setGiftMessage(''); void continueGift() }} disabled={giftSending} className="mt-5 h-12 w-full rounded-lg bg-[#335fff] text-base font-extrabold text-white transition-colors hover:bg-[#244be0] disabled:opacity-50">Next</button>
-              <button type="button" onClick={() => {setGiftSelectedPlayer(null);setGiftMessage('')}} className="mt-3 text-xs text-white/65 underline">Choose another player</button>
+              <button type="button" onClick={() => { setGiftMessage(''); setGiftReview(true) }} disabled={giftSending} className="mt-5 h-12 w-full rounded-lg bg-[#335fff] text-base font-extrabold text-white transition-colors hover:bg-[#244be0] disabled:opacity-50">Next</button>
+              <button type="button" onClick={() => {setGiftSelectedPlayer(null);setGiftReview(false);setGiftMessage('')}} className="mt-3 text-xs text-white/65 underline">Choose another player</button>
             </div>
           ) : (
             <>
