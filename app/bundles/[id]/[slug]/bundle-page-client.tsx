@@ -360,14 +360,20 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
         <section role="dialog" aria-modal="true" aria-labelledby="gift-title" className="relative z-10 my-auto w-full max-w-md overflow-hidden rounded-2xl border border-[#41414b] bg-[#17171c] p-5 text-[#f7f6f2] shadow-2xl sm:p-6" onClick={(event) => event.stopPropagation()}>
           <div className="relative z-10">
           {giftSuccess ? (
-            <div className="flex min-h-[300px] flex-col items-center justify-center py-8 text-center">
-              <div className="mb-5 flex size-14 items-center justify-center rounded-full bg-[#00b06f] text-white">
-                <Check className="size-8 stroke-[3]" />
+            <div className="py-3">
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center gap-2.5">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="" aria-hidden="true" className="size-6 shrink-0 brightness-0 invert" />
+                  <h2 id="gift-title" className="text-xl font-extrabold">Send an item</h2>
+                </div>
+                <span className="flex shrink-0 items-center gap-2 text-lg font-bold text-white/80"><RobuxIcon className="size-5" />{balance.toLocaleString('en-US')}</span>
               </div>
-              <h3 className="text-xl font-bold">Gift preview complete</h3>
-              <p className="mt-3 text-sm text-muted-foreground">{giftBundle === 'korblox' ? 'Korblox Deathspeaker' : 'Headless Horseman'}</p>
-              {giftSelectedPlayer && <p className="mt-1 text-sm text-muted-foreground">To {giftSelectedPlayer.displayName} (@{giftSelectedPlayer.name})</p>}
-              <button type="button" onClick={() => { setGiftSuccess(false); setGiftMessage(""); setGiftSearchMessage(""); setGiftUsername(""); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftSending(false); setGiftReview(false) }} className="mt-7 h-10 min-w-32 rounded-lg bg-[#335fff] px-6 text-sm font-bold text-white transition hover:bg-[#244be0]">Done</button>
+              <div className="mx-auto mt-8 flex size-16 items-center justify-center rounded-full border-2 border-white bg-transparent text-white">
+                <svg viewBox="0 0 24 24" className="size-8" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6" /></svg>
+              </div>
+              <p className="mt-4 text-center text-sm text-white/75">You sent {giftBundle === 'korblox' ? 'Korblox Deathspeaker' : 'Headless Horseman'} to @{giftSelectedPlayer?.name}</p>
+              <p className="mt-1 text-center text-xs text-white/45">Visual preview only — no real Roblox gift was sent.</p>
+              <button type="button" onClick={() => { setGiftOpen(false); setGiftSuccess(false); setGiftMessage(''); setGiftSearchMessage(''); setGiftUsername(''); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftSending(false); setGiftReview(false); setGiftManualMode(false) }} className="mt-6 h-14 w-full rounded-xl bg-[#335fff] px-7 text-2xl font-extrabold text-white transition hover:bg-[#244be0]">OK</button>
             </div>
           ) : giftSending ? (
             <div className="flex min-h-[390px] flex-col items-center justify-center px-4 py-10 text-center">
