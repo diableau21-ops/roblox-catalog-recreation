@@ -257,11 +257,10 @@ export default function RobuxPage() {
                             <span className="flex items-center gap-2 text-2xl font-extrabold"><RobuxIcon className="size-6"/>{Number(sendAmount||0).toLocaleString('en-US')}</span>
                           </div>
                           <div className="mt-4 flex gap-3">
-                            <button type="button" onClick={()=>setSendError('You need an age check or parental consent to send Robux. This is only a visual preview; no Robux were sent.')} className="h-12 flex-1 rounded-xl bg-[#146bff] text-base font-extrabold">Send</button>
+                            <button type="button" onClick={()=>{const amount=Number(sendAmount);if(!Number.isSafeInteger(amount)||amount<1||amount>balance){setSendError('Enter a valid amount within your balance.');return;}setBalance(current=>current-amount);setSendError('');setSendSuccess(true)}} className="h-12 flex-1 rounded-xl bg-[#146bff] text-base font-extrabold">Send</button>
                             <button type="button" onClick={()=>{setSendReview(false);setSendError('')}} className="h-12 flex-1 rounded-xl border border-white/20 text-base font-bold">Edit</button>
                           </div>
-                          <p role="status" className="mt-5 rounded-xl border border-white/10 bg-[#292929] p-4 text-sm leading-6 text-white/75">You need an age check or parental consent to send Robux. Once you send, you cannot cancel.</p>
-                          {sendError && <p role="status" className="mt-3 text-sm leading-5 text-amber-200">{sendError}</p>}
+                          {sendError && <p role="status" className="mt-3 text-sm leading-5 text-red-300">{sendError}</p>}
                         </div>
                       </div>
                     ) : sendPlayer ? (
