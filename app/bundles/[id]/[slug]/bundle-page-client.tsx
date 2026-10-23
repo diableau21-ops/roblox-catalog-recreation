@@ -49,20 +49,6 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   const [giftManualMode, setGiftManualMode] = useState(false)
   const [giftReview, setGiftReview] = useState(false)
   const [giftBundle, setGiftBundle] = useState<'korblox' | 'headless'>('korblox')
-  useEffect(() => {
-    if (!giftOpen || !giftSuccess) return
-    const timer = window.setTimeout(() => {
-      setGiftSuccess(false)
-      setGiftMessage('')
-      setGiftSearchMessage('')
-      setGiftUsername('')
-      setGiftSelectedPlayer(null)
-      setGiftPlayers([])
-      setGiftSending(false)
-
-    }, 1800)
-    return () => window.clearTimeout(timer)
-  }, [giftOpen, giftSuccess])
   const giftCost = giftBundle === 'korblox' ? 17000 : 31000
   const continueGift = async () => {
     if (!giftSelectedPlayer || giftSending) return
