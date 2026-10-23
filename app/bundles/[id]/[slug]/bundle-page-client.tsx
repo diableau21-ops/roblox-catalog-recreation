@@ -385,7 +385,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                   <p className="mt-1 text-sm text-white/60">Recipient: @{giftSelectedPlayer.name}</p>
                 </div>
               </div>
-              <button type="button" onClick={() => { setGiftMessage(''); void continueGift() }} disabled={giftSending} className="mt-5 h-12 w-full rounded-lg bg-[#335fff] text-base font-extrabold text-white transition-colors hover:bg-[#244be0] disabled:opacity-50">Send gift</button>
+              <button type="button" onClick={() => { setGiftMessage(''); void continueGift() }} disabled={giftSending} className="mt-5 h-12 w-full rounded-lg bg-[#335fff] text-base font-extrabold text-white transition-colors hover:bg-[#244be0] disabled:opacity-50">Next</button>
               <button type="button" onClick={() => {setGiftSelectedPlayer(null);setGiftMessage('')}} className="mt-3 text-xs text-white/65 underline">Choose another player</button>
             </div>
           ) : (
