@@ -44,6 +44,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   const [giftSelectedPlayer, setGiftSelectedPlayer] = useState<{id: number; name: string; displayName: string; avatarUrl: string | null; hasVerifiedBadge: boolean} | null>(null)
   const [giftMessage, setGiftMessage] = useState('')
   const [giftSending, setGiftSending] = useState(false)
+  const [giftLoadingStep, setGiftLoadingStep] = useState(0)
   const [giftSuccess, setGiftSuccess] = useState(false)
   const [giftManualMode, setGiftManualMode] = useState(false)
   const [giftReview, setGiftReview] = useState(false)
@@ -70,8 +71,18 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
       return
     }
     setGiftSending(true)
+    setGiftLoadingStep(0)
     setGiftMessage('')
-    await new Promise((resolve) => window.setTimeout(resolve, 1800))
+    const stages = [
+      { step: 1, delay: 900 },
+      { step: 2, delay: 1100 },
+      { step: 3, delay: 1200 },
+      { step: 4, delay: 900 },
+    ]
+    for (const stage of stages) {
+      await new Promise((resolve) => window.setTimeout(resolve, stage.delay))
+      setGiftLoadingStep(stage.step)
+    }
     setBalance((current) => current - giftCost)
     setGiftSuccess(true)
     setGiftSending(false)
@@ -360,15 +371,31 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             </div>
           ) : giftSending ? (
             <div className="flex min-h-[390px] flex-col items-center justify-center px-4 py-10 text-center">
-              <div className="relative flex size-28 items-center justify-center">
+              <div className="relative flex size-24 items-center justify-center">
                 <div className="absolute inset-0 animate-pulse rounded-full bg-[#335fff]/20 blur-xl" />
-                <div className="absolute inset-1 animate-spin rounded-full border-4 border-white/10 border-t-[#335fff]" />
-                <div className="absolute inset-4 animate-spin rounded-full border-4 border-[#335fff]/25 border-b-white/80" style={{animationDirection:'reverse',animationDuration:'1.8s'}} />
-                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="" aria-hidden="true" className="size-9 brightness-0 invert" />
+                <div className="absolute inset-1 animate-spin rounded-full border-[3px] border-white/10 border-t-[#335fff]" />
+                <img src={giftSelectedPlayer?.avatarUrl || "https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg"} alt="" aria-hidden="true" className={giftSelectedPlayer?.avatarUrl ? "size-16 rounded-full border-2 border-white/20 object-cover" : "size-9 brightness-0 invert"} />
               </div>
               <h3 className="mt-7 text-2xl font-extrabold text-white">Sending your gift…</h3>
               <p className="mt-2 max-w-xs text-sm leading-6 text-white/65">Please wait while we prepare your gift for @{giftSelectedPlayer?.name}.</p>
-              <div className="mt-6 h-2 w-full max-w-xs overflow-hidden rounded-full bg-white/10"><div className="h-full w-2/3 animate-pulse rounded-full bg-[#335fff]" /></div>
+              <div className="mt-6 w-full max-w-xs space-y-3 text-left">
+                {[
+                  'Checking recipient',
+                  'Preparing item details',
+                  'Processing gift request',
+                  'Finishing up',
+                ].map((label, index) => (
+                  <div key={label} className="flex items-center gap-3 text-sm">
+                    <span className={giftLoadingStep > index ? "flex size-5 shrink-0 items-center justify-center rounded-full bg-[#00b06f] text-white" : giftLoadingStep === index ? "size-5 shrink-0 animate-spin rounded-full border-2 border-white/20 border-t-[#335fff]" : "size-5 shrink-0 rounded-full border border-white/15"}>
+                      {giftLoadingStep > index ? <Check className="size-3.5 stroke-[3]" /> : null}
+                    </span>
+                    <span className={giftLoadingStep > index ? "text-white" : giftLoadingStep === index ? "text-white" : "text-white/40"}>{label}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-5 h-1.5 w-full max-w-xs overflow-hidden rounded-full bg-white/10">
+                <div className="h-full rounded-full bg-[#335fff] transition-all duration-700 ease-out" style={{ width: `${Math.min(100, giftLoadingStep * 25)}%` }} />
+              </div>
               <p className="mt-3 text-xs text-white/45">This is a visual preview. No real Roblox gift is sent.</p>
             </div>
           ) : (
