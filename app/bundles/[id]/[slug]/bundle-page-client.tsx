@@ -377,14 +377,14 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             </div>
           ) : giftSending ? (
             <div className="py-8 text-center">
-              <h2 id="gift-title" className="text-2xl font-extrabold">Sending</h2>
+              <h2 id="gift-title" className="text-2xl font-extrabold">Sending gift</h2>
               <div className="mt-7 flex flex-col items-center">
                 {giftSelectedPlayer?.avatarUrl ? <img src={giftSelectedPlayer.avatarUrl} alt="" className="size-24 rounded-full bg-[#303030] object-cover" /> : <span className="flex size-24 items-center justify-center rounded-full bg-[#303030] text-2xl font-bold">{(giftSelectedPlayer?.displayName || giftSelectedPlayer?.name || '?').slice(0,2).toUpperCase()}</span>}
                 <p className="mt-3 flex items-center justify-center gap-1.5 text-xl font-bold">{giftSelectedPlayer?.displayName}{giftSelectedPlayer?.hasVerifiedBadge && <VerifiedBadge className="size-4" />}</p>
                 <p className="text-sm text-white/60">@{giftSelectedPlayer?.name}</p>
               </div>
               <div className="mx-auto mt-8 size-12 animate-spin rounded-full border-4 border-white/15 border-t-[#146bff]" role="status" aria-label="Sending" />
-              <p className="mt-4 text-sm text-white/65">Sending {giftBundle === 'korblox' ? 'Korblox Deathspeaker' : 'Headless Horseman'}…</p>
+              <p className="mt-4 text-sm text-white/65">Sending gift to @{giftSelectedPlayer?.name}…</p>
               <p className="mt-2 text-xs text-white/40">Visual preview only — no real Roblox gift is sent.</p>
             </div>
           ) : (
