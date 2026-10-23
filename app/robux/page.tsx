@@ -241,11 +241,20 @@ export default function RobuxPage() {
                     <p className="mt-4 text-sm text-white/65">Sending {Number(sendAmount || 0).toLocaleString('en-US')} Robux…</p>
                   </div>
                 ) : sendSuccess ? (
-                  <div className="py-8 text-center">
-                    <div className="mx-auto flex size-16 items-center justify-center rounded-full border-2 border-white bg-transparent text-3xl font-semibold text-white"><svg viewBox="0 0 24 24" className="size-8" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6" /></svg></div>
-                    <div className="mt-4 flex items-center justify-center gap-2"><h2 id="send-robux-title" className="text-xl font-extrabold">Send Robux</h2><svg viewBox="0 0 24 24" className="size-6 shrink-0" aria-label="Roblox Plus" role="img" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.25" stroke="currentColor" strokeWidth="1.5"/><path d="M12 6.5v11M6.5 12h11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg></div>
-                    <p className="mt-2 text-sm text-white/75">You sent {Number(sendAmount || 0).toLocaleString("en-US")} Robux</p>
-                    
+                  <div className="py-3">
+                    <div className="flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-2.5">
+                        <svg viewBox="0 0 40 44" className="size-9 shrink-0" role="img" aria-label="Roblox Plus" xmlns="http://www.w3.org/2000/svg">
+                          <path fill="currentColor" d="M20 1 38 11.5v21L20 43 2 32.5v-21z"/>
+                          <path fill="#1f1f1f" d="m12 13 16-3-3 16-16 3z"/>
+                          <path fill="currentColor" d="m20 15 2.2 4.8L27 22l-4.8 2.2L20 29l-2.2-4.8L13 22l4.8-2.2z"/>
+                        </svg>
+                        <h2 id="send-robux-title" className="text-xl font-extrabold">Send Robux</h2>
+                      </div>
+                      <span className="flex shrink-0 items-center gap-2 text-lg font-bold text-white/80"><RobuxIcon className="size-5"/>{Number(sendAmount || 0).toLocaleString('en-US')}</span>
+                    </div>
+                    <div className="mx-auto mt-8 flex size-16 items-center justify-center rounded-full border-2 border-white bg-transparent text-3xl font-semibold text-white"><svg viewBox="0 0 24 24" className="size-8" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6" /></svg></div>
+                    <p className="mt-4 text-center text-sm text-white/75">You sent {Number(sendAmount || 0).toLocaleString("en-US")} Robux</p>
                     <button type="button" onClick={() => {setSendOpen(false);setSendReview(false)}} className="mt-6 h-14 w-full rounded-xl bg-[#335fff] px-7 text-2xl font-extrabold">OK</button>
                   </div>
                 ) : (
