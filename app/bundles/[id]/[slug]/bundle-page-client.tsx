@@ -427,6 +427,21 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           </div>
         </section>
       </div>}
+      <footer className="mt-12 w-full border-t border-white/10 bg-[#191919] px-5 py-8 text-white/70">
+        <nav aria-label="Footer" className="mx-auto flex max-w-[1100px] flex-wrap items-center justify-center gap-x-5 gap-y-3 text-xs font-semibold">
+          <a className="hover:text-white" href="https://www.roblox.com/info/about-us?locale=en_us" target="_blank" rel="noreferrer">About Us</a>
+          <a className="hover:text-white" href="https://www.roblox.com/info/jobs?locale=en_us" target="_blank" rel="noreferrer">Jobs</a>
+          <a className="hover:text-white" href="https://www.roblox.com/info/blog?locale=en_us" target="_blank" rel="noreferrer">Newsroom</a>
+          <a className="hover:text-white" href="https://www.roblox.com/info/parents?locale=en_us" target="_blank" rel="noreferrer">Parents</a>
+          <a className="hover:text-white" href="https://www.roblox.com/giftcards?locale=en_us" target="_blank" rel="noreferrer">Buy Gift Cards</a>
+          <a className="hover:text-white" href="https://www.roblox.com/info/help?locale=en_us" target="_blank" rel="noreferrer">Help</a>
+          <a className="hover:text-white" href="https://www.roblox.com/info/terms?locale=en_us" target="_blank" rel="noreferrer">Terms</a>
+          <a className="hover:text-white" href="https://www.roblox.com/info/accessibility?locale=en_us" target="_blank" rel="noreferrer">Accessibility</a>
+          <a className="hover:text-white" href="https://www.roblox.com/info/privacy?locale=en_us" target="_blank" rel="noreferrer">Privacy</a>
+          <button type="button" className="hover:text-white" onClick={() => window.open('https://www.roblox.com/info/privacy?locale=en_us', '_blank', 'noopener,noreferrer')}>Your Privacy Choices <span aria-hidden="true">▧</span></button>
+          <a className="hover:text-white" href="https://www.roblox.com/sitemap?locale=en_us" target="_blank" rel="noreferrer">Sitemap</a>
+        </nav>
+      </footer>
     </main>
   )
 }
