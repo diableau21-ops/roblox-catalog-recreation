@@ -377,7 +377,6 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                 {giftSelectedPlayer.avatarUrl ? <img src={giftSelectedPlayer.avatarUrl} alt="" className="size-24 rounded-full bg-[#303030] object-cover" /> : <span className="flex size-24 items-center justify-center rounded-full bg-[#303030] text-2xl font-bold">{giftSelectedPlayer.displayName.slice(0,2).toUpperCase()}</span>}
                 <p className="mt-3 flex items-center justify-center gap-1.5 text-xl font-bold">{giftSelectedPlayer.displayName}{giftSelectedPlayer.hasVerifiedBadge && <VerifiedBadge className="size-4" />}</p>
                 <p className="text-sm text-white/60">@{giftSelectedPlayer.name}</p>
-                <p className="mt-1 text-xs text-white/55">0 mutual Connections · Roblox account</p>
               </div>
               <div className="mt-6 border-t border-white/10 pt-5">
                 <div className="flex items-center gap-4 rounded-xl bg-[#292929] p-3">
@@ -388,7 +387,6 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                   <button type="button" disabled={giftSending} onClick={() => { setGiftMessage(''); void continueGift() }} className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-[#146bff] text-base font-extrabold disabled:cursor-wait disabled:opacity-80">{giftSending ? 'Sending…' : 'Send'}</button>
                   <button type="button" onClick={() => {setGiftReview(false);setGiftMessage('')}} className="h-12 flex-1 rounded-xl border border-white/20 text-base font-bold">Edit</button>
                 </div>
-                <p className="mt-4 rounded-lg bg-[#292929] p-3 text-xs leading-5 text-white/65">This is a visual preview. No real Roblox item or Robux is sent.</p>
               </div>
             </div>
           ) : giftSelectedPlayer ? (
