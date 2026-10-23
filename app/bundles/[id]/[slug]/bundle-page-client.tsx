@@ -233,7 +233,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           </div>
           </div>
           {isKorblox && <section className="mt-8 w-full max-w-[900px] text-white">
-            <h2 className="mb-4 text-xl font-bold">Korblox Recommendations</h2>
+            <h2 className="mb-4 text-xl font-bold">Recommendations</h2>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
               {[
                 { id: '154', name: 'Korblox Lord of Death', price: '4,230', image: 'https://tr.rbxcdn.com/30DAY-Avatar-E130600A8A15FA27C8DD03FE92687684-Png/150/150/Avatar/Webp/noFilter', href: 'https://www.roblox.com/bundles/154/Korblox-Lord-of-Death' },
