@@ -229,7 +229,18 @@ export default function RobuxPage() {
             <section role="dialog" aria-modal="true" aria-labelledby="send-robux-title" className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-[#383838] bg-[#1f1f1f] p-5 text-white shadow-2xl sm:p-6" onClick={(event) => event.stopPropagation()}>
               <div className="pointer-events-none absolute inset-0 opacity-40" aria-hidden="true" style={{backgroundImage:'radial-gradient(1.5px 1.5px at 15% 20%, white 60%, transparent), radial-gradient(1px 1px at 78% 26%, #a5d8ff 60%, transparent), radial-gradient(1.5px 1.5px at 64% 75%, #d8b4fe 60%, transparent)'}} />
               <div className="relative z-10">
-                {sendSuccess ? (
+                {sendProcessing ? (
+                  <div className="py-8 text-center">
+                    <h2 id="send-robux-title" className="text-2xl font-extrabold">Sending</h2>
+                    <div className="mt-7 flex flex-col items-center">
+                      {sendPlayer?.avatarUrl ? <img src={sendPlayer.avatarUrl} alt="" className="size-24 rounded-full bg-[#303030] object-cover" /> : <span className="flex size-24 items-center justify-center rounded-full bg-[#303030] text-2xl font-bold">{(sendPlayer?.displayName || sendPlayer?.name || '?').slice(0,2).toUpperCase()}</span>}
+                      <p className="mt-3 flex items-center justify-center gap-1.5 text-xl font-bold">{sendPlayer?.displayName}{sendPlayer?.hasVerifiedBadge && <VerifiedBadge className="size-4" />}</p>
+                      <p className="text-sm text-white/60">@{sendPlayer?.name}</p>
+                    </div>
+                    <div className="mx-auto mt-8 size-12 animate-spin rounded-full border-4 border-white/15 border-t-[#146bff]" role="status" aria-label="Sending" />
+                    <p className="mt-4 text-sm text-white/65">Sending {Number(sendAmount || 0).toLocaleString('en-US')} Robux…</p>
+                  </div>
+                ) : sendSuccess ? (
                   <div className="py-8 text-center">
                     <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-emerald-500 text-3xl font-black">✓</div>
                     <h2 id="send-robux-title" className="mt-4 text-xl font-extrabold">Robux sent successfully!</h2>
