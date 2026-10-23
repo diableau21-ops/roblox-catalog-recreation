@@ -244,11 +244,7 @@ export default function RobuxPage() {
                   <div className="py-3">
                     <div className="flex items-center justify-between gap-4">
                       <div className="flex items-center gap-2.5">
-                        <svg viewBox="0 0 40 44" className="size-9 shrink-0" role="img" aria-label="Roblox Plus" xmlns="http://www.w3.org/2000/svg">
-                          <path fill="currentColor" d="M20 1 38 11.5v21L20 43 2 32.5v-21z"/>
-                          <path fill="#1f1f1f" d="m12 13 16-3-3 16-16 3z"/>
-                          <path fill="currentColor" d="m20 15 2.2 4.8L27 22l-4.8 2.2L20 29l-2.2-4.8L13 22l4.8-2.2z"/>
-                        </svg>
+                        <img src="https://robux-send-fake-creator-iker.lovable.app/__l5e/assets-v1/1aea3764-f82d-470c-b9d7-fc4c6220088e/robux-menu-icon.png" alt="Robux" className="size-9 shrink-0 object-contain" />
                         <h2 id="send-robux-title" className="text-xl font-extrabold">Send Robux</h2>
                       </div>
                       <span className="flex shrink-0 items-center gap-2 text-lg font-bold text-white/80"><RobuxIcon className="size-5"/>{balance.toLocaleString('en-US')}</span>
