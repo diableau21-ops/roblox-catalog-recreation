@@ -6,7 +6,6 @@ export function generateStaticParams() {
   return [
     { id: '192', slug: 'Korblox-Deathspeaker' },
     { id: '201', slug: 'Headless-Horseman' },
-    { id: '14', slug: '8-Bit-Royal-Crown' },
   ]
 }
 
