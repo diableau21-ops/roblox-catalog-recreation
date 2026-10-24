@@ -198,43 +198,18 @@ export default function RobuxPage() {
           </p>
         )}
         {selectedPackage && (
-          <div className="fixed inset-0 z-[80] flex items-center justify-center overflow-y-auto bg-black/80 p-3" onClick={() => !paying && setSelectedPackage(null)}>
-            <section role="dialog" aria-modal="true" aria-labelledby="payment-title" className="my-auto w-full max-w-md rounded-2xl border border-[#41414b] bg-[#17171c] p-5 text-[#f7f6f2] shadow-2xl sm:p-6" onClick={(e) => e.stopPropagation()}>
-              <div className="flex items-center justify-between gap-3"><div><p className="text-xs font-bold uppercase tracking-widest text-[#a7a7b3]">Checkout</p><h2 id="payment-title" className="mt-1 text-2xl font-extrabold">{paid ? 'Order complete!' : 'Complete your purchase'}</h2></div>{!paying && <button type="button" onClick={() => setSelectedPackage(null)} aria-label="Close" className="rounded-lg px-3 py-1 text-2xl text-white/70 hover:bg-white/10">×</button>}</div>
-              {paid ? (
-                <div className="py-8 text-center"><div className="mx-auto flex size-16 items-center justify-center rounded-full bg-emerald-500/15 text-4xl font-black text-emerald-400">✓</div><h3 className="mt-4 text-xl font-extrabold">Purchase complete</h3><p className="mt-2 text-sm text-white/65">{selectedPackage.amount} Robux · {selectedPackage.price}</p><button type="button" onClick={() => setSelectedPackage(null)} className="mt-6 h-11 w-full rounded-lg bg-[#335fff] font-extrabold hover:bg-[#244be0]">Done</button></div>
-              ) : paying ? (
-                <div className="flex min-h-64 flex-col items-center justify-center text-center"><div className="size-12 animate-spin rounded-full border-4 border-white/15 border-t-[#7183ff]" /><h3 className="mt-5 text-lg font-extrabold">Processing your order…</h3><p className="mt-2 text-sm text-white/60">Please wait…</p></div>
-              ) : (
-                <>
-                  <div className="mt-5 rounded-xl border border-[#34343b] bg-[#202024] p-4">
-                    <div className="flex items-center justify-between gap-3">
-                      <div className="flex items-center gap-3"><RobuxIcon className="size-9" /><div><p className="font-extrabold">{selectedPackage.amount} Robux</p><p className="text-xs text-white/55">Robux package</p></div></div>
-                      <p className="text-lg font-extrabold">{selectedPackage.price}</p>
-                    </div>
-                  </div>
-                  <div className="mt-5">
-                    <h3 className="text-base font-extrabold">Payment method</h3>
-                    <button type="button" onClick={() => setPaymentMethod('card')} aria-pressed={paymentMethod === 'card'} className={`mt-3 flex w-full items-center gap-3 rounded-xl border-2 p-3 text-left ${paymentMethod === 'card' ? 'border-[#335fff] bg-[#22232b]' : 'border-[#3b3b44] bg-[#1d1d22]'}`}>
-                      <span className="flex size-11 items-center justify-center rounded-lg bg-white text-[#17479e]"><span className="text-sm font-black italic">VISA</span></span>
-                      <span className="min-w-0 flex-1"><span className="block font-bold">Credit or debit card</span><span className="block text-xs text-white/55">Visa · Mastercard · American Express</span></span>
-                      {paymentMethod === 'card' && <span className="flex size-5 items-center justify-center rounded-full bg-[#335fff] text-xs font-black">✓</span>}
-                    </button>
-                    <button type="button" onClick={() => setPaymentMethod('paypal')} aria-pressed={paymentMethod === 'paypal'} className={`mt-2 flex w-full items-center gap-3 rounded-xl border-2 p-3 text-left ${paymentMethod === 'paypal' ? 'border-[#335fff] bg-[#22232b]' : 'border-[#3b3b44] bg-[#1d1d22]'}`}>
-                      <span className="flex size-11 items-center justify-center rounded-lg bg-white text-[#123b80]"><span className="text-sm font-black italic">P</span></span>
-                      <span className="flex-1 font-bold">PayPal</span>
-                      {paymentMethod === 'paypal' && <span className="flex size-5 items-center justify-center rounded-full bg-[#335fff] text-xs font-black">✓</span>}
-                    </button>
-                  </div>
-                  <div className="mt-5 space-y-3 rounded-xl bg-[#202024] p-4 text-sm">
-                    <div className="flex items-center justify-between text-white/65"><span>Subtotal</span><span>{selectedPackage.price}</span></div>
-                    <div className="flex items-center justify-between text-white/65"><span>Taxes</span><span>Not calculated</span></div>
-                    <div className="border-t border-white/10 pt-3"><div className="flex items-center justify-between font-extrabold"><span>Total</span><span>{selectedPackage.price}</span></div></div>
-                  </div>
-                  <button type="button" onClick={() => { setPaying(true); window.setTimeout(() => { setBalance((current) => current + Number(selectedPackage.amount.replace(/,/g, ''))); setPaying(false); setPaid(true) }, 1200) }} className="mt-5 flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-[#335fff] font-extrabold hover:bg-[#244be0]">Continue · {selectedPackage.price}</button>
-                  <p className="mt-3 text-center text-[11px] text-white/40">Secure checkout</p>
-                </>
-              )}
+          <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/80 p-3" onClick={() => setSelectedPackage(null)}>
+            <section role="dialog" aria-modal="true" aria-labelledby="package-info-title" className="w-full max-w-md rounded-2xl border border-[#41414b] bg-[#17171c] p-5 text-[#f7f6f2] shadow-2xl sm:p-6" onClick={(e) => e.stopPropagation()}>
+              <div className="flex items-center justify-between gap-3">
+                <h2 id="package-info-title" className="text-2xl font-extrabold">Robux package preview</h2>
+                <button type="button" onClick={() => setSelectedPackage(null)} aria-label="Close" className="rounded-lg px-3 py-1 text-2xl text-white/70 hover:bg-white/10">×</button>
+              </div>
+              <div className="mt-5 rounded-xl border border-[#34343b] bg-[#202024] p-4">
+                <div className="flex items-center gap-3"><RobuxIcon className="size-9" /><div><p className="font-extrabold">{selectedPackage.amount} Robux</p><p className="text-sm text-white/60">Visual catalog preview · {selectedPackage.price}</p></div></div>
+              </div>
+              <p className="mt-4 text-sm leading-6 text-white/75">This is an unofficial fan-made mockup. Purchases are disabled: no payment is collected and no Robux are delivered. To buy Robux, visit the official Roblox website.</p>
+              <a href="https://www.roblox.com/upgrades/robux" target="_blank" rel="noreferrer" className="mt-5 flex h-12 w-full items-center justify-center rounded-lg bg-[#335fff] font-extrabold hover:bg-[#244be0]">Open official Roblox</a>
+              <button type="button" onClick={() => setSelectedPackage(null)} className="mt-2 h-11 w-full rounded-lg border border-white/15 font-bold hover:bg-white/5">Close preview</button>
             </section>
           </div>
         )}
