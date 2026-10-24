@@ -240,7 +240,7 @@ export default function RobuxPage() {
                       <span className="flex shrink-0 items-center gap-2 text-lg font-bold text-white/80"><RobuxIcon className="size-5"/>{balance.toLocaleString('en-US')}</span>
                     </div>
                     <div className="mx-auto mt-8 flex size-16 items-center justify-center rounded-full border-2 border-white bg-transparent text-3xl font-semibold text-white"><svg viewBox="0 0 24 24" className="size-8" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6" /></svg></div>
-                    <p className="mt-4 text-center text-sm text-white/75">You sent {Number(sendAmount || 0).toLocaleString("en-US")} Robux</p>
+                    <p className="mt-4 text-center text-sm font-semibold text-amber-200">Demo only — no Robux were sent. This is an unofficial mockup.</p>
                     <button type="button" onClick={() => {setSendOpen(false);setSendReview(false)}} className="mt-6 h-14 w-full rounded-xl bg-[#335fff] px-7 text-2xl font-extrabold">OK</button>
                   </div>
                 ) : (
@@ -263,7 +263,7 @@ export default function RobuxPage() {
                             <span className="flex items-center gap-2 text-2xl font-extrabold"><RobuxIcon className="size-6"/>{Number(sendAmount||0).toLocaleString('en-US')}</span>
                           </div>
                           <div className="mt-4 flex gap-3">
-                            <button type="button" disabled={sendProcessing} onClick={()=>{const amount=Number(sendAmount);if(!Number.isSafeInteger(amount)||amount<1||amount>balance){setSendError('Enter a valid amount within your balance.');return;}setSendError('');setSendProcessing(true);window.setTimeout(()=>{setBalance(current=>current-amount);setSendProcessing(false);setSendSuccess(true)},1800)}} className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-[#146bff] text-base font-extrabold disabled:cursor-wait disabled:opacity-80">{sendProcessing ? <><span className="size-4 animate-spin rounded-full border-2 border-white/35 border-t-white" />Sending…</> : 'Send'}</button>
+                            <button type="button" disabled={sendProcessing} onClick={()=>{const amount=Number(sendAmount);if(!Number.isSafeInteger(amount)||amount<1||amount>balance){setSendError('Enter a valid amount within your balance.');return;}setSendError('');setSendProcessing(true);window.setTimeout(()=>{setSendProcessing(false);setSendSuccess(true)},800)} className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-[#146bff] text-base font-extrabold disabled:cursor-wait disabled:opacity-80">{sendProcessing ? <><span className="size-4 animate-spin rounded-full border-2 border-white/35 border-t-white" />Sending…</> : 'Send'}</button>
                             <button type="button" onClick={()=>{setSendReview(false);setSendError('')}} className="h-12 flex-1 rounded-xl border border-white/20 text-base font-bold">Edit</button>
                           </div>
                           {sendError && <p role="status" className="mt-3 text-sm leading-5 text-red-300">{sendError}</p>}
