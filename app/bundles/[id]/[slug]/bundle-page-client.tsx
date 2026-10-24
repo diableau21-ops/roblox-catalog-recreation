@@ -219,7 +219,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                     <ellipse cx="12" cy="22" rx="8.5" ry="1.5" />
                   </svg>
                 </button>
-                <button type="button" onClick={() => { setGiftManualMode(true); setGiftMessage(''); setGiftSelectedPlayer(null); setGiftOpen(true) }} className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="" aria-hidden="true" className="size-4 brightness-0 invert" /><span>Gift</span></button>
+                <button type="button" onClick={() => { setGiftManualMode(false); setGiftSuccess(false); setGiftMessage(''); setGiftSearchMessage(''); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftUsername(''); setGiftReview(false); setGiftOpen(true) }} className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-border bg-secondary px-5 text-base font-semibold transition hover:bg-secondary/70"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="" aria-hidden="true" className="size-4 brightness-0 invert" /><span>Gift</span></button>
               </>
             </div>
 
