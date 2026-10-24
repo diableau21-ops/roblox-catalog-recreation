@@ -374,14 +374,14 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             <div><p className="text-xs font-bold uppercase tracking-widest text-[#a7a7b3]">Gift</p><h2 id="gift-title" className="mt-1 text-2xl font-extrabold">Send Gift</h2></div>
             <button type="button" onClick={() => { setGiftOpen(false); setGiftManualMode(false) }} aria-label="Close" className="rounded-lg px-2 py-1 text-xl hover:bg-secondary">×</button>
           </div>
-          {!giftSelectedPlayer && !giftReview ? (
+          {!giftSelectedPlayer && !giftReview && !giftManualMode ? (
             <div className="mt-5">
               <h3 className="mb-3 text-lg font-bold">Choose gift</h3>
-              <button type="button" onClick={() => setGiftBundle('headless')} className="mb-3 flex w-full items-center gap-3 rounded-xl border border-white/15 p-3 text-left hover:border-[#146bff]">
+              <button type="button" onClick={() => setGiftBundle('headless')} aria-pressed={giftBundle === 'headless'} className={`mb-3 flex w-full items-center gap-3 rounded-xl border p-3 text-left transition ${giftBundle === 'headless' ? 'border-[#146bff] bg-[#146bff]/10 ring-1 ring-[#146bff]' : 'border-white/15 hover:border-[#146bff]'}`}>
                 <img src="/items/headless.png" alt="Headless Horseman" className="size-20 shrink-0 rounded-lg bg-[#202020] object-contain p-1" />
                 <span className="min-w-0 flex-1"><span className="block font-bold">Headless Horseman</span><span className="mt-1 block text-sm text-white/55">Headless Horseman bundle</span><span className="mt-2 flex items-center gap-1.5 text-sm font-extrabold"><RobuxIcon className="size-4" />31,000</span></span>
               </button>
-              <button type="button" onClick={() => setGiftBundle('combo')} className="flex w-full items-center gap-3 rounded-xl border border-white/15 p-3 text-left hover:border-[#146bff]">
+              <button type="button" onClick={() => setGiftBundle('combo')} aria-pressed={giftBundle === 'combo'} className={`flex w-full items-center gap-3 rounded-xl border p-3 text-left transition ${giftBundle === 'combo' ? 'border-[#146bff] bg-[#146bff]/10 ring-1 ring-[#146bff]' : 'border-white/15 hover:border-[#146bff]'}`}>
                 <span className="flex size-20 shrink-0 items-center justify-center gap-0.5 rounded-lg bg-[#202020] p-1"><img src="/items/headless.png" alt="Headless Horseman" className="h-16 min-w-0 flex-1 object-contain" /><img src="/items/korblox.png" alt="Korblox Deathspeaker" className="h-16 min-w-0 flex-1 object-contain" /></span>
                 <span className="min-w-0 flex-1"><span className="block font-bold">Headless + Korblox</span><span className="mt-1 block text-sm text-white/55">Both bundles together</span><span className="mt-2 flex items-center gap-1.5 text-sm font-extrabold"><RobuxIcon className="size-4" />48,000</span></span>
               </button>
