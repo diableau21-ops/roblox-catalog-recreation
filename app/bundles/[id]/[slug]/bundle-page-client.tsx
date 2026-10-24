@@ -167,6 +167,9 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   return (
     <main className="min-h-screen bg-background text-foreground">
       <SiteHeader balance={balance} query={query} onQueryChange={setQuery} onBuyRobux={() => setRobuxShopOpen(true)} onNotify={notify} />
+      <div role="note" aria-label="Unofficial mockup notice" className="mx-3 mt-3 rounded-lg border border-amber-400/40 bg-amber-950/40 px-4 py-3 text-sm text-amber-100 sm:mx-5 md:ml-[240px] md:mr-8">
+        <strong>Unofficial fan-made mockup.</strong> This site is not affiliated with Roblox. Robux balances and gift flows are visual demonstrations only; no real Robux or items are sent. Never enter your Roblox password here.
+      </div>
       <LeftNav onNotify={notify} onBuyRobux={() => setRobuxShopOpen(true)} />
 
       <div className="w-full px-3 py-4 pb-24 sm:px-5 sm:py-6 md:ml-[220px] md:max-w-[calc(100%-220px)] md:px-8 md:py-8">
