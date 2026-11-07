@@ -153,7 +153,7 @@ function PeopleSearchContent() {
                         <div className="mt-7 flex items-center justify-center gap-2">
                           <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Robux_2019_Logo_gold.svg" alt="" className="size-9 object-contain brightness-0 invert" />
                           <label htmlFor="people-send-amount" className="sr-only">Robux amount</label>
-                          <input id="people-send-amount" type="number" min="0" max="5000" step="1" value={sendAmount} onChange={(event) => { setSendAmount(event.target.value); setSendMessage("") }} className="w-32 bg-transparent text-center text-5xl font-extrabold text-white outline-none" />
+                          <input id="people-send-amount" type="number" min="1" step="1" value={sendAmount} onChange={(event) => { setSendAmount(event.target.value); setSendMessage("") }} className="w-32 bg-transparent text-center text-5xl font-extrabold text-white outline-none" />
                         </div>
                         <div className="mt-8 grid w-full grid-cols-4 gap-2">
                           {[25, 50, 100, 200].map((amount) => (
@@ -162,7 +162,7 @@ function PeopleSearchContent() {
                             </button>
                           ))}
                         </div>
-                        <button type="button" disabled={!Number.isSafeInteger(Number(sendAmount)) || Number(sendAmount) < 1 || Number(sendAmount) > 5000} onClick={() => { setSendMessage(""); setSendStage("confirm") }} className="mt-9 h-11 w-full rounded-lg bg-[#335fff] font-bold text-white transition-colors hover:bg-[#426cff] disabled:cursor-not-allowed disabled:opacity-45">Next</button>
+                        <button type="button" disabled={!Number.isSafeInteger(Number(sendAmount)) || Number(sendAmount) < 1} onClick={() => { setSendMessage(""); setSendStage("confirm") }} className="mt-9 h-11 w-full rounded-lg bg-[#335fff] font-bold text-white transition-colors hover:bg-[#426cff] disabled:cursor-not-allowed disabled:opacity-45">Next</button>
                         <p className="mt-3 text-xs text-white/65">Robux are sent instantly with no fees</p>
                       </div>
                     </>
