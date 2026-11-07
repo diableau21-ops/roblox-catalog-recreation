@@ -31,6 +31,9 @@ function VerifiedBadge({ className = 'size-4' }: { className?: string }) {
 
 export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify, onSetBalance, onBellClick }: Props) {
   const [searchOpen, setSearchOpen] = useState(false)
+  const [peopleResults, setPeopleResults] = useState<{ id: number; name: string; displayName: string; avatarUrl?: string; hasVerifiedBadge?: boolean }[]>([])
+  const [peopleSearching, setPeopleSearching] = useState(false)
+  const [peopleMessage, setPeopleMessage] = useState('')
   const [robuxPickerOpen, setRobuxPickerOpen] = useState(false)
   const [robuxAmount, setRobuxAmount] = useState(String(balance))
   const [settingsOpen, setSettingsOpen] = useState(false)
@@ -83,6 +86,25 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
 
   const searchCategories = ['Games', 'People', 'Marketplace', 'Communities', 'Creator Store']
 
+  const searchPeople = async () => {
+    const keyword = query.trim()
+    if (keyword.length < 3) { setPeopleMessage('Écris au moins 3 caractères.'); return }
+    setPeopleSearching(true)
+    setPeopleMessage('')
+    setPeopleResults([])
+    setSearchOpen(true)
+    try {
+      const response = await fetch(`/api/roblox-users?keyword=${encodeURIComponent(keyword)}`, { cache: 'no-store' })
+      if (!response.ok) throw new Error('Search failed')
+      const payload = await response.json()
+      const results = Array.isArray(payload.data) ? payload.data : []
+      setPeopleResults(results)
+      setPeopleMessage(results.length ? '' : 'Aucun profil trouvé.')
+    } catch {
+      setPeopleMessage('La recherche ne fonctionne pas pour le moment.')
+    } finally { setPeopleSearching(false) }
+  }
+
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-header/95 shadow-sm backdrop-blur-md">
       <div className="flex h-14 w-full items-center gap-3 px-3 sm:gap-4 sm:px-5 lg:px-6">
@@ -118,6 +140,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
             value={query}
             onChange={(e) => onQueryChange(e.target.value)}
             onFocus={() => setSearchOpen(true)}
+            onKeyDown={(event) => { if (event.key === 'Enter') { event.preventDefault(); void searchPeople() } }}
             onBlur={() => setTimeout(() => setSearchOpen(false), 150)}
             placeholder="Search"
             style={{ backgroundColor: "#2a2b30", color: "#f7f7f8" }}
@@ -131,6 +154,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
                   type="button"
                   onMouseDown={(e) => e.preventDefault()}
                   onClick={() => {
+                    if (category === 'People') { void searchPeople(); return }
                     onQueryChange(query.trim())
                     setSearchOpen(false)
                   }}
@@ -140,6 +164,15 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
                   <span className="min-w-0 truncate">
                     <span className="text-[#606162]">In </span>{category}
                   </span>
+                </button>
+              ))}
+              {peopleSearching && <p className="px-3 py-3 text-sm text-[#606162]">Recherche de profils…</p>}
+              {peopleMessage && <p className="px-3 py-3 text-sm text-[#606162]">{peopleMessage}</p>}
+              {peopleResults.map((player) => (
+                <button key={player.id} type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => { window.location.href = `/users/${player.id}/${encodeURIComponent(player.name)}` }} className="flex w-full items-center gap-3 px-3 py-2.5 text-left hover:bg-[#e8e8e8]">
+                  {player.avatarUrl ? <img src={player.avatarUrl} alt="" className="size-9 rounded-full object-cover" /> : <span className="size-9 rounded-full bg-[#ddd]" />}
+                  <span className="min-w-0 flex-1"><span className="block truncate text-sm font-semibold">{player.displayName}</span><span className="block truncate text-xs text-[#606162]">@{player.name}</span></span>
+                  <span className="text-xs text-[#606162]">Profil</span>
                 </button>
               ))}
             </div>
