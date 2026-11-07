@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { ProfileSiteHeader } from '@/components/catalog/profile-site-header'
 
 export const dynamic = 'force-dynamic'
 
@@ -49,18 +50,7 @@ export default async function RobloxUserProfile({ params }: { params: Promise<{ 
 
   return (
     <main className="min-h-screen bg-black text-white">
-      <header className="sticky top-0 z-30 flex h-14 items-center gap-5 border-b border-[#252525] bg-black px-4 sm:px-7">
-        <Link href="/" aria-label="Retour au Marketplace" className="shrink-0 text-xl font-black tracking-tight text-white">ROBLOX</Link>
-        <nav className="hidden items-center gap-6 text-sm font-semibold text-white sm:flex">
-          <Link href="/" className="hover:text-white">Charts</Link>
-          <Link href="/" className="hover:text-white">Marketplace</Link>
-          <Link href="/" className="hover:text-white">Create</Link>
-          <Link href="/" className="hover:text-white">Robux</Link>
-        </nav>
-        <div className="ml-auto flex h-9 max-w-md flex-1 items-center rounded-none border-b border-[#333333] bg-transparent px-3 text-sm text-[#d0d0d0]">
-          <span className="mr-2">⌕</span><span>Search</span>
-        </div>
-      </header>
+      <ProfileSiteHeader />
 
       <div className="w-full px-3 py-5 sm:px-8 sm:py-7">
         <Link href="/" className="mb-4 inline-flex text-sm font-semibold text-[#335fff] hover:underline">← Retour au Marketplace</Link>
