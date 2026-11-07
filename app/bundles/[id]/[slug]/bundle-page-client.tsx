@@ -326,7 +326,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             <h2 id="robux-title" className="text-lg font-bold">Choisir des Robux</h2>
             <button type="button" onClick={() => setRobuxShopOpen(false)} aria-label="Fermer" className="rounded-lg px-2 py-0.5 text-xl hover:bg-secondary">×</button>
           </div>
-          <p className="mt-1 text-xs text-muted-foreground">Clique sur un pack pour ajouter automatiquement les Robux à ton solde.</p>
+          <p className="mt-1 text-xs text-muted-foreground">Choisis un pack ou entre une quantité pour créditer ton solde.</p>
           <div className="mt-3 grid grid-cols-2 gap-2">
             {robuxOptions.map((amount) => <button key={amount} type="button" onClick={() => { setSelectedRobux(amount); setCustomRobux(String(amount)); setBalance((current) => current + amount); setRobuxShopOpen(false) }} aria-pressed={selectedRobux === amount && customRobux === String(amount)} className={`flex min-h-14 flex-col items-center justify-center gap-1 rounded-lg border p-2 text-sm font-bold transition hover:bg-secondary ${selectedRobux === amount ? 'border-[#00b06f] bg-[#00b06f]/10 ring-2 ring-[#00b06f]' : 'border-border'}`}>
               <span className="flex items-center gap-2"><RobuxIcon />{amount}</span>
@@ -335,7 +335,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           </div>
           <label htmlFor="custom-robux" className="mt-3 block text-xs font-semibold text-muted-foreground">Ou écris la quantité souhaitée</label>
           <input id="custom-robux" type="number" min="1" max="1000000000" step="1" inputMode="numeric" value={customRobux} onChange={(event) => { setCustomRobux(event.target.value); const amount = Number(event.target.value); if (Number.isSafeInteger(amount) && amount > 0) setSelectedRobux(amount) }} placeholder="Ex. 2500" className="mt-1 h-10 w-full rounded-lg border border-border bg-input px-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-[#00b06f]" />
-          <button type="button" onClick={() => { setBalance((current) => current + selectedRobux); setRobuxShopOpen(false) }} className="mt-3 h-10 w-full rounded-lg bg-[#00b06f] text-sm font-bold text-white transition hover:bg-[#009e63]">Ajouter {selectedRobux} Robux</button>
+          <button type="button" onClick={() => { setBalance((current) => current + selectedRobux); setRobuxShopOpen(false) }} className="mt-3 h-10 w-full rounded-lg bg-[#00b06f] text-sm font-bold text-white transition hover:bg-[#009e63]">Acheter {selectedRobux} Robux</button>
         </section>
       </div>}
 
@@ -459,7 +459,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
         </section>
       </div>}
       <footer className="mt-8 w-full border-t border-white/10 bg-[#191919] px-4 py-5 text-white/75">
-        <p className="mx-auto mb-2 max-w-[1000px] text-center text-xs text-white/45">Demo only — no Roblox item was transferred. Robux and items cannot be transferred here.</p>
+        <p className="mx-auto mb-2 max-w-[1000px] text-center text-xs text-white/45">Simulation uniquement : les Robux ajoutés apparaissent dans le solde de ce site, pas dans ton compte Roblox. Aucun achat ni transfert Roblox réel n’est effectué.</p>
         {isKorblox && <p className="mx-auto mb-4 max-w-[1000px] text-center text-xs text-white/45">Unofficial site, not affiliated with Roblox.</p>}
         <div className="mx-auto max-w-[1000px]">
           <nav aria-label="Footer" className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-semibold sm:text-sm">
