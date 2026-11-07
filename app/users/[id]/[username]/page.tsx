@@ -37,7 +37,7 @@ async function getProfile(id: string) {
 }
 
 function VerifiedBadge() {
-  return <span title="Compte vérifié" className="inline-flex size-5 items-center justify-center rounded-full bg-[#335fff] text-xs font-black text-white">✓</span>
+  return <span title="Compte vérifié" className="inline-flex size-[18px] items-center justify-center rounded-full bg-[#335fff] text-[11px] font-black text-white">✓</span>
 }
 
 export default async function RobloxUserProfile({ params }: { params: Promise<{ id: string; username: string }> }) {
@@ -45,44 +45,75 @@ export default async function RobloxUserProfile({ params }: { params: Promise<{ 
   const result = await getProfile(id)
 
   return (
-    <main className="min-h-screen bg-[#f2f4f5] text-[#202227]">
-      <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
-        <Link href="/" className="text-sm font-semibold text-[#335fff] hover:underline">← Retour au Marketplace</Link>
+    <main className="min-h-screen bg-[#f2f4f5] text-[#191b1f]">
+      <header className="sticky top-0 z-30 flex h-14 items-center gap-5 border-b border-[#d7dadd] bg-white px-4 shadow-sm sm:px-7">
+        <Link href="/" aria-label="Retour au Marketplace" className="shrink-0 text-xl font-black tracking-tight text-[#191b1f]">ROBLOX</Link>
+        <nav className="hidden items-center gap-6 text-sm font-semibold text-[#393b3d] sm:flex">
+          <Link href="/" className="hover:text-black">Charts</Link>
+          <Link href="/" className="hover:text-black">Marketplace</Link>
+          <Link href="/" className="hover:text-black">Create</Link>
+          <Link href="/" className="hover:text-black">Robux</Link>
+        </nav>
+        <div className="ml-auto flex h-9 max-w-md flex-1 items-center rounded-md bg-[#f2f4f5] px-3 text-sm text-[#60656b]">
+          <span className="mr-2">⌕</span><span>Search</span>
+        </div>
+      </header>
+
+      <div className="mx-auto max-w-[1180px] px-3 py-5 sm:px-6 sm:py-7">
+        <Link href="/" className="mb-4 inline-flex text-sm font-semibold text-[#335fff] hover:underline">← Retour au Marketplace</Link>
         {!result ? (
-          <section className="mt-6 rounded-xl bg-white p-8 shadow-sm">
+          <section className="rounded-lg bg-white p-8 shadow-sm">
             <h1 className="text-2xl font-bold">Profil introuvable</h1>
             <p className="mt-2 text-sm text-[#60656b]">Ce profil Roblox n’existe pas ou les informations ne sont pas disponibles.</p>
           </section>
         ) : (
           <>
-            <section className="mt-6 overflow-hidden rounded-xl bg-white shadow-sm">
-              <div className="h-36 bg-gradient-to-r from-[#273b68] via-[#4565a8] to-[#9bb7df] sm:h-48" />
-              <div className="px-5 pb-6 sm:px-8">
-                <div className="-mt-14 flex flex-col gap-4 sm:-mt-16 sm:flex-row sm:items-end">
-                  <div className="size-28 shrink-0 overflow-hidden rounded-2xl border-4 border-white bg-[#e5e7eb] shadow sm:size-32">
-                    {result.avatar ? <img src={result.avatar} alt={`Avatar de ${result.user.name}`} className="size-full object-cover" /> : <div className="flex size-full items-center justify-center text-4xl">👤</div>}
-                  </div>
-                  <div className="min-w-0 flex-1 pb-1">
-                    <h1 className="flex flex-wrap items-center gap-2 text-2xl font-extrabold sm:text-3xl">{result.user.displayName}{result.user.hasVerifiedBadge && <VerifiedBadge />}</h1>
-                    <p className="mt-1 text-sm text-[#60656b]">@{result.user.name}</p>
-                  </div>
-                  <a href={`https://www.roblox.com/users/${result.user.id}/profile`} target="_blank" rel="noreferrer" className="inline-flex h-10 items-center justify-center rounded-lg bg-[#335fff] px-5 text-sm font-bold text-white hover:bg-[#244bd6]">Voir sur Roblox ↗</a>
+            <section className="overflow-hidden rounded-lg bg-white shadow-sm">
+              <div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:p-7">
+                <div className="size-32 shrink-0 overflow-hidden rounded-full bg-[#e5e7eb] sm:size-40">
+                  {result.avatar ? <img src={result.avatar} alt={`Avatar de ${result.user.name}`} className="size-full object-cover" /> : <div className="flex size-full items-center justify-center text-5xl">👤</div>}
                 </div>
-                <div className="mt-6 grid grid-cols-2 gap-3 border-t border-[#e7e8ea] pt-5 sm:grid-cols-3">
-                  <div><p className="text-xl font-extrabold">{result.friends?.toLocaleString('fr-CA') ?? '—'}</p><p className="text-sm text-[#60656b]">Amis</p></div>
-                  <div><p className="text-xl font-extrabold">{result.followers?.toLocaleString('fr-CA') ?? '—'}</p><p className="text-sm text-[#60656b]">Abonnés</p></div>
-                  <div><p className="text-xl font-extrabold">{result.user.isBanned ? 'Oui' : 'Non'}</p><p className="text-sm text-[#60656b]">Compte banni</p></div>
+                <div className="min-w-0 flex-1">
+                  <h1 className="flex flex-wrap items-center gap-2 text-2xl font-extrabold sm:text-3xl">{result.user.displayName}{result.user.hasVerifiedBadge && <VerifiedBadge />}</h1>
+                  <p className="mt-1 text-base text-[#60656b]">@{result.user.name}</p>
+                  <div className="mt-4 flex flex-wrap items-center gap-3 text-sm">
+                    <span className="font-semibold">{result.friends?.toLocaleString('en-US') ?? '—'} <span className="font-normal text-[#60656b]">Friends</span></span>
+                    <span className="text-[#c4c7ca]">•</span>
+                    <span className="font-semibold">{result.followers?.toLocaleString('en-US') ?? '—'} <span className="font-normal text-[#60656b]">Followers</span></span>
+                  </div>
                 </div>
+                <a href={`https://www.roblox.com/users/${result.user.id}/profile`} target="_blank" rel="noreferrer" className="inline-flex h-11 shrink-0 items-center justify-center rounded-md bg-[#335fff] px-6 text-sm font-bold text-white transition hover:bg-[#244bd6]">View on Roblox ↗</a>
               </div>
+              <nav className="flex gap-7 border-t border-[#e7e8ea] px-5 sm:px-7" aria-label="Profile sections">
+                <a href="#about" className="border-b-[3px] border-[#335fff] py-4 text-sm font-bold">About</a>
+                <a href="#creations" className="py-4 text-sm font-semibold text-[#60656b] hover:text-[#191b1f]">Creations</a>
+              </nav>
             </section>
-            <section className="mt-5 rounded-xl bg-white p-5 shadow-sm sm:p-7">
-              <h2 className="text-lg font-extrabold">À propos</h2>
-              <p className="mt-3 whitespace-pre-wrap text-sm leading-6 text-[#454950]">{result.user.description?.trim() || 'Cet utilisateur n’a pas de description.'}</p>
-              {result.user.created && <p className="mt-5 text-xs text-[#777d84]">Membre depuis le {new Date(result.user.created).toLocaleDateString('fr-CA', { year: 'numeric', month: 'long', day: 'numeric' })}</p>}
+
+            <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_300px]">
+              <section id="about" className="rounded-lg bg-white p-5 shadow-sm sm:p-7">
+                <h2 className="text-xl font-extrabold">About</h2>
+                <p className="mt-4 min-h-16 whitespace-pre-wrap break-words text-sm leading-6 text-[#393b3d]">{result.user.description?.trim() || 'This user has no description.'}</p>
+                {result.user.created && <p className="mt-6 border-t border-[#e7e8ea] pt-4 text-sm text-[#60656b]">Join Date: {new Date(result.user.created).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>}
+              </section>
+              <aside className="h-fit rounded-lg bg-white p-5 shadow-sm">
+                <h2 className="text-lg font-extrabold">Statistics</h2>
+                <div className="mt-4 space-y-4 text-sm">
+                  <div className="flex items-center justify-between"><span className="text-[#60656b]">Friends</span><strong>{result.friends?.toLocaleString('en-US') ?? '—'}</strong></div>
+                  <div className="flex items-center justify-between"><span className="text-[#60656b]">Followers</span><strong>{result.followers?.toLocaleString('en-US') ?? '—'}</strong></div>
+                  <div className="flex items-center justify-between"><span className="text-[#60656b]">Account status</span><strong>{result.user.isBanned ? 'Banned' : 'Active'}</strong></div>
+                </div>
+              </aside>
+            </div>
+
+            <section id="creations" className="mt-5 rounded-lg bg-white p-5 shadow-sm sm:p-7">
+              <h2 className="text-xl font-extrabold">Creations</h2>
+              <p className="mt-3 text-sm text-[#60656b]">This user's public creations can be viewed on their Roblox profile.</p>
+              <a href={`https://www.roblox.com/users/${result.user.id}/profile#!/creations`} target="_blank" rel="noreferrer" className="mt-4 inline-flex text-sm font-semibold text-[#335fff] hover:underline">View creations on Roblox ↗</a>
             </section>
           </>
         )}
-        <p className="mt-5 text-center text-xs text-[#858a91]">Profil public basé sur les informations Roblox disponibles. Ce site n’est pas affilié à Roblox.</p>
+        <p className="mt-6 text-center text-xs text-[#858a91]">Public profile information from Roblox. This fan-made site is not affiliated with Roblox.</p>
       </div>
     </main>
   )
