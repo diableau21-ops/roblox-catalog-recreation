@@ -48,17 +48,12 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   const [giftSuccess, setGiftSuccess] = useState(false)
   const [giftManualMode, setGiftManualMode] = useState(false)
   const [giftReview, setGiftReview] = useState(false)
-  const [giftBundle, setGiftBundle] = useState<'korblox' | 'headless' | 'combo' | 'robux'>('headless')
-  const [giftRobuxAmount, setGiftRobuxAmount] = useState('100')
-  const giftCost = giftBundle === 'robux' ? Number(giftRobuxAmount) : giftBundle === 'korblox' ? 17000 : giftBundle === 'headless' ? 31000 : 48000
+  const [giftBundle, setGiftBundle] = useState<'korblox' | 'headless' | 'combo'>('headless')
+  const giftCost = giftBundle === 'korblox' ? 17000 : giftBundle === 'headless' ? 31000 : 48000
   const continueGift = async () => {
     if (!giftSelectedPlayer || giftSending) return
-    if (!Number.isSafeInteger(giftCost) || giftCost <= 0) {
-      setGiftMessage('Enter a valid Robux amount greater than 0.')
-      return
-    }
     if (balance < giftCost) {
-      setGiftMessage(`Not enough Robux. This ${giftBundle === 'robux' ? 'send' : 'item'} costs ${giftCost.toLocaleString('en-US')} Robux, and your balance is ${balance.toLocaleString('en-US')}.`)
+      setGiftMessage(`Not enough Robux. This item costs ${giftCost.toLocaleString('en-US')} Robux, and your balance is ${balance.toLocaleString('en-US')}.`)
       return
     }
     setGiftSending(true)
@@ -359,7 +354,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <div className="mx-auto mt-8 flex size-16 items-center justify-center rounded-full border-2 border-white bg-transparent text-white">
                 <svg viewBox="0 0 24 24" className="size-8" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6" /></svg>
               </div>
-              <p className="mt-4 text-center text-base font-bold text-white">{giftBundle === 'robux' ? `${giftCost.toLocaleString('en-US')} Robux sent to` : 'Gift sent to'} {giftSelectedPlayer?.name ? `@${giftSelectedPlayer.name}` : giftSelectedPlayer?.displayName || 'player'}</p>
+              <p className="mt-4 text-center text-base font-bold text-white">{'Gift sent to'} {giftSelectedPlayer?.name ? `@${giftSelectedPlayer.name}` : giftSelectedPlayer?.displayName || 'player'}</p>
               <button type="button" onClick={() => { setGiftOpen(false); setGiftSuccess(false); setGiftMessage(''); setGiftSearchMessage(''); setGiftUsername(''); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftSending(false); setGiftReview(false); setGiftManualMode(false) }} className="mt-6 h-14 w-full rounded-xl bg-[#335fff] px-7 text-2xl font-extrabold text-white transition hover:bg-[#244be0]">OK</button>
             </div>
           ) : giftSending ? (
@@ -371,7 +366,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                 <p className="text-sm text-white/60">@{giftSelectedPlayer?.name}</p>
               </div>
               <div className="mx-auto mt-8 size-12 animate-spin rounded-full border-4 border-white/15 border-t-[#146bff]" role="status" aria-label="Sending" />
-              <p className="mt-4 text-sm text-white/65">{giftBundle === 'robux' ? `Sending ${giftCost.toLocaleString('en-US')} Robux to` : 'Sending gift to'} @{giftSelectedPlayer?.name}…</p>
+              <p className="mt-4 text-sm text-white/65">{'Sending gift to'} @{giftSelectedPlayer?.name}…</p>
             </div>
           ) : (
           <>
@@ -389,10 +384,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <button type="button" onClick={() => setGiftBundle('combo')} aria-pressed={giftBundle === 'combo'} className={`flex w-full items-center gap-3 rounded-xl border p-3 text-left transition ${giftBundle === 'combo' ? 'border-[#146bff] bg-[#146bff]/10 ring-1 ring-[#146bff]' : 'border-white/15 hover:border-[#146bff]'}`}>
                 <span className="flex size-20 shrink-0 items-center justify-center gap-0.5 rounded-lg bg-[#202020] p-1"><img src="/items/headless.png" alt="Headless Horseman" className="h-16 min-w-0 flex-1 object-contain" /><span className="shrink-0 text-xl font-black text-white">+</span><img src="/items/korblox.png" alt="Korblox Deathspeaker" className="h-16 min-w-0 flex-1 object-contain" /></span>
                 <span className="min-w-0 flex-1"><span className="block font-bold">Headless + Korblox</span><span className="mt-1 block text-sm text-white/55">Both bundles together</span><span className="mt-2 flex items-center gap-1.5 text-sm font-extrabold"><RobuxIcon className="size-4" />48,000</span></span>
-              </button>
-              <button type="button" onClick={() => setGiftBundle('robux')} aria-pressed={giftBundle === 'robux'} className={`mt-3 flex w-full items-center gap-3 rounded-xl border p-3 text-left transition ${giftBundle === 'robux' ? 'border-[#146bff] bg-[#146bff]/10 ring-1 ring-[#146bff]' : 'border-white/15 hover:border-[#146bff]'}`}><span className="flex size-20 shrink-0 items-center justify-center rounded-lg bg-[#202020]"><RobuxIcon className="size-9" /></span><span className="min-w-0 flex-1"><span className="block font-bold">Robux</span><span className="mt-1 block text-sm text-white/55">Send an amount to a player</span></span></button>
-              {giftBundle === 'robux' && <div className="mt-3"><label htmlFor="gift-robux-amount" className="mb-1 block text-sm font-semibold">Robux amount</label><input id="gift-robux-amount" type="number" min="1" max="1000000000" step="1" value={giftRobuxAmount} onChange={(event) => setGiftRobuxAmount(event.target.value)} placeholder="Enter amount" className="h-11 w-full rounded-lg border border-white/15 bg-[#202024] px-3 text-sm text-white outline-none focus:border-[#7183ff]" /></div>}
-              <button type="button" onClick={() => { setGiftUsername(''); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftSearchMessage(''); setGiftMessage(''); setGiftReview(false); setGiftManualMode(true) }} className="mt-4 h-12 w-full rounded-xl bg-[#146bff] text-base font-extrabold">Next</button>
+              </button>              <button type="button" onClick={() => { setGiftUsername(''); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftSearchMessage(''); setGiftMessage(''); setGiftReview(false); setGiftManualMode(true) }} className="mt-4 h-12 w-full rounded-xl bg-[#146bff] text-base font-extrabold">Next</button>
             </div>
           ) : giftSelectedPlayer && giftReview ? (
             <div className="mt-6">
@@ -403,8 +395,8 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               </div>
               <div className="mt-6 border-t border-white/10 pt-5">
                 <div className="flex items-center gap-4 rounded-xl bg-[#292929] p-3">
-                  <span className="flex size-16 shrink-0 items-center justify-center gap-0.5 rounded-lg bg-[#202020] p-1">{giftBundle === 'robux' ? <RobuxIcon className="size-8" /> : giftBundle === 'combo' ? <><img src="/items/headless.png" alt="Headless Horseman" className="h-12 min-w-0 flex-1 object-contain" /><span className="text-sm font-black">+</span><img src="/items/korblox.png" alt="Korblox Deathspeaker" className="h-12 min-w-0 flex-1 object-contain" /></> : <img src={giftBundle === 'korblox' ? '/items/korblox.png' : '/items/headless.png'} alt="" className="h-full w-full object-contain" />}</span>
-                  <div className="min-w-0 flex-1"><p className="font-bold">{giftBundle === 'robux' ? `${giftCost.toLocaleString('en-US')} Robux` : giftBundle === 'korblox' ? 'Korblox Deathspeaker' : giftBundle === 'headless' ? 'Headless Horseman' : 'Headless + Korblox'}</p><p className="mt-1 text-sm text-white/60">{giftBundle === 'robux' ? `Robux for @${giftSelectedPlayer.name}` : `Gift for @${giftSelectedPlayer.name}`}</p><p className="mt-2 flex items-center gap-1.5 text-sm font-extrabold"><RobuxIcon className="size-4" />{giftCost.toLocaleString('en-US')} Robux</p></div>
+                  <span className="flex size-16 shrink-0 items-center justify-center gap-0.5 rounded-lg bg-[#202020] p-1">{giftBundle === 'combo' ? <><img src="/items/headless.png" alt="Headless Horseman" className="h-12 min-w-0 flex-1 object-contain" /><span className="text-sm font-black">+</span><img src="/items/korblox.png" alt="Korblox Deathspeaker" className="h-12 min-w-0 flex-1 object-contain" /></> : <img src={giftBundle === 'korblox' ? '/items/korblox.png' : '/items/headless.png'} alt="" className="h-full w-full object-contain" />}</span>
+                  <div className="min-w-0 flex-1"><p className="font-bold">{giftBundle === 'korblox' ? 'Korblox Deathspeaker' : giftBundle === 'headless' ? 'Headless Horseman' : 'Headless + Korblox'}</p><p className="mt-1 text-sm text-white/60">{`Gift for @${giftSelectedPlayer.name}`}</p><p className="mt-2 flex items-center gap-1.5 text-sm font-extrabold"><RobuxIcon className="size-4" />{giftCost.toLocaleString('en-US')} Robux</p></div>
                 </div>
                 <div className="mt-4 flex gap-3">
                   <button type="button" disabled={giftSending} onClick={() => { setGiftMessage(''); void continueGift() }} className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-[#146bff] text-base font-extrabold disabled:cursor-wait disabled:opacity-80">{giftSending ? 'Sending…' : 'Send'}</button>
