@@ -6,6 +6,7 @@ import { ProfileSiteHeader } from '@/components/catalog/profile-site-header'
 import { LeftNav } from '@/components/catalog/left-nav'
 import Link from 'next/link'
 import { MoreHorizontal } from 'lucide-react'
+import { RobuxIcon } from '@/components/catalog/robux-icon'
 
 type Player = {
   id: number
@@ -31,6 +32,19 @@ function PeopleSearchContent() {
   const [sendAmount, setSendAmount] = useState('100')
   const [sendStage, setSendStage] = useState<'edit' | 'confirm' | 'loading' | 'success'>('edit')
   const [sendMessage, setSendMessage] = useState('')
+  const [robuxBalance, setRobuxBalance] = useState(1250)
+
+  useEffect(() => {
+    const readBalance = () => {
+      try {
+        const saved = window.localStorage.getItem('catalog-demo-robux-balance')
+        if (saved !== null && Number.isFinite(Number(saved)) && Number(saved) >= 0) setRobuxBalance(Number(saved))
+      } catch {}
+    }
+    readBalance()
+    window.addEventListener('storage', readBalance)
+    return () => window.removeEventListener('storage', readBalance)
+  }, [])
 
   useEffect(() => {
     let active = true
@@ -112,17 +126,33 @@ function PeopleSearchContent() {
         )}
         {sendRecipient && sendStage === "loading" && (
           <div className="fixed inset-0 z-[120] flex items-center justify-center bg-black/75 p-3">
-            <section role="status" aria-live="polite" className="flex min-h-[260px] w-full max-w-sm flex-col items-center justify-center rounded-2xl border border-[#383838] bg-[#1f1f1f] px-6 py-8 text-center text-white shadow-2xl">
+            <section role="status" aria-live="polite" className="flex min-h-[300px] w-full max-w-sm flex-col rounded-2xl border border-[#383838] bg-[#1f1f1f] px-5 py-5 text-white shadow-2xl">
+              <div className="flex w-full items-center justify-between gap-3 border-b border-white/10 pb-4">
+                <div className="flex min-w-0 items-center gap-2">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="" className="size-6 shrink-0 object-contain brightness-0 invert" />
+                  <span className="truncate text-base font-extrabold">Send Robux</span>
+                </div>
+                <div className="flex shrink-0 items-center gap-1.5 text-sm font-bold"><RobuxIcon className="size-5" /><span className="tabular-nums">{robuxBalance.toLocaleString('en-US')}</span></div>
+              </div>
+              <div className="flex flex-1 flex-col items-center justify-center py-5 text-center">
               {sendRecipient.avatarUrl ? <img src={sendRecipient.avatarUrl} alt="" className="size-16 rounded-full object-cover opacity-80" /> : <span className="size-16 rounded-full bg-[#3a3b40]" />}
               <span aria-label="Loading" className="mt-6 size-8 animate-spin rounded-full border-[3px] border-white/20 border-t-white" />
               <p className="mt-5 text-lg font-bold">Sending Robux...</p>
               <p className="mt-1 text-sm text-white/60">To @{sendRecipient.name}</p>
+              </div>
             </section>
           </div>
         )}
         {sendRecipient && sendStage !== "loading" && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 p-3" onClick={() => setSendRecipient(null)}>
             <section role="dialog" aria-modal="true" aria-labelledby="people-send-title" className="relative w-full max-w-lg rounded-2xl border border-[#383838] bg-[#1f1f1f] p-5 text-white shadow-2xl sm:p-6" onClick={(event) => event.stopPropagation()}>
+              <div className="flex items-center justify-between gap-3 border-b border-white/10 pb-4">
+                <div className="flex min-w-0 items-center gap-2.5">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="" className="size-7 shrink-0 object-contain brightness-0 invert" />
+                  <h2 id="people-send-title" className="truncate text-xl font-extrabold">Send Robux</h2>
+                </div>
+                <div className="flex shrink-0 items-center gap-1.5 text-sm font-bold"><RobuxIcon className="size-5" /><span className="tabular-nums">{robuxBalance.toLocaleString('en-US')}</span></div>
+              </div>
               {sendStage === "success" ? (
                 <div className="flex min-h-[370px] flex-col items-center px-2 pb-1 pt-8 text-center">
                   {sendRecipient.avatarUrl ? <img src={sendRecipient.avatarUrl} alt={`Avatar of ${sendRecipient.name}`} className="size-20 rounded-full object-cover" /> : <span className="size-20 rounded-full bg-[#3a3b40]" />}
@@ -137,11 +167,7 @@ function PeopleSearchContent() {
                 </div>
               ) : (
                 <>
-                  <div className="flex items-center justify-between gap-3 border-b border-white/10 pb-4">
-                    <div className="flex items-center gap-2.5">
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="Roblox Plus" className="size-7 shrink-0 object-contain brightness-0 invert" />
-                      <h2 id="people-send-title" className="text-2xl font-extrabold">Send Robux</h2>
-                    </div>
+                  <div className="flex justify-end pt-2">
                     <button type="button" onClick={() => setSendRecipient(null)} aria-label="Close" className="rounded-lg px-2 py-1 text-xl text-white/75 hover:bg-white/10">×</button>
                   </div>
                   {sendStage === "edit" ? (
