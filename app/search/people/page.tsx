@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { ProfileSiteHeader } from '@/components/catalog/profile-site-header'
 import { LeftNav } from '@/components/catalog/left-nav'
@@ -17,7 +17,7 @@ function VerifiedBadge() {
   return <span title="Verified" className="inline-flex size-4 items-center justify-center rounded-full bg-[#335fff] text-[10px] font-black text-white">✓</span>
 }
 
-export default function PeopleSearchPage() {
+function PeopleSearchContent() {
   const params = useSearchParams()
   const keyword = params.get('keyword')?.trim() ?? ''
   const [players, setPlayers] = useState<Player[]>([])
@@ -93,5 +93,14 @@ export default function PeopleSearchPage() {
         <p className="mt-10 text-xs text-[#777b85]">Public profile information from Roblox. This fan-made site is not affiliated with Roblox.</p>
       </div>
     </main>
+  )
+}
+
+
+export default function PeopleSearchPage() {
+  return (
+    <Suspense fallback={<main className="min-h-screen bg-black px-6 py-12 text-white">Loading people…</main>}>
+      <PeopleSearchContent />
+    </Suspense>
   )
 }
