@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { ProfileSiteHeader } from '@/components/catalog/profile-site-header'
+import { LeftNav } from '@/components/catalog/left-nav'
 
 export const dynamic = 'force-dynamic'
 
@@ -51,8 +52,9 @@ export default async function RobloxUserProfile({ params }: { params: Promise<{ 
   return (
     <main className="min-h-screen bg-black text-white">
       <ProfileSiteHeader username={result?.user.name ?? ''} />
+      <LeftNav dark />
 
-      <div className="w-full px-3 py-5 sm:px-8 sm:py-7">
+      <div className="ml-0 w-full px-3 pb-20 pt-5 sm:px-8 sm:py-7 md:ml-[220px] md:w-[calc(100%-220px)]">
         <Link href="/" className="mb-4 inline-flex text-sm font-semibold text-[#335fff] hover:underline">← Retour au Marketplace</Link>
         {!result ? (
           <section className="bg-transparent p-0">
