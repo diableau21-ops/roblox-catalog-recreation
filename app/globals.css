@@ -502,3 +502,39 @@ html[data-site-theme="light"] [class*="placeholder:text-"]::placeholder {
 html[data-site-theme="light"] header svg {
   color: #202127;
 }
+
+/* Full white appearance: make every page surface white and all text readable. */
+html[data-site-theme="light"] body,
+html[data-site-theme="light"] body main,
+html[data-site-theme="light"] body section,
+html[data-site-theme="light"] body article,
+html[data-site-theme="light"] body aside,
+html[data-site-theme="light"] body nav,
+html[data-site-theme="light"] body footer,
+html[data-site-theme="light"] body [class*="bg-"],
+html[data-site-theme="light"] body [style*="background"] {
+  background-color: #ffffff !important;
+  background-image: none !important;
+}
+html[data-site-theme="light"] body *:not(img):not(video):not(canvas):not(svg):not(path) {
+  color: #202127;
+}
+html[data-site-theme="light"] body input,
+html[data-site-theme="light"] body textarea,
+html[data-site-theme="light"] body select {
+  background: #ffffff !important;
+  color: #202127 !important;
+  border-color: #cfd1d8 !important;
+}
+html[data-site-theme="light"] body button {
+  border-color: #d4d6dc;
+}
+html[data-site-theme="light"] body a {
+  color: #2457d6;
+}
+html[data-site-theme="light"] body img,
+html[data-site-theme="light"] body video,
+html[data-site-theme="light"] body canvas,
+html[data-site-theme="light"] body svg {
+  background-color: transparent !important;
+}
