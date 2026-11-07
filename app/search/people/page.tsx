@@ -114,7 +114,7 @@ function PeopleSearchContent() {
           <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 p-3" onClick={() => setSendRecipient(null)}>
             <section role="dialog" aria-modal="true" aria-labelledby="people-send-title" className="relative w-full max-w-lg rounded-2xl border border-[#383838] bg-[#1f1f1f] p-5 text-white shadow-2xl sm:p-6" onClick={(event) => event.stopPropagation()}>
               <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-2.5"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="Roblox Plus" className="size-7 shrink-0 object-contain" /><h2 id="people-send-title" className="text-2xl font-extrabold">Send Robux</h2></div>
+                <div className="flex items-center gap-2.5"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="Roblox Plus" className="size-7 shrink-0 object-contain brightness-0 invert" /><h2 id="people-send-title" className="text-2xl font-extrabold">Send Robux</h2></div>
                 <button type="button" onClick={() => setSendRecipient(null)} aria-label="Close" className="rounded-lg px-2 py-1 text-xl text-white/75 hover:bg-white/10">×</button>
               </div>
               <div className="mt-6 flex flex-col items-center text-center">
