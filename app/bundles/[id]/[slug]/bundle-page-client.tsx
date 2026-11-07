@@ -426,9 +426,15 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           ) : (
             <>
               <p className="mt-2 text-sm text-[#a8a8b0]">Choose an item, then select the Roblox player.</p>
-              <div className="mt-4 rounded-xl border border-white/10 bg-[#202020] p-3">
-                <p className="text-sm font-bold">{giftBundle === 'combo' ? 'Headless + Korblox' : giftBundle === 'korblox' ? 'Korblox Deathspeaker' : 'Headless Horseman'}</p>
-                <p className="mt-1 text-xs text-white/55">Gift selection confirmed. Now find the Roblox account.</p>
+              <div className="mt-4 overflow-hidden rounded-xl border border-white/10 bg-[#202020]">
+                <div className="flex aspect-[16/9] w-full items-center justify-center gap-2 bg-[#171717] p-3">
+                  {(giftBundle === 'combo' || giftBundle === 'headless') && <img src="/items/headless.png" alt="Headless Horseman" className={giftBundle === 'combo' ? 'h-full w-1/2 object-contain' : 'h-full w-full object-contain'} />}
+                  {(giftBundle === 'combo' || giftBundle === 'korblox') && <img src="/items/korblox.png" alt="Korblox Deathspeaker" className={giftBundle === 'combo' ? 'h-full w-1/2 object-contain' : 'h-full w-full object-contain'} />}
+                </div>
+                <div className="p-3">
+                  <p className="text-sm font-bold">{giftBundle === 'combo' ? 'Headless + Korblox' : giftBundle === 'korblox' ? 'Korblox Deathspeaker' : 'Headless Horseman'}</p>
+                  <p className="mt-1 text-xs text-white/55">Selected gift • Now find the Roblox account.</p>
+                </div>
               </div>
               <div className="mt-4">
                 <input value={giftUsername} onChange={(event) => { setGiftUsername(event.target.value); setGiftSearchMessage(''); setGiftPlayers([]); setGiftSelectedPlayer(null); setGiftMessage(''); setGiftSuccess(false) }} placeholder="Enter a Roblox username" aria-label="Roblox player username" className="h-12 w-full rounded-lg border border-[#34343b] bg-[#202024] px-3 text-sm text-[#f7f6f2] outline-none placeholder:text-[#85858f] focus:border-[#7183ff] focus:ring-2 focus:ring-[#335fff]/30" />
