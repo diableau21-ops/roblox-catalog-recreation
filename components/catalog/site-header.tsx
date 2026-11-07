@@ -31,10 +31,6 @@ function VerifiedBadge({ className = 'size-4' }: { className?: string }) {
 
 export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify, onSetBalance, onBellClick }: Props) {
   const [searchOpen, setSearchOpen] = useState(false)
-  const [peopleResults, setPeopleResults] = useState<{ id: number; name: string; displayName: string; avatarUrl?: string; hasVerifiedBadge?: boolean }[]>([])
-  const [peopleSearching, setPeopleSearching] = useState(false)
-  const [peopleMessage, setPeopleMessage] = useState('')
-  const [friendRequests, setFriendRequests] = useState<number[]>([])
   const [robuxPickerOpen, setRobuxPickerOpen] = useState(false)
   const [robuxAmount, setRobuxAmount] = useState(String(balance))
   const [settingsOpen, setSettingsOpen] = useState(false)
@@ -87,23 +83,11 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
 
   const searchCategories = ['Games', 'People', 'Marketplace', 'Communities', 'Creator Store']
 
-  const searchPeople = async () => {
+  const searchPeople = () => {
     const keyword = query.trim()
-    if (keyword.length < 3) { setPeopleMessage('Écris au moins 3 caractères.'); return }
-    setPeopleSearching(true)
-    setPeopleMessage('')
-    setPeopleResults([])
-    setSearchOpen(true)
-    try {
-      const response = await fetch(`/api/roblox-users?keyword=${encodeURIComponent(keyword)}`, { cache: 'no-store' })
-      if (!response.ok) throw new Error('Search failed')
-      const payload = await response.json()
-      const results = Array.isArray(payload.data) ? payload.data : []
-      setPeopleResults(results)
-      setPeopleMessage(results.length ? '' : 'Aucun profil trouvé.')
-    } catch {
-      setPeopleMessage('La recherche ne fonctionne pas pour le moment.')
-    } finally { setPeopleSearching(false) }
+    if (keyword.length < 3) return
+    setSearchOpen(false)
+    window.location.href = `/search/people?keyword=${encodeURIComponent(keyword)}`
   }
 
   return (
@@ -167,30 +151,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
                   </span>
                 </button>
               ))}
-              {peopleSearching && <p className="px-3 py-3 text-sm text-[#606162]">Recherche de profils…</p>}
-              {peopleMessage && <p className="px-3 py-3 text-sm text-[#a3a5ab]">{peopleMessage}</p>}
-              {peopleResults.length > 0 && (
-                <div className="border-t border-[#45464d]">
-                  <div className="px-3 py-3 text-sm font-bold text-white">People Results for {query.trim()}</div>
-                  <div className="max-h-[min(65vh,560px)] overflow-y-auto">
-                    {peopleResults.map((player) => (
-                      <div key={player.id} className="flex items-center gap-3 px-3 py-2.5 hover:bg-[#34353b]">
-                        <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => { window.location.href = `/users/${player.id}/${encodeURIComponent(player.name)}` }} className="flex min-w-0 flex-1 items-center gap-3 text-left">
-                          {player.avatarUrl ? <img src={player.avatarUrl} alt="" className="size-11 shrink-0 rounded-full object-cover" /> : <span className="size-11 shrink-0 rounded-full bg-[#45464d]" />}
-                          <span className="min-w-0 flex-1">
-                            <span className="block truncate text-sm font-semibold text-white">{player.displayName}</span>
-                            <span className="block truncate text-xs text-[#a3a5ab]">@{player.name}</span>
-                            <span className="mt-0.5 block text-xs text-[#888a91]">Offline</span>
-                          </span>
-                        </button>
-                        <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => setFriendRequests((current) => current.includes(player.id) ? current : [...current, player.id])} disabled={friendRequests.includes(player.id)} className="shrink-0 rounded-md bg-[#3b3c43] px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#50515a] disabled:cursor-default disabled:text-[#a3a5ab]">
-                          {friendRequests.includes(player.id) ? 'Request Sent' : 'Add Friend'}
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+
             </div>
           )}
         </label>
