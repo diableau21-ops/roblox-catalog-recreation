@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import { ProfileSiteHeader } from '@/components/catalog/profile-site-header'
 import { LeftNav } from '@/components/catalog/left-nav'
 import Link from 'next/link'
-import { MoreHorizontal } from 'lucide-react'
+import { BadgeCheck, MoreHorizontal } from 'lucide-react'
 
 type Player = {
   id: number
@@ -16,7 +16,7 @@ type Player = {
 }
 
 function VerifiedBadge() {
-  return <span title="Verified" className="inline-flex size-4 items-center justify-center rounded-full bg-[#335fff] text-[10px] font-black text-white">✓</span>
+  return <BadgeCheck aria-label="Verified" title="Verified" className="inline-block size-4 shrink-0 fill-[#335fff] text-white" strokeWidth={2.5} />
 }
 
 function PeopleSearchContent() {
@@ -126,7 +126,7 @@ function PeopleSearchContent() {
               {sendStage === "success" ? (
                 <div className="flex min-h-[370px] flex-col items-center px-2 pb-1 pt-8 text-center">
                   {sendRecipient.avatarUrl ? <img src={sendRecipient.avatarUrl} alt={`Avatar of ${sendRecipient.name}`} className="size-20 rounded-full object-cover" /> : <span className="size-20 rounded-full bg-[#3a3b40]" />}
-                  <p className="mt-3 text-lg font-bold">{sendRecipient.displayName}</p>
+                  <p className="mt-3 flex items-center justify-center gap-1.5 text-lg font-bold">{sendRecipient.displayName}{sendRecipient.hasVerifiedBadge && <VerifiedBadge />}</p>
                   <p className="mt-0.5 text-sm text-white/60">@{sendRecipient.name}</p>
                   <p className="mt-5 text-sm font-semibold text-white/65">Robux sent</p>
                   <div className="mt-3 flex items-center justify-center gap-2">
@@ -148,7 +148,7 @@ function PeopleSearchContent() {
                     <>
                       <div className="flex flex-col items-center px-2 pb-1 pt-7 text-center">
                         {sendRecipient.avatarUrl ? <img src={sendRecipient.avatarUrl} alt="" className="size-[68px] rounded-full object-cover" /> : <span className="size-[68px] rounded-full bg-[#3a3b40]" />}
-                        <p className="mt-3 text-base font-bold">{sendRecipient.displayName}</p>
+                        <p className="mt-3 flex items-center justify-center gap-1.5 text-base font-bold">{sendRecipient.displayName}{sendRecipient.hasVerifiedBadge && <VerifiedBadge />}</p>
                         <p className="mt-0.5 text-sm text-white/55">@{sendRecipient.name}</p>
                         <div className="mt-7 flex items-center justify-center gap-2">
                           <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Robux_2019_Logo_gold.svg" alt="" className="size-9 object-contain brightness-0 invert" />
@@ -170,7 +170,7 @@ function PeopleSearchContent() {
                     <>
                       <div className="mt-5 rounded-lg bg-[#292a31] px-4 py-5 text-center">
                         {sendRecipient.avatarUrl ? <img src={sendRecipient.avatarUrl} alt="" className="mx-auto size-[68px] rounded-full object-cover" /> : <span className="mx-auto block size-[68px] rounded-full bg-[#3a3b40]" />}
-                        <p className="mt-3 text-base font-bold">{sendRecipient.displayName}</p>
+                        <p className="mt-3 flex items-center justify-center gap-1.5 text-base font-bold">{sendRecipient.displayName}{sendRecipient.hasVerifiedBadge && <VerifiedBadge />}</p>
                         <p className="mt-0.5 text-sm text-white/65">@{sendRecipient.name}</p>
                       </div>
                       <div className="mt-4 rounded-lg bg-[#292a31] px-4 py-6 text-center">
