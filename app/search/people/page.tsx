@@ -29,7 +29,7 @@ function PeopleSearchContent() {
   const [openMenu, setOpenMenu] = useState<number | null>(null)
   const [sendRecipient, setSendRecipient] = useState<Player | null>(null)
   const [sendAmount, setSendAmount] = useState('100')
-  const [sendStage, setSendStage] = useState<'edit' | 'confirm' | 'success'>('edit')
+  const [sendStage, setSendStage] = useState<'edit' | 'confirm' | 'loading' | 'success'>('edit')
   const [sendMessage, setSendMessage] = useState('')
 
   useEffect(() => {
@@ -113,32 +113,43 @@ function PeopleSearchContent() {
         {sendRecipient && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 p-3" onClick={() => setSendRecipient(null)}>
             <section role="dialog" aria-modal="true" aria-labelledby="people-send-title" className="relative w-full max-w-lg rounded-2xl border border-[#383838] bg-[#1f1f1f] p-5 text-white shadow-2xl sm:p-6" onClick={(event) => event.stopPropagation()}>
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-2.5"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="Roblox Plus" className="size-7 shrink-0 object-contain brightness-0 invert" /><h2 id="people-send-title" className="text-2xl font-extrabold">Send Robux</h2></div>
-                <button type="button" onClick={() => setSendRecipient(null)} aria-label="Close" className="rounded-lg px-2 py-1 text-xl text-white/75 hover:bg-white/10">×</button>
-              </div>
-              <div className="mt-6 flex flex-col items-center text-center">
-                {sendRecipient.avatarUrl ? <img src={sendRecipient.avatarUrl} alt="" className="size-24 rounded-full object-cover" /> : <span className="size-24 rounded-full bg-[#303136]" /> }
-                <p className="mt-3 text-xl font-bold">{sendRecipient.displayName}</p>
-                <p className="text-sm text-white/60">@{sendRecipient.name}</p>
-              </div>
-              {sendStage === "edit" ? (
-                <>
-                  <label htmlFor="people-send-amount" className="mt-6 block text-sm font-semibold text-white/75">Robux amount</label>
-                  <input id="people-send-amount" type="number" min="1" step="1" value={sendAmount} onChange={(event) => { setSendAmount(event.target.value); setSendMessage("") }} className="mt-2 h-12 w-full rounded-lg border border-white/20 bg-[#292929] px-4 text-white outline-none focus:border-[#146bff]" />
-                  <button type="button" disabled={!Number.isSafeInteger(Number(sendAmount)) || Number(sendAmount) < 1} onClick={() => { setSendMessage(""); setSendStage("confirm") }} className="mt-5 h-12 w-full rounded-xl bg-[#146bff] font-extrabold disabled:opacity-50">Next</button>
-                </>
-              ) : sendStage === "confirm" ? (
-                <>
-                  <div className="mt-5 flex gap-3">
-                    <button type="button" onClick={() => { setSendStage("success"); setSendMessage("Gift preview completed.") }} className="h-12 flex-1 rounded-xl bg-[#146bff] font-extrabold">Send</button>
-                    <button type="button" onClick={() => setSendStage("edit")} className="h-12 flex-1 rounded-xl border border-white/20 font-bold hover:bg-white/5">Back</button>
-                  </div>
-                </>
+              {sendStage === "loading" ? (
+                <div className="flex min-h-[330px] flex-col items-center justify-center text-center">
+                  <span className="size-14 animate-spin rounded-full border-4 border-white/15 border-t-white" />
+                  <p className="mt-6 text-xl font-extrabold">Sending...</p>
+                  <p className="mt-2 text-sm text-white/60">Please wait</p>
+                </div>
+              ) : sendStage === "success" ? (
+                <div className="flex min-h-[370px] flex-col items-center px-2 pb-1 pt-5 text-center">
+                  <div className="flex size-16 items-center justify-center rounded-full border-2 border-white bg-white text-4xl font-black leading-none text-black">✓</div>
+                  <p className="mt-8 text-2xl font-extrabold">{Number(sendAmount).toLocaleString("en-US")} Robux</p>
+                  <p className="mt-2 text-lg font-semibold">to {sendRecipient.name}</p>
+                  <p className="mt-3 text-xs text-white/45">Simulation only — no Robux were transferred.</p>
+                  <button type="button" onClick={() => setSendRecipient(null)} className="mt-auto h-12 w-full max-w-[220px] rounded-xl bg-[#146bff] font-extrabold hover:bg-[#2878ff]">OK</button>
+                </div>
               ) : (
                 <>
-                  <p className="mt-6 rounded-xl bg-[#292929] p-4 text-center font-semibold">{sendMessage} This is only a visual mockup; no Robux are transferred.</p>
-                  <button type="button" onClick={() => setSendRecipient(null)} className="mt-5 h-12 w-full rounded-xl bg-[#146bff] font-extrabold">Done</button>
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2.5"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="Roblox Plus" className="size-7 shrink-0 object-contain brightness-0 invert" /><h2 id="people-send-title" className="text-2xl font-extrabold">Send Robux</h2></div>
+                    <button type="button" onClick={() => setSendRecipient(null)} aria-label="Close" className="rounded-lg px-2 py-1 text-xl text-white/75 hover:bg-white/10">×</button>
+                  </div>
+                  <div className="mt-6 flex flex-col items-center text-center">
+                    {sendRecipient.avatarUrl ? <img src={sendRecipient.avatarUrl} alt="" className="size-24 rounded-full object-cover" /> : <span className="size-24 rounded-full bg-[#303136]" /> }
+                    <p className="mt-3 text-xl font-bold">{sendRecipient.displayName}</p>
+                    <p className="text-sm text-white/60">@{sendRecipient.name}</p>
+                  </div>
+                  {sendStage === "edit" ? (
+                    <>
+                      <label htmlFor="people-send-amount" className="mt-6 block text-sm font-semibold text-white/75">Robux amount</label>
+                      <input id="people-send-amount" type="number" min="1" step="1" value={sendAmount} onChange={(event) => { setSendAmount(event.target.value); setSendMessage("") }} className="mt-2 h-12 w-full rounded-lg border border-white/20 bg-[#292929] px-4 text-white outline-none focus:border-[#146bff]" />
+                      <button type="button" disabled={!Number.isSafeInteger(Number(sendAmount)) || Number(sendAmount) < 1} onClick={() => { setSendMessage(""); setSendStage("confirm") }} className="mt-5 h-12 w-full rounded-xl bg-[#146bff] font-extrabold disabled:opacity-50">Next</button>
+                    </>
+                  ) : (
+                    <div className="mt-5 flex gap-3">
+                      <button type="button" onClick={() => { setSendStage("loading"); window.setTimeout(() => setSendStage("success"), 1600) }} className="h-12 flex-1 rounded-xl bg-[#146bff] font-extrabold">Send</button>
+                      <button type="button" onClick={() => setSendStage("edit")} className="h-12 flex-1 rounded-xl border border-white/20 font-bold hover:bg-white/5">Back</button>
+                    </div>
+                  )}
                 </>
               )}
             </section>
