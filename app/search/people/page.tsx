@@ -111,8 +111,13 @@ function PeopleSearchContent() {
           </div>
         )}
         {sendRecipient && sendStage === "loading" && (
-          <div className="pointer-events-none fixed inset-0 z-[120] flex items-center justify-center">
-            <span aria-label="Loading" role="status" className="size-9 animate-spin rounded-full border-[3px] border-white/20 border-t-white" />
+          <div className="fixed inset-0 z-[120] flex items-center justify-center bg-black/75 p-3">
+            <section role="status" aria-live="polite" className="flex min-h-[260px] w-full max-w-sm flex-col items-center justify-center rounded-2xl border border-[#383838] bg-[#1f1f1f] px-6 py-8 text-center text-white shadow-2xl">
+              {sendRecipient.avatarUrl ? <img src={sendRecipient.avatarUrl} alt="" className="size-16 rounded-full object-cover opacity-80" /> : <span className="size-16 rounded-full bg-[#3a3b40]" />}
+              <span aria-label="Loading" className="mt-6 size-8 animate-spin rounded-full border-[3px] border-white/20 border-t-white" />
+              <p className="mt-5 text-lg font-bold">Sending Robux...</p>
+              <p className="mt-1 text-sm text-white/60">To @{sendRecipient.name}</p>
+            </section>
           </div>
         )}
         {sendRecipient && sendStage !== "loading" && (
@@ -121,8 +126,14 @@ function PeopleSearchContent() {
               {sendStage === "success" ? (
                 <div className="flex min-h-[370px] flex-col items-center px-2 pb-1 pt-8 text-center">
                   <div className="flex size-16 items-center justify-center rounded-full border-2 border-white bg-transparent text-4xl font-black leading-none text-white">✓</div>
-                  <p className="mt-7 text-2xl font-extrabold">{Number(sendAmount).toLocaleString("en-US")} Robux</p>
-                  <p className="mt-3 text-lg font-semibold">to {sendRecipient.name}</p>
+                  <p className="mt-6 text-sm font-semibold text-white/65">Robux sent to</p>
+                  {sendRecipient.avatarUrl ? <img src={sendRecipient.avatarUrl} alt={`Avatar of ${sendRecipient.name}`} className="mt-3 size-20 rounded-full object-cover" /> : <span className="mt-3 size-20 rounded-full bg-[#3a3b40]" />}
+                  <p className="mt-3 text-lg font-bold">{sendRecipient.displayName}</p>
+                  <p className="mt-0.5 text-sm text-white/60">@{sendRecipient.name}</p>
+                  <div className="mt-5 flex items-center justify-center gap-2">
+                    <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Robux_2019_Logo_gold.svg" alt="" className="size-7 object-contain brightness-0 invert" />
+                    <p className="text-2xl font-extrabold">{Number(sendAmount).toLocaleString("en-US")}</p>
+                  </div>
                   <button type="button" onClick={() => setSendRecipient(null)} className="mt-auto h-12 w-full max-w-[220px] rounded-xl bg-[#146bff] font-extrabold hover:bg-[#2878ff]">OK</button>
                 </div>
               ) : (
