@@ -218,7 +218,6 @@ function PeopleSearchContent() {
             </section>
           </div>
         )}
-        <p className="mt-10 text-xs text-[#777b85]">Public profile information from Roblox. This fan-made site is not affiliated with Roblox.</p>
       </div>
     </main>
   )
