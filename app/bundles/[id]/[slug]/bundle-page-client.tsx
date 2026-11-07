@@ -166,9 +166,6 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   return (
     <main className="min-h-screen bg-background text-foreground">
       <SiteHeader balance={balance} query={query} onQueryChange={setQuery} onBuyRobux={() => setRobuxShopOpen(true)} onNotify={notify} />
-      <div role="note" aria-label="Site information" className="mx-3 mt-3 rounded-lg border border-white/10 bg-[#202020] px-4 py-2 text-xs text-white/60 sm:mx-5 md:ml-[240px] md:mr-8">
-        Unofficial site, not affiliated with Roblox. Robux and items cannot be transferred here.
-      </div>
       <LeftNav onNotify={notify} onBuyRobux={() => setRobuxShopOpen(true)} />
 
       <div className="w-full px-3 py-4 pb-24 sm:px-5 sm:py-6 md:ml-[220px] md:max-w-[calc(100%-220px)] md:px-8 md:py-8">
@@ -466,6 +463,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
         </section>
       </div>}
       <footer className="mt-8 w-full border-t border-white/10 bg-[#191919] px-4 py-5 text-white/75">
+        <p className="mx-auto mb-4 max-w-[1000px] text-center text-xs text-white/45">Unofficial site, not affiliated with Roblox. Robux and items cannot be transferred here.</p>
         <div className="mx-auto max-w-[1000px]">
           <nav aria-label="Footer" className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-semibold sm:text-sm">
             <a className="hover:text-white" href="https://www.roblox.com/info/about-us?locale=en_us" target="_blank" rel="noreferrer">About Us</a>
