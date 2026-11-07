@@ -142,14 +142,14 @@ function PeopleSearchContent() {
                         <p className="mt-3 text-base font-bold">{sendRecipient.displayName}</p>
                         <p className="mt-0.5 text-sm text-white/55">@{sendRecipient.name}</p>
                         <div className="mt-7 flex items-center justify-center gap-2">
-                          <span aria-hidden="true" className="text-4xl leading-none text-white">⬡</span>
+                          <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Robux_2019_Logo_gold.svg" alt="" className="size-9 object-contain brightness-0 invert" />
                           <label htmlFor="people-send-amount" className="sr-only">Robux amount</label>
                           <input id="people-send-amount" type="number" min="0" max="5000" step="1" value={sendAmount} onChange={(event) => { setSendAmount(event.target.value); setSendMessage("") }} className="w-32 bg-transparent text-center text-5xl font-extrabold text-white outline-none" />
                         </div>
                         <div className="mt-8 grid w-full grid-cols-4 gap-2">
                           {[25, 50, 100, 200].map((amount) => (
                             <button key={amount} type="button" onClick={() => setSendAmount(String(amount))} className={`flex h-12 items-center justify-center gap-1.5 rounded-lg px-2 text-sm font-bold transition-colors ${Number(sendAmount) === amount ? "bg-[#3a3b44]" : "bg-[#303139] hover:bg-[#3a3b44]"}`}>
-                              <span aria-hidden="true" className="text-lg">⬡</span>{amount}
+                              <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Robux_2019_Logo_gold.svg" alt="" className="size-5 object-contain brightness-0 invert" />{amount}
                             </button>
                           ))}
                         </div>
@@ -166,7 +166,7 @@ function PeopleSearchContent() {
                       </div>
                       <div className="mt-4 rounded-lg bg-[#292a31] px-4 py-6 text-center">
                         <div className="flex items-center justify-center gap-2">
-                          <span aria-hidden="true" className="text-4xl leading-none">⬡</span>
+                          <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Robux_2019_Logo_gold.svg" alt="" className="size-9 object-contain brightness-0 invert" />
                           <p className="text-4xl font-extrabold">{Number(sendAmount).toLocaleString("en-US")}</p>
                         </div>
                         <p className="mt-2 text-sm text-white/65">The recipient will get {Number(sendAmount).toLocaleString("en-US")} Robux.</p>
