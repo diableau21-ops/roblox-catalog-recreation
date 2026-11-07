@@ -80,11 +80,10 @@ function PeopleSearchContent() {
       <LeftNav dark onNotify={(msg) => window.alert(msg)} />
       <div className="ml-0 w-full px-4 pb-24 pt-7 sm:px-8 md:ml-[220px] md:w-[calc(100%-220px)]">
         <div className="mb-6 border-b border-[#292a2e] pb-5">
-          <h1 className="text-2xl font-extrabold sm:text-3xl">People Results for {keyword}</h1>
+          <h1 className="text-2xl font-extrabold sm:text-3xl">Search</h1>
           <form onSubmit={(event) => { event.preventDefault(); const term = searchTerm.trim(); if (term.length >= 3) router.push(`/search/people?keyword=${encodeURIComponent(term)}`) }} className="mt-4 flex w-full max-w-xl items-center gap-2 rounded-full border border-[#45464d] bg-[#242529] p-1.5 focus-within:border-white/60">
             <Search className="ml-3 size-5 shrink-0 text-[#a3a5ab]" />
             <input aria-label="Search people" value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Search people" className="min-w-0 flex-1 bg-transparent px-1 py-2 text-sm text-white outline-none placeholder:text-[#a3a5ab]" />
-            <button type="submit" disabled={searchTerm.trim().length < 3} className="rounded-full bg-[#335fff] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#426cff] disabled:cursor-not-allowed disabled:opacity-50">Search</button>
           </form>
         </div>
 
