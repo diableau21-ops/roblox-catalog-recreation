@@ -19,9 +19,13 @@ export function ProfileActions({ username }: { username: string }) {
         <MoreHorizontal className="size-6" />
       </button>
       {open && (
-        <div className="absolute right-0 top-full z-[80] mt-1 w-40 overflow-hidden rounded-md border border-[#38393e] bg-[#242529] py-1 shadow-xl">
+        <div className="absolute right-0 top-full z-[80] mt-1 w-44 overflow-hidden rounded-md border border-[#38393e] bg-[#242529] py-1 shadow-xl">
           <Link href={'/robux?q=' + encodeURIComponent(username)} onClick={() => setOpen(false)} className="block px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Send Robux</Link>
           <button type="button" className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Follow</button>
+          <button type="button" className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Inventory</button>
+          <button type="button" className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Favorites</button>
+          <button type="button" className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Block User</button>
+          <button type="button" className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Report Abuse</button>
         </div>
       )}
     </div>
