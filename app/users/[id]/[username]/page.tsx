@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { ProfileSiteHeader } from '@/components/catalog/profile-site-header'
 import { LeftNav } from '@/components/catalog/left-nav'
+import { ProfileActions } from '@/components/catalog/profile-actions'
 
 export const dynamic = 'force-dynamic'
 
@@ -51,7 +52,7 @@ export default async function RobloxUserProfile({ params }: { params: Promise<{ 
 
   return (
     <main className="min-h-screen bg-black text-white">
-      <ProfileSiteHeader username={result?.user.name ?? ''} />
+      <ProfileSiteHeader />
       <LeftNav dark />
 
       <div className="ml-0 w-full px-3 pb-20 pt-5 sm:px-8 sm:py-7 md:ml-[220px] md:w-[calc(100%-220px)]">
@@ -79,6 +80,7 @@ export default async function RobloxUserProfile({ params }: { params: Promise<{ 
                     <span className="font-semibold">{result.following?.toLocaleString('en-US') ?? '—'} <span className="font-normal text-[#a4a7b0]">Following</span></span>
                   </div>
                 </div>
+                <ProfileActions username={result.user.name} />
               </div>
               <nav className="flex gap-7 border-b border-[#252525] px-0" aria-label="Profile sections">
                 <a href="#about" className="border-b-[3px] border-[#335fff] py-4 text-sm font-bold">About</a>
