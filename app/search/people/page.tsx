@@ -126,11 +126,11 @@ function PeopleSearchContent() {
         )}
         {sendRecipient && sendStage === "loading" && (
           <div className="fixed inset-0 z-[120] flex items-center justify-center bg-black/75 p-3">
-            <section role="status" aria-live="polite" className="flex min-h-[300px] w-full max-w-sm flex-col rounded-2xl border border-[#383838] bg-[#1f1f1f] px-5 py-5 text-white shadow-2xl">
+            <section role="status" aria-live="polite" className="flex min-h-[460px] w-full max-w-lg flex-col rounded-2xl border border-[#383838] bg-[#1f1f1f] px-5 py-5 text-white shadow-2xl sm:p-6">
               <div className="flex w-full items-center justify-between gap-3 border-b border-white/10 pb-4">
                 <div className="flex min-w-0 items-center gap-2">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="" className="size-6 shrink-0 object-contain brightness-0 invert" />
-                  <span className="truncate text-base font-extrabold">Send Robux</span>
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="" className="size-7 shrink-0 object-contain brightness-0 invert" />
+                  <span className="truncate text-xl font-extrabold">Send Robux</span>
                 </div>
                 <div className="flex shrink-0 items-center gap-1.5 text-sm font-bold"><RobuxIcon className="size-5" /><span className="tabular-nums">{robuxBalance.toLocaleString('en-US')}</span></div>
               </div>
