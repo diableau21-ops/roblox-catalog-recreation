@@ -4,6 +4,8 @@ import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { ProfileSiteHeader } from '@/components/catalog/profile-site-header'
 import { LeftNav } from '@/components/catalog/left-nav'
+import Link from 'next/link'
+import { MoreHorizontal } from 'lucide-react'
 
 type Player = {
   id: number
@@ -24,6 +26,7 @@ function PeopleSearchContent() {
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState('')
   const [sent, setSent] = useState<number[]>([])
+  const [openMenu, setOpenMenu] = useState<number | null>(null)
 
   useEffect(() => {
     let active = true
@@ -66,7 +69,20 @@ function PeopleSearchContent() {
         ) : (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
             {players.map((player) => (
-              <article key={player.id} className="flex min-h-[270px] flex-col items-center rounded-xl bg-[#191a1f] px-5 py-5 text-center transition-colors hover:bg-[#202127]">
+              <article key={player.id} className="relative flex min-h-[270px] flex-col items-center rounded-xl bg-[#191a1f] px-5 py-5 text-center transition-colors hover:bg-[#202127]">
+                <button type="button" aria-label={`More actions for ${player.name}`} aria-expanded={openMenu === player.id} onClick={() => setOpenMenu((current) => current === player.id ? null : player.id)} className="absolute right-3 top-3 flex size-9 items-center justify-center rounded-full text-white hover:bg-[#34353b]">
+                  <MoreHorizontal className="size-6" />
+                </button>
+                {openMenu === player.id && (
+                  <div className="absolute right-3 top-12 z-30 w-44 overflow-hidden rounded-md border border-[#38393e] bg-[#242529] py-1 text-left shadow-xl">
+                    <Link href={`/robux?q=${encodeURIComponent(player.name)}`} onClick={() => setOpenMenu(null)} className="block px-3 py-2.5 text-sm font-semibold text-white hover:bg-[#35363c]">Send Robux</Link>
+                    <button type="button" onClick={() => setOpenMenu(null)} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Follow</button>
+                    <button type="button" onClick={() => setOpenMenu(null)} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Inventory</button>
+                    <button type="button" onClick={() => setOpenMenu(null)} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Favorites</button>
+                    <button type="button" onClick={() => setOpenMenu(null)} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Block User</button>
+                    <button type="button" onClick={() => setOpenMenu(null)} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Report Abuse</button>
+                  </div>
+                )}
                 <a href={`/users/${player.id}/${encodeURIComponent(player.name)}`} className="flex w-full flex-col items-center">
                   {player.avatarUrl
                     ? <img src={player.avatarUrl} alt={`Avatar of ${player.name}`} className="size-28 rounded-full object-cover" />
