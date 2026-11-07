@@ -47,26 +47,10 @@ export async function GET(request: Request) {
           }))
       : []
 
-    const ids = data.map((player: { id: number }) => player.id).join(',')
-    let thumbnails: { data?: { targetId?: number; imageUrl?: string }[] } = {}
-    if (ids) {
-      try {
-        const thumbResponse = await fetch(
-          `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${ids}&size=150x150&format=Png&isCircular=false&thumbnailType=HeadShot`,
-          { headers: { Accept: 'application/json' }, cache: 'no-store', signal: AbortSignal.timeout(4000) },
-        )
-        if (thumbResponse.ok) thumbnails = await thumbResponse.json()
-      } catch {}
-    }
-    const avatarById = new Map(
-      (thumbnails.data ?? [])
-        .filter((thumbnail) => thumbnail.imageUrl)
-        .map((thumbnail) => [String(thumbnail.targetId), thumbnail.imageUrl as string]),
-    )
     return NextResponse.json({
       data: data.map((player: { id: number; name: string; displayName: string; hasVerifiedBadge: boolean }) => ({
         ...player,
-        avatarUrl: avatarById.get(String(player.id)) ?? `https://www.roblox.com/headshot-thumbnail/image?userId=${player.id}&width=150&height=150&format=png`,
+        avatarUrl: `https://www.roblox.com/headshot-thumbnail/image?userId=${player.id}&width=150&height=150&format=png`,
       })),
     }, { headers: corsHeaders })
   } catch {
