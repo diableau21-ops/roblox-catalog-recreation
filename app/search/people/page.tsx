@@ -82,7 +82,7 @@ function PeopleSearchContent() {
                   type="button"
                   disabled={sent.includes(player.id)}
                   onClick={() => setSent((current) => current.includes(player.id) ? current : [...current, player.id])}
-                  className="mt-auto w-full max-w-[220px] rounded-lg bg-[#335fff] px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#264de0] disabled:cursor-default disabled:bg-[#343640] disabled:text-[#b8bac2]"
+                  className="mt-auto w-full max-w-[220px] rounded-lg bg-[#242529] px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#303136] active:bg-[#1b1c20] disabled:cursor-default disabled:bg-[#1c1d21] disabled:text-[#858891]"
                 >
                   {sent.includes(player.id) ? 'Request Sent' : 'Add Friend'}
                 </button>
