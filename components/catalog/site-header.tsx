@@ -36,12 +36,33 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
   const [robuxPickerOpen, setRobuxPickerOpen] = useState(false)
   const [robuxAmount, setRobuxAmount] = useState(String(balance))
   const [settingsOpen, setSettingsOpen] = useState(false)
+  const [appearanceOpen, setAppearanceOpen] = useState(false)
+  const [siteTheme, setSiteTheme] = useState<'dark' | 'light'>('dark')
+  const [siteFont, setSiteFont] = useState('Manrope')
   const [profileOpen, setProfileOpen] = useState(false)
   const [profileQuery, setProfileQuery] = useState('')
   const [profileSearching, setProfileSearching] = useState(false)
   const [profileMessage, setProfileMessage] = useState('')
   const [profileResults, setProfileResults] = useState<{ id: number; name: string; displayName: string; avatarUrl?: string; hasVerifiedBadge?: boolean }[]>([])
   const [profile, setProfile] = useState<{ id: number; name: string; displayName: string; avatarUrl?: string; hasVerifiedBadge?: boolean } | null>(null)
+
+  useEffect(() => {
+    try {
+      const savedTheme = window.localStorage.getItem('catalog-site-theme')
+      const savedFont = window.localStorage.getItem('catalog-site-font')
+      if (savedTheme === 'light' || savedTheme === 'dark') setSiteTheme(savedTheme)
+      if (savedFont) setSiteFont(savedFont)
+    } catch {}
+  }, [])
+
+  useEffect(() => {
+    document.documentElement.dataset.siteTheme = siteTheme
+    document.documentElement.style.setProperty('--site-font', siteFont === 'Trebuchet MS' ? "'Trebuchet MS'" : siteFont)
+    try {
+      window.localStorage.setItem('catalog-site-theme', siteTheme)
+      window.localStorage.setItem('catalog-site-font', siteFont)
+    } catch {}
+  }, [siteTheme, siteFont])
 
   useEffect(() => {
     try {
@@ -172,14 +193,30 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
           <button
             type="button"
             aria-label="Notifications"
-            onClick={() => { if (onSetBalance) { setRobuxAmount(String(balance)); setRobuxPickerOpen(true) } else if (onBellClick) onBellClick(); else onNotify('No new notifications') }}
+            onClick={() => { setAppearanceOpen((open) => !open); setSettingsOpen(false) }}
             className="relative rounded-lg p-2 hover:bg-secondary"
           >
             <Bell className="size-5" />
-            <span className="absolute right-1 top-1 flex size-4 items-center justify-center rounded-full bg-favorite text-[10px] font-bold text-white">
-              2
-            </span>
+            <span className="absolute right-1 top-1 flex size-4 items-center justify-center rounded-full bg-favorite text-[10px] font-bold text-white">2</span>
           </button>
+          {appearanceOpen && (
+            <div className="absolute right-0 top-full z-[120] mt-2 w-72 rounded-xl border border-[#38393e] bg-[#242529] p-4 text-white shadow-2xl">
+              <div className="mb-3 flex items-center justify-between">
+                <h2 className="text-base font-bold">Appearance</h2>
+                <button type="button" aria-label="Close appearance" onClick={() => setAppearanceOpen(false)} className="rounded-md px-2 py-1 text-lg text-white/70 hover:bg-white/10">×</button>
+              </div>
+              <p className="mb-2 text-xs font-semibold text-white/60">Site color</p>
+              <div className="grid grid-cols-2 gap-2">
+                <button type="button" aria-pressed={siteTheme === 'dark'} onClick={() => setSiteTheme('dark')} className={`rounded-lg border px-3 py-2.5 text-sm font-semibold ${siteTheme === 'dark' ? 'border-blue-400 bg-[#343944]' : 'border-white/10 bg-[#1b1c20]'}`}>Black</button>
+                <button type="button" aria-pressed={siteTheme === 'light'} onClick={() => setSiteTheme('light')} className={`rounded-lg border px-3 py-2.5 text-sm font-semibold ${siteTheme === 'light' ? 'border-blue-400 bg-white text-black' : 'border-white/10 bg-[#1b1c20]'}`}>White</button>
+              </div>
+              <label htmlFor="site-font-choice-main" className="mb-2 mt-4 block text-xs font-semibold text-white/60">Font</label>
+              <select id="site-font-choice-main" value={siteFont} onChange={(event) => setSiteFont(event.target.value)} className="h-10 w-full rounded-lg border border-white/15 bg-[#1b1c20] px-3 text-sm text-white outline-none focus:border-blue-400">
+                <option value="Manrope">Manrope</option><option value="Arial">Arial</option><option value="Verdana">Verdana</option><option value="Trebuchet MS">Trebuchet MS</option><option value="Georgia">Georgia</option>
+              </select>
+              <p className="mt-3 text-[11px] text-white/50">Your choices are saved on this device.</p>
+            </div>
+          )}
           {robuxPickerOpen && onSetBalance && (
             <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 p-4" onClick={() => setRobuxPickerOpen(false)}>
               <section role="dialog" aria-modal="true" aria-labelledby="robux-picker-title" className="w-full max-w-sm rounded-2xl border border-border bg-card p-5 text-foreground shadow-2xl" onClick={(event) => event.stopPropagation()}>
