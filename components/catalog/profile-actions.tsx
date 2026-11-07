@@ -1,14 +1,28 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { MoreHorizontal } from 'lucide-react'
 
 export function ProfileActions({ username }: { username: string }) {
   const [open, setOpen] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!open) return
+
+    function handleOutsideClick(event: PointerEvent) {
+      if (event.target instanceof Node && !containerRef.current?.contains(event.target)) {
+        setOpen(false)
+      }
+    }
+
+    document.addEventListener('pointerdown', handleOutsideClick)
+    return () => document.removeEventListener('pointerdown', handleOutsideClick)
+  }, [open])
 
   return (
-    <div className="relative flex shrink-0 items-center gap-2 self-start sm:self-center">
+    <div ref={containerRef} className="relative flex shrink-0 items-center gap-2 self-start sm:self-center">
       <button type="button" className="h-10 rounded-md bg-[#393b40] px-4 text-sm font-bold text-white hover:bg-[#4a4c52]">
         Add Friend
       </button>
