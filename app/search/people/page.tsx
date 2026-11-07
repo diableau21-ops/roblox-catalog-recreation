@@ -53,26 +53,36 @@ function PeopleSearchContent() {
 
   useEffect(() => {
     let active = true
+    const controller = new AbortController()
     const run = async () => {
       setLoading(true)
       setMessage('')
       try {
-        const response = await fetch(`/api/roblox-users?keyword=${encodeURIComponent(keyword)}`, { cache: 'no-store' })
+        const response = await fetch(`/api/roblox-users?keyword=${encodeURIComponent(keyword)}`, {
+          cache: 'no-store',
+          signal: controller.signal,
+        })
         if (!response.ok) throw new Error('Search failed')
         const payload = await response.json()
         if (!active) return
         const data = Array.isArray(payload.data) ? payload.data : []
         setPlayers(data)
         setMessage(data.length ? '' : 'No results found.')
-      } catch {
-        if (active) setMessage('Could not load people right now. Please try again.')
+      } catch (error) {
+        if (active && !(error instanceof DOMException && error.name === 'AbortError')) {
+          setPlayers([])
+          setMessage('Could not load people right now. Please try again.')
+        }
       } finally {
         if (active) setLoading(false)
       }
     }
     if (keyword.length >= 3) void run()
     else { setPlayers([]); setMessage('Enter at least 3 characters.'); setLoading(false) }
-    return () => { active = false }
+    return () => {
+      active = false
+      controller.abort()
+    }
   }, [keyword])
 
   return (
@@ -111,7 +121,7 @@ function PeopleSearchContent() {
                 )}
                 <a href={`/users/${player.id}/${encodeURIComponent(player.name)}`} className="flex w-full flex-col items-center">
                   {player.avatarUrl
-                    ? <img src={player.avatarUrl} alt={`Avatar of ${player.name}`} className="size-28 rounded-full object-cover" />
+                    ? <img src={player.avatarUrl} alt={`Avatar of ${player.name}`} loading="lazy" decoding="async" className="size-28 rounded-full object-cover" />
                     : <div className="size-28 rounded-full bg-[#303136]" />}
                   <span className="mt-3 flex max-w-full items-center justify-center gap-1 truncate text-base font-bold">
                     <span className="truncate">{player.displayName}</span>
