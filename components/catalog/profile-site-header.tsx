@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { Search, Bell } from 'lucide-react'
+import { Search, Bell, Settings } from 'lucide-react'
 import { RobloxLogo, RobloxMark, RobuxIcon } from '@/components/catalog/robux-icon'
 
 type SavedProfile = { name?: string; displayName?: string; avatarUrl?: string }
@@ -11,6 +11,7 @@ export function ProfileSiteHeader() {
   const [balance, setBalance] = useState(1250)
   const [profile, setProfile] = useState<SavedProfile | null>(null)
   const [query, setQuery] = useState('')
+  const [settingsOpen, setSettingsOpen] = useState(false)
 
   useEffect(() => {
     try {
@@ -50,6 +51,16 @@ export function ProfileSiteHeader() {
             <span className="max-w-28 truncate text-sm font-bold">{profile?.displayName || 'Builderman'}</span>
           </div>
           <button type="button" aria-label="Notifications" className="rounded-lg p-2 hover:bg-[#242529]"><Bell className="size-5" /></button>
+          <div className="relative">
+            <button type="button" aria-label="Settings" aria-expanded={settingsOpen} onClick={() => setSettingsOpen((open) => !open)} className="rounded-lg p-2 hover:bg-[#242529]"><Settings className="size-5" /></button>
+            {settingsOpen && (
+              <div className="absolute right-0 top-full z-[80] mt-1 w-56 overflow-hidden rounded-lg border border-[#38393e] bg-[#242529] py-1 text-white shadow-xl">
+                {['Settings', 'Quick Sign In', 'Help and Safety', 'Switch Accounts', 'Logout'].map((label) => (
+                  <button key={label} type="button" onClick={() => setSettingsOpen(false)} className="flex w-full items-center px-4 py-3 text-left text-sm font-medium hover:bg-[#35363c]">{label}</button>
+                ))}
+              </div>
+            )}
+          </div>
           <Link href="/robux" className="flex items-center gap-1.5 rounded-lg px-2 py-2 text-sm font-bold hover:bg-[#242529] sm:text-base" aria-label={balance.toLocaleString() + ' Robux'}>
             <RobuxIcon className="size-6" />
             <span className="tabular-nums">{balance.toLocaleString('en-US')}</span>
