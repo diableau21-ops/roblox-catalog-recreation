@@ -44,7 +44,9 @@ export default function RobuxPage() {
           setBalance(corruptedSuffix ? 1250 + corruptedSuffix : parsed)
         }
       }
-      setQuery(new URLSearchParams(window.location.search).get('q') ?? '')
+      const recipient = new URLSearchParams(window.location.search).get('q') ?? ''
+      setQuery(recipient)
+      if (recipient) { setSendUsername(recipient); setSendOpen(true) }
     } catch {}
     setBalanceReady(true)
   }, [])
