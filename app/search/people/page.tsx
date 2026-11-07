@@ -158,7 +158,7 @@ function PeopleSearchContent() {
                   {sendRecipient.avatarUrl ? <img src={sendRecipient.avatarUrl} alt={`Avatar of ${sendRecipient.name}`} className="size-20 rounded-full object-cover" /> : <span className="size-20 rounded-full bg-[#3a3b40]" />}
                   <p className="mt-3 flex items-center justify-center gap-1.5 text-lg font-bold">{sendRecipient.displayName}{sendRecipient.hasVerifiedBadge && <VerifiedBadge />}</p>
                   <p className="mt-0.5 text-sm text-white/60">@{sendRecipient.name}</p>
-                  <p className="mt-5 text-sm font-semibold text-white/65">Robux sent</p>
+                  <p className="mt-5 text-sm font-semibold text-white/65">Robux send</p>
                   <div className="mt-3 flex items-center justify-center gap-2">
                     <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Robux_2019_Logo_gold.svg" alt="" className="size-7 object-contain brightness-0 invert" />
                     <p className="text-2xl font-extrabold">{Number(sendAmount).toLocaleString("en-US")}</p>
@@ -204,7 +204,7 @@ function PeopleSearchContent() {
                         <p className="mt-2 text-sm text-white/65">The recipient will get {Number(sendAmount).toLocaleString("en-US")} Robux.</p>
                       </div>
                       <div className="mt-5 flex gap-2">
-                        <button type="button" onClick={() => { setSendStage("loading"); window.setTimeout(() => setSendStage("success"), 1600) }} className="h-11 flex-1 rounded-lg bg-[#335fff] font-bold text-white hover:bg-[#426cff]">Send</button>
+                        <button type="button" onClick={() => { const amount = Number(sendAmount); const updatedBalance = Math.max(0, robuxBalance - amount); setRobuxBalance(updatedBalance); try { window.localStorage.setItem('catalog-demo-robux-balance', String(updatedBalance)) } catch {} setSendStage("loading"); window.setTimeout(() => setSendStage("success"), 1600) }} className="h-11 flex-1 rounded-lg bg-[#335fff] font-bold text-white hover:bg-[#426cff]">Send</button>
                         <button type="button" onClick={() => setSendStage("edit")} className="h-11 flex-1 rounded-lg bg-[#303139] font-bold text-white hover:bg-[#3a3b44]">Edit</button>
                       </div>
                       <p className="mt-3 text-center text-xs text-white/65">You need an age check or parental consent to send Robux. Once you send, you cannot cancel.</p>
