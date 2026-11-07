@@ -211,7 +211,7 @@ function PeopleSearchContent() {
                         <p className="mt-2 text-sm text-white/65">The recipient will get {Number(sendAmount).toLocaleString("en-US")} Robux.</p>
                       </div>
                       <div className="mt-5 flex gap-2">
-                        <button type="button" onClick={() => { const amount = Number(sendAmount); const updatedBalance = Math.max(0, robuxBalance - amount); setRobuxBalance(updatedBalance); try { window.localStorage.setItem('catalog-demo-robux-balance', String(updatedBalance)); window.dispatchEvent(new Event('catalog-demo-balance-change')) } catch {} setSendStage("loading"); window.setTimeout(() => setSendStage("success"), 1600) }} className="h-11 flex-1 rounded-lg bg-[#335fff] font-bold text-white hover:bg-[#426cff]">Send</button>
+                        <button type="button" onClick={() => { setSendStage("loading"); window.setTimeout(() => { const amount = Number(sendAmount); setRobuxBalance((currentBalance) => { const updatedBalance = Math.max(0, currentBalance - amount); try { window.localStorage.setItem('catalog-demo-robux-balance', String(updatedBalance)); window.dispatchEvent(new Event('catalog-demo-balance-change')) } catch {} return updatedBalance }); setSendStage("success") }, 1600) }} className="h-11 flex-1 rounded-lg bg-[#335fff] font-bold text-white hover:bg-[#426cff]">Send</button>
                         <button type="button" onClick={() => setSendStage("edit")} className="h-11 flex-1 rounded-lg bg-[#303139] font-bold text-white hover:bg-[#3a3b44]">Edit</button>
                       </div>
                       <p className="mt-3 text-center text-xs text-white/65">You need an age check or parental consent to send Robux. Once you send, you cannot cancel.</p>
