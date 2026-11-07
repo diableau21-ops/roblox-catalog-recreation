@@ -463,7 +463,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
         </section>
       </div>}
       <footer className="mt-8 w-full border-t border-white/10 bg-[#191919] px-4 py-5 text-white/75">
-        <p className="mx-auto mb-4 max-w-[1000px] text-center text-xs text-white/45">Unofficial site, not affiliated with Roblox. Robux and items cannot be transferred here.</p>
+        {isKorblox && <p className="mx-auto mb-4 max-w-[1000px] text-center text-xs text-white/45">Unofficial site, not affiliated with Roblox. Robux and items cannot be transferred here.</p>}
         <div className="mx-auto max-w-[1000px]">
           <nav aria-label="Footer" className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-semibold sm:text-sm">
             <a className="hover:text-white" href="https://www.roblox.com/info/about-us?locale=en_us" target="_blank" rel="noreferrer">About Us</a>
