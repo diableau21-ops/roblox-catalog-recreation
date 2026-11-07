@@ -412,3 +412,71 @@ svg {
   -webkit-user-drag: none;
   user-drag: none;
 }
+
+
+/* User appearance preferences */
+html {
+  font-family: var(--site-font, 'Manrope'), sans-serif;
+}
+html[data-site-theme="light"] {
+  color-scheme: light;
+  --background: #ffffff;
+  --foreground: #191a1f;
+  --card: #f3f3f5;
+  --card-foreground: #191a1f;
+  --popover: #ffffff;
+  --popover-foreground: #191a1f;
+  --secondary: #e9e9ed;
+  --secondary-foreground: #191a1f;
+  --muted: #eeeeF1;
+  --muted-foreground: #62636a;
+  --accent: #e9e9ed;
+  --accent-foreground: #191a1f;
+  --border: #d8d9de;
+  --input: #e9e9ed;
+  --header: #ffffff;
+  --sidebar: #f7f7f8;
+}
+html[data-site-theme="light"] body {
+  background: #ffffff !important;
+  color: #191a1f !important;
+}
+html[data-site-theme="light"] header {
+  background: #ffffff !important;
+  color: #191a1f !important;
+  border-color: #dedfe3 !important;
+}
+html[data-site-theme="light"] header a,
+html[data-site-theme="light"] header button {
+  color: #191a1f;
+}
+html[data-site-theme="light"] [class~="bg-black"],
+html[data-site-theme="light"] [class*="bg-[#111"],
+html[data-site-theme="light"] [class*="bg-[#181"],
+html[data-site-theme="light"] [class*="bg-[#191"],
+html[data-site-theme="light"] [class*="bg-[#1a"],
+html[data-site-theme="light"] [class*="bg-[#1b"],
+html[data-site-theme="light"] [class*="bg-[#1c"],
+html[data-site-theme="light"] [class*="bg-[#1f"],
+html[data-site-theme="light"] [class*="bg-[#20"],
+html[data-site-theme="light"] [class*="bg-[#24"],
+html[data-site-theme="light"] [class*="bg-[#29"],
+html[data-site-theme="light"] [class*="bg-[#2a"],
+html[data-site-theme="light"] [class*="bg-[#30"],
+html[data-site-theme="light"] [class*="bg-[#34"] {
+  background-color: #f1f1f4 !important;
+}
+html[data-site-theme="light"] [class~="text-white"],
+html[data-site-theme="light"] [class*="text-white/"] {
+  color: #191a1f !important;
+}
+html[data-site-theme="light"] [class*="border-[#"] {
+  border-color: #d8d9de !important;
+}
+html[data-site-theme="light"] input,
+html[data-site-theme="light"] select {
+  color: #191a1f;
+}
+html[data-site-theme="light"] input::placeholder {
+  color: #777982;
+}
