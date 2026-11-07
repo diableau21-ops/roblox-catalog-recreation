@@ -54,7 +54,6 @@ export function ProfileSiteHeader() {
             <RobuxIcon className="size-6" />
             <span className="tabular-nums">{balance.toLocaleString('en-US')}</span>
           </Link>
-/div>
         </div>
       </div>
     </header>
