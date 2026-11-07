@@ -12,6 +12,9 @@ export function ProfileActions({ username }: { username: string }) {
       <button type="button" className="h-10 rounded-md bg-[#335fff] px-4 text-sm font-bold text-white hover:bg-[#264bd6]">
         Add Trusted Friend
       </button>
+      <button type="button" className="h-10 rounded-md bg-[#393b40] px-4 text-sm font-bold text-white hover:bg-[#4a4c52]">
+        Add Friend
+      </button>
       <button type="button" aria-label="More profile actions" aria-expanded={open} onClick={() => setOpen((value) => !value)} className="flex size-10 items-center justify-center rounded-full text-white hover:bg-[#242529]">
         <MoreHorizontal className="size-6" />
       </button>
