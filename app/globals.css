@@ -538,3 +538,22 @@ html[data-site-theme="light"] body canvas,
 html[data-site-theme="light"] body svg {
   background-color: transparent !important;
 }
+
+/* In white appearance, buttons remain clearly visible with black styling. */
+html[data-site-theme="light"] body button {
+  background-color: #17181c !important;
+  color: #ffffff !important;
+  border-color: #17181c !important;
+}
+html[data-site-theme="light"] body button:hover {
+  background-color: #303137 !important;
+  border-color: #303137 !important;
+}
+html[data-site-theme="light"] body button:disabled {
+  background-color: #777980 !important;
+  color: #ffffff !important;
+  border-color: #777980 !important;
+}
+html[data-site-theme="light"] body button svg {
+  color: #ffffff !important;
+}
