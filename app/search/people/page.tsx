@@ -81,9 +81,6 @@ function PeopleSearchContent() {
       <LeftNav dark onNotify={(msg) => window.alert(msg)} />
       <div className="ml-0 w-full px-4 pb-24 pt-7 sm:px-8 md:ml-[220px] md:w-[calc(100%-220px)]">
         <div className="mb-6 border-b border-[#292a2e] pb-5">
-          <div className="mb-3 flex min-h-11 w-full max-w-xl items-center rounded-lg border border-[#383940] bg-[#191a1f] px-4">
-            <span className="truncate text-base font-semibold text-white">{keyword || 'People'}</span>
-          </div>
           <form onSubmit={(event) => { event.preventDefault(); const term = searchTerm.trim(); if (term.length >= 3) router.push(`/search/people?keyword=${encodeURIComponent(term)}`) }} className="flex min-h-12 w-full max-w-xl items-center gap-3 rounded-lg border border-[#45464d] bg-[#242529] px-4 focus-within:border-white/60">
             <Search className="size-5 shrink-0 text-[#a3a5ab]" />
             <input aria-label="Search people" value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Search" className="min-w-0 flex-1 bg-transparent py-2 text-sm text-white outline-none placeholder:text-[#a3a5ab]" />
