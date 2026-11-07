@@ -391,3 +391,24 @@ img {
   -webkit-user-drag: none;
   user-drag: none;
 }
+
+
+/* Prevent accidental text highlighting while dragging with the left mouse button. */
+body {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+input,
+textarea,
+[contenteditable="true"],
+[contenteditable=""] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+img,
+svg {
+  -webkit-user-drag: none;
+  user-drag: none;
+}
