@@ -110,16 +110,15 @@ function PeopleSearchContent() {
             ))}
           </div>
         )}
-        {sendRecipient && (
+        {sendRecipient && sendStage === "loading" && (
+          <div className="pointer-events-none fixed inset-0 z-[120] flex items-center justify-center">
+            <span aria-label="Loading" role="status" className="size-9 animate-spin rounded-full border-[3px] border-white/20 border-t-white" />
+          </div>
+        )}
+        {sendRecipient && sendStage !== "loading" && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 p-3" onClick={() => setSendRecipient(null)}>
             <section role="dialog" aria-modal="true" aria-labelledby="people-send-title" className="relative w-full max-w-lg rounded-2xl border border-[#383838] bg-[#1f1f1f] p-5 text-white shadow-2xl sm:p-6" onClick={(event) => event.stopPropagation()}>
-              {sendStage === "loading" ? (
-                <div className="flex min-h-[330px] flex-col items-center justify-center text-center">
-                  <span className="size-14 animate-spin rounded-full border-4 border-white/15 border-t-white" />
-                  <p className="mt-6 text-xl font-extrabold">Sending...</p>
-                  <p className="mt-2 text-sm text-white/60">Please wait</p>
-                </div>
-              ) : sendStage === "success" ? (
+              {sendStage === "success" ? (
                 <div className="flex min-h-[370px] flex-col items-center px-2 pb-1 pt-8 text-center">
                   <div className="flex size-16 items-center justify-center rounded-full border-2 border-white bg-transparent text-4xl font-black leading-none text-white">✓</div>
                   <p className="mt-7 text-2xl font-extrabold">{Number(sendAmount).toLocaleString("en-US")} Robux</p>
