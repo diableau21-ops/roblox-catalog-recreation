@@ -130,10 +130,9 @@ function PeopleSearchContent() {
                 </>
               ) : sendStage === "confirm" ? (
                 <>
-                  <p className="mt-6 rounded-xl bg-[#292929] p-4 text-center text-lg font-bold">{Number(sendAmount).toLocaleString("en-US")} Robux to {sendRecipient.name}?</p>
                   <div className="mt-5 flex gap-3">
-                    <button type="button" onClick={() => setSendStage("edit")} className="h-12 flex-1 rounded-xl border border-white/20 font-bold hover:bg-white/5">Back</button>
                     <button type="button" onClick={() => { setSendStage("success"); setSendMessage("Gift preview completed.") }} className="h-12 flex-1 rounded-xl bg-[#146bff] font-extrabold">Send</button>
+                    <button type="button" onClick={() => setSendStage("edit")} className="h-12 flex-1 rounded-xl border border-white/20 font-bold hover:bg-white/5">Back</button>
                   </div>
                 </>
               ) : (
