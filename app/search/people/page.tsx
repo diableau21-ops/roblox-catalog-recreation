@@ -79,7 +79,7 @@ function PeopleSearchContent() {
                 </button>
                 {openMenu === player.id && (
                   <div className="absolute right-3 top-12 z-30 w-44 overflow-hidden rounded-md border border-[#38393e] bg-[#242529] py-1 text-left shadow-xl">
-                    <button type="button" onClick={() => { setSendRecipient(player); setSendAmount('100'); setSendStage('edit'); setSendMessage(''); setOpenMenu(null) }} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Send Robux</button>
+                    <button type="button" onClick={() => { setSendRecipient(player); setSendAmount('0'); setSendStage('edit'); setSendMessage(''); setOpenMenu(null) }} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Send Robux</button>
                     <button type="button" onClick={() => setOpenMenu(null)} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Follow</button>
                     <button type="button" onClick={() => setOpenMenu(null)} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Inventory</button>
                     <button type="button" onClick={() => setOpenMenu(null)} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Favorites</button>
@@ -137,36 +137,45 @@ function PeopleSearchContent() {
                   </div>
                   {sendStage === "edit" ? (
                     <>
-                      <div className="mt-5 flex items-center gap-3 rounded-xl bg-[#292a2f] p-3">
-                        {sendRecipient.avatarUrl ? <img src={sendRecipient.avatarUrl} alt="" className="size-14 rounded-full object-cover" /> : <span className="size-14 rounded-full bg-[#3a3b40]" />}
-                        <div className="min-w-0 text-left">
-                          <p className="truncate font-bold">{sendRecipient.displayName}</p>
-                          <p className="truncate text-sm text-white/55">@{sendRecipient.name}</p>
+                      <div className="flex flex-col items-center px-2 pb-1 pt-7 text-center">
+                        {sendRecipient.avatarUrl ? <img src={sendRecipient.avatarUrl} alt="" className="size-[68px] rounded-full object-cover" /> : <span className="size-[68px] rounded-full bg-[#3a3b40]" />}
+                        <p className="mt-3 text-base font-bold">{sendRecipient.displayName}</p>
+                        <p className="mt-0.5 text-sm text-white/55">@{sendRecipient.name}</p>
+                        <div className="mt-7 flex items-center justify-center gap-2">
+                          <span aria-hidden="true" className="text-4xl leading-none text-white">⬡</span>
+                          <label htmlFor="people-send-amount" className="sr-only">Robux amount</label>
+                          <input id="people-send-amount" type="number" min="0" max="5000" step="1" value={sendAmount} onChange={(event) => { setSendAmount(event.target.value); setSendMessage("") }} className="w-32 bg-transparent text-center text-5xl font-extrabold text-white outline-none" />
                         </div>
+                        <div className="mt-8 grid w-full grid-cols-4 gap-2">
+                          {[25, 50, 100, 200].map((amount) => (
+                            <button key={amount} type="button" onClick={() => setSendAmount(String(amount))} className={`flex h-12 items-center justify-center gap-1.5 rounded-lg px-2 text-sm font-bold transition-colors ${Number(sendAmount) === amount ? "bg-[#3a3b44]" : "bg-[#303139] hover:bg-[#3a3b44]"}`}>
+                              <span aria-hidden="true" className="text-lg">⬡</span>{amount}
+                            </button>
+                          ))}
+                        </div>
+                        <button type="button" disabled={!Number.isSafeInteger(Number(sendAmount)) || Number(sendAmount) < 1 || Number(sendAmount) > 5000} onClick={() => { setSendMessage(""); setSendStage("confirm") }} className="mt-9 h-11 w-full rounded-lg bg-[#335fff] font-bold text-white transition-colors hover:bg-[#426cff] disabled:cursor-not-allowed disabled:opacity-45">Next</button>
+                        <p className="mt-3 text-xs text-white/65">Robux are sent instantly with no fees</p>
                       </div>
-                      <p className="mt-6 text-base font-bold">Enter amount</p>
-                      <label htmlFor="people-send-amount" className="sr-only">Robux amount</label>
-                      <div className="mt-3 flex h-12 items-center rounded-lg border border-white/20 bg-[#292a2f] px-4 focus-within:border-white/60">
-                        <span className="mr-3 text-lg font-bold text-white/70">R$</span>
-                        <input id="people-send-amount" type="number" min="1" step="1" value={sendAmount} onChange={(event) => { setSendAmount(event.target.value); setSendMessage("") }} className="h-full min-w-0 flex-1 bg-transparent text-white outline-none" />
-                      </div>
-                      <button type="button" disabled={!Number.isSafeInteger(Number(sendAmount)) || Number(sendAmount) < 1} onClick={() => { setSendMessage(""); setSendStage("confirm") }} className="mt-6 h-12 w-full rounded-xl bg-white font-extrabold text-black transition-colors hover:bg-white/85 disabled:opacity-40">Continue</button>
                     </>
                   ) : (
                     <>
-                      <p className="mt-6 text-lg font-bold">Review transfer</p>
-                      <div className="mt-4 flex flex-col items-center rounded-xl bg-[#292a2f] px-4 py-6 text-center">
-                        {sendRecipient.avatarUrl ? <img src={sendRecipient.avatarUrl} alt="" className="size-20 rounded-full object-cover" /> : <span className="size-20 rounded-full bg-[#3a3b40]" />}
-                        <p className="mt-3 text-lg font-extrabold">{sendRecipient.displayName}</p>
-                        <p className="text-sm text-white/55">@{sendRecipient.name}</p>
-                        <div className="mt-5 border-t border-white/10 pt-4">
-                          <p className="text-3xl font-black">{Number(sendAmount).toLocaleString("en-US")} Robux</p>
+                      <div className="mt-5 rounded-lg bg-[#292a31] px-4 py-5 text-center">
+                        {sendRecipient.avatarUrl ? <img src={sendRecipient.avatarUrl} alt="" className="mx-auto size-[68px] rounded-full object-cover" /> : <span className="mx-auto block size-[68px] rounded-full bg-[#3a3b40]" />}
+                        <p className="mt-3 text-base font-bold">{sendRecipient.displayName}</p>
+                        <p className="mt-0.5 text-sm text-white/65">@{sendRecipient.name}</p>
+                      </div>
+                      <div className="mt-4 rounded-lg bg-[#292a31] px-4 py-6 text-center">
+                        <div className="flex items-center justify-center gap-2">
+                          <span aria-hidden="true" className="text-4xl leading-none">⬡</span>
+                          <p className="text-4xl font-extrabold">{Number(sendAmount).toLocaleString("en-US")}</p>
                         </div>
+                        <p className="mt-2 text-sm text-white/65">The recipient will get {Number(sendAmount).toLocaleString("en-US")} Robux.</p>
                       </div>
-                      <div className="mt-6 flex gap-3">
-                        <button type="button" onClick={() => { setSendStage("loading"); window.setTimeout(() => setSendStage("success"), 1600) }} className="h-12 flex-1 rounded-xl bg-white font-extrabold text-black hover:bg-white/85">Send</button>
-                        <button type="button" onClick={() => setSendStage("edit")} className="h-12 flex-1 rounded-xl border border-white/20 font-bold text-white hover:bg-white/5">Edit</button>
+                      <div className="mt-5 flex gap-2">
+                        <button type="button" onClick={() => { setSendStage("loading"); window.setTimeout(() => setSendStage("success"), 1600) }} className="h-11 flex-1 rounded-lg bg-[#335fff] font-bold text-white hover:bg-[#426cff]">Send</button>
+                        <button type="button" onClick={() => setSendStage("edit")} className="h-11 flex-1 rounded-lg bg-[#303139] font-bold text-white hover:bg-[#3a3b44]">Edit</button>
                       </div>
+                      <p className="mt-3 text-center text-xs text-white/65">You need an age check or parental consent to send Robux. Once you send, you cannot cancel.</p>
                     </>
                   )}
                 </>
