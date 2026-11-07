@@ -233,6 +233,41 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             </dl>
           </div>
           </div>
+          {isHeadless && <section className="mt-8 w-full max-w-[900px] overflow-hidden rounded-xl border border-white/10 bg-[#202020] p-4 text-white">
+            <h2 className="mb-4 text-xl font-bold">Recommendations</h2>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
+              {[
+                { id: '702', name: 'Old Town Road LNX - Lil Nas X', creator: 'Sony Immersive Music Studios', price: '500', image: 'https://tr.rbxcdn.com/30DAY-Avatar-866DD3752DF925DA753F97F999E91C34-Png/150/150/Avatar/Webp/noFilter', href: 'https://www.roblox.com/bundles/702/Old-Town-Road-LNX-Lil-Nas-X' },
+                { id: '464', name: 'Noob Attack: Mech Mobility', price: '250', image: 'https://tr.rbxcdn.com/30DAY-Avatar-B48BA71A50ECA91695A396E6451B656A-Png/150/150/Avatar/Webp/noFilter', href: 'https://www.roblox.com/bundles/464/Noob-Attack-Mech-Mobility' },
+                { id: '319460', name: 'Mini Bear [Recolorable]', creator: '@ADbros', price: '175', image: 'https://tr.rbxcdn.com/30DAY-Avatar-986021A8C12929FD81A7DDC51A03539C-Png/150/150/Avatar/Webp/noFilter', href: 'https://www.roblox.com/bundles/319460/Mini-Bear-Recolorable' },
+                { id: '243', name: 'The Overseer', price: '2,000', image: 'https://tr.rbxcdn.com/30DAY-Avatar-C43EE02B65EAFF10A0A499B59A161FAE-Png/150/150/Avatar/Webp/noFilter', href: 'https://www.roblox.com/bundles/243/The-Overseer' },
+                { id: '190', name: 'Wanwood Bundle', price: '1,215', image: 'https://tr.rbxcdn.com/30DAY-Avatar-4649BD679754B728E8936D4C4DC4C51D-Png/150/150/Avatar/Webp/noFilter', href: 'https://www.roblox.com/bundles/190/Wanwood-Bundle' },
+                { id: '1628', name: 'Doll Avatar (Fashion)', creator: '@luka007', price: '175', image: 'https://tr.rbxcdn.com/30DAY-Avatar-78A1C588B417A08956AA29A097AB0974-Png/150/150/Avatar/Webp/noFilter', href: 'https://www.roblox.com/bundles/1628/Doll-Avatar-Fashion' },
+                { id: '247', name: 'Undercover Superhero', price: '175', image: 'https://tr.rbxcdn.com/30DAY-Avatar-E9BCE7322DEA55BD691C417CF589EC69-Png/150/150/Avatar/Webp/noFilter', href: 'https://www.roblox.com/bundles/247/Undercover-Superhero' },
+              ].map((recommendation) => <a key={recommendation.id} href={recommendation.href} target="_blank" rel="noreferrer" className="group min-w-0 overflow-hidden rounded-lg bg-[#232323] transition hover:bg-[#303030]">
+                <div className="aspect-square overflow-hidden bg-[#303030]"><img src={recommendation.image} alt={recommendation.name} loading="lazy" className="h-full w-full object-cover transition group-hover:scale-[1.03]" /></div>
+                <div className="p-2"><p className="line-clamp-2 min-h-8 text-xs font-semibold text-white">{recommendation.name}</p>{recommendation.creator && <p className="mt-1 line-clamp-1 text-[10px] text-white/55">By {recommendation.creator}</p>}<p className="mt-1 flex items-center gap-1 text-xs font-bold text-white"><RobuxIcon />{recommendation.price}</p></div>
+              </a>)}
+            </div>
+          </section>}
+          {isHeadless && <section className="mt-8 w-full max-w-[900px] overflow-hidden rounded-xl border border-white/10 bg-[#202020] p-4 text-white">
+            <h2 className="mb-4 text-xl font-bold">Included Items</h2>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+              {[
+                { id: '134082453', name: 'Headless Horseman Left Arm', type: 'Left Arm', image: 'https://tr.rbxcdn.com/180DAY-acc45dde3644317f5c0d9cb22af23824/150/150/LeftArm/Webp/noFilter' },
+                { id: '134082473', name: 'Headless Horseman Right Arm', type: 'Right Arm', image: 'https://tr.rbxcdn.com/180DAY-96c298067b19c45e7e0961de929e4f80/150/150/RightArm/Webp/noFilter' },
+                { id: '134082507', name: 'Headless Horseman Left Leg', type: 'Left Leg', image: 'https://tr.rbxcdn.com/180DAY-985fcf246bfe1a39bc4cef99a861372c/150/150/LeftLeg/Webp/noFilter' },
+                { id: '134082533', name: 'Headless Horseman Right Leg', type: 'Right Leg', image: 'https://tr.rbxcdn.com/180DAY-c921abf3c6fbb78df7d3cb2f32db7bed/150/150/RightLeg/Webp/noFilter' },
+                { id: '134082557', name: 'Headless Horseman Torso', type: 'Torso', image: 'https://tr.rbxcdn.com/180DAY-9ecdd3f8cc3c4148aa163c8d8927832c/150/150/Torso/Webp/noFilter' },
+                { id: '131592085', name: "Headless Horseman's New Head", type: 'Gear · Off Sale', image: 'https://tr.rbxcdn.com/180DAY-9d9695f855093a412a8eeb7c3f0e14bf/150/150/Gear/Webp/noFilter' },
+                { id: '15093053680', name: 'Headless Head', type: 'Dynamic Head', image: 'https://tr.rbxcdn.com/180DAY-5d30ea2e004abe68a2db3b0d19fff763/150/150/DynamicHead/Webp/noFilter' },
+                { id: '11573370910', name: 'Anime - Mood', type: 'Mood Animation', image: 'https://tr.rbxcdn.com/180DAY-9f02afad71d7dcbb7762462d74184c84/150/150/MoodAnimation/Webp/noFilter' },
+              ].map((included) => <a key={included.id} href={`https://www.roblox.com/catalog/${included.id}`} target="_blank" rel="noreferrer" className="group flex min-w-0 items-center gap-3 rounded-lg bg-[#232323] p-2 transition hover:bg-[#303030]">
+                <div className="size-16 shrink-0 overflow-hidden rounded-md bg-[#303030]"><img src={included.image} alt={included.name} loading="lazy" className="h-full w-full object-contain" /></div>
+                <div className="min-w-0"><p className="line-clamp-2 text-xs font-semibold text-white">{included.name}</p><p className="mt-1 text-[11px] text-white/55">{included.type}</p></div>
+              </a>)}
+            </div>
+          </section>}
           {isKorblox && <section className="mt-8 w-full max-w-[900px] overflow-hidden rounded-xl border border-white/10 bg-[#202020] p-4 text-white">
             <h2 className="mb-4 text-xl font-bold">Recommendations</h2>
             <div className="grid grid-cols-4 gap-2 sm:grid-cols-7">
