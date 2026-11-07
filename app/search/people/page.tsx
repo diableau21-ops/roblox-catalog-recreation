@@ -120,11 +120,11 @@ function PeopleSearchContent() {
                   <p className="mt-2 text-sm text-white/60">Please wait</p>
                 </div>
               ) : sendStage === "success" ? (
-                <div className="flex min-h-[370px] flex-col items-center px-2 pb-1 pt-5 text-center">
-                  <div className="flex size-16 items-center justify-center rounded-full border-2 border-white bg-black text-4xl font-black leading-none text-white">✓</div>
-                  <p className="mt-8 text-2xl font-extrabold">{Number(sendAmount).toLocaleString("en-US")} Robux</p>
-                  <p className="mt-2 text-lg font-semibold">to {sendRecipient.name}</p>
-                  <button type="button" onClick={() => setSendRecipient(null)} className="mt-auto h-12 w-full max-w-[220px] rounded-xl bg-[#146bff] font-extrabold hover:bg-[#2878ff]">OK</button>
+                <div className="flex min-h-[300px] flex-col items-center px-2 pb-1 pt-3 text-center">
+                  <div className="flex size-16 items-center justify-center rounded-full border-2 border-white bg-transparent text-4xl font-black leading-none text-white">✓</div>
+                  <p className="mt-4 text-2xl font-extrabold">{Number(sendAmount).toLocaleString("en-US")} Robux</p>
+                  <p className="mt-1 text-lg font-semibold">to {sendRecipient.name}</p>
+                  <button type="button" onClick={() => setSendRecipient(null)} className="mt-6 h-12 w-full max-w-[220px] rounded-xl bg-[#146bff] font-extrabold hover:bg-[#2878ff]">OK</button>
                 </div>
               ) : (
                 <>
