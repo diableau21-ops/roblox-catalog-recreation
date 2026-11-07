@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Bell, Search, Settings } from 'lucide-react'
 import { RobloxLogo, RobloxMark, RobuxIcon } from './robux-icon'
 
@@ -30,6 +31,7 @@ function VerifiedBadge({ className = 'size-4' }: { className?: string }) {
 }
 
 export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify, onSetBalance, onBellClick }: Props) {
+  const router = useRouter()
   const [searchOpen, setSearchOpen] = useState(false)
   const [robuxPickerOpen, setRobuxPickerOpen] = useState(false)
   const [robuxAmount, setRobuxAmount] = useState(String(balance))
@@ -87,7 +89,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
     const keyword = query.trim()
     if (keyword.length < 3) return
     setSearchOpen(false)
-    window.location.href = `/search/people?keyword=${encodeURIComponent(keyword)}`
+    router.push(`/search/people?keyword=${encodeURIComponent(keyword)}`)
   }
 
   return (
