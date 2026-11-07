@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import { ProfileSiteHeader } from '@/components/catalog/profile-site-header'
 import { LeftNav } from '@/components/catalog/left-nav'
 import Link from 'next/link'
-import { BadgeCheck, MoreHorizontal } from 'lucide-react'
+import { MoreHorizontal } from 'lucide-react'
 
 type Player = {
   id: number
@@ -16,7 +16,7 @@ type Player = {
 }
 
 function VerifiedBadge() {
-  return <BadgeCheck aria-label="Verified" title="Verified" className="inline-block size-4 shrink-0 fill-[#335fff] text-white" strokeWidth={2.5} />
+  return <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Roblox_Verification_Badge.svg" alt="Verified" title="Verified" className="inline-block size-4 shrink-0 object-contain" />
 }
 
 function PeopleSearchContent() {
