@@ -94,21 +94,12 @@ export default async function RobloxUserProfile({ params }: { params: Promise<{ 
               </nav>
             </section>
 
-            <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_300px]">
+            <div className="mt-5">
               <section id="about" className="rounded-none border-0 bg-transparent p-0 shadow-none sm:p-0">
                 <h2 className="text-xl font-extrabold">About</h2>
                 <p className="mt-4 min-h-16 whitespace-pre-wrap break-words text-sm leading-6 text-[#d1d3d8]">{result.user.description?.trim() || 'This user has no description.'}</p>
                 {result.user.created && <p className="mt-6 border-t border-[#252525] pt-4 text-sm text-[#a4a7b0]">Join Date: {new Date(result.user.created).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>}
               </section>
-              <aside className="h-fit rounded-none border-0 bg-transparent p-0 shadow-none">
-                <h2 className="text-lg font-extrabold">Statistics</h2>
-                <div className="mt-4 space-y-4 text-sm">
-                  <div className="flex items-center justify-between"><span className="text-[#a4a7b0]">Friends</span><strong>{result.friends?.toLocaleString('en-US') ?? '—'}</strong></div>
-                  <div className="flex items-center justify-between"><span className="text-[#a4a7b0]">Followers</span><strong>{result.followers?.toLocaleString('en-US') ?? '—'}</strong></div>
-                  <div className="flex items-center justify-between"><span className="text-[#a4a7b0]">Following</span><strong>{result.following?.toLocaleString('en-US') ?? '—'}</strong></div>
-                  <div className="flex items-center justify-between"><span className="text-[#a4a7b0]">Account status</span><strong>{result.user.isBanned ? 'Banned' : 'Active'}</strong></div>
-                </div>
-              </aside>
             </div>
 
           </>
