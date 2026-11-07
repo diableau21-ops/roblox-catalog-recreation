@@ -81,6 +81,7 @@ function PeopleSearchContent() {
       <LeftNav dark onNotify={(msg) => window.alert(msg)} />
       <div className="ml-0 w-full px-4 pb-24 pt-7 sm:px-8 md:ml-[220px] md:w-[calc(100%-220px)]">
         <div className="mb-6 border-b border-[#292a2e] pb-5">
+          <h1 className="mb-4 text-2xl font-bold">People Results for {keyword}</h1>
           <form onSubmit={(event) => { event.preventDefault(); const term = searchTerm.trim(); if (term.length >= 3) router.push(`/search/people?keyword=${encodeURIComponent(term)}`) }} className="flex min-h-12 w-full max-w-xl items-center gap-3 rounded-lg border border-[#45464d] bg-[#242529] px-4 focus-within:border-white/60">
             <Search className="size-5 shrink-0 text-[#a3a5ab]" />
             <input aria-label="Search people" value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Search" className="min-w-0 flex-1 bg-transparent py-2 text-sm text-white outline-none placeholder:text-[#a3a5ab]" />
@@ -222,6 +223,25 @@ function PeopleSearchContent() {
             </section>
           </div>
         )}
+        <footer className="mt-16 border-t border-[#292a2e] pt-7 pb-5 text-xs text-[#a3a5ab]">
+          <nav aria-label="Footer" className="flex flex-wrap items-center gap-x-5 gap-y-3">
+            <a className="hover:underline" href="https://www.roblox.com/info/about-us?locale=en_us">About Us</a>
+            <a className="hover:underline" href="https://www.roblox.com/info/jobs?locale=en_us">Jobs</a>
+            <a className="hover:underline" href="https://www.roblox.com/info/blog?locale=en_us">Newsroom</a>
+            <a className="hover:underline" href="https://www.roblox.com/info/parents?locale=en_us">Parents</a>
+            <a className="hover:underline" href="https://www.roblox.com/giftcards?locale=en_us">Buy Gift Cards</a>
+            <a className="hover:underline" href="https://www.roblox.com/info/help?locale=en_us">Help</a>
+            <a className="hover:underline" href="https://www.roblox.com/info/terms?locale=en_us">Terms</a>
+            <a className="hover:underline" href="https://www.roblox.com/info/accessibility?locale=en_us">Accessibility</a>
+            <a className="hover:underline" href="https://www.roblox.com/info/privacy?locale=en_us">Privacy</a>
+            <span>Your Privacy Choices</span>
+            <a className="hover:underline" href="https://www.roblox.com/sitemap?locale=en_us">Sitemap</a>
+          </nav>
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
+            <span>English (United States)</span>
+            <span>©2026 Roblox Corporation. Roblox, the Roblox logo and Powering Imagination are among our registered and unregistered trademarks in the U.S. and other countries.</span>
+          </div>
+        </footer>
       </div>
     </main>
   )
