@@ -128,26 +128,50 @@ function PeopleSearchContent() {
                 </div>
               ) : (
                 <>
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-2.5"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="Roblox Plus" className="size-7 shrink-0 object-contain brightness-0 invert" /><h2 id="people-send-title" className="text-2xl font-extrabold">Send Robux</h2></div>
+                  <div className="flex items-center justify-between gap-3 border-b border-white/10 pb-4">
+                    <div className="flex items-center gap-2.5">
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="Roblox Plus" className="size-7 shrink-0 object-contain brightness-0 invert" />
+                      <h2 id="people-send-title" className="text-2xl font-extrabold">Send Robux</h2>
+                    </div>
                     <button type="button" onClick={() => setSendRecipient(null)} aria-label="Close" className="rounded-lg px-2 py-1 text-xl text-white/75 hover:bg-white/10">×</button>
-                  </div>
-                  <div className="mt-6 flex flex-col items-center text-center">
-                    {sendRecipient.avatarUrl ? <img src={sendRecipient.avatarUrl} alt="" className="size-24 rounded-full object-cover" /> : <span className="size-24 rounded-full bg-[#303136]" /> }
-                    <p className="mt-3 text-xl font-bold">{sendRecipient.displayName}</p>
-                    <p className="text-sm text-white/60">@{sendRecipient.name}</p>
                   </div>
                   {sendStage === "edit" ? (
                     <>
-                      <label htmlFor="people-send-amount" className="mt-6 block text-sm font-semibold text-white/75">Robux amount</label>
-                      <input id="people-send-amount" type="number" min="1" step="1" value={sendAmount} onChange={(event) => { setSendAmount(event.target.value); setSendMessage("") }} className="mt-2 h-12 w-full rounded-lg border border-white/20 bg-[#292929] px-4 text-white outline-none focus:border-[#146bff]" />
-                      <button type="button" disabled={!Number.isSafeInteger(Number(sendAmount)) || Number(sendAmount) < 1} onClick={() => { setSendMessage(""); setSendStage("confirm") }} className="mt-5 h-12 w-full rounded-xl bg-[#146bff] font-extrabold disabled:opacity-50">Next</button>
+                      <div className="mt-5 flex items-center gap-3 rounded-xl bg-[#292a2f] p-3">
+                        {sendRecipient.avatarUrl ? <img src={sendRecipient.avatarUrl} alt="" className="size-14 rounded-full object-cover" /> : <span className="size-14 rounded-full bg-[#3a3b40]" />}
+                        <div className="min-w-0 text-left">
+                          <p className="truncate font-bold">{sendRecipient.displayName}</p>
+                          <p className="truncate text-sm text-white/55">@{sendRecipient.name}</p>
+                        </div>
+                      </div>
+                      <p className="mt-6 text-base font-bold">Choose an amount</p>
+                      <div className="mt-3 grid grid-cols-4 gap-2">
+                        {[25, 50, 100, 200].map((amount) => (
+                          <button key={amount} type="button" onClick={() => { setSendAmount(String(amount)); setSendMessage("") }} className={`h-11 rounded-lg border text-sm font-extrabold transition-colors ${sendAmount === String(amount) ? "border-white bg-white text-black" : "border-white/15 bg-[#292a2f] text-white hover:bg-[#36373d]"}`}>
+                            {amount}
+                          </button>
+                        ))}
+                      </div>
+                      <label htmlFor="people-send-amount" className="mt-5 block text-sm font-semibold text-white/70">Or enter an amount</label>
+                      <input id="people-send-amount" type="number" min="1" step="1" value={sendAmount} onChange={(event) => { setSendAmount(event.target.value); setSendMessage("") }} className="mt-2 h-12 w-full rounded-lg border border-white/20 bg-[#292a2f] px-4 text-white outline-none focus:border-white/60" />
+                      <button type="button" disabled={!Number.isSafeInteger(Number(sendAmount)) || Number(sendAmount) < 1} onClick={() => { setSendMessage(""); setSendStage("confirm") }} className="mt-6 h-12 w-full rounded-xl bg-white font-extrabold text-black transition-colors hover:bg-white/85 disabled:opacity-40">Next</button>
                     </>
                   ) : (
-                    <div className="mt-5 flex gap-3">
-                      <button type="button" onClick={() => { setSendStage("loading"); window.setTimeout(() => setSendStage("success"), 1600) }} className="h-12 flex-1 rounded-xl bg-[#146bff] font-extrabold">Send</button>
-                      <button type="button" onClick={() => setSendStage("edit")} className="h-12 flex-1 rounded-xl border border-white/20 font-bold hover:bg-white/5">Back</button>
-                    </div>
+                    <>
+                      <p className="mt-6 text-lg font-bold">Review transfer</p>
+                      <div className="mt-4 flex flex-col items-center rounded-xl bg-[#292a2f] px-4 py-6 text-center">
+                        {sendRecipient.avatarUrl ? <img src={sendRecipient.avatarUrl} alt="" className="size-20 rounded-full object-cover" /> : <span className="size-20 rounded-full bg-[#3a3b40]" />}
+                        <p className="mt-3 text-lg font-extrabold">{sendRecipient.displayName}</p>
+                        <p className="text-sm text-white/55">@{sendRecipient.name}</p>
+                        <div className="mt-5 border-t border-white/10 pt-4">
+                          <p className="text-3xl font-black">{Number(sendAmount).toLocaleString("en-US")} Robux</p>
+                        </div>
+                      </div>
+                      <div className="mt-6 flex gap-3">
+                        <button type="button" onClick={() => { setSendStage("loading"); window.setTimeout(() => setSendStage("success"), 1600) }} className="h-12 flex-1 rounded-xl bg-white font-extrabold text-black hover:bg-white/85">Send</button>
+                        <button type="button" onClick={() => setSendStage("edit")} className="h-12 flex-1 rounded-xl border border-white/20 font-bold text-white hover:bg-white/5">Edit</button>
+                      </div>
+                    </>
                   )}
                 </>
               )}
