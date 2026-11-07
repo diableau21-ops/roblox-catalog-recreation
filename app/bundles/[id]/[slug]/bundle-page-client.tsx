@@ -66,6 +66,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
       await new Promise((resolve) => window.setTimeout(resolve, stage.delay))
       setGiftLoadingStep(stage.step)
     }
+    setBalance((current) => Math.max(0, current - giftCost))
     setGiftSuccess(true)
     setGiftSending(false)
   }
