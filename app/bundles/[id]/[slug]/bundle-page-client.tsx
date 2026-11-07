@@ -381,7 +381,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                 <span className="min-w-0 flex-1"><span className="block font-bold">Headless Horseman</span><span className="mt-1 block text-sm text-white/55">Headless Horseman bundle</span><span className="mt-2 flex items-center gap-1.5 text-sm font-extrabold"><RobuxIcon className="size-4" />31,000</span></span>
               </button>
               <button type="button" onClick={() => setGiftBundle('combo')} aria-pressed={giftBundle === 'combo'} className={`flex w-full items-center gap-3 rounded-xl border p-3 text-left transition ${giftBundle === 'combo' ? 'border-[#146bff] bg-[#146bff]/10 ring-1 ring-[#146bff]' : 'border-white/15 hover:border-[#146bff]'}`}>
-                <span className="flex size-20 shrink-0 items-center justify-center gap-0.5 rounded-lg bg-[#202020] p-1"><img src="/items/headless.png" alt="Headless Horseman" className="h-16 min-w-0 flex-1 object-contain" /><img src="/items/korblox.png" alt="Korblox Deathspeaker" className="h-16 min-w-0 flex-1 object-contain" /></span>
+                <span className="flex size-20 shrink-0 items-center justify-center gap-0.5 rounded-lg bg-[#202020] p-1"><img src="/items/headless.png" alt="Headless Horseman" className="h-16 min-w-0 flex-1 object-contain" /><span className="shrink-0 text-xl font-black text-white">+</span><img src="/items/korblox.png" alt="Korblox Deathspeaker" className="h-16 min-w-0 flex-1 object-contain" /></span>
                 <span className="min-w-0 flex-1"><span className="block font-bold">Headless + Korblox</span><span className="mt-1 block text-sm text-white/55">Both bundles together</span><span className="mt-2 flex items-center gap-1.5 text-sm font-extrabold"><RobuxIcon className="size-4" />48,000</span></span>
               </button>
               <button type="button" onClick={() => { setGiftUsername(''); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftSearchMessage(''); setGiftMessage(''); setGiftReview(false); setGiftManualMode(true) }} className="mt-4 h-12 w-full rounded-xl bg-[#146bff] text-base font-extrabold">Next</button>
@@ -395,7 +395,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               </div>
               <div className="mt-6 border-t border-white/10 pt-5">
                 <div className="flex items-center gap-4 rounded-xl bg-[#292929] p-3">
-                  <img src={giftBundle === 'korblox' ? '/items/korblox.png' : '/items/headless.png'} alt="" className="size-16 rounded-lg bg-[#202020] object-contain p-1" />
+                  <span className="flex size-16 shrink-0 items-center justify-center gap-0.5 rounded-lg bg-[#202020] p-1">{giftBundle === 'combo' ? <><img src="/items/headless.png" alt="Headless Horseman" className="h-12 min-w-0 flex-1 object-contain" /><span className="text-sm font-black">+</span><img src="/items/korblox.png" alt="Korblox Deathspeaker" className="h-12 min-w-0 flex-1 object-contain" /></> : <img src={giftBundle === 'korblox' ? '/items/korblox.png' : '/items/headless.png'} alt="" className="h-full w-full object-contain" />}</span>
                   <div className="min-w-0 flex-1"><p className="font-bold">{giftBundle === 'korblox' ? 'Korblox Deathspeaker' : giftBundle === 'headless' ? 'Headless Horseman' : 'Headless + Korblox'}</p><p className="mt-1 text-sm text-white/60">Gift for @{giftSelectedPlayer.name}</p><p className="mt-2 flex items-center gap-1.5 text-sm font-extrabold"><RobuxIcon className="size-4" />{giftCost.toLocaleString('en-US')} Robux</p></div>
                 </div>
                 <div className="mt-4 flex gap-3">
@@ -428,8 +428,9 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <p className="mt-2 text-sm text-[#a8a8b0]">Choose an item, then select the Roblox player.</p>
               <div className="mt-4 overflow-hidden rounded-xl border border-white/10 bg-[#202020]">
                 <div className="flex aspect-[16/9] w-full items-center justify-center gap-2 bg-[#171717] p-3">
-                  {(giftBundle === 'combo' || giftBundle === 'headless') && <img src="/items/headless.png" alt="Headless Horseman" className={giftBundle === 'combo' ? 'h-full w-1/2 object-contain' : 'h-full w-full object-contain'} />}
-                  {(giftBundle === 'combo' || giftBundle === 'korblox') && <img src="/items/korblox.png" alt="Korblox Deathspeaker" className={giftBundle === 'combo' ? 'h-full w-1/2 object-contain' : 'h-full w-full object-contain'} />}
+                  {(giftBundle === 'combo' || giftBundle === 'headless') && <img src="/items/headless.png" alt="Headless Horseman" className={giftBundle === 'combo' ? 'h-full min-w-0 flex-1 object-contain' : 'h-full w-full object-contain'} />}
+                  {giftBundle === 'combo' && <span className="shrink-0 text-3xl font-black text-white">+</span>}
+                  {(giftBundle === 'combo' || giftBundle === 'korblox') && <img src="/items/korblox.png" alt="Korblox Deathspeaker" className={giftBundle === 'combo' ? 'h-full min-w-0 flex-1 object-contain' : 'h-full w-full object-contain'} />}
                 </div>
                 <div className="p-3">
                   <p className="text-sm font-bold">{giftBundle === 'combo' ? 'Headless + Korblox' : giftBundle === 'korblox' ? 'Korblox Deathspeaker' : 'Headless Horseman'}</p>
