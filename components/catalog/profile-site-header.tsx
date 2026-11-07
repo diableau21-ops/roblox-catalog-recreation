@@ -12,6 +12,9 @@ export function ProfileSiteHeader() {
   const [profile, setProfile] = useState<SavedProfile | null>(null)
   const [query, setQuery] = useState('')
   const [settingsOpen, setSettingsOpen] = useState(false)
+  const [appearanceOpen, setAppearanceOpen] = useState(false)
+  const [siteTheme, setSiteTheme] = useState<'dark' | 'light'>('dark')
+  const [siteFont, setSiteFont] = useState('Manrope')
 
   useEffect(() => {
     try {
@@ -54,7 +57,31 @@ export function ProfileSiteHeader() {
             {profile?.avatarUrl ? <img src={profile.avatarUrl} alt="" className="size-8 rounded-full object-cover" /> : <span className="size-8 rounded-full bg-[#303136]" />}
             <span className="max-w-28 truncate text-sm font-bold">{profile?.displayName || 'Builderman'}</span>
           </div>
-          <button type="button" aria-label="Notifications" className="rounded-lg p-2 hover:bg-[#242529]"><Bell className="size-5" /></button>
+          <div className="relative">
+            <button type="button" aria-label="Appearance" aria-expanded={appearanceOpen} onClick={() => setAppearanceOpen((open) => !open)} className="rounded-lg p-2 hover:bg-[#242529]"><Bell className="size-5" /></button>
+            {appearanceOpen && (
+              <div className="absolute right-0 top-full z-[90] mt-2 w-72 rounded-xl border border-[#38393e] bg-[#242529] p-4 text-white shadow-2xl">
+                <div className="mb-3 flex items-center justify-between">
+                  <h2 className="text-base font-bold">Appearance</h2>
+                  <button type="button" aria-label="Close appearance" onClick={() => setAppearanceOpen(false)} className="rounded-md px-2 py-1 text-lg text-white/70 hover:bg-white/10">×</button>
+                </div>
+                <p className="mb-2 text-xs font-semibold text-white/60">Site color</p>
+                <div className="grid grid-cols-2 gap-2">
+                  <button type="button" aria-pressed={siteTheme === 'dark'} onClick={() => setSiteTheme('dark')} className={`rounded-lg border px-3 py-2.5 text-sm font-semibold ${siteTheme === 'dark' ? 'border-blue-400 bg-[#343944]' : 'border-white/10 bg-[#1b1c20]'}`}>Black</button>
+                  <button type="button" aria-pressed={siteTheme === 'light'} onClick={() => setSiteTheme('light')} className={`rounded-lg border px-3 py-2.5 text-sm font-semibold ${siteTheme === 'light' ? 'border-blue-400 bg-white text-black' : 'border-white/10 bg-[#1b1c20]'}`}>White</button>
+                </div>
+                <label htmlFor="site-font-choice" className="mb-2 mt-4 block text-xs font-semibold text-white/60">Font</label>
+                <select id="site-font-choice" value={siteFont} onChange={(event) => setSiteFont(event.target.value)} className="h-10 w-full rounded-lg border border-white/15 bg-[#1b1c20] px-3 text-sm text-white outline-none focus:border-blue-400">
+                  <option value="Manrope">Manrope</option>
+                  <option value="Arial">Arial</option>
+                  <option value="Verdana">Verdana</option>
+                  <option value="Trebuchet MS">Trebuchet MS</option>
+                  <option value="Georgia">Georgia</option>
+                </select>
+                <p className="mt-3 text-[11px] text-white/50">Your choices are saved on this device.</p>
+              </div>
+            )}
+          </div>
           <Link href="/robux" className="flex items-center gap-1.5 rounded-lg px-2 py-2 text-sm font-bold hover:bg-[#242529] sm:text-base" aria-label={balance.toLocaleString() + ' Robux'}>
             <RobuxIcon className="size-6" />
             <span className="tabular-nums">{balance.toLocaleString('en-US')}</span>
