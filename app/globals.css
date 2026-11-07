@@ -578,3 +578,16 @@ html[data-site-theme="light"] body button:disabled {
   color: #ffffff !important;
   border-color: #777980 !important;
 }
+
+
+/* In light mode, text that was white in dark mode becomes dark for contrast. */
+html[data-site-theme="light"] body [class*="text-white"]:not(button):not(button *),
+html[data-site-theme="light"] body [style*="color: white"]:not(button):not(button *),
+html[data-site-theme="light"] body [style*="color:#fff"]:not(button):not(button *),
+html[data-site-theme="light"] body [style*="color: #fff"]:not(button):not(button *) {
+  color: #202127 !important;
+}
+html[data-site-theme="light"] body :not(button) > svg,
+html[data-site-theme="light"] body :not(button) > svg * {
+  color: #34363d !important;
+}
