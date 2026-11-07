@@ -62,7 +62,7 @@ export default async function RobloxUserProfile({ params }: { params: Promise<{ 
         </div>
       </header>
 
-      <div className="mx-auto max-w-[1180px] px-3 py-5 sm:px-6 sm:py-7">
+      <div className="w-full px-3 py-5 sm:px-8 sm:py-7">
         <Link href="/" className="mb-4 inline-flex text-sm font-semibold text-[#335fff] hover:underline">← Retour au Marketplace</Link>
         {!result ? (
           <section className="bg-transparent p-0">
@@ -71,8 +71,8 @@ export default async function RobloxUserProfile({ params }: { params: Promise<{ 
           </section>
         ) : (
           <>
-            <section className="overflow-hidden rounded-none border-0 bg-transparent shadow-none">
-              <div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:p-7">
+            <section className="w-full border-0 bg-transparent shadow-none">
+              <div className="flex w-full flex-col gap-5 p-0 sm:flex-row sm:items-center sm:py-5">
                 <div className="size-32 shrink-0 overflow-hidden rounded-full bg-[#171717] sm:size-40">
                   {result.avatar ? <img src={result.avatar} alt={`Avatar de ${result.user.name}`} className="size-full object-cover" /> : <div className="flex size-full items-center justify-center text-5xl">👤</div>}
                 </div>
@@ -88,14 +88,14 @@ export default async function RobloxUserProfile({ params }: { params: Promise<{ 
                   </div>
                 </div>
               </div>
-              <nav className="flex gap-7 border-t border-[#252525] px-5 sm:px-7" aria-label="Profile sections">
+              <nav className="flex gap-7 border-b border-[#252525] px-0" aria-label="Profile sections">
                 <a href="#about" className="border-b-[3px] border-[#335fff] py-4 text-sm font-bold">About</a>
                 
               </nav>
             </section>
 
-            <div className="mt-5">
-              <section id="about" className="rounded-none border-0 bg-transparent p-0 shadow-none sm:p-0">
+            <div className="mt-5 w-full">
+              <section id="about" className="w-full border-0 bg-transparent p-0 shadow-none">
                 <h2 className="text-xl font-extrabold">About</h2>
                 <p className="mt-4 min-h-16 whitespace-pre-wrap break-words text-sm leading-6 text-[#d1d3d8]">{result.user.description?.trim() || 'This user has no description.'}</p>
                 {result.user.created && <p className="mt-6 border-t border-[#252525] pt-4 text-sm text-[#a4a7b0]">Join Date: {new Date(result.user.created).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>}
@@ -104,7 +104,7 @@ export default async function RobloxUserProfile({ params }: { params: Promise<{ 
 
           </>
         )}
-        <p className="mt-6 text-center text-xs text-[#a0a0a0]">Public profile information from Roblox. This fan-made site is not affiliated with Roblox.</p>
+        <p className="mt-6 text-left text-xs text-[#a0a0a0]">Public profile information from Roblox. This fan-made site is not affiliated with Roblox.</p>
       </div>
     </main>
   )
