@@ -51,6 +51,10 @@ export function ProfileSiteHeader() {
             <span className="max-w-28 truncate text-sm font-bold">{profile?.displayName || 'Builderman'}</span>
           </div>
           <button type="button" aria-label="Notifications" className="rounded-lg p-2 hover:bg-[#242529]"><Bell className="size-5" /></button>
+          <Link href="/robux" className="flex items-center gap-1.5 rounded-lg px-2 py-2 text-sm font-bold hover:bg-[#242529] sm:text-base" aria-label={balance.toLocaleString() + ' Robux'}>
+            <RobuxIcon className="size-6" />
+            <span className="tabular-nums">{balance.toLocaleString('en-US')}</span>
+          </Link>
           <div className="relative">
             <button type="button" aria-label="Settings" aria-expanded={settingsOpen} onClick={() => setSettingsOpen((open) => !open)} className="rounded-lg p-2 hover:bg-[#242529]"><Settings className="size-5" /></button>
             {settingsOpen && (
@@ -61,10 +65,6 @@ export function ProfileSiteHeader() {
               </div>
             )}
           </div>
-          <Link href="/robux" className="flex items-center gap-1.5 rounded-lg px-2 py-2 text-sm font-bold hover:bg-[#242529] sm:text-base" aria-label={balance.toLocaleString() + ' Robux'}>
-            <RobuxIcon className="size-6" />
-            <span className="tabular-nums">{balance.toLocaleString('en-US')}</span>
-          </Link>
         </div>
       </div>
     </header>
