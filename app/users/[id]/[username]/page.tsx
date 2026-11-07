@@ -50,7 +50,7 @@ export default async function RobloxUserProfile({ params }: { params: Promise<{ 
 
   return (
     <main className="min-h-screen bg-black text-white">
-      <ProfileSiteHeader />
+      <ProfileSiteHeader username={result?.user.name ?? ''} />
 
       <div className="w-full px-3 py-5 sm:px-8 sm:py-7">
         <Link href="/" className="mb-4 inline-flex text-sm font-semibold text-[#335fff] hover:underline">← Retour au Marketplace</Link>
