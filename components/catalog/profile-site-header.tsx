@@ -40,7 +40,7 @@ export function ProfileSiteHeader() {
           <Link href="/" className="px-2.5 py-[18px] text-sm font-semibold text-white/90 hover:text-white lg:px-3 lg:text-base">Create</Link>
           <Link href="/robux" className="px-2.5 py-[18px] text-sm font-semibold text-white/90 hover:text-white lg:px-3 lg:text-base">Robux</Link>
         </nav>
-        <form className="relative mx-auto flex min-w-0 max-w-[600px] flex-1 items-center" onSubmit={(event) => { event.preventDefault(); window.location.href = '/?search=' + encodeURIComponent(query) }}>
+        <form className="relative mx-auto flex min-w-0 max-w-[600px] flex-1 items-center" onSubmit={(event) => { event.preventDefault(); window.location.href = '/search/people?keyword=' + encodeURIComponent(query) }}>
           <Search className="pointer-events-none absolute left-2.5 size-[18px] text-[#a3a5ab]" />
           <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search" aria-label="Search" className="h-8 w-full rounded-md border border-[#3a3b40] bg-[#2a2b30] pl-9 pr-3 text-sm text-white placeholder:text-[#a3a5ab] outline-none focus:border-[#66676d] sm:h-9" />
         </form>
