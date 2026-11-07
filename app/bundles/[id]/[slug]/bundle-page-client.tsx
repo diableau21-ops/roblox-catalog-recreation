@@ -370,7 +370,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           ) : (
           <>
           <div className="flex items-center justify-between gap-3">
-            <div><p className="text-xs font-bold uppercase tracking-widest text-[#a7a7b3]">Gift</p><h2 id="gift-title" className="mt-1 text-2xl font-extrabold">Send Gift</h2></div>
+            <div className="flex items-center gap-3"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="Roblox Plus" className="size-8 brightness-0 invert" /><h2 id="gift-title" className="text-2xl font-extrabold">Gift</h2></div>
             <button type="button" onClick={() => { setGiftOpen(false); setGiftManualMode(false) }} aria-label="Close" className="rounded-lg px-2 py-1 text-xl hover:bg-secondary">×</button>
           </div>
           {!giftSelectedPlayer && !giftReview && !giftManualMode ? (
