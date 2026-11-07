@@ -51,7 +51,8 @@ export async function GET(request: Request) {
       return NextResponse.json({ data: [] }, { headers: corsHeaders })
     }
 
-    // Use Roblox's current thumbnails endpoint instead of the retired headshot URL.
+    // Fetch avatars and presence concurrently so one Roblox endpoint doesn't
+    // have to finish before the other request even starts.
     const ids = players.map((player: { id: number }) => player.id).join(',')
     const thumbnailsUrl = new URL('https://thumbnails.roblox.com/v1/users/avatar-headshot')
     thumbnailsUrl.search = new URLSearchParams({
@@ -61,13 +62,25 @@ export async function GET(request: Request) {
       isCircular: 'false',
     }).toString()
 
-    const thumbnailsResponse = await fetch(thumbnailsUrl, {
-      headers: { Accept: 'application/json' },
-      cache: 'no-store',
-      signal: AbortSignal.timeout(8000),
-    })
+    const [thumbnailsResult, presenceResult] = await Promise.all([
+      fetch(thumbnailsUrl, {
+        headers: { Accept: 'application/json' },
+        cache: 'no-store',
+        signal: AbortSignal.timeout(5000),
+      })
+        .then(async (response) => response.ok ? await response.json() : { data: [] })
+        .catch(() => ({ data: [] })),
+      fetch('https://presence.roblox.com/v1/presence/users', {
+        method: 'POST',
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userIds: players.map((player: { id: number }) => player.id) }),
+        cache: 'no-store',
+        signal: AbortSignal.timeout(5000),
+      })
+        .then(async (response) => response.ok ? await response.json() : { userPresences: [] })
+        .catch(() => ({ userPresences: [] })),
+    ])
 
-    const thumbnailsResult = thumbnailsResponse.ok ? await thumbnailsResponse.json() : { data: [] }
     const avatarById = new Map<number, string>(
       (Array.isArray(thumbnailsResult.data) ? thumbnailsResult.data : [])
         .filter((thumbnail: { targetId?: number; imageUrl?: string; state?: string }) =>
@@ -76,29 +89,13 @@ export async function GET(request: Request) {
         .map((thumbnail: { targetId: number; imageUrl: string }) => [thumbnail.targetId, thumbnail.imageUrl]),
     )
 
-    // Roblox's public presence endpoint reports whether each searched user is online.
-    let presenceById = new Map<number, boolean>()
-    try {
-      const presenceResponse = await fetch('https://presence.roblox.com/v1/presence/users', {
-        method: 'POST',
-        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userIds: players.map((player: { id: number }) => player.id) }),
-        cache: 'no-store',
-        signal: AbortSignal.timeout(8000),
-      })
-      if (presenceResponse.ok) {
-        const presenceResult = await presenceResponse.json()
-        presenceById = new Map<number, boolean>(
-          (Array.isArray(presenceResult.userPresences) ? presenceResult.userPresences : [])
-            .map((presence: { userId?: number; userPresenceType?: number }) => [
-              presence.userId,
-              Number(presence.userPresenceType) > 0,
-            ]),
-        )
-      }
-    } catch {
-      // Keep the search usable if Roblox presence data is temporarily unavailable.
-    }
+    const presenceById = new Map<number, boolean>(
+      (Array.isArray(presenceResult.userPresences) ? presenceResult.userPresences : [])
+        .map((presence: { userId?: number; userPresenceType?: number }) => [
+          presence.userId,
+          Number(presence.userPresenceType) > 0,
+        ]),
+    )
 
     return NextResponse.json({
       data: players.map((player: { id: number; name: string; displayName: string; hasVerifiedBadge: boolean }) => ({
