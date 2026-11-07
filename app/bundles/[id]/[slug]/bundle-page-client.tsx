@@ -167,7 +167,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
     <main className="min-h-screen bg-background text-foreground">
       <SiteHeader balance={balance} query={query} onQueryChange={setQuery} onBuyRobux={() => setRobuxShopOpen(true)} onNotify={notify} />
       <div role="note" aria-label="Unofficial mockup notice" className="mx-3 mt-3 rounded-lg border border-amber-400/40 bg-amber-950/40 px-4 py-3 text-sm text-amber-100 sm:mx-5 md:ml-[240px] md:mr-8">
-        <strong>Unofficial fan-made mockup.</strong> This site is not affiliated with Roblox. Robux balances and gift flows are visual demonstrations only; no real Robux or items are sent. Never enter your Roblox password here.
+        <strong>Unofficial fan-made mockup.</strong> This site is not affiliated with Roblox. It cannot transfer Robux or items to Roblox accounts. Never enter your Roblox password here.
       </div>
       <LeftNav onNotify={notify} onBuyRobux={() => setRobuxShopOpen(true)} />
 
@@ -356,7 +356,7 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <div className="mx-auto mt-8 flex size-16 items-center justify-center rounded-full border-2 border-white bg-transparent text-white">
                 <svg viewBox="0 0 24 24" className="size-8" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6" /></svg>
               </div>
-              <p className="mt-4 text-center text-sm font-semibold text-amber-200">Demo only — no item was sent to @{giftSelectedPlayer?.name}. This is an unofficial mockup.</p>
+              <p className="mt-4 text-center text-sm font-semibold text-amber-200">No item was sent to @{giftSelectedPlayer?.name}. Item transfers are not supported on this site.</p>
               <button type="button" onClick={() => { setGiftOpen(false); setGiftSuccess(false); setGiftMessage(''); setGiftSearchMessage(''); setGiftUsername(''); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftSending(false); setGiftReview(false); setGiftManualMode(false) }} className="mt-6 h-14 w-full rounded-xl bg-[#335fff] px-7 text-2xl font-extrabold text-white transition hover:bg-[#244be0]">OK</button>
             </div>
           ) : giftSending ? (
