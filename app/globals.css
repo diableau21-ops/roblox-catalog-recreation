@@ -503,47 +503,62 @@ html[data-site-theme="light"] header svg {
   color: #202127;
 }
 
-/* Full white appearance: make every page surface white and all text readable. */
-html[data-site-theme="light"] body,
+/* Light appearance: white page with softly contrasted, visible surfaces. */
+html[data-site-theme="light"] body {
+  background: #ffffff !important;
+  color: #202127 !important;
+}
 html[data-site-theme="light"] body main,
 html[data-site-theme="light"] body section,
 html[data-site-theme="light"] body article,
 html[data-site-theme="light"] body aside,
 html[data-site-theme="light"] body nav,
-html[data-site-theme="light"] body footer,
-html[data-site-theme="light"] body [class*="bg-"],
-html[data-site-theme="light"] body [style*="background"] {
-  background-color: #ffffff !important;
+html[data-site-theme="light"] body footer {
+  color: #202127;
+}
+
+/* Turn dark card/panel backgrounds into light grey surfaces, not invisible white. */
+html[data-site-theme="light"] body [class*="bg-"]:not(button):not(.gift-galaxy-card):not(.gift-galaxy-card-bg),
+html[data-site-theme="light"] body [style*="background-color"]:not(button) {
+  background-color: #f2f3f5 !important;
   background-image: none !important;
 }
-html[data-site-theme="light"] body *:not(img):not(video):not(canvas):not(svg):not(path) {
+html[data-site-theme="light"] body header,
+html[data-site-theme="light"] body [class*="bg-white"] {
+  background-color: #ffffff !important;
+}
+
+/* Dark readable text and icons throughout the light theme. */
+html[data-site-theme="light"] body *:not(button):not(button *):not(img):not(video):not(canvas) {
   color: #202127;
+}
+html[data-site-theme="light"] body svg {
+  color: #34363d;
 }
 html[data-site-theme="light"] body input,
 html[data-site-theme="light"] body textarea,
 html[data-site-theme="light"] body select {
   background: #ffffff !important;
   color: #202127 !important;
-  border-color: #cfd1d8 !important;
+  border: 1px solid #cfd1d8 !important;
 }
-html[data-site-theme="light"] body button {
-  border-color: #d4d6dc;
+html[data-site-theme="light"] body input::placeholder,
+html[data-site-theme="light"] body textarea::placeholder {
+  color: #737680 !important;
+  opacity: 1;
+}
+html[data-site-theme="light"] body [class*="border-"] {
+  border-color: #d4d6dc !important;
 }
 html[data-site-theme="light"] body a {
   color: #2457d6;
 }
-html[data-site-theme="light"] body img,
-html[data-site-theme="light"] body video,
-html[data-site-theme="light"] body canvas,
-html[data-site-theme="light"] body svg {
-  background-color: transparent !important;
-}
 
-/* In white appearance, every button has a black surface and readable white content. */
+/* Buttons stay black, with white text and icons that are easy to see. */
 html[data-site-theme="light"] body button {
   background-color: #17181c !important;
   color: #ffffff !important;
-  border-color: #17181c !important;
+  border: 1px solid #17181c !important;
 }
 html[data-site-theme="light"] body button,
 html[data-site-theme="light"] body button * {
