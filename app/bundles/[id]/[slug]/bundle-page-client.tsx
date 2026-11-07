@@ -353,7 +353,6 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
               <div className="mx-auto mt-8 flex size-16 items-center justify-center rounded-full border-2 border-white bg-transparent text-white">
                 <svg viewBox="0 0 24 24" className="size-8" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6" /></svg>
               </div>
-              <p className="mt-4 text-center text-sm font-semibold text-amber-200">Demo only — no Roblox item was transferred.</p>
               <button type="button" onClick={() => { setGiftOpen(false); setGiftSuccess(false); setGiftMessage(''); setGiftSearchMessage(''); setGiftUsername(''); setGiftSelectedPlayer(null); setGiftPlayers([]); setGiftSending(false); setGiftReview(false); setGiftManualMode(false) }} className="mt-6 h-14 w-full rounded-xl bg-[#335fff] px-7 text-2xl font-extrabold text-white transition hover:bg-[#244be0]">OK</button>
             </div>
           ) : giftSending ? (
@@ -459,7 +458,8 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
         </section>
       </div>}
       <footer className="mt-8 w-full border-t border-white/10 bg-[#191919] px-4 py-5 text-white/75">
-        {isKorblox && <p className="mx-auto mb-4 max-w-[1000px] text-center text-xs text-white/45">Unofficial site, not affiliated with Roblox. Robux and items cannot be transferred here.</p>}
+        <p className="mx-auto mb-2 max-w-[1000px] text-center text-xs text-white/45">Demo only — no Roblox item was transferred. Robux and items cannot be transferred here.</p>
+        {isKorblox && <p className="mx-auto mb-4 max-w-[1000px] text-center text-xs text-white/45">Unofficial site, not affiliated with Roblox.</p>}
         <div className="mx-auto max-w-[1000px]">
           <nav aria-label="Footer" className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-semibold sm:text-sm">
             <a className="hover:text-white" href="https://www.roblox.com/info/about-us?locale=en_us" target="_blank" rel="noreferrer">About Us</a>
