@@ -98,6 +98,13 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
       if (!response.ok) throw new Error('Search failed')
       const payload = await response.json()
       const results = Array.isArray(payload.data) ? payload.data : []
+      const exactMatch = results.find((player: { name?: string }) =>
+        typeof player.name === 'string' && player.name.toLowerCase() === keyword.toLowerCase()
+      )
+      if (exactMatch?.id && exactMatch.name) {
+        window.location.href = `/users/${exactMatch.id}/${encodeURIComponent(exactMatch.name)}`
+        return
+      }
       setPeopleResults(results)
       setPeopleMessage(results.length ? '' : 'Aucun profil trouvé.')
     } catch {
