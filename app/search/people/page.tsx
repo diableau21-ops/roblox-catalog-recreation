@@ -144,17 +144,13 @@ function PeopleSearchContent() {
                           <p className="truncate text-sm text-white/55">@{sendRecipient.name}</p>
                         </div>
                       </div>
-                      <p className="mt-6 text-base font-bold">Choose an amount</p>
-                      <div className="mt-3 grid grid-cols-4 gap-2">
-                        {[25, 50, 100, 200].map((amount) => (
-                          <button key={amount} type="button" onClick={() => { setSendAmount(String(amount)); setSendMessage("") }} className={`h-11 rounded-lg border text-sm font-extrabold transition-colors ${sendAmount === String(amount) ? "border-white bg-white text-black" : "border-white/15 bg-[#292a2f] text-white hover:bg-[#36373d]"}`}>
-                            {amount}
-                          </button>
-                        ))}
+                      <p className="mt-6 text-base font-bold">Enter amount</p>
+                      <label htmlFor="people-send-amount" className="sr-only">Robux amount</label>
+                      <div className="mt-3 flex h-12 items-center rounded-lg border border-white/20 bg-[#292a2f] px-4 focus-within:border-white/60">
+                        <span className="mr-3 text-lg font-bold text-white/70">R$</span>
+                        <input id="people-send-amount" type="number" min="1" step="1" value={sendAmount} onChange={(event) => { setSendAmount(event.target.value); setSendMessage("") }} className="h-full min-w-0 flex-1 bg-transparent text-white outline-none" />
                       </div>
-                      <label htmlFor="people-send-amount" className="mt-5 block text-sm font-semibold text-white/70">Or enter an amount</label>
-                      <input id="people-send-amount" type="number" min="1" step="1" value={sendAmount} onChange={(event) => { setSendAmount(event.target.value); setSendMessage("") }} className="mt-2 h-12 w-full rounded-lg border border-white/20 bg-[#292a2f] px-4 text-white outline-none focus:border-white/60" />
-                      <button type="button" disabled={!Number.isSafeInteger(Number(sendAmount)) || Number(sendAmount) < 1} onClick={() => { setSendMessage(""); setSendStage("confirm") }} className="mt-6 h-12 w-full rounded-xl bg-white font-extrabold text-black transition-colors hover:bg-white/85 disabled:opacity-40">Next</button>
+                      <button type="button" disabled={!Number.isSafeInteger(Number(sendAmount)) || Number(sendAmount) < 1} onClick={() => { setSendMessage(""); setSendStage("confirm") }} className="mt-6 h-12 w-full rounded-xl bg-white font-extrabold text-black transition-colors hover:bg-white/85 disabled:opacity-40">Continue</button>
                     </>
                   ) : (
                     <>
