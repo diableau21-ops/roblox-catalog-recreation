@@ -7,9 +7,17 @@ import { MoreHorizontal } from 'lucide-react'
 export function ProfileActions({ username }: { username: string }) {
   const [open, setOpen] = useState(false)
   const [following, setFollowing] = useState(false)
+  const [trusted, setTrusted] = useState(false)
 
   return (
-    <div className="relative shrink-0 self-start sm:self-center">
+    <div className="relative flex shrink-0 items-center gap-2 self-start sm:self-center">
+      <button
+        type="button"
+        onClick={() => setTrusted((value) => !value)}
+        className="h-10 rounded-md bg-[#335fff] px-4 text-sm font-bold text-white hover:bg-[#264bd6]"
+      >
+        {trusted ? 'Trusted Friend' : 'Add Trusted Friend'}
+      </button>
       <button type="button" aria-label="More profile actions" aria-expanded={open} onClick={() => setOpen((value) => !value)} className="flex size-10 items-center justify-center rounded-full text-white hover:bg-[#242529]">
         <MoreHorizontal className="size-6" />
       </button>
