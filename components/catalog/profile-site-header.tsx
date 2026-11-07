@@ -25,7 +25,11 @@ export function ProfileSiteHeader() {
       if (value && Number.isFinite(Number(value))) setBalance(Number(value))
     }
     window.addEventListener('storage', updateBalance)
-    return () => window.removeEventListener('storage', updateBalance)
+    window.addEventListener('catalog-demo-balance-change', updateBalance)
+    return () => {
+      window.removeEventListener('storage', updateBalance)
+      window.removeEventListener('catalog-demo-balance-change', updateBalance)
+    }
   }, [])
 
   return (
