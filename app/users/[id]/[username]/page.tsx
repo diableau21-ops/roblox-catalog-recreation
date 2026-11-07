@@ -45,16 +45,16 @@ export default async function RobloxUserProfile({ params }: { params: Promise<{ 
   const result = await getProfile(id)
 
   return (
-    <main className="min-h-screen bg-[#f2f4f5] text-[#191b1f]">
-      <header className="sticky top-0 z-30 flex h-14 items-center gap-5 border-b border-[#d7dadd] bg-white px-4 shadow-sm sm:px-7">
-        <Link href="/" aria-label="Retour au Marketplace" className="shrink-0 text-xl font-black tracking-tight text-[#191b1f]">ROBLOX</Link>
-        <nav className="hidden items-center gap-6 text-sm font-semibold text-[#393b3d] sm:flex">
+    <main className="min-h-screen bg-[#111216] text-white">
+      <header className="sticky top-0 z-30 flex h-14 items-center gap-5 border-b border-[#292b32] bg-[#191a20] px-4 shadow-[0_4px_24px_rgba(0,0,0,0.22)] sm:px-7">
+        <Link href="/" aria-label="Retour au Marketplace" className="shrink-0 text-xl font-black tracking-tight text-white">ROBLOX</Link>
+        <nav className="hidden items-center gap-6 text-sm font-semibold text-[#d1d3d8] sm:flex">
           <Link href="/" className="hover:text-black">Charts</Link>
           <Link href="/" className="hover:text-black">Marketplace</Link>
           <Link href="/" className="hover:text-black">Create</Link>
           <Link href="/" className="hover:text-black">Robux</Link>
         </nav>
-        <div className="ml-auto flex h-9 max-w-md flex-1 items-center rounded-md bg-[#f2f4f5] px-3 text-sm text-[#60656b]">
+        <div className="ml-auto flex h-9 max-w-md flex-1 items-center rounded-md bg-[#24262e] px-3 text-sm text-[#a4a7b0]">
           <span className="mr-2">⌕</span><span>Search</span>
         </div>
       </header>
@@ -62,7 +62,7 @@ export default async function RobloxUserProfile({ params }: { params: Promise<{ 
       <div className="mx-auto max-w-[1180px] px-3 py-5 sm:px-6 sm:py-7">
         <Link href="/" className="mb-4 inline-flex text-sm font-semibold text-[#335fff] hover:underline">← Retour au Marketplace</Link>
         {!result ? (
-          <section className="rounded-lg bg-white p-8 shadow-sm">
+          <section className="rounded-lg bg-[#191a20] p-8 shadow-sm">
             <h1 className="text-2xl font-bold">Profil introuvable</h1>
             <p className="mt-2 text-sm text-[#60656b]">Ce profil Roblox n’existe pas ou les informations ne sont pas disponibles.</p>
           </section>
@@ -70,7 +70,7 @@ export default async function RobloxUserProfile({ params }: { params: Promise<{ 
           <>
             <section className="overflow-hidden rounded-lg bg-white shadow-sm">
               <div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:p-7">
-                <div className="size-32 shrink-0 overflow-hidden rounded-full bg-[#e5e7eb] sm:size-40">
+                <div className="size-32 shrink-0 overflow-hidden rounded-full bg-[#292b33] sm:size-40">
                   {result.avatar ? <img src={result.avatar} alt={`Avatar de ${result.user.name}`} className="size-full object-cover" /> : <div className="flex size-full items-center justify-center text-5xl">👤</div>}
                 </div>
                 <div className="min-w-0 flex-1">
@@ -82,9 +82,8 @@ export default async function RobloxUserProfile({ params }: { params: Promise<{ 
                     <span className="font-semibold">{result.followers?.toLocaleString('en-US') ?? '—'} <span className="font-normal text-[#60656b]">Followers</span></span>
                   </div>
                 </div>
-                <a href={`https://www.roblox.com/users/${result.user.id}/profile`} target="_blank" rel="noreferrer" className="inline-flex h-11 shrink-0 items-center justify-center rounded-md bg-[#335fff] px-6 text-sm font-bold text-white transition hover:bg-[#244bd6]">View on Roblox ↗</a>
               </div>
-              <nav className="flex gap-7 border-t border-[#e7e8ea] px-5 sm:px-7" aria-label="Profile sections">
+              <nav className="flex gap-7 border-t border-[#30323a] px-5 sm:px-7" aria-label="Profile sections">
                 <a href="#about" className="border-b-[3px] border-[#335fff] py-4 text-sm font-bold">About</a>
                 <a href="#creations" className="py-4 text-sm font-semibold text-[#60656b] hover:text-[#191b1f]">Creations</a>
               </nav>
@@ -109,11 +108,10 @@ export default async function RobloxUserProfile({ params }: { params: Promise<{ 
             <section id="creations" className="mt-5 rounded-lg bg-white p-5 shadow-sm sm:p-7">
               <h2 className="text-xl font-extrabold">Creations</h2>
               <p className="mt-3 text-sm text-[#60656b]">This user's public creations can be viewed on their Roblox profile.</p>
-              <a href={`https://www.roblox.com/users/${result.user.id}/profile#!/creations`} target="_blank" rel="noreferrer" className="mt-4 inline-flex text-sm font-semibold text-[#335fff] hover:underline">View creations on Roblox ↗</a>
             </section>
           </>
         )}
-        <p className="mt-6 text-center text-xs text-[#858a91]">Public profile information from Roblox. This fan-made site is not affiliated with Roblox.</p>
+        <p className="mt-6 text-center text-xs text-[#777b86]">Public profile information from Roblox. This fan-made site is not affiliated with Roblox.</p>
       </div>
     </main>
   )
