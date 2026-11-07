@@ -374,3 +374,20 @@ a, button, [role="button"], input[type="checkbox"], input[type="radio"], select,
   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M5 2 L5 24 L11 18 L16 28 L20 26 L15 16 L24 16 Z' fill='white' stroke='%23111111' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E") 5 2, pointer;
 }
 
+
+
+/* Prevent blue text highlighting when dragging with the mouse. */
+*, *::before, *::after {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+input, textarea, [contenteditable="true"] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+img {
+  -webkit-user-drag: none;
+  user-drag: none;
+}
