@@ -27,6 +27,10 @@ function PeopleSearchContent() {
   const [message, setMessage] = useState('')
   const [sent, setSent] = useState<number[]>([])
   const [openMenu, setOpenMenu] = useState<number | null>(null)
+  const [sendRecipient, setSendRecipient] = useState<Player | null>(null)
+  const [sendAmount, setSendAmount] = useState('100')
+  const [sendStage, setSendStage] = useState<'edit' | 'confirm' | 'success'>('edit')
+  const [sendMessage, setSendMessage] = useState('')
 
   useEffect(() => {
     let active = true
@@ -75,7 +79,7 @@ function PeopleSearchContent() {
                 </button>
                 {openMenu === player.id && (
                   <div className="absolute right-3 top-12 z-30 w-44 overflow-hidden rounded-md border border-[#38393e] bg-[#242529] py-1 text-left shadow-xl">
-                    <Link href={`/robux?q=${encodeURIComponent(player.name)}`} onClick={() => setOpenMenu(null)} className="block px-3 py-2.5 text-sm font-semibold text-white hover:bg-[#35363c]">Send Robux</Link>
+                    <button type="button" onClick={() => { setSendRecipient(player); setSendAmount('100'); setSendStage('edit'); setSendMessage(''); setOpenMenu(null) }} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Send Robux</button>
                     <button type="button" onClick={() => setOpenMenu(null)} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Follow</button>
                     <button type="button" onClick={() => setOpenMenu(null)} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Inventory</button>
                     <button type="button" onClick={() => setOpenMenu(null)} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Favorites</button>
@@ -104,6 +108,41 @@ function PeopleSearchContent() {
                 </button>
               </article>
             ))}
+          </div>
+        )}
+        {sendRecipient && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 p-3" onClick={() => setSendRecipient(null)}>
+            <section role="dialog" aria-modal="true" aria-labelledby="people-send-title" className="relative w-full max-w-lg rounded-2xl border border-[#383838] bg-[#1f1f1f] p-5 text-white shadow-2xl sm:p-6" onClick={(event) => event.stopPropagation()}>
+              <div className="flex items-center justify-between gap-3">
+                <h2 id="people-send-title" className="text-2xl font-extrabold">Send Robux</h2>
+                <button type="button" onClick={() => setSendRecipient(null)} aria-label="Close" className="rounded-lg px-2 py-1 text-xl text-white/75 hover:bg-white/10">×</button>
+              </div>
+              <div className="mt-6 flex flex-col items-center text-center">
+                {sendRecipient.avatarUrl ? <img src={sendRecipient.avatarUrl} alt="" className="size-24 rounded-full object-cover" /> : <span className="size-24 rounded-full bg-[#303136]" /> }
+                <p className="mt-3 text-xl font-bold">{sendRecipient.displayName}</p>
+                <p className="text-sm text-white/60">@{sendRecipient.name}</p>
+              </div>
+              {sendStage === "edit" ? (
+                <>
+                  <label htmlFor="people-send-amount" className="mt-6 block text-sm font-semibold text-white/75">Robux amount</label>
+                  <input id="people-send-amount" type="number" min="1" step="1" value={sendAmount} onChange={(event) => { setSendAmount(event.target.value); setSendMessage("") }} className="mt-2 h-12 w-full rounded-lg border border-white/20 bg-[#292929] px-4 text-white outline-none focus:border-[#146bff]" />
+                  <button type="button" disabled={!Number.isSafeInteger(Number(sendAmount)) || Number(sendAmount) < 1} onClick={() => { setSendMessage(""); setSendStage("confirm") }} className="mt-5 h-12 w-full rounded-xl bg-[#146bff] font-extrabold disabled:opacity-50">Next</button>
+                </>
+              ) : sendStage === "confirm" ? (
+                <>
+                  <p className="mt-6 rounded-xl bg-[#292929] p-4 text-center text-lg font-bold">{Number(sendAmount).toLocaleString("en-US")} Robux to {sendRecipient.name}?</p>
+                  <div className="mt-5 flex gap-3">
+                    <button type="button" onClick={() => setSendStage("edit")} className="h-12 flex-1 rounded-xl border border-white/20 font-bold hover:bg-white/5">Back</button>
+                    <button type="button" onClick={() => { setSendStage("success"); setSendMessage("Gift preview completed.") }} className="h-12 flex-1 rounded-xl bg-[#146bff] font-extrabold">Send</button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="mt-6 rounded-xl bg-[#292929] p-4 text-center font-semibold">{sendMessage} This is only a visual mockup; no Robux are transferred.</p>
+                  <button type="button" onClick={() => setSendRecipient(null)} className="mt-5 h-12 w-full rounded-xl bg-[#146bff] font-extrabold">Done</button>
+                </>
+              )}
+            </section>
           </div>
         )}
         <p className="mt-10 text-xs text-[#777b85]">Public profile information from Roblox. This fan-made site is not affiliated with Roblox.</p>
