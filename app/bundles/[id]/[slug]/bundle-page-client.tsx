@@ -426,19 +426,9 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
           ) : (
             <>
               <p className="mt-2 text-sm text-[#a8a8b0]">Choose an item, then select the Roblox player.</p>
-              <div className="mt-4 grid grid-cols-2 gap-3">
-                <button type="button" onClick={() => setGiftBundle('korblox')} aria-pressed={giftBundle === 'korblox'} className={`overflow-hidden rounded-xl border text-left transition ${giftBundle === 'korblox' ? 'border-[#335fff] bg-[#335fff]/15 ring-1 ring-[#335fff]' : 'border-white/15 bg-white/[0.03] hover:bg-white/[0.07]'}`}>
-                  <div className="flex aspect-square w-full items-center justify-center bg-[#202020]">
-                    <img src="/items/korblox.png" alt="Korblox Deathspeaker" loading="eager" fetchPriority="high" className="h-full w-full object-contain p-2" />
-                  </div>
-                  <span className="block px-3 pb-3 pt-2 text-sm font-bold">Korblox Deathspeaker</span>
-                </button>
-                <button type="button" onClick={() => setGiftBundle('headless')} aria-pressed={giftBundle === 'headless'} className={`overflow-hidden rounded-xl border text-left transition ${giftBundle === 'headless' ? 'border-[#335fff] bg-[#335fff]/15 ring-1 ring-[#335fff]' : 'border-white/15 bg-white/[0.03] hover:bg-white/[0.07]'}`}>
-                  <div className="flex aspect-square w-full items-center justify-center bg-[#202020]">
-                    <img src="/items/headless.png" alt="Headless Horseman" loading="eager" fetchPriority="high" className="h-full w-full object-contain p-2" />
-                  </div>
-                  <span className="block px-3 pb-3 pt-2 text-sm font-bold">Headless Horseman</span>
-                </button>
+              <div className="mt-4 rounded-xl border border-white/10 bg-[#202020] p-3">
+                <p className="text-sm font-bold">{giftBundle === 'combo' ? 'Headless + Korblox' : giftBundle === 'korblox' ? 'Korblox Deathspeaker' : 'Headless Horseman'}</p>
+                <p className="mt-1 text-xs text-white/55">Gift selection confirmed. Now find the Roblox account.</p>
               </div>
               <div className="mt-4">
                 <input value={giftUsername} onChange={(event) => { setGiftUsername(event.target.value); setGiftSearchMessage(''); setGiftPlayers([]); setGiftSelectedPlayer(null); setGiftMessage(''); setGiftSuccess(false) }} placeholder="Enter a Roblox username" aria-label="Roblox player username" className="h-12 w-full rounded-lg border border-[#34343b] bg-[#202024] px-3 text-sm text-[#f7f6f2] outline-none placeholder:text-[#85858f] focus:border-[#7183ff] focus:ring-2 focus:ring-[#335fff]/30" />
