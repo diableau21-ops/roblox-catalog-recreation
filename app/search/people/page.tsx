@@ -128,7 +128,6 @@ function PeopleSearchContent() {
                   {sendRecipient.avatarUrl ? <img src={sendRecipient.avatarUrl} alt={`Avatar of ${sendRecipient.name}`} className="size-20 rounded-full object-cover" /> : <span className="size-20 rounded-full bg-[#3a3b40]" />}
                   <p className="mt-3 text-lg font-bold">{sendRecipient.displayName}</p>
                   <p className="mt-0.5 text-sm text-white/60">@{sendRecipient.name}</p>
-                  <div className="mt-6 flex size-16 items-center justify-center rounded-full border-2 border-white bg-transparent text-4xl font-black leading-none text-white">✓</div>
                   <p className="mt-5 text-sm font-semibold text-white/65">Robux sent</p>
                   <div className="mt-3 flex items-center justify-center gap-2">
                     <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Robux_2019_Logo_gold.svg" alt="" className="size-7 object-contain brightness-0 invert" />
