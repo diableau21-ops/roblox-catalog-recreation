@@ -21,7 +21,7 @@ export async function GET(request: Request) {
 
   try {
     const upstream = await fetch(
-      `https://users.roblox.com/v1/users/search?keyword=${encodeURIComponent(keyword)}&limit=10`,
+      `https://users.roblox.com/v1/users/search?keyword=${encodeURIComponent(keyword)}&limit=25`,
       {
         headers: { Accept: 'application/json' },
         cache: 'no-store',
