@@ -125,8 +125,8 @@ function PeopleSearchContent() {
           </div>
         )}
         {sendRecipient && sendStage === "loading" && (
-          <div className="fixed inset-0 z-[120] flex items-center justify-center bg-black/75 p-3">
-            <section role="status" aria-live="polite" className="flex min-h-[460px] w-full max-w-lg flex-col rounded-2xl border border-[#383838] bg-[#1f1f1f] px-5 py-5 text-white shadow-2xl sm:p-6">
+          <div className="fixed inset-0 z-[120] flex items-center justify-center bg-black/75 p-3" onClick={() => setSendRecipient(null)}>
+            <section role="status" aria-live="polite" onClick={(event) => event.stopPropagation()} className="flex min-h-[460px] w-full max-w-lg flex-col rounded-2xl border border-[#383838] bg-[#1f1f1f] px-5 py-5 text-white shadow-2xl sm:p-6">
               <div className="flex w-full items-center justify-between gap-3 border-b border-white/10 pb-4">
                 <div className="flex min-w-0 items-center gap-2">
                   <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="" className="size-7 shrink-0 object-contain brightness-0 invert" />
@@ -167,9 +167,6 @@ function PeopleSearchContent() {
                 </div>
               ) : (
                 <>
-                  <div className="flex justify-end pt-2">
-                    <button type="button" onClick={() => setSendRecipient(null)} aria-label="Close" className="rounded-lg px-2 py-1 text-xl text-white/75 hover:bg-white/10">×</button>
-                  </div>
                   {sendStage === "edit" ? (
                     <>
                       <div className="flex flex-col items-center px-2 pb-1 pt-7 text-center">
