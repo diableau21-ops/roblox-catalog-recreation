@@ -166,8 +166,8 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
   return (
     <main className="min-h-screen bg-background text-foreground">
       <SiteHeader balance={balance} query={query} onQueryChange={setQuery} onBuyRobux={() => setRobuxShopOpen(true)} onNotify={notify} />
-      <div role="note" aria-label="Unofficial mockup notice" className="mx-3 mt-3 rounded-lg border border-amber-400/40 bg-amber-950/40 px-4 py-3 text-sm text-amber-100 sm:mx-5 md:ml-[240px] md:mr-8">
-        <strong>Unofficial fan-made mockup.</strong> This site is not affiliated with Roblox. It cannot transfer Robux or items to Roblox accounts. Never enter your Roblox password here.
+      <div role="note" aria-label="Site information" className="mx-3 mt-3 rounded-lg border border-white/10 bg-[#202020] px-4 py-2 text-xs text-white/60 sm:mx-5 md:ml-[240px] md:mr-8">
+        Unofficial site, not affiliated with Roblox. Robux and items cannot be transferred here.
       </div>
       <LeftNav onNotify={notify} onBuyRobux={() => setRobuxShopOpen(true)} />
 
