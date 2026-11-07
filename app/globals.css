@@ -480,3 +480,25 @@ html[data-site-theme="light"] select {
 html[data-site-theme="light"] input::placeholder {
   color: #777982;
 }
+
+/* Keep text readable when the user switches the site to the light theme. */
+html[data-site-theme="light"] [class*="text-white"],
+html[data-site-theme="light"] [class*="text-gray-"],
+html[data-site-theme="light"] [class*="text-zinc-"],
+html[data-site-theme="light"] [class*="text-neutral-"],
+html[data-site-theme="light"] [class*="text-slate-"],
+html[data-site-theme="light"] [class*="text-[#a"],
+html[data-site-theme="light"] [class*="text-[#b"],
+html[data-site-theme="light"] [class*="text-[#c"],
+html[data-site-theme="light"] [class*="text-[#d"],
+html[data-site-theme="light"] [class*="text-[#e"],
+html[data-site-theme="light"] [class*="text-[#f"] {
+  color: #202127 !important;
+}
+html[data-site-theme="light"] [class*="placeholder:text-"]::placeholder {
+  color: #666872 !important;
+  opacity: 1;
+}
+html[data-site-theme="light"] header svg {
+  color: #202127;
+}
