@@ -18,7 +18,8 @@ import { cn } from '@/lib/utils'
 
 type Props = {
   onNotify: (msg: string) => void
-  onBuyRobux: () => void
+  onBuyRobux?: () => void
+  dark?: boolean
 }
 
 const links = [
@@ -33,7 +34,9 @@ const links = [
   { label: 'Gift Cards', icon: Gift },
 ]
 
-export function LeftNav({ onNotify, onBuyRobux }: Props) {
+export function LeftNav({ onNotify, onBuyRobux, dark = false }: Props) {
+  const notify = onNotify ?? ((msg: string) => window.alert(msg))
+  const buyRobux = onBuyRobux ?? (() => { window.location.href = '/robux' })
   const [profile, setProfile] = useState<{ id: number; name: string; displayName: string; avatarUrl?: string; hasVerifiedBadge?: boolean } | null>(null)
 
   useEffect(() => {
@@ -62,18 +65,19 @@ export function LeftNav({ onNotify, onBuyRobux }: Props) {
       <nav aria-label="Mobile navigation" className="fixed inset-x-0 bottom-0 z-40 flex items-center justify-around border-t border-border bg-header/95 px-2 pb-[env(safe-area-inset-bottom)] pt-2 shadow-[0_-4px_20px_rgba(0,0,0,0.18)] backdrop-blur-md md:hidden">
         <a href={(process.env.NEXT_PUBLIC_BASE_PATH ?? '') + '/'} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><House className="size-5" /><span>Home</span></a>
         <a href={(process.env.NEXT_PUBLIC_BASE_PATH ?? '') + '/'} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><Search className="size-5" /><span>Marketplace</span></a>
-        <button type="button" onClick={() => onNotify('Avatar is coming soon')} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><Shirt className="size-5" /><span>Avatar</span></button>
-        <button type="button" onClick={onBuyRobux} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><Package className="size-5" /><span>Robux</span></button>
+        <button type="button" onClick={() => notify('Avatar is coming soon')} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><Shirt className="size-5" /><span>Avatar</span></button>
+        <button type="button" onClick={buyRobux} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><Package className="size-5" /><span>Robux</span></button>
       </nav>
       <nav
         aria-label="Account"
         className={cn(
-          'fixed bottom-0 left-0 top-14 z-40 hidden w-[220px] flex-col overflow-y-auto border-r border-border bg-header px-3 py-4 md:flex',
+          'fixed bottom-0 left-0 top-14 z-40 hidden w-[220px] flex-col overflow-y-auto border-r px-3 py-4 md:flex',
+          dark ? 'border-[#292a2e] bg-black text-white' : 'border-border bg-header',
         )}
       >
         <button
           type="button"
-          onClick={() => onNotify('Opening your profile')}
+          onClick={() => notify('Opening your profile')}
           className="mb-3 flex items-center gap-3 rounded-xl px-2 py-2.5 text-left transition-colors hover:bg-secondary"
         >
           <span className="relative size-9 overflow-hidden rounded-full bg-thumb">
@@ -89,7 +93,7 @@ export function LeftNav({ onNotify, onBuyRobux }: Props) {
                 onClick={(e) => {
                   if (label !== 'Home') {
                     e.preventDefault()
-                    onNotify(`${label} is coming soon`)
+                    notify(`${label} is coming soon`)
                   }
                 }}
                 className="flex items-center gap-3 rounded-xl px-2.5 py-2.5 text-[15px] font-medium text-foreground/90 transition-colors hover:bg-secondary hover:text-foreground"
@@ -103,7 +107,7 @@ export function LeftNav({ onNotify, onBuyRobux }: Props) {
             </li>
           ))}
         </ul>
-        <div className="mt-5 rounded-xl border border-border bg-secondary/40 p-3.5">
+        <div className={dark ? 'mt-5 rounded-xl border border-[#292a2e] bg-[#151515] p-3.5' : 'mt-5 rounded-xl border border-border bg-secondary/40 p-3.5'}>
           <div className="mb-3 flex items-center gap-2">
             <span className="flex size-7 shrink-0 items-center justify-center">
               <img
@@ -112,7 +116,7 @@ export function LeftNav({ onNotify, onBuyRobux }: Props) {
                 className="size-7 object-contain brightness-0 invert"
               />
             </span>
-            <span className="text-sm font-bold leading-5 text-foreground">Roblox Plus</span>
+            <span className={dark ? 'text-sm font-bold leading-5 text-white' : 'text-sm font-bold leading-5 text-foreground'}>Roblox Plus</span>
           </div>
           <p className="text-sm font-bold leading-5 text-foreground">More fun for less Robux.</p>
           <p className="mt-1 text-xs leading-4 text-muted-foreground">Subscribe to Roblox Plus.</p>
