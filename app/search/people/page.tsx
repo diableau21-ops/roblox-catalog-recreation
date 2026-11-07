@@ -1,11 +1,11 @@
 'use client'
 
 import { Suspense, useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { ProfileSiteHeader } from '@/components/catalog/profile-site-header'
 import { LeftNav } from '@/components/catalog/left-nav'
 import Link from 'next/link'
-import { MoreHorizontal } from 'lucide-react'
+import { MoreHorizontal, Search } from 'lucide-react'
 import { RobuxIcon } from '@/components/catalog/robux-icon'
 
 type Player = {
@@ -22,8 +22,10 @@ function VerifiedBadge() {
 
 function PeopleSearchContent() {
   const params = useSearchParams()
+  const router = useRouter()
   const keyword = params.get('keyword')?.trim() ?? ''
   const [players, setPlayers] = useState<Player[]>([])
+  const [searchTerm, setSearchTerm] = useState(keyword)
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState('')
   const [sent, setSent] = useState<number[]>([])
@@ -33,6 +35,8 @@ function PeopleSearchContent() {
   const [sendStage, setSendStage] = useState<'edit' | 'confirm' | 'loading' | 'success'>('edit')
   const [sendMessage, setSendMessage] = useState('')
   const [robuxBalance, setRobuxBalance] = useState(1250)
+
+  useEffect(() => { setSearchTerm(keyword) }, [keyword])
 
   useEffect(() => {
     const readBalance = () => {
@@ -77,7 +81,11 @@ function PeopleSearchContent() {
       <div className="ml-0 w-full px-4 pb-24 pt-7 sm:px-8 md:ml-[220px] md:w-[calc(100%-220px)]">
         <div className="mb-6 border-b border-[#292a2e] pb-5">
           <h1 className="text-2xl font-extrabold sm:text-3xl">People Results for {keyword}</h1>
-          {!loading && <p className="mt-2 text-sm text-[#a3a5ab]">{players.length} results</p>}
+          <form onSubmit={(event) => { event.preventDefault(); const term = searchTerm.trim(); if (term.length >= 3) router.push(`/search/people?keyword=${encodeURIComponent(term)}`) }} className="mt-4 flex w-full max-w-xl items-center gap-2 rounded-full border border-[#45464d] bg-[#242529] p-1.5 focus-within:border-white/60">
+            <Search className="ml-3 size-5 shrink-0 text-[#a3a5ab]" />
+            <input aria-label="Search people" value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Search people" className="min-w-0 flex-1 bg-transparent px-1 py-2 text-sm text-white outline-none placeholder:text-[#a3a5ab]" />
+            <button type="submit" disabled={searchTerm.trim().length < 3} className="rounded-full bg-[#335fff] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#426cff] disabled:cursor-not-allowed disabled:opacity-50">Search</button>
+          </form>
         </div>
 
         {loading ? (
