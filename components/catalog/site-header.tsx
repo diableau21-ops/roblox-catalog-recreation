@@ -147,7 +147,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
             className="h-8 w-full rounded-md border border-[#3a3b40] !bg-[#2a2b30] pl-9 pr-3 text-sm text-[#f7f7f8] placeholder:text-[#a3a5ab] transition-colors focus:!bg-[#2a2b30] focus:border-[#55565d] focus:outline-none focus:ring-1 focus:ring-[#55565d] sm:h-9 sm:text-sm"
           />
           {searchOpen && query.trim() && (
-            <div className="absolute left-0 right-0 top-full z-[60] mt-1 overflow-hidden rounded-md border border-[#d5d7d8] bg-white py-1 text-[#393b3d] shadow-xl">
+            <div className="absolute left-0 right-0 top-full z-[60] mt-1 overflow-hidden rounded-md border border-[#45464d] bg-[#2a2b30] py-1 text-[#f7f7f8] shadow-xl">
               {searchCategories.map((category) => (
                 <button
                   key={category}
@@ -158,21 +158,21 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
                     onQueryChange(query.trim())
                     setSearchOpen(false)
                   }}
-                  className="flex w-full items-center gap-3 px-3 py-2.5 text-left text-sm hover:bg-[#e8e8e8]"
+                  className="flex w-full items-center gap-3 px-3 py-2.5 text-left text-sm hover:bg-[#3a3b42]"
                 >
-                  <Search className="size-4 shrink-0 text-[#606162]" />
+                  <Search className="size-4 shrink-0 text-[#a3a5ab]" />
                   <span className="min-w-0 truncate">
-                    <span className="text-[#606162]">In </span>{category}
+                    <span className="font-semibold text-white">{query.trim()} </span><span className="text-[#a3a5ab]">in </span><span className="text-white">{category}</span>
                   </span>
                 </button>
               ))}
               {peopleSearching && <p className="px-3 py-3 text-sm text-[#606162]">Recherche de profils…</p>}
-              {peopleMessage && <p className="px-3 py-3 text-sm text-[#606162]">{peopleMessage}</p>}
+              {peopleMessage && <p className="px-3 py-3 text-sm text-[#a3a5ab]">{peopleMessage}</p>}
               {peopleResults.map((player) => (
-                <button key={player.id} type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => { window.location.href = `/users/${player.id}/${encodeURIComponent(player.name)}` }} className="flex w-full items-center gap-3 px-3 py-2.5 text-left hover:bg-[#e8e8e8]">
-                  {player.avatarUrl ? <img src={player.avatarUrl} alt="" className="size-9 rounded-full object-cover" /> : <span className="size-9 rounded-full bg-[#ddd]" />}
+                <button key={player.id} type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => { window.location.href = `/users/${player.id}/${encodeURIComponent(player.name)}` }} className="flex w-full items-center gap-3 px-3 py-2.5 text-left hover:bg-[#3a3b42]">
+                  {player.avatarUrl ? <img src={player.avatarUrl} alt="" className="size-9 rounded-full object-cover" /> : <span className="size-9 rounded-full bg-[#45464d]" />}
                   <span className="min-w-0 flex-1"><span className="block truncate text-sm font-semibold">{player.displayName}</span><span className="block truncate text-xs text-[#606162]">@{player.name}</span></span>
-                  <span className="text-xs text-[#606162]">Profil</span>
+                  <span className="text-xs text-[#a3a5ab]">Profil</span>
                 </button>
               ))}
             </div>
