@@ -18,6 +18,24 @@ export function ProfileSiteHeader() {
 
   useEffect(() => {
     try {
+      const savedTheme = window.localStorage.getItem('catalog-site-theme')
+      const savedFont = window.localStorage.getItem('catalog-site-font')
+      if (savedTheme === 'light' || savedTheme === 'dark') setSiteTheme(savedTheme)
+      if (savedFont) setSiteFont(savedFont)
+    } catch {}
+  }, [])
+
+  useEffect(() => {
+    document.documentElement.dataset.siteTheme = siteTheme
+    document.documentElement.style.setProperty('--site-font', siteFont === 'Trebuchet MS' ? "'Trebuchet MS'" : siteFont)
+    try {
+      window.localStorage.setItem('catalog-site-theme', siteTheme)
+      window.localStorage.setItem('catalog-site-font', siteFont)
+    } catch {}
+  }, [siteTheme, siteFont])
+
+  useEffect(() => {
+    try {
       const storedBalance = window.localStorage.getItem('catalog-demo-robux-balance')
       if (storedBalance && Number.isFinite(Number(storedBalance))) setBalance(Number(storedBalance))
       const storedProfile = window.localStorage.getItem('catalog-demo-profile')
@@ -58,9 +76,9 @@ export function ProfileSiteHeader() {
             <span className="max-w-28 truncate text-sm font-bold">{profile?.displayName || 'Builderman'}</span>
           </div>
           <div className="relative">
-            <button type="button" aria-label="Appearance" aria-expanded={appearanceOpen} onClick={() => setAppearanceOpen((open) => !open)} className="rounded-lg p-2 hover:bg-[#242529]"><Bell className="size-5" /></button>
+            <button type="button" aria-label="Appearance" aria-expanded={appearanceOpen} onClick={() => { setAppearanceOpen(true); setSettingsOpen(false) }} className="relative z-[100] rounded-lg p-2 hover:bg-[#242529]" title="Open appearance settings"><Bell className="size-5" /></button>
             {appearanceOpen && (
-              <div className="absolute right-0 top-full z-[90] mt-2 w-72 rounded-xl border border-[#38393e] bg-[#242529] p-4 text-white shadow-2xl">
+              <div className="absolute right-0 top-full z-[110] mt-2 w-72 rounded-xl border border-[#38393e] bg-[#242529] p-4 text-white shadow-2xl">
                 <div className="mb-3 flex items-center justify-between">
                   <h2 className="text-base font-bold">Appearance</h2>
                   <button type="button" aria-label="Close appearance" onClick={() => setAppearanceOpen(false)} className="rounded-md px-2 py-1 text-lg text-white/70 hover:bg-white/10">×</button>
