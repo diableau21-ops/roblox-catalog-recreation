@@ -14,6 +14,7 @@ type Player = {
   displayName: string
   avatarUrl?: string
   hasVerifiedBadge?: boolean
+  isOnline?: boolean
 }
 
 function VerifiedBadge() {
@@ -119,7 +120,7 @@ function PeopleSearchContent() {
                     {player.hasVerifiedBadge && <VerifiedBadge />}
                   </span>
                   <span className="mt-1 max-w-full truncate text-sm text-[#a3a5ab]">@{player.name}</span>
-                  <span className="mt-2 text-xs text-[#858891]">Offline</span>
+                  <span className={`mt-2 text-xs ${player.isOnline ? "text-[#43b581]" : "text-[#858891]"}`}>{player.isOnline ? "Online" : "Offline"}</span>
                 </a>
                 <button
                   type="button"
