@@ -434,7 +434,6 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
                 </div>
                 <div className="p-3">
                   <p className="text-sm font-bold">{giftBundle === 'combo' ? 'Headless + Korblox' : giftBundle === 'korblox' ? 'Korblox Deathspeaker' : 'Headless Horseman'}</p>
-                  <p className="mt-1 text-xs text-white/55">Selected gift • Now find the Roblox account.</p>
                 </div>
               </div>
               <div className="mt-4">
