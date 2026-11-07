@@ -326,9 +326,9 @@ export default function BundlePageClient({ id, slug }: { id: string; slug: strin
             <h2 id="robux-title" className="text-lg font-bold">Choisir des Robux</h2>
             <button type="button" onClick={() => setRobuxShopOpen(false)} aria-label="Fermer" className="rounded-lg px-2 py-0.5 text-xl hover:bg-secondary">×</button>
           </div>
-          <p className="mt-1 text-xs text-muted-foreground">Sélectionne la quantité que tu veux.</p>
+          <p className="mt-1 text-xs text-muted-foreground">Clique sur un pack pour ajouter automatiquement les Robux à ton solde démo.</p>
           <div className="mt-3 grid grid-cols-2 gap-2">
-            {robuxOptions.map((amount) => <button key={amount} type="button" onClick={() => { setSelectedRobux(amount); setCustomRobux(String(amount)) }} aria-pressed={selectedRobux === amount && customRobux === String(amount)} className={`flex min-h-14 flex-col items-center justify-center gap-1 rounded-lg border p-2 text-sm font-bold transition hover:bg-secondary ${selectedRobux === amount ? 'border-[#00b06f] bg-[#00b06f]/10 ring-2 ring-[#00b06f]' : 'border-border'}`}>
+            {robuxOptions.map((amount) => <button key={amount} type="button" onClick={() => { setSelectedRobux(amount); setCustomRobux(String(amount)); setBalance((current) => current + amount); setRobuxShopOpen(false) }} aria-pressed={selectedRobux === amount && customRobux === String(amount)} className={`flex min-h-14 flex-col items-center justify-center gap-1 rounded-lg border p-2 text-sm font-bold transition hover:bg-secondary ${selectedRobux === amount ? 'border-[#00b06f] bg-[#00b06f]/10 ring-2 ring-[#00b06f]' : 'border-border'}`}>
               <span className="flex items-center gap-2"><RobuxIcon />{amount}</span>
               <span className="text-[10px] font-medium text-muted-foreground">Robux</span>
             </button>)}
