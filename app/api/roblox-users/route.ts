@@ -76,10 +76,35 @@ export async function GET(request: Request) {
         .map((thumbnail: { targetId: number; imageUrl: string }) => [thumbnail.targetId, thumbnail.imageUrl]),
     )
 
+    // Roblox's public presence endpoint reports whether each searched user is online.
+    let presenceById = new Map<number, boolean>()
+    try {
+      const presenceResponse = await fetch('https://presence.roblox.com/v1/presence/users', {
+        method: 'POST',
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userIds: players.map((player: { id: number }) => player.id) }),
+        cache: 'no-store',
+        signal: AbortSignal.timeout(8000),
+      })
+      if (presenceResponse.ok) {
+        const presenceResult = await presenceResponse.json()
+        presenceById = new Map<number, boolean>(
+          (Array.isArray(presenceResult.userPresences) ? presenceResult.userPresences : [])
+            .map((presence: { userId?: number; userPresenceType?: number }) => [
+              presence.userId,
+              Number(presence.userPresenceType) > 0,
+            ]),
+        )
+      }
+    } catch {
+      // Keep the search usable if Roblox presence data is temporarily unavailable.
+    }
+
     return NextResponse.json({
       data: players.map((player: { id: number; name: string; displayName: string; hasVerifiedBadge: boolean }) => ({
         ...player,
         avatarUrl: avatarById.get(player.id) ?? null,
+        isOnline: presenceById.get(player.id) ?? false,
       })),
     }, { headers: corsHeaders })
   } catch {
