@@ -2,17 +2,15 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { Search, Bell, MoreHorizontal } from 'lucide-react'
+import { Search, Bell } from 'lucide-react'
 import { RobloxLogo, RobloxMark, RobuxIcon } from '@/components/catalog/robux-icon'
 
 type SavedProfile = { name?: string; displayName?: string; avatarUrl?: string }
 
-export function ProfileSiteHeader({ username = '' }: { username?: string }) {
+export function ProfileSiteHeader() {
   const [balance, setBalance] = useState(1250)
   const [profile, setProfile] = useState<SavedProfile | null>(null)
   const [query, setQuery] = useState('')
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [following, setFollowing] = useState(false)
 
   useEffect(() => {
     try {
@@ -56,17 +54,7 @@ export function ProfileSiteHeader({ username = '' }: { username?: string }) {
             <RobuxIcon className="size-6" />
             <span className="tabular-nums">{balance.toLocaleString('en-US')}</span>
           </Link>
-          <div className="relative">
-            <button type="button" aria-label="More options" aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)} className="rounded-lg p-2 hover:bg-[#242529]">
-              <MoreHorizontal className="size-5" />
-            </button>
-            {menuOpen && (
-              <div className="absolute right-0 top-full z-[80] mt-1 w-40 overflow-hidden rounded-md border border-[#38393e] bg-[#242529] py-1 shadow-xl">
-                <Link href={"/robux?q=" + encodeURIComponent(username)} onClick={() => setMenuOpen(false)} className="block px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Send Robux</Link>
-                <button type="button" onClick={() => setFollowing((value) => !value)} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">{following ? "Following" : "Follow"}</button>
-              </div>
-            )}
-          </div>
+/div>
         </div>
       </div>
     </header>
