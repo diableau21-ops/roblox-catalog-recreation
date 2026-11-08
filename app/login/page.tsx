@@ -72,7 +72,7 @@ export default function LoginPage() {
         {message && <p role="status" className="mt-4 rounded-lg bg-[#292a31] p-3 text-center text-sm text-[#e5e6eb]">{message}</p>}
 
         <p className="mt-5 text-center text-sm font-semibold">Don't have an account? <button type="button" onClick={demoAction} className="underline underline-offset-2">Create one</button></p>
-        <p className="mt-3 text-center text-xs leading-5 text-[#a5a6ad]">This sign-in page is not connected to Roblox. Do not enter your real Roblox password here.</p>
+        <p className="mt-3 text-center text-xs leading-5 text-[#a5a6ad]">Do not enter your real Roblox password here.</p>
         <button type="button" onClick={() => router.push('/')} className="mt-3 w-full text-sm font-semibold text-[#c6c7cd] underline underline-offset-2">Back to Marketplace</button>
       </section>
       <style jsx>{`
