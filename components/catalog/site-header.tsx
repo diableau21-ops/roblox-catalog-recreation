@@ -16,7 +16,7 @@ type Props = {
   onBellClick?: () => void
 }
 
-const navLinks = ['Charts', 'Marketplace', 'Create', 'Robux'] as const
+const navLinks = ['Charts', 'Catalog', 'Create', 'Robux'] as const
 
 function VerifiedBadge({ className = 'size-4' }: { className?: string }) {
   return (
@@ -104,7 +104,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
     setProfileMessage('')
   }
 
-  const searchCategories = ['Games', 'People', 'Marketplace', 'Communities', 'Creator Store']
+  const searchCategories = ['Games', 'People', 'Catalog', 'Communities', 'Creator Store']
 
   const searchPeople = () => {
     const keyword = query.trim()
@@ -130,9 +130,9 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
                 e.preventDefault()
                 if (label === 'Robux') {
                   window.location.href = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/robux`
-                } else if (label !== 'Marketplace') onNotify(`${label} is coming soon`)
+                } else if (label !== 'Catalog') onNotify(`${label} is coming soon`)
               }}
-              aria-current={label === 'Marketplace' ? 'page' : undefined}
+              aria-current={label === 'Catalog' ? 'page' : undefined}
               className="relative px-2.5 py-[18px] text-sm font-semibold text-foreground/90 transition-colors hover:text-foreground lg:px-3 lg:text-base aria-[current=page]:text-foreground aria-[current=page]:after:absolute aria-[current=page]:after:inset-x-2.5 aria-[current=page]:after:bottom-0 aria-[current=page]:after:h-[3px] aria-[current=page]:after:rounded-full aria-[current=page]:after:bg-foreground lg:aria-[current=page]:after:inset-x-3"
             >
               {label}
@@ -141,7 +141,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
         </nav>
 
         <label className="relative mx-auto flex min-w-0 max-w-[600px] flex-1 items-center">
-          <span className="sr-only">Search the Marketplace</span>
+          <span className="sr-only">Search the catalog</span>
           <Search className="pointer-events-none absolute left-2.5 size-[18px] text-[#606162]" />
           <input
             type="search"
