@@ -418,70 +418,52 @@ svg {
 html {
   font-family: var(--site-font, 'Manrope'), sans-serif;
 }
+
+/* Light theme: clean Roblox-like white layout, without dark panels. */
 html[data-site-theme="light"] {
   color-scheme: light;
   --background: #ffffff;
   --foreground: #191a1f;
-  --card: #f3f3f5;
+  --card: #f7f7f8;
   --card-foreground: #191a1f;
   --popover: #ffffff;
   --popover-foreground: #191a1f;
-  --secondary: #e9e9ed;
+  --secondary: #f1f2f4;
   --secondary-foreground: #191a1f;
-  --muted: #eeeeF1;
+  --muted: #f4f4f5;
   --muted-foreground: #62636a;
-  --accent: #e9e9ed;
+  --accent: #eeeeF1;
   --accent-foreground: #191a1f;
-  --border: #d8d9de;
-  --input: #e9e9ed;
+  --border: #e1e2e5;
+  --input: #f5f6f7;
   --header: #ffffff;
   --sidebar: #f7f7f8;
 }
+
 html[data-site-theme="light"] body {
   background: #ffffff !important;
   color: #191a1f !important;
 }
+
+/* Keep the top navigation and page background white. */
 html[data-site-theme="light"] header {
   background: #ffffff !important;
   color: #191a1f !important;
-  border-color: #dedfe3 !important;
-}
-html[data-site-theme="light"] header a,
-html[data-site-theme="light"] header button {
-  color: #191a1f;
-}
-html[data-site-theme="light"] [class~="bg-black"],
-html[data-site-theme="light"] [class*="bg-[#111"],
-html[data-site-theme="light"] [class*="bg-[#181"],
-html[data-site-theme="light"] [class*="bg-[#191"],
-html[data-site-theme="light"] [class*="bg-[#1a"],
-html[data-site-theme="light"] [class*="bg-[#1b"],
-html[data-site-theme="light"] [class*="bg-[#1c"],
-html[data-site-theme="light"] [class*="bg-[#1f"],
-html[data-site-theme="light"] [class*="bg-[#20"],
-html[data-site-theme="light"] [class*="bg-[#24"],
-html[data-site-theme="light"] [class*="bg-[#29"],
-html[data-site-theme="light"] [class*="bg-[#2a"],
-html[data-site-theme="light"] [class*="bg-[#30"],
-html[data-site-theme="light"] [class*="bg-[#34"] {
-  background-color: #f1f1f4 !important;
-}
-html[data-site-theme="light"] [class~="text-white"],
-html[data-site-theme="light"] [class*="text-white/"] {
-  color: #191a1f !important;
-}
-html[data-site-theme="light"] [class*="border-[#"] {
-  border-color: #d8d9de !important;
-}
-html[data-site-theme="light"] input,
-html[data-site-theme="light"] select {
-  color: #191a1f;
-}
-html[data-site-theme="light"] input::placeholder {
-  color: #777982;
+  border-color: #e5e5e7 !important;
 }
 
-/* Keep text readable when the user switches the site to the light theme. */
+/* Convert only explicitly dark Tailwind surfaces to a very pale neutral.
+   Do not override every background: game thumbnails and colorful artwork stay intact. */
+html[data-site-theme="light"] [class~="bg-black"],
+html[data-site-theme="light"] [class*="bg-[#050"],
+html[data-site-theme="light"] [class*="bg-[#0a"],
+html[data-site-theme="light"] [class*="bg-[#1"],
+html[data-site-theme="light"] [class*="bg-[#2"] {
+  background-color: #f5f6f7 !important;
+  background-image: none !important;
+}
+
+/* Dark-mode text shades become readable charcoal in the white theme. */
 html[data-site-theme="light"] [class*="text-white"],
 html[data-site-theme="light"] [class*="text-gray-"],
 html[data-site-theme="light"] [class*="text-zinc-"],
@@ -495,19 +477,8 @@ html[data-site-theme="light"] [class*="text-[#e"],
 html[data-site-theme="light"] [class*="text-[#f"] {
   color: #202127 !important;
 }
-html[data-site-theme="light"] [class*="placeholder:text-"]::placeholder {
-  color: #666872 !important;
-  opacity: 1;
-}
-html[data-site-theme="light"] header svg {
-  color: #202127;
-}
 
-/* Light appearance: white page with softly contrasted, visible surfaces. */
-html[data-site-theme="light"] body {
-  background: #ffffff !important;
-  color: #202127 !important;
-}
+html[data-site-theme="light"] body,
 html[data-site-theme="light"] body main,
 html[data-site-theme="light"] body section,
 html[data-site-theme="light"] body article,
@@ -517,77 +488,39 @@ html[data-site-theme="light"] body footer {
   color: #202127;
 }
 
-/* Turn dark card/panel backgrounds into light grey surfaces, not invisible white. */
-html[data-site-theme="light"] body [class*="bg-"]:not(button):not(.gift-galaxy-card):not(.gift-galaxy-card-bg),
-html[data-site-theme="light"] body [style*="background-color"]:not(button) {
-  background-color: #f2f3f5 !important;
-  background-image: none !important;
-}
-html[data-site-theme="light"] body header,
-html[data-site-theme="light"] body [class*="bg-white"] {
-  background-color: #ffffff !important;
+html[data-site-theme="light"] input,
+html[data-site-theme="light"] textarea,
+html[data-site-theme="light"] select {
+  background: #f5f6f7 !important;
+  color: #202127 !important;
+  border-color: #dedfe3 !important;
 }
 
-/* Dark readable text and icons throughout the light theme. */
-html[data-site-theme="light"] body *:not(button):not(button *):not(img):not(video):not(canvas) {
-  color: #202127;
-}
-html[data-site-theme="light"] body svg {
-  color: #34363d;
-}
-html[data-site-theme="light"] body input,
-html[data-site-theme="light"] body textarea,
-html[data-site-theme="light"] body select {
-  background: #ffffff !important;
-  color: #202127 !important;
-  border: 1px solid #cfd1d8 !important;
-}
-html[data-site-theme="light"] body input::placeholder,
-html[data-site-theme="light"] body textarea::placeholder {
-  color: #737680 !important;
+html[data-site-theme="light"] input::placeholder,
+html[data-site-theme="light"] textarea::placeholder {
+  color: #777982 !important;
   opacity: 1;
 }
-html[data-site-theme="light"] body [class*="border-"] {
-  border-color: #d4d6dc !important;
-}
-html[data-site-theme="light"] body a {
-  color: #2457d6;
+
+html[data-site-theme="light"] [class*="border-[#"] {
+  border-color: #e1e2e5 !important;
 }
 
-/* Buttons stay black, with white text and icons that are easy to see. */
-html[data-site-theme="light"] body button {
+html[data-site-theme="light"] svg {
+  color: #34363d;
+}
+
+/* Preserve button designs; only make buttons that were dark remain dark. */
+html[data-site-theme="light"] button[class~="bg-black"],
+html[data-site-theme="light"] button[class*="bg-[#111"],
+html[data-site-theme="light"] button[class*="bg-[#1"] {
   background-color: #17181c !important;
   color: #ffffff !important;
-  border: 1px solid #17181c !important;
-}
-html[data-site-theme="light"] body button,
-html[data-site-theme="light"] body button * {
-  color: #ffffff !important;
-}
-html[data-site-theme="light"] body button svg,
-html[data-site-theme="light"] body button svg * {
-  color: #ffffff !important;
-  stroke: currentColor;
-}
-html[data-site-theme="light"] body button:hover {
-  background-color: #303137 !important;
-  border-color: #303137 !important;
-}
-html[data-site-theme="light"] body button:disabled {
-  background-color: #777980 !important;
-  color: #ffffff !important;
-  border-color: #777980 !important;
+  border-color: #17181c !important;
 }
 
-
-/* In light mode, text that was white in dark mode becomes dark for contrast. */
-html[data-site-theme="light"] body [class*="text-white"]:not(button):not(button *),
-html[data-site-theme="light"] body [style*="color: white"]:not(button):not(button *),
-html[data-site-theme="light"] body [style*="color:#fff"]:not(button):not(button *),
-html[data-site-theme="light"] body [style*="color: #fff"]:not(button):not(button *) {
-  color: #202127 !important;
-}
-html[data-site-theme="light"] body :not(button) > svg,
-html[data-site-theme="light"] body :not(button) > svg * {
-  color: #34363d !important;
+html[data-site-theme="light"] button[class~="bg-black"] *,
+html[data-site-theme="light"] button[class*="bg-[#111"] *,
+html[data-site-theme="light"] button[class*="bg-[#1"] * {
+  color: #ffffff !important;
 }
