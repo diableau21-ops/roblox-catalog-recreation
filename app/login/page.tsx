@@ -66,12 +66,6 @@ export default function LoginPage() {
 
         <div className="my-4 flex items-center gap-4 text-xs text-[#c5c6cc]"><span className="h-px flex-1 bg-[#34353c]" />OR<span className="h-px flex-1 bg-[#34353c]" /></div>
 
-        <div className="space-y-2">
-          <button type="button" onClick={demoAction} className="h-[44px] w-full rounded-[10px] bg-[#303139] text-base font-semibold hover:bg-[#3a3b44]">✉　Email a code</button>
-          <button type="button" onClick={demoAction} className="h-[44px] w-full rounded-[10px] bg-[#303139] text-base font-semibold hover:bg-[#3a3b44]">▦　QR code</button>
-          <button type="button" onClick={demoAction} className="h-[44px] w-full rounded-[10px] bg-[#303139] text-base font-semibold hover:bg-[#3a3b44]">Other sign-in options</button>
-        </div>
-
         {message && <p role="status" className="mt-4 rounded-lg bg-[#292a31] p-3 text-center text-sm text-[#e5e6eb]">{message}</p>}
 
         <p className="mt-5 text-center text-sm font-semibold">Don't have an account? <button type="button" onClick={demoAction} className="underline underline-offset-2">Create one</button></p>
