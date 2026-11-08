@@ -43,6 +43,9 @@ export default function LoginPage() {
             ) : (
               <div className={`game-fallback fallback-${index + 1}`}><span>{game.title}</span></div>
             )}
+            {game.placeId === '142823291' && (
+              <span className="mm2-notice">これはRoblox公式のログインページではありません。実際のパスワードを入力しないでください。</span>
+            )}
           </div>
         ))}
       </div>
@@ -72,7 +75,6 @@ export default function LoginPage() {
         {message && <p role="status" className="mt-4 rounded-lg bg-[#292a31] p-3 text-center text-sm text-[#e5e6eb]">{message}</p>}
 
         <p className="mt-5 text-center text-sm font-semibold">Don't have an account? <button type="button" onClick={demoAction} className="underline underline-offset-2">Create one</button></p>
-        <p className="mt-3 text-center text-xs leading-5 text-[#a5a6ad]">Do not enter your real Roblox password here.</p>
         <button type="button" onClick={() => router.push('/')} className="mt-3 w-full text-sm font-semibold text-[#c6c7cd] underline underline-offset-2">Back to Marketplace</button>
       </section>
       <style jsx>{`
@@ -80,6 +82,7 @@ export default function LoginPage() {
         .game-collage { position: fixed; inset: 0; overflow: hidden; pointer-events: none; }
         .game-tile { position: absolute; width: clamp(190px, 22vw, 340px); aspect-ratio: 16/9; overflow: hidden; border: 3px solid rgba(255,255,255,.16); border-radius: 13px; background: #20232c; box-shadow: 0 18px 45px rgba(0,0,0,.55); }
         .game-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .mm2-notice { position:absolute; inset:auto 7px 7px 7px; z-index:2; padding:5px 7px; border-radius:6px; background:rgba(0,0,0,.82); color:#fff; font-size:clamp(8px, .8vw, 11px); line-height:1.45; text-align:center; font-weight:600; }
         .game-one { left: -3%; top: 5%; transform: rotate(-13deg); }
         .game-two { right: -2%; top: 3%; transform: rotate(11deg); }
         .game-three { left: 7%; top: 42%; transform: rotate(9deg); }
