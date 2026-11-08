@@ -16,7 +16,6 @@ const games = [
 
 export default function LoginPage() {
   const router = useRouter()
-  const [message, setMessage] = useState('')
   const [gameImages, setGameImages] = useState<Record<string, string>>({})
 
   useEffect(() => {
@@ -28,9 +27,7 @@ export default function LoginPage() {
     return () => { active = false }
   }, [])
 
-  function demoAction() {
-    setMessage('This action is unavailable in this preview.')
-  }
+  function demoAction() {}
 
   return (
     <main className="login-scene relative flex h-screen min-h-[680px] items-center justify-center overflow-hidden bg-[#08090d] px-4 py-5 text-white">
@@ -65,8 +62,6 @@ export default function LoginPage() {
         <button type="button" onClick={demoAction} className="mt-3 text-sm text-[#c3c4ca] underline underline-offset-2">Forgot password or username?</button>
 
         <div className="my-4 flex items-center gap-4 text-xs text-[#c5c6cc]"><span className="h-px flex-1 bg-[#34353c]" />OR<span className="h-px flex-1 bg-[#34353c]" /></div>
-
-        {message && <p role="status" className="mt-4 rounded-lg bg-[#292a31] p-3 text-center text-sm text-[#e5e6eb]">{message}</p>}
 
         <p className="mt-5 text-center text-sm font-semibold">Don't have an account? <button type="button" onClick={demoAction} className="underline underline-offset-2">Create one</button></p>
         <button type="button" onClick={() => router.push('/')} className="mt-3 w-full text-sm font-semibold text-[#c6c7cd] underline underline-offset-2">Back to Marketplace</button>
