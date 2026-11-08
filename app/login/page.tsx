@@ -29,7 +29,7 @@ export default function LoginPage() {
   }, [])
 
   function demoAction() {
-    setMessage('This sign-in preview is not connected to Roblox.')
+    setMessage('This action is unavailable in this preview.')
   }
 
   return (
