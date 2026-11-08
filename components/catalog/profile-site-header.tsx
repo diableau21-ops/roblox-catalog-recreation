@@ -115,6 +115,7 @@ export function ProfileSiteHeader() {
                       setProfile(null)
                       try { window.localStorage.removeItem('catalog-demo-profile') } catch {}
                       window.dispatchEvent(new CustomEvent('catalog-profile-updated', { detail: null }))
+                      window.location.href = '/login'
                     }
                   }} className="flex w-full items-center px-4 py-3 text-left text-sm font-medium hover:bg-[#35363c]">{label}</button>
                 ))}
