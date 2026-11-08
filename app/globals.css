@@ -419,7 +419,7 @@ html {
   font-family: var(--site-font, 'Manrope'), sans-serif;
 }
 
-/* Light theme: clean Roblox-like white layout, without dark panels. */
+/* Light theme: white page, subtle light-grey surfaces, readable dark content. */
 html[data-site-theme="light"] {
   color-scheme: light;
   --background: #ffffff;
@@ -442,28 +442,33 @@ html[data-site-theme="light"] {
 
 html[data-site-theme="light"] body {
   background: #ffffff !important;
-  color: #191a1f !important;
+  color: #202127 !important;
 }
 
-/* Keep the top navigation and page background white. */
+/* Keep the page and navigation white. */
 html[data-site-theme="light"] header {
   background: #ffffff !important;
-  color: #191a1f !important;
+  color: #202127 !important;
   border-color: #e5e5e7 !important;
 }
 
-/* Convert only explicitly dark Tailwind surfaces to a very pale neutral.
-   Do not override every background: game thumbnails and colorful artwork stay intact. */
+/* Turn dark interface panels into soft grey surfaces, never black boxes.
+   Leave images, avatars and artwork untouched. */
 html[data-site-theme="light"] [class~="bg-black"],
 html[data-site-theme="light"] [class*="bg-[#050"],
-html[data-site-theme="light"] [class*="bg-[#0a"],
+html[data-site-theme="light"] [class*="bg-[#0"],
 html[data-site-theme="light"] [class*="bg-[#1"],
-html[data-site-theme="light"] [class*="bg-[#2"] {
-  background-color: #f5f6f7 !important;
+html[data-site-theme="light"] [class*="bg-[#2"],
+html[data-site-theme="light"] [class*="bg-zinc-9"],
+html[data-site-theme="light"] [class*="bg-neutral-9"],
+html[data-site-theme="light"] [class*="bg-gray-9"],
+html[data-site-theme="light"] [class*="bg-slate-9"] {
+  background-color: #f3f4f6 !important;
   background-image: none !important;
+  color: #202127 !important;
 }
 
-/* Dark-mode text shades become readable charcoal in the white theme. */
+/* Dark and white text classes become readable dark text. */
 html[data-site-theme="light"] [class*="text-white"],
 html[data-site-theme="light"] [class*="text-gray-"],
 html[data-site-theme="light"] [class*="text-zinc-"],
@@ -478,7 +483,6 @@ html[data-site-theme="light"] [class*="text-[#f"] {
   color: #202127 !important;
 }
 
-html[data-site-theme="light"] body,
 html[data-site-theme="light"] body main,
 html[data-site-theme="light"] body section,
 html[data-site-theme="light"] body article,
@@ -510,17 +514,21 @@ html[data-site-theme="light"] svg {
   color: #34363d;
 }
 
-/* Preserve button designs; only make buttons that were dark remain dark. */
+/* Buttons also stay light in the white theme; no black button boxes. */
 html[data-site-theme="light"] button[class~="bg-black"],
 html[data-site-theme="light"] button[class*="bg-[#111"],
-html[data-site-theme="light"] button[class*="bg-[#1"] {
-  background-color: #17181c !important;
-  color: #ffffff !important;
-  border-color: #17181c !important;
+html[data-site-theme="light"] button[class*="bg-[#1"],
+html[data-site-theme="light"] button[class*="bg-zinc-9"],
+html[data-site-theme="light"] button[class*="bg-gray-9"] {
+  background-color: #f1f2f4 !important;
+  color: #202127 !important;
+  border-color: #dedfe3 !important;
 }
 
 html[data-site-theme="light"] button[class~="bg-black"] *,
 html[data-site-theme="light"] button[class*="bg-[#111"] *,
-html[data-site-theme="light"] button[class*="bg-[#1"] * {
-  color: #ffffff !important;
+html[data-site-theme="light"] button[class*="bg-[#1"] *,
+html[data-site-theme="light"] button[class*="bg-zinc-9"] *,
+html[data-site-theme="light"] button[class*="bg-gray-9"] * {
+  color: #202127 !important;
 }
