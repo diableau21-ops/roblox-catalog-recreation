@@ -109,7 +109,14 @@ export function ProfileSiteHeader() {
             {settingsOpen && (
               <div className="absolute right-0 top-full z-[80] mt-1 w-56 overflow-hidden rounded-lg border border-[#38393e] bg-[#242529] py-1 text-white shadow-xl">
                 {['Settings', 'Quick Sign In', 'Help and Safety', 'Switch Accounts', 'Logout'].map((label) => (
-                  <button key={label} type="button" onClick={() => setSettingsOpen(false)} className="flex w-full items-center px-4 py-3 text-left text-sm font-medium hover:bg-[#35363c]">{label}</button>
+                  <button key={label} type="button" onClick={() => {
+                    setSettingsOpen(false)
+                    if (label === 'Logout') {
+                      setProfile(null)
+                      try { window.localStorage.removeItem('catalog-demo-profile') } catch {}
+                      window.dispatchEvent(new CustomEvent('catalog-profile-updated', { detail: null }))
+                    }
+                  }} className="flex w-full items-center px-4 py-3 text-left text-sm font-medium hover:bg-[#35363c]">{label}</button>
                 ))}
               </div>
             )}
