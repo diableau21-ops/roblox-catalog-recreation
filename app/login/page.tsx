@@ -33,7 +33,7 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="login-scene relative flex min-h-screen items-start justify-center overflow-hidden bg-[#08090d] px-4 pb-8 pt-[clamp(88px,13.5vh,112px)] text-white">
+    <main className="login-scene relative flex h-screen min-h-[680px] items-center justify-center overflow-hidden bg-[#08090d] px-4 py-5 text-white">
       <div className="login-stars" aria-hidden="true" />
       <div className="game-collage" aria-hidden="true">
         {games.map((game, index) => (
@@ -46,34 +46,34 @@ export default function LoginPage() {
           </div>
         ))}
       </div>
-      <section className="relative z-10 w-full max-w-[520px] rounded-[18px] bg-[#191a1f]/95 px-5 pb-8 pt-7 shadow-[0_18px_70px_rgba(0,0,0,.55)] backdrop-blur-[2px] sm:px-5" style={{ minHeight: 'min(700px, calc(100vh - 100px))' }}>
-        <h1 className="mb-9 text-[24px] font-bold tracking-tight">Sign in</h1>
+      <section className="relative z-10 w-full max-w-[420px] rounded-[18px] bg-[#191a1f]/95 px-5 pb-5 pt-5 shadow-[0_18px_70px_rgba(0,0,0,.55)] backdrop-blur-[2px]">
+        <h1 className="mb-5 text-[22px] font-bold tracking-tight">Sign in</h1>
 
         <form onSubmit={(event) => { event.preventDefault(); demoAction() }}>
-          <label htmlFor="demo-username" className="mb-3 block text-base font-semibold">Username, email, or phone</label>
-          <input id="demo-username" type="text" autoComplete="off" placeholder="Username, email, or phone" className="mb-5 h-[50px] w-full rounded-[10px] border border-[#626675] bg-[#191a1f] px-4 text-base text-white outline-none placeholder:text-[#a7a9b1] focus:border-[#8b91a3]" />
+          <label htmlFor="demo-username" className="mb-2 block text-sm font-semibold">Username, email, or phone</label>
+          <input id="demo-username" type="text" autoComplete="off" placeholder="Username, email, or phone" className="mb-4 h-[44px] w-full rounded-[10px] border border-[#626675] bg-[#191a1f] px-4 text-base text-white outline-none placeholder:text-[#a7a9b1] focus:border-[#8b91a3]" />
 
-          <label htmlFor="demo-password" className="mb-3 block text-base font-semibold">Password</label>
-          <input id="demo-password" type="password" autoComplete="new-password" placeholder="Password (demo only)" className="h-[50px] w-full rounded-[10px] border border-[#626675] bg-[#191a1f] px-4 text-base text-white outline-none placeholder:text-[#a7a9b1] focus:border-[#8b91a3]" />
+          <label htmlFor="demo-password" className="mb-2 block text-sm font-semibold">Password</label>
+          <input id="demo-password" type="password" autoComplete="new-password" placeholder="Password (demo only)" className="h-[44px] w-full rounded-[10px] border border-[#626675] bg-[#191a1f] px-4 text-base text-white outline-none placeholder:text-[#a7a9b1] focus:border-[#8b91a3]" />
 
-          <button type="submit" className="mt-5 h-[50px] w-full rounded-[10px] bg-[#292a31] text-base font-semibold text-[#a5a6ad] hover:bg-[#34353d]">Sign in</button>
+          <button type="submit" className="mt-4 h-[44px] w-full rounded-[10px] bg-[#292a31] text-base font-semibold text-[#a5a6ad] hover:bg-[#34353d]">Sign in</button>
         </form>
 
-        <button type="button" onClick={demoAction} className="mt-4 text-sm text-[#c3c4ca] underline underline-offset-2">Forgot password or username?</button>
+        <button type="button" onClick={demoAction} className="mt-3 text-sm text-[#c3c4ca] underline underline-offset-2">Forgot password or username?</button>
 
-        <div className="my-6 flex items-center gap-4 text-xs text-[#c5c6cc]"><span className="h-px flex-1 bg-[#34353c]" />OR<span className="h-px flex-1 bg-[#34353c]" /></div>
+        <div className="my-4 flex items-center gap-4 text-xs text-[#c5c6cc]"><span className="h-px flex-1 bg-[#34353c]" />OR<span className="h-px flex-1 bg-[#34353c]" /></div>
 
-        <div className="space-y-2.5">
-          <button type="button" onClick={demoAction} className="h-[50px] w-full rounded-[10px] bg-[#303139] text-base font-semibold hover:bg-[#3a3b44]">✉　Email a code</button>
-          <button type="button" onClick={demoAction} className="h-[50px] w-full rounded-[10px] bg-[#303139] text-base font-semibold hover:bg-[#3a3b44]">▦　QR code</button>
-          <button type="button" onClick={demoAction} className="h-[50px] w-full rounded-[10px] bg-[#303139] text-base font-semibold hover:bg-[#3a3b44]">Other sign-in options</button>
+        <div className="space-y-2">
+          <button type="button" onClick={demoAction} className="h-[44px] w-full rounded-[10px] bg-[#303139] text-base font-semibold hover:bg-[#3a3b44]">✉　Email a code</button>
+          <button type="button" onClick={demoAction} className="h-[44px] w-full rounded-[10px] bg-[#303139] text-base font-semibold hover:bg-[#3a3b44]">▦　QR code</button>
+          <button type="button" onClick={demoAction} className="h-[44px] w-full rounded-[10px] bg-[#303139] text-base font-semibold hover:bg-[#3a3b44]">Other sign-in options</button>
         </div>
 
         {message && <p role="status" className="mt-4 rounded-lg bg-[#292a31] p-3 text-center text-sm text-[#e5e6eb]">{message}</p>}
 
-        <p className="mt-7 text-center text-sm font-semibold">Don't have an account? <button type="button" onClick={demoAction} className="underline underline-offset-2">Create one</button></p>
-        <p className="mt-5 text-center text-xs leading-5 text-[#a5a6ad]">Demo page only. Nothing you type is saved or sent anywhere. Never enter your real Roblox password here.</p>
-        <button type="button" onClick={() => router.push('/')} className="mt-4 w-full text-sm font-semibold text-[#c6c7cd] underline underline-offset-2">Back to Marketplace</button>
+        <p className="mt-5 text-center text-sm font-semibold">Don't have an account? <button type="button" onClick={demoAction} className="underline underline-offset-2">Create one</button></p>
+        <p className="mt-3 text-center text-xs leading-5 text-[#a5a6ad]">Demo page only. Nothing you type is saved or sent anywhere. Never enter your real Roblox password here.</p>
+        <button type="button" onClick={() => router.push('/')} className="mt-3 w-full text-sm font-semibold text-[#c6c7cd] underline underline-offset-2">Back to Marketplace</button>
       </section>
       <style jsx>{`
         .login-stars { position: fixed; inset: 0; pointer-events: none; opacity: .75; background-image: radial-gradient(1px 1px at 8% 18%,#fff 99%,transparent),radial-gradient(1px 1px at 22% 73%,#fff 99%,transparent),radial-gradient(2px 2px at 78% 15%,#fff 99%,transparent),radial-gradient(1px 1px at 91% 62%,#fff 99%,transparent),radial-gradient(1px 1px at 64% 84%,#fff 99%,transparent),radial-gradient(1px 1px at 42% 31%,#fff 99%,transparent); background-size: 230px 190px; }
