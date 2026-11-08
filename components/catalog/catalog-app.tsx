@@ -352,7 +352,7 @@ export function CatalogApp() {
             </select>
           </div>
           <p className="w-full pt-3 text-xs leading-relaxed text-muted-foreground">
-            Fan-made interface preview. Robux balances, purchases and account actions are not connected to Roblox.
+            Unofficial fan-made interface. Not affiliated with Roblox. Purchases and account actions are not connected to Roblox.
           </p>
         </div>
       </footer>
