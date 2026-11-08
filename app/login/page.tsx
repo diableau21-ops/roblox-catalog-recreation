@@ -44,7 +44,7 @@ export default function LoginPage() {
           <a href="/create" className="transition hover:text-white">Create</a>
           <a href="/robux" className="transition hover:text-white">Robux</a>
         </nav>
-        <form className="ml-auto flex h-[36px] w-full max-w-[300px] items-center rounded-lg border border-[#55565d] bg-[#292a30] px-3 focus-within:border-[#a7a8ad]" onSubmit={(event) => event.preventDefault()}>
+        <form className="flex h-[36px] w-full max-w-[300px] items-center rounded-lg border border-[#55565d] bg-[#292a30] px-3 focus-within:border-[#a7a8ad]" onSubmit={(event) => event.preventDefault()}>
           <svg viewBox="0 0 24 24" className="mr-2 h-[18px] w-[18px] shrink-0 text-[#bdbec4]" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg>
           <input aria-label="Search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search" className="min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-[#bdbec4]" />
         </form>
