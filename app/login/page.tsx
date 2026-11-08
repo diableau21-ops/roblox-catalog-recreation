@@ -33,18 +33,18 @@ export default function LoginPage() {
 
   return (
     <main className="login-scene relative flex h-screen min-h-[680px] items-center justify-center overflow-hidden bg-[#08090d] px-4 pb-5 pt-[88px] text-white">
-      <header className="login-topbar fixed inset-x-0 top-0 z-30 flex h-[64px] items-center gap-7 border-b border-[#393a3f] bg-[#191a1f] px-5 text-white shadow-lg">
+      <header className="login-topbar fixed inset-x-0 top-0 z-30 flex h-[64px] items-center gap-6 border-b border-[#393a3f] bg-[#191a1f] px-5 text-white shadow-lg">
         <a href="/" aria-label="Roblox home" className="flex shrink-0 items-center gap-2.5">
           <svg viewBox="0 0 36 36" className="h-8 w-8" aria-hidden="true"><path fill="currentColor" d="M8.1 1.8 34.2 8.1 27.9 34.2 1.8 27.9 8.1 1.8Zm6.1 9.1-2.2 9.1 9.1 2.2 2.2-9.1-9.1-2.2Z"/></svg>
           <span className="text-[23px] font-black tracking-[-1.5px]">ROBLOX</span>
         </a>
-        <nav className="hidden items-center gap-6 text-[15px] font-semibold text-[#e5e5e7] md:flex">
-          <a href="/" className="transition hover:text-white">Discover</a>
+        <nav className="hidden items-center gap-5 whitespace-nowrap text-[15px] font-semibold text-[#e5e5e7] md:flex">
+          <a href="/" className="transition hover:text-white">Charts</a>
           <a href="/catalog" className="transition hover:text-white">Marketplace</a>
           <a href="/create" className="transition hover:text-white">Create</a>
           <a href="/robux" className="transition hover:text-white">Robux</a>
         </nav>
-        <form className="ml-auto flex h-[38px] w-full max-w-[360px] items-center rounded-lg border border-[#55565d] bg-[#292a30] px-3 focus-within:border-[#a7a8ad]" onSubmit={(event) => event.preventDefault()}>
+        <form className="ml-auto flex h-[36px] w-full max-w-[300px] items-center rounded-lg border border-[#55565d] bg-[#292a30] px-3 focus-within:border-[#a7a8ad]" onSubmit={(event) => event.preventDefault()}>
           <svg viewBox="0 0 24 24" className="mr-2 h-[18px] w-[18px] shrink-0 text-[#bdbec4]" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg>
           <input aria-label="Search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search" className="min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-[#bdbec4]" />
         </form>
