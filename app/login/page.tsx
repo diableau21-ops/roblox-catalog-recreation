@@ -51,8 +51,8 @@ export default function LoginPage() {
         <h1 className="mb-5 text-[22px] font-bold tracking-tight">Sign in</h1>
 
         <form onSubmit={(event) => { event.preventDefault(); demoAction() }}>
-          <label htmlFor="demo-username" className="mb-2 block text-sm font-semibold">Username, email, or phone</label>
-          <input id="demo-username" type="text" autoComplete="off" placeholder="Username, email, or phone" className="mb-4 h-[44px] w-full rounded-[10px] border border-[#626675] bg-[#191a1f] px-4 text-base text-white outline-none placeholder:text-[#a7a9b1] focus:border-[#8b91a3]" />
+          <label htmlFor="demo-username" className="mb-2 block text-sm font-semibold">Username</label>
+          <input id="demo-username" type="text" autoComplete="off" placeholder="Username" className="mb-4 h-[44px] w-full rounded-[10px] border border-[#626675] bg-[#191a1f] px-4 text-base text-white outline-none placeholder:text-[#a7a9b1] focus:border-[#8b91a3]" />
 
           <label htmlFor="demo-password" className="mb-2 block text-sm font-semibold">Password</label>
           <div className="relative">
