@@ -64,7 +64,7 @@ export function LeftNav({ onNotify, onBuyRobux, dark = false }: Props) {
     <>
       <nav aria-label="Mobile navigation" className="fixed inset-x-0 bottom-0 z-40 flex items-center justify-around border-t border-border bg-header/95 px-2 pb-[env(safe-area-inset-bottom)] pt-2 shadow-[0_-4px_20px_rgba(0,0,0,0.18)] backdrop-blur-md md:hidden">
         <a href={(process.env.NEXT_PUBLIC_BASE_PATH ?? '') + '/'} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><House className="size-5" /><span>Home</span></a>
-        <a href={(process.env.NEXT_PUBLIC_BASE_PATH ?? '') + '/'} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><Search className="size-5" /><span>Marketplace</span></a>
+        <a href={(process.env.NEXT_PUBLIC_BASE_PATH ?? '') + '/'} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><Search className="size-5" /><span>Catalog</span></a>
         <button type="button" onClick={() => notify('Avatar is coming soon')} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><Shirt className="size-5" /><span>Avatar</span></button>
         <button type="button" onClick={buyRobux} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><Package className="size-5" /><span>Robux</span></button>
       </nav>
