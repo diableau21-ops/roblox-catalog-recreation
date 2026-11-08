@@ -21,23 +21,10 @@ export default function LoginPage() {
 
   useEffect(() => {
     let active = true
-    async function loadGameImages() {
-      const results = await Promise.all(games.map(async (game) => {
-        try {
-          const universeResponse = await fetch(`https://apis.roblox.com/universes/v1/places/${game.placeId}/universe`)
-          if (!universeResponse.ok) return [game.placeId, ''] as const
-          const universeData = await universeResponse.json()
-          const imageResponse = await fetch(`https://thumbnails.roblox.com/v1/games/icons?universeIds=${universeData.universeId}&size=512x512&format=Png&isCircular=false`)
-          if (!imageResponse.ok) return [game.placeId, ''] as const
-          const imageData = await imageResponse.json()
-          return [game.placeId, imageData.data?.[0]?.imageUrl || ''] as const
-        } catch {
-          return [game.placeId, ''] as const
-        }
-      }))
-      if (active) setGameImages(Object.fromEntries(results.filter((item) => item[1])))
-    }
-    loadGameImages()
+    fetch('/api/game-thumbnails')
+      .then((response) => response.ok ? response.json() : {})
+      .then((images) => { if (active) setGameImages(images) })
+      .catch(() => {})
     return () => { active = false }
   }, [])
 
