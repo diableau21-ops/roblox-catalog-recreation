@@ -251,7 +251,15 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
           {settingsOpen && (
             <div className="absolute right-4 top-12 z-[70] w-56 overflow-hidden rounded-lg border border-border bg-card py-1 text-foreground shadow-xl sm:right-5 lg:right-6">
               {['Settings', 'Quick Sign In', 'Help and Safety', 'Switch Accounts', 'Logout'].map((label) => (
-                <button key={label} type="button" onClick={() => { setSettingsOpen(false) }} className="flex w-full items-center px-4 py-3 text-left text-sm font-medium text-foreground transition-colors hover:bg-secondary">
+                <button key={label} type="button" onClick={() => {
+                  setSettingsOpen(false)
+                  if (label === 'Logout') {
+                    setProfile(null)
+                    try { window.localStorage.removeItem('catalog-demo-profile') } catch {}
+                    window.dispatchEvent(new CustomEvent('catalog-profile-updated', { detail: null }))
+                    onNotify('You have been logged out.')
+                  }
+                }} className="flex w-full items-center px-4 py-3 text-left text-sm font-medium text-foreground transition-colors hover:bg-secondary">
                   {label}
                 </button>
               ))}
