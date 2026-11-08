@@ -29,7 +29,7 @@ export default function LoginPage() {
   }, [])
 
   function demoAction() {
-    setMessage('Demo only — no Roblox account is connected. Do not enter your real password.')
+    setMessage('This sign-in preview is not connected to Roblox.')
   }
 
   return (
@@ -54,7 +54,7 @@ export default function LoginPage() {
           <input id="demo-username" type="text" autoComplete="off" placeholder="Username, email, or phone" className="mb-4 h-[44px] w-full rounded-[10px] border border-[#626675] bg-[#191a1f] px-4 text-base text-white outline-none placeholder:text-[#a7a9b1] focus:border-[#8b91a3]" />
 
           <label htmlFor="demo-password" className="mb-2 block text-sm font-semibold">Password</label>
-          <input id="demo-password" type="password" autoComplete="new-password" placeholder="Password (demo only)" className="h-[44px] w-full rounded-[10px] border border-[#626675] bg-[#191a1f] px-4 text-base text-white outline-none placeholder:text-[#a7a9b1] focus:border-[#8b91a3]" />
+          <input id="demo-password" type="password" autoComplete="new-password" placeholder="Password" className="h-[44px] w-full rounded-[10px] border border-[#626675] bg-[#191a1f] px-4 text-base text-white outline-none placeholder:text-[#a7a9b1] focus:border-[#8b91a3]" />
 
           <button type="submit" className="mt-4 h-[44px] w-full rounded-[10px] bg-[#292a31] text-base font-semibold text-[#a5a6ad] hover:bg-[#34353d]">Sign in</button>
         </form>
@@ -72,7 +72,7 @@ export default function LoginPage() {
         {message && <p role="status" className="mt-4 rounded-lg bg-[#292a31] p-3 text-center text-sm text-[#e5e6eb]">{message}</p>}
 
         <p className="mt-5 text-center text-sm font-semibold">Don't have an account? <button type="button" onClick={demoAction} className="underline underline-offset-2">Create one</button></p>
-        <p className="mt-3 text-center text-xs leading-5 text-[#a5a6ad]">Demo page only. Nothing you type is saved or sent anywhere. Never enter your real Roblox password here.</p>
+        <p className="mt-3 text-center text-xs leading-5 text-[#a5a6ad]">This sign-in page is not connected to Roblox. Do not enter your real Roblox password here.</p>
         <button type="button" onClick={() => router.push('/')} className="mt-3 w-full text-sm font-semibold text-[#c6c7cd] underline underline-offset-2">Back to Marketplace</button>
       </section>
       <style jsx>{`
