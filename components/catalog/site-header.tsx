@@ -257,7 +257,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
                     setProfile(null)
                     try { window.localStorage.removeItem('catalog-demo-profile') } catch {}
                     window.dispatchEvent(new CustomEvent('catalog-profile-updated', { detail: null }))
-                    onNotify('You have been logged out.')
+                    router.push('/login')
                   }
                 }} className="flex w-full items-center px-4 py-3 text-left text-sm font-medium text-foreground transition-colors hover:bg-secondary">
                   {label}
