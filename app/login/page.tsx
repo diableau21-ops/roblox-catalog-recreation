@@ -14,7 +14,14 @@ export default function LoginPage() {
   return (
     <main
       className="flex min-h-screen items-start justify-center overflow-y-auto bg-black bg-cover bg-center bg-no-repeat px-4 pb-8 text-white"
-      style={{ backgroundImage: "url('/login-background.jpg')", paddingTop: 'clamp(88px, 13.5vh, 112px)' }}
+      style={{
+        backgroundImage: "url('/login-background.jpg')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
+        paddingTop: 'clamp(88px, 13.5vh, 112px)',
+      }}
     >
       <section className="w-full max-w-[520px] rounded-[18px] bg-[#191a1f] px-5 pb-8 pt-7 shadow-none sm:px-5" style={{ minHeight: 'min(700px, calc(100vh - 100px))' }}>
         <h1 className="mb-9 text-[24px] font-bold tracking-tight">Sign in</h1>
