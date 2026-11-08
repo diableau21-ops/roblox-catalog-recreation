@@ -26,7 +26,7 @@ const sortLabels: Record<Sort, string> = {
 const translations: Record<string, Record<string, string>> = {
   English: {},
   Français: {
-    Marketplace: 'Marché', 'All Categories': 'Toutes les catégories', Featured: 'En vedette',
+    Catalog: 'Marché', 'All Categories': 'Toutes les catégories', Featured: 'En vedette',
     Clothing: 'Vêtements', Accessories: 'Accessoires', 'Heads & Faces': 'Têtes et visages',
     Bundles: 'Packs', Gear: 'Équipement', Relevance: 'Pertinence',
     'Most Favorited': 'Les plus populaires', 'Recently Created': 'Récemment créés',
@@ -38,7 +38,7 @@ const translations: Record<string, Record<string, string>> = {
     Accessibility: 'Accessibilité', Privacy: 'Confidentialité', Language: 'Langue',
   },
   Español: {
-    Marketplace: 'Mercado', 'All Categories': 'Todas las categorías', Featured: 'Destacados',
+    Catalog: 'Mercado', 'All Categories': 'Todas las categorías', Featured: 'Destacados',
     Clothing: 'Ropa', Accessories: 'Accesorios', 'Heads & Faces': 'Cabezas y caras',
     Bundles: 'Paquetes', Gear: 'Equipo', Relevance: 'Relevancia', 'Most Favorited': 'Más favoritos',
     'Recently Created': 'Creados recientemente', 'Price (Low to High)': 'Precio (menor a mayor)',
@@ -49,7 +49,7 @@ const translations: Record<string, Record<string, string>> = {
     Accessibility: 'Accesibilidad', Privacy: 'Privacidad', Language: 'Idioma',
   },
   Português: {
-    Marketplace: 'Mercado', 'All Categories': 'Todas as categorias', Featured: 'Em destaque',
+    Catalog: 'Mercado', 'All Categories': 'Todas as categorias', Featured: 'Em destaque',
     Clothing: 'Roupas', Accessories: 'Acessórios', 'Heads & Faces': 'Cabeças e rostos',
     Bundles: 'Pacotes', Gear: 'Equipamento', Relevance: 'Relevância', 'Most Favorited': 'Mais favoritos',
     'Recently Created': 'Criados recentemente', 'Price (Low to High)': 'Preço (menor para maior)',
@@ -60,7 +60,7 @@ const translations: Record<string, Record<string, string>> = {
     Accessibility: 'Acessibilidade', Privacy: 'Privacidade', Language: 'Idioma',
   },
   Deutsch: {
-    Marketplace: 'Marktplatz', 'All Categories': 'Alle Kategorien', Featured: 'Empfohlen',
+    Catalog: 'Marktplatz', 'All Categories': 'Alle Kategorien', Featured: 'Empfohlen',
     Clothing: 'Kleidung', Accessories: 'Accessoires', 'Heads & Faces': 'Köpfe und Gesichter',
     Bundles: 'Pakete', Gear: 'Ausrüstung', Relevance: 'Relevanz', 'Most Favorited': 'Am häufigsten favorisiert',
     'Recently Created': 'Kürzlich erstellt', 'Price (Low to High)': 'Preis (aufsteigend)',
@@ -71,7 +71,7 @@ const translations: Record<string, Record<string, string>> = {
     Accessibility: 'Barrierefreiheit', Privacy: 'Datenschutz', Language: 'Sprache',
   },
   Italiano: {
-    Marketplace: 'Mercato', 'All Categories': 'Tutte le categorie', Featured: 'In evidenza',
+    Catalog: 'Mercato', 'All Categories': 'Tutte le categorie', Featured: 'In evidenza',
     Clothing: 'Abbigliamento', Accessories: 'Accessori', 'Heads & Faces': 'Teste e volti',
     Bundles: 'Pacchetti', Gear: 'Equipaggiamento', Relevance: 'Rilevanza', 'Most Favorited': 'Più preferiti',
     'Recently Created': 'Creati di recente', 'Price (Low to High)': 'Prezzo crescente',
@@ -82,7 +82,7 @@ const translations: Record<string, Record<string, string>> = {
     Accessibility: 'Accessibilità', Privacy: 'Privacy', Language: 'Lingua',
   },
   日本語: {
-    Marketplace: 'マーケットプレイス', 'All Categories': 'すべてのカテゴリ', Featured: 'おすすめ',
+    Catalog: 'マーケットプレイス', 'All Categories': 'すべてのカテゴリ', Featured: 'おすすめ',
     Clothing: '服', Accessories: 'アクセサリー', 'Heads & Faces': '頭と顔', Bundles: 'バンドル',
     Gear: 'ギア', Relevance: '関連性', 'Most Favorited': 'お気に入りが多い順',
     'Recently Created': '新着順', 'Price (Low to High)': '価格の安い順', 'Price (High to Low)': '価格の高い順',
@@ -92,7 +92,7 @@ const translations: Record<string, Record<string, string>> = {
     'Try a different search or clear your filters.': '別の検索を試すか、フィルターをクリアしてください。',
   },
   한국어: {
-    Marketplace: '마켓플레이스', 'All Categories': '모든 카테고리', Featured: '추천',
+    Catalog: '마켓플레이스', 'All Categories': '모든 카테고리', Featured: '추천',
     Clothing: '의류', Accessories: '액세서리', 'Heads & Faces': '머리 및 얼굴', Bundles: '번들',
     Gear: '장비', Relevance: '관련성', 'Most Favorited': '즐겨찾기 많은 순', 'Recently Created': '최근 생성',
     'Price (Low to High)': '가격 낮은 순', 'Price (High to Low)': '가격 높은 순',
@@ -102,7 +102,7 @@ const translations: Record<string, Record<string, string>> = {
     'Gift Cards': '기프트 카드', Help: '도움말', Terms: '약관', Accessibility: '접근성', Privacy: '개인정보 보호', Language: '언어',
   },
   '简体中文': {
-    Marketplace: '市场', 'All Categories': '所有类别', Featured: '精选', Clothing: '服装',
+    Catalog: '市场', 'All Categories': '所有类别', Featured: '精选', Clothing: '服装',
     Accessories: '配饰', 'Heads & Faces': '头部和面部', Bundles: '套装', Gear: '装备',
     Relevance: '相关性', 'Most Favorited': '收藏最多', 'Recently Created': '最近创建',
     'Price (Low to High)': '价格从低到高', 'Price (High to Low)': '价格从高到低',
@@ -232,7 +232,7 @@ export function CatalogApp() {
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
               <h1 id="catalog-heading" className="text-2xl font-bold tracking-tight md:text-3xl">
-                {t('Marketplace')}
+                {t('Catalog')}
               </h1>
               <p className="mt-1.5 text-sm text-muted-foreground">
                 {t(categoryLabel)}
@@ -352,7 +352,7 @@ export function CatalogApp() {
             </select>
           </div>
           <p className="w-full pt-3 text-xs leading-relaxed text-muted-foreground">
-            ©2026 Roblox Corporation. Roblox, the Roblox logo and Powering Imagination are among our registered and unregistered trademarks in the U.S. and other countries.
+            Fan-made interface preview. Robux balances, purchases and account actions are not connected to Roblox.
           </p>
         </div>
       </footer>
