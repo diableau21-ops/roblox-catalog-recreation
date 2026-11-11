@@ -23,15 +23,15 @@ type Props = {
 }
 
 const links = [
-  { label: 'Home', icon: House },
+  { label: 'Accueil', icon: House },
   { label: 'Profil', icon: UserRound },
   { label: 'Messages', icon: MessageSquare, badge: 3 },
-  { label: 'Friends', icon: Users },
+  { label: 'Amis', icon: Users },
   { label: 'Avatar', icon: Shirt },
-  { label: 'Inventory', icon: Package },
-  { label: 'Trade', icon: Repeat },
-  { label: 'Communities', icon: UsersRound },
-  { label: 'Gift Cards', icon: Gift },
+  { label: 'Inventaire', icon: Package },
+  { label: 'Échanges', icon: Repeat },
+  { label: 'Communautés', icon: UsersRound },
+  { label: 'Cartes-cadeaux', icon: Gift },
 ]
 
 export function LeftNav({ onNotify, onBuyRobux, dark = false }: Props) {
@@ -63,9 +63,9 @@ export function LeftNav({ onNotify, onBuyRobux, dark = false }: Props) {
   return (
     <>
       <nav aria-label="Mobile navigation" className="fixed inset-x-0 bottom-0 z-40 flex items-center justify-around border-t border-border bg-header/95 px-2 pb-[env(safe-area-inset-bottom)] pt-2 shadow-[0_-4px_20px_rgba(0,0,0,0.18)] backdrop-blur-md md:hidden">
-        <a href={(process.env.NEXT_PUBLIC_BASE_PATH ?? '') + '/'} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><House className="size-5" /><span>Home</span></a>
-        <a href={(process.env.NEXT_PUBLIC_BASE_PATH ?? '') + '/'} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><Search className="size-5" /><span>Catalog</span></a>
-        <button type="button" onClick={() => notify('Avatar is coming soon')} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><Shirt className="size-5" /><span>Avatar</span></button>
+        <a href={(process.env.NEXT_PUBLIC_BASE_PATH ?? '') + '/'} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><House className="size-5" /><span>Accueil</span></a>
+        <a href={(process.env.NEXT_PUBLIC_BASE_PATH ?? '') + '/'} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><Search className="size-5" /><span>Catalogue</span></a>
+        <button type="button" onClick={() => notify('La section Avatar sera bientôt disponible')} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><Shirt className="size-5" /><span>Avatar</span></button>
         <button type="button" onClick={buyRobux} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><Package className="size-5" /><span>Robux</span></button>
       </nav>
       <nav
@@ -77,7 +77,7 @@ export function LeftNav({ onNotify, onBuyRobux, dark = false }: Props) {
       >
         <button
           type="button"
-          onClick={() => notify('Opening your profile')}
+          onClick={() => notify('Ouverture de ton profil')}
           className="mb-3 flex items-center gap-3 rounded-xl px-2 py-2.5 text-left transition-colors hover:bg-secondary"
         >
           <span className="relative size-9 overflow-hidden rounded-full bg-thumb">
