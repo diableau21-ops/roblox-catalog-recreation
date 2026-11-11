@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   description:
     'Personnalise ton avatar avec des vêtements, accessoires, équipements et plus encore.',
   generator: 'v0.app',
+  manifest: '/manifest.webmanifest',
   icons: {
     icon: [
       {
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   colorScheme: 'dark',
-  themeColor: '#111216',
+  themeColor: '#00A2FF',
 }
 
 export default function RootLayout({
