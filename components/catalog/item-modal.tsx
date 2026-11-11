@@ -133,7 +133,7 @@ export function ItemModal({
                 {insufficient ? (
                   <>
                     <p className="text-sm text-destructive">
-                      {`Il te manque ${(effectivePrice - balance).toLocaleString('en-US')} Robux pour acheter cet article.`}
+                      {`Il te manque ${(effectivePrice - balance).toLocaleString('fr-CA')} Robux pour acheter cet article.`}
                     </p>
                     <button
                       type="button"
@@ -165,7 +165,7 @@ export function ItemModal({
                 {!insufficient && effectivePrice > 0 && (
                   <p className="flex items-center justify-center gap-1 text-xs text-muted-foreground">
                     Solde après la transaction : <RobuxIcon className="size-3" />
-                    {(balance - effectivePrice).toLocaleString('en-US')}
+                    {(balance - effectivePrice).toLocaleString('fr-CA')}
                   </p>
                 )}
               </div>
@@ -180,7 +180,7 @@ export function ItemModal({
               </button>
             )}
 
-            {!owned && effectivePrice !== null && <button type="button" onClick={onAddToCart} className="h-10 rounded-lg border border-border text-sm font-semibold hover:bg-secondary">{inCart ? 'Remove from Cart' : 'Add to Cart'}</button>}
+            {!owned && effectivePrice !== null && <button type="button" onClick={onAddToCart} className="h-10 rounded-lg border border-border text-sm font-semibold hover:bg-secondary">{inCart ? 'Retirer du panier' : 'Ajouter au panier'}</button>}
 
             <div className="flex gap-2">
               <button
@@ -201,7 +201,7 @@ export function ItemModal({
               </button>
               <button
                 type="button"
-                aria-label="Share"
+                aria-label="Partager"
                 onClick={() => {
                   navigator.clipboard?.writeText(`${window.location.origin}/catalog/${item.id}`)
                   onNotify('Lien copié')
