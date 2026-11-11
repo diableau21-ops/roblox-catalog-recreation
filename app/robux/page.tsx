@@ -238,7 +238,7 @@ export default function RobuxPage() {
                     <div className="flex items-center justify-between gap-4">
                       <div className="flex items-center gap-2.5">
                         <img src="https://robux-send-fake-creator-iker.lovable.app/__l5e/assets-v1/1aea3764-f82d-470c-b9d7-fc4c6220088e/robux-menu-icon.png" alt="Robux" className="size-6 shrink-0 object-contain" />
-                        <h2 id="send-robux-title" className="text-xl font-extrabold">Envoyer Robux</h2>
+                        <h2 id="send-robux-title" className="text-xl font-extrabold">Gift</h2>
                       </div>
                       <span className="flex shrink-0 items-center gap-2 text-lg font-bold text-white/80"><RobuxIcon className="size-5"/>{balance.toLocaleString('en-US')}</span>
                     </div>
@@ -248,7 +248,7 @@ export default function RobuxPage() {
                 ) : (
                   <>
                     <div className="flex items-center justify-between gap-3">
-                      <div className="flex min-w-0 items-center gap-2.5"><img src="https://robux-send-fake-creator-iker.lovable.app/__l5e/assets-v1/1aea3764-f82d-470c-b9d7-fc4c6220088e/robux-menu-icon.png" alt="Robux" className="size-6 shrink-0 object-contain" /><h2 id="send-robux-title" className="text-2xl font-extrabold">Envoyer Robux</h2></div><span className="ml-auto flex items-center gap-2 text-lg text-white/65"><RobuxIcon className="size-5"/>{balance.toLocaleString("en-US")}</span>
+                      <div className="flex min-w-0 items-center gap-2.5"><img src="https://robux-send-fake-creator-iker.lovable.app/__l5e/assets-v1/1aea3764-f82d-470c-b9d7-fc4c6220088e/robux-menu-icon.png" alt="Robux" className="size-6 shrink-0 object-contain" /><h2 id="send-robux-title" className="text-2xl font-extrabold">Gift</h2></div><span className="ml-auto flex items-center gap-2 text-lg text-white/65"><RobuxIcon className="size-5"/>{balance.toLocaleString("en-US")}</span>
                       <button type="button" onClick={() => setEnvoyerOpen(false)} aria-label="Fermer" className="rounded-lg px-2 py-1 text-xl text-white/75 hover:bg-white/10">×</button>
                     </div>
                     {sendPlayer && sendReview ? (
@@ -265,7 +265,7 @@ export default function RobuxPage() {
                             <span className="flex items-center gap-2 text-2xl font-extrabold"><RobuxIcon className="size-6"/>{Number(sendAmount||0).toLocaleString('en-US')}</span>
                           </div>
                           <div className="mt-4 flex gap-3">
-                            <button type="button" disabled={sendProcessing} onClick={()=>{const amount=Number(sendAmount);if(!Number.isSafeInteger(amount)||amount<1||amount>balance){setEnvoyerError('Entre un montant valide qui ne dépasse pas ton solde.');return;}setEnvoyerError('');setEnvoyerProcessing(true);window.setTimeout(()=>{setEnvoyerProcessing(false);setEnvoyerSuccess(true)},800)}} className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-[#146bff] text-base font-extrabold disabled:cursor-wait disabled:opacity-80">{sendProcessing ? <><span className="size-4 animate-spin rounded-full border-2 border-white/35 border-t-white" />Envoyering…</> : 'Envoyer'}</button>
+                            <button type="button" disabled={sendProcessing} onClick={()=>{const amount=Number(sendAmount);if(!Number.isSafeInteger(amount)||amount<1||amount>balance){setEnvoyerError('Entre un montant valide qui ne dépasse pas ton solde.');return;}setEnvoyerError('');setEnvoyerProcessing(true);window.setTimeout(()=>{setEnvoyerProcessing(false);setEnvoyerSuccess(true)},800)}} className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-[#146bff] text-base font-extrabold disabled:cursor-wait disabled:opacity-80">{sendProcessing ? <><span className="size-4 animate-spin rounded-full border-2 border-white/35 border-t-white" />Envoyering…</> : 'Gift'}</button>
                             <button type="button" onClick={()=>{setEnvoyerReview(false);setEnvoyerError('')}} className="h-12 flex-1 rounded-xl border border-white/20 text-base font-bold">Modifier</button>
                           </div>
                           {sendError && <p role="status" className="mt-3 text-sm leading-5 text-red-300">{sendError}</p>}
