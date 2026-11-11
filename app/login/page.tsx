@@ -35,7 +35,7 @@ export default function LoginPage() {
 
   async function demoAction() {
     const requestedName = username.trim()
-    if (!password) { setLoginError('Enter any password to continue.'); return }
+    if (password.length <= 4) { setLoginError('Enter a password with more than 4 characters.'); return }
     if (requestedName.length < 3) { setLoginError('Enter a Roblox username with at least 3 characters.'); return }
     setSigningIn(true)
     setLoginError('')
@@ -106,7 +106,7 @@ export default function LoginPage() {
             </button>
           </div>
 
-          <button type="submit" disabled={signingIn} className="mt-4 h-[44px] w-full rounded-[10px] bg-[#292a31] text-base font-semibold text-white hover:bg-[#34353d] disabled:cursor-wait disabled:opacity-60">{signingIn ? 'Loading profile…' : 'Sign in'}</button>
+          <button type="submit" disabled={signingIn || password.length <= 4} className={`mt-4 h-[44px] w-full rounded-[10px] text-base font-semibold transition-colors ${password.length > 4 && !signingIn ? 'bg-[#292a31] text-white hover:bg-[#34353d]' : 'cursor-not-allowed bg-[#17181d] text-[#777982]'} disabled:cursor-not-allowed`}>{signingIn ? 'Loading profile…' : 'Sign in'}</button>
           {loginError && <p role="alert" className="mt-3 text-sm text-[#ff8585]">{loginError}</p>}
         </form>
 
