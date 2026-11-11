@@ -4,7 +4,7 @@ import './globals.css'
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
 
 export const metadata: Metadata = {
-  title: 'Marché - Boutique d'avatars',
+  title: "Marché - Boutique d'avatars",
   description:
     'Personnalise ton avatar avec des vêtements, accessoires, équipements et plus encore.',
   generator: 'v0.app',
