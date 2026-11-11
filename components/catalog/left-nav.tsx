@@ -93,7 +93,7 @@ export function LeftNav({ onNotify, onBuyRobux, dark = false }: Props) {
                 onClick={(e) => {
                   if (label !== 'Home') {
                     e.preventDefault()
-                    notify(`${label} is coming soon`)
+                    notify(`${label} sera bientôt disponible`)
                   }
                 }}
                 className="flex items-center gap-3 rounded-xl px-2.5 py-2.5 text-[15px] font-medium text-foreground/90 transition-colors hover:bg-secondary hover:text-foreground"
