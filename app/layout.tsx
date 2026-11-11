@@ -12,19 +12,12 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: `${basePath}/icon-light-32x32.png`,
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: `${basePath}/icon-dark-32x32.png`,
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: `${basePath}/icon.svg`,
+        url: `${basePath}/icon-roblox.svg`,
         type: 'image/svg+xml',
+        sizes: 'any',
       },
     ],
-    apple: `${basePath}/apple-icon.png`,
+    apple: `${basePath}/icon-roblox.svg`,
   },
 }
 
