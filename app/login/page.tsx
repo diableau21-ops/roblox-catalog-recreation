@@ -59,9 +59,12 @@ export default function LoginPage() {
   return (
     <main className="login-scene relative flex h-screen min-h-[680px] items-center justify-center overflow-hidden bg-[#08090d] px-4 pb-5 pt-[88px] text-white">
       <header className="login-topbar fixed inset-x-0 top-0 z-30 flex h-[64px] items-center gap-6 border-b border-[#393a3f] bg-[#191a1f] px-5 text-white shadow-lg">
-        <a href="/" aria-label="Roblox home" className="flex shrink-0 items-center gap-2.5">
-          <svg viewBox="0 0 36 36" className="h-8 w-8" aria-hidden="true"><path fill="currentColor" d="M8.1 1.8 34.2 8.1 27.9 34.2 1.8 27.9 8.1 1.8Zm6.1 9.1-2.2 9.1 9.1 2.2 2.2-9.1-9.1-2.2Z"/></svg>
-          <span className="text-[23px] font-black tracking-[-1.5px]">ROBLOX</span>
+        <a href="/" aria-label="Roblox home" className="flex shrink-0 items-center text-white">
+          <span className="flex items-center text-[25px] font-black leading-none tracking-[-1.8px]">
+            ROBL
+            <svg viewBox="0 0 36 36" className="mx-[1px] h-[22px] w-[22px] shrink-0" aria-hidden="true"><path fill="currentColor" d="M8.1 1.8 34.2 8.1 27.9 34.2 1.8 27.9 8.1 1.8Zm6.1 9.1-2.2 9.1 9.1 2.2 2.2-9.1-9.1-2.2Z"/></svg>
+            X
+          </span>
         </a>
         <nav className="hidden items-center gap-5 whitespace-nowrap text-[15px] font-semibold text-[#e5e5e7] md:flex">
           <a href="/" className="transition hover:text-white">Classements</a>
