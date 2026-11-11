@@ -9,8 +9,8 @@ export default function Page() {
   const [authenticatedDemo, setAuthenticatedDemo] = useState(false)
 
   useEffect(() => {
-    const profile = window.localStorage.getItem('catalog-demo-profile')
-    if (profile) setAuthenticatedDemo(true)
+    const signedInThisSession = window.sessionStorage.getItem('catalog-demo-signed-in') === 'true'
+    if (signedInThisSession) setAuthenticatedDemo(true)
     else router.replace('/login')
   }, [router])
 
