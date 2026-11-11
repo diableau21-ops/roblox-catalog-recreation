@@ -15,13 +15,13 @@ export default function manifest(): MetadataRoute.Manifest {
     lang: 'fr-CA',
     icons: [
       {
-        src: '/icon.svg',
+        src: '/icon-roblox.svg',
         sizes: 'any',
         type: 'image/svg+xml',
         purpose: 'any',
       },
       {
-        src: '/icon.svg',
+        src: '/icon-roblox.svg',
         sizes: 'any',
         type: 'image/svg+xml',
         purpose: 'maskable',
