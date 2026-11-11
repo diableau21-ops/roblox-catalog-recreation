@@ -17,10 +17,10 @@ type Props = {
 }
 
 const priceOptions: { id: PriceFilter; label: string }[] = [
-  { id: 'any', label: 'Any Price' },
-  { id: 'free', label: 'Free' },
-  { id: 'under100', label: 'Under 100' },
-  { id: 'over100', label: '100 and up' },
+  { id: 'any', label: 'Tous les prix' },
+  { id: 'free', label: 'Gratuit' },
+  { id: 'under100', label: 'Moins de 100' },
+  { id: 'over100', label: '100 et plus' },
 ]
 
 export function CategorySidebar({
@@ -33,8 +33,8 @@ export function CategorySidebar({
   onHideOffSale,
 }: Props) {
   return (
-    <aside className="hidden w-56 shrink-0 lg:block" aria-label="Filters">
-      <h2 className="mb-2 px-2 text-sm font-bold text-muted-foreground">Category</h2>
+    <aside className="hidden w-56 shrink-0 lg:block" aria-label="Filtres">
+      <h2 className="mb-2 px-2 text-sm font-bold text-muted-foreground">Catégorie</h2>
       <ul className="flex flex-col gap-0.5">
         {categories.map((c) => {
           const active = category === c.id
@@ -80,7 +80,7 @@ export function CategorySidebar({
         })}
       </ul>
 
-      <h2 className="mb-2 mt-6 px-2 text-sm font-bold text-muted-foreground">Price</h2>
+      <h2 className="mb-2 mt-6 px-2 text-sm font-bold text-muted-foreground">Prix</h2>
       <fieldset className="flex flex-col gap-0.5">
         <legend className="sr-only">Price filter</legend>
         {priceOptions.map((p) => (
@@ -107,7 +107,7 @@ export function CategorySidebar({
           onChange={(e) => onHideOffSale(e.target.checked)}
           className="accent-primary"
         />
-        Hide off-sale items
+        Masquer les articles indisponibles
       </label>
     </aside>
   )
