@@ -4,20 +4,20 @@ import './globals.css'
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
 
 export const metadata: Metadata = {
-  title: "Marché - Boutique d'avatars",
+  title: 'Riblox',
   description:
-    'Personnalise ton avatar avec des vêtements, accessoires, équipements et plus encore.',
+    "Catalogue non officiel d'avatars et d'articles inspirés de Roblox.",
   generator: 'v0.app',
   manifest: '/manifest.webmanifest',
   icons: {
     icon: [
       {
-        url: `${basePath}/icon-roblox.svg`,
+        url: `${basePath}/riblox-app.svg`,
         type: 'image/svg+xml',
         sizes: 'any',
       },
     ],
-    apple: `${basePath}/icon-roblox.svg`,
+    apple: `${basePath}/riblox-app.svg`,
   },
 }
 
