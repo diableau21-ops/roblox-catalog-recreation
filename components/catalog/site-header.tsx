@@ -22,8 +22,8 @@ function VerifiedBadge({ className = 'size-4' }: { className?: string }) {
   return (
     <img
       src="https://cdn3.emoji.gg/emojis/9389-roblox-verified.png"
-      alt="Verified Roblox account"
-      title="Verified Roblox account"
+      alt="Compte Roblox vérifié"
+      title="Compte Roblox vérifié"
       className={className}
       draggable={false}
     />
@@ -116,7 +116,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-header/95 shadow-sm backdrop-blur-md">
       <div className="flex h-14 w-full items-center gap-3 px-3 sm:gap-4 sm:px-5 lg:px-6">
-        <a href="#" className="flex items-center text-foreground" aria-label="Roblox home">
+        <a href="#" className="flex items-center text-foreground" aria-label="Accueil Roblox">
           <RobloxLogo className="hidden md:inline-flex" />
           <RobloxMark className="md:hidden" />
         </a>
@@ -141,7 +141,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
         </nav>
 
         <label className="relative mx-auto flex min-w-0 max-w-[600px] flex-1 items-center">
-          <span className="sr-only">Search the catalog</span>
+          <span className="sr-only">Rechercher dans le catalogue</span>
           <Search className="pointer-events-none absolute left-2.5 size-[18px] text-[#606162]" />
           <input
             type="search"
@@ -203,7 +203,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
             <div className="absolute right-0 top-full z-[120] mt-2 w-72 rounded-xl border border-[#38393e] bg-[#242529] p-4 text-white shadow-2xl">
               <div className="mb-3 flex items-center justify-between">
                 <h2 className="text-base font-bold">Apparence</h2>
-                <button type="button" aria-label="Close appearance" onClick={() => setAppearanceOpen(false)} className="rounded-md px-2 py-1 text-lg text-white/70 hover:bg-white/10">×</button>
+                <button type="button" aria-label="Fermer l’apparence" onClick={() => setAppearanceOpen(false)} className="rounded-md px-2 py-1 text-lg text-white/70 hover:bg-white/10">×</button>
               </div>
               <p className="mb-2 text-xs font-semibold text-white/60">Couleur du site</p>
               <div className="grid grid-cols-2 gap-2">
@@ -222,7 +222,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
               <section role="dialog" aria-modal="true" aria-labelledby="robux-picker-title" className="w-full max-w-sm rounded-2xl border border-border bg-card p-5 text-foreground shadow-2xl" onClick={(event) => event.stopPropagation()}>
                 <div className="flex items-center justify-between gap-3">
                   <h2 id="robux-picker-title" className="text-xl font-extrabold">Choisis ton solde de Robux</h2>
-                  <button type="button" onClick={() => setRobuxPickerOpen(false)} aria-label="Close" className="rounded-lg px-2 py-1 text-xl hover:bg-secondary">×</button>
+                  <button type="button" onClick={() => setRobuxPickerOpen(false)} aria-label="Fermer" className="rounded-lg px-2 py-1 text-xl hover:bg-secondary">×</button>
                 </div>
                 <p className="mt-2 text-sm text-muted-foreground">Choisis 9 000 Robux ou plus.</p>
                 <label htmlFor="custom-robux-balance" className="mt-4 block text-sm font-semibold">Montant de Robux</label>
@@ -235,7 +235,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
             type="button"
             onClick={onBuyRobux}
             className="flex items-center gap-1.5 rounded-lg px-2 py-2 text-sm font-bold transition-colors hover:bg-secondary sm:text-base"
-            aria-label={`${balance} Robux, buy more`}
+            aria-label={`${balance} Robux, en acheter plus`}
           >
             <RobuxIcon className="size-6" />
             <span className="tabular-nums">{balance}</span>
@@ -272,7 +272,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
           <section role="dialog" aria-modal="true" aria-labelledby="profile-title" className="w-full max-w-md rounded-xl border border-border bg-card p-5 text-foreground shadow-2xl" onClick={(event) => event.stopPropagation()}>
             <div className="flex items-center justify-between gap-3">
               <h2 id="profile-title" className="text-lg font-bold">Définir ton profil Roblox</h2>
-              <button type="button" onClick={() => setProfileOpen(false)} aria-label="Close" className="rounded-lg px-2 py-1 text-xl hover:bg-secondary">×</button>
+              <button type="button" onClick={() => setProfileOpen(false)} aria-label="Fermer" className="rounded-lg px-2 py-1 text-xl hover:bg-secondary">×</button>
             </div>
             {profile && <div className="mt-4 flex items-center gap-3 rounded-lg border border-border p-3">
               {profile.avatarUrl ? <img src={profile.avatarUrl} alt="" className="size-12 rounded-full object-cover" /> : <span className="flex size-12 items-center justify-center rounded-full bg-secondary">👤</span>}
