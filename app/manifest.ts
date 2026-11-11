@@ -16,16 +16,16 @@ export default function manifest(): MetadataRoute.Manifest {
     lang: 'fr-CA',
     icons: [
       {
-        src: '/riblox-app.svg',
-        sizes: 'any',
-        type: 'image/svg+xml',
+        src: '/riblox-icon-192',
+        sizes: '192x192',
+        type: 'image/png',
         purpose: 'any',
       },
       {
-        src: '/riblox-app.svg',
-        sizes: 'any',
-        type: 'image/svg+xml',
-        purpose: 'maskable',
+        src: '/riblox-icon-512',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'any maskable',
       },
     ],
   }
