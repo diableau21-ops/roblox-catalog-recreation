@@ -4,9 +4,9 @@ import './globals.css'
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
 
 export const metadata: Metadata = {
-  title: 'Marketplace - Avatar Shop',
+  title: 'Marché - Boutique d'avatars',
   description:
-    'Customize your avatar with a never-ending marketplace of clothing, accessories, gear, and more.',
+    'Personnalise ton avatar avec des vêtements, accessoires, équipements et plus encore.',
   generator: 'v0.app',
   icons: {
     icon: [
@@ -38,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="roblox">
+    <html lang="fr" className="roblox">
       <body className="antialiased">{children}</body>
     </html>
   )
