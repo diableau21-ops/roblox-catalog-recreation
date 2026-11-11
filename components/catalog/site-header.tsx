@@ -16,7 +16,7 @@ type Props = {
   onBellClick?: () => void
 }
 
-const navLinks = ['Charts', 'Catalog', 'Create', 'Robux'] as const
+const navLinks = ['Classements', 'Catalogue', 'Créer', 'Robux'] as const
 
 function VerifiedBadge({ className = 'size-4' }: { className?: string }) {
   return (
@@ -74,21 +74,21 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
   const searchProfile = async () => {
     const keyword = profileQuery.trim()
     if (keyword.length < 3) {
-      setProfileMessage('Enter at least 3 characters.')
+      setProfileMessage('Entre au moins 3 caractères.')
       return
     }
     setProfileSearching(true)
     setProfileMessage('')
     try {
       const response = await fetch(`/api/roblox-users?keyword=${encodeURIComponent(keyword)}`, { cache: 'no-store' })
-      if (!response.ok) throw new Error('Search failed')
+      if (!response.ok) throw new Error('La recherche a échoué')
       const payload = await response.json()
       const results = Array.isArray(payload.data) ? payload.data : []
       setProfileResults(results)
-      setProfileMessage(results.length ? '' : 'No Roblox users found.')
+      setProfileMessage(results.length ? '' : 'Aucun utilisateur Roblox trouvé.')
     } catch {
       setProfileResults([])
-      setProfileMessage('Could not search Roblox users. Try again.')
+      setProfileMessage('Impossible de rechercher des utilisateurs Roblox. Réessaie.')
     } finally {
       setProfileSearching(false)
     }
@@ -104,7 +104,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
     setProfileMessage('')
   }
 
-  const searchCategories = ['Games', 'People', 'Catalog', 'Communities', 'Creator Store']
+  const searchCategories = ['Jeux', 'Personnes', 'Catalogue', 'Communautés', 'Boutique des créateurs']
 
   const searchPeople = () => {
     const keyword = query.trim()
@@ -130,7 +130,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
                 e.preventDefault()
                 if (label === 'Robux') {
                   window.location.href = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/robux`
-                } else if (label !== 'Catalog') onNotify(`${label} is coming soon`)
+                } else if (label !== 'Catalog') onNotify(`${label} sera bientôt disponible`)
               }}
               aria-current={label === 'Catalog' ? 'page' : undefined}
               className="relative px-2.5 py-[18px] text-sm font-semibold text-foreground/90 transition-colors hover:text-foreground lg:px-3 lg:text-base aria-[current=page]:text-foreground aria-[current=page]:after:absolute aria-[current=page]:after:inset-x-2.5 aria-[current=page]:after:bottom-0 aria-[current=page]:after:h-[3px] aria-[current=page]:after:rounded-full aria-[current=page]:after:bg-foreground lg:aria-[current=page]:after:inset-x-3"
@@ -150,7 +150,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
             onFocus={() => setSearchOpen(true)}
             onKeyDown={(event) => { if (event.key === 'Enter') { event.preventDefault(); void searchPeople() } }}
             onBlur={() => setTimeout(() => setSearchOpen(false), 150)}
-            placeholder="Search"
+            placeholder="Rechercher"
             style={{ backgroundColor: "#2a2b30", color: "#f7f7f8" }}
             className="h-8 w-full rounded-md border border-[#3a3b40] !bg-[#2a2b30] pl-9 pr-3 text-sm text-[#f7f7f8] placeholder:text-[#a3a5ab] transition-colors focus:!bg-[#2a2b30] focus:border-[#55565d] focus:outline-none focus:ring-1 focus:ring-[#55565d] sm:h-9 sm:text-sm"
           />
@@ -162,7 +162,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
                   type="button"
                   onMouseDown={(e) => e.preventDefault()}
                   onClick={() => {
-                    if (category === 'People') { void searchPeople(); return }
+                    if (category === 'Personnes') { void searchPeople(); return }
                     onQueryChange(query.trim())
                     setSearchOpen(false)
                   }}
@@ -207,14 +207,14 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
               </div>
               <p className="mb-2 text-xs font-semibold text-white/60">Site color</p>
               <div className="grid grid-cols-2 gap-2">
-                <button type="button" aria-pressed={siteTheme === 'dark'} onClick={() => setSiteTheme('dark')} className={`rounded-lg border px-3 py-2.5 text-sm font-semibold ${siteTheme === 'dark' ? 'border-blue-400 bg-[#343944]' : 'border-white/10 bg-[#1b1c20]'}`}>Black</button>
-                <button type="button" aria-pressed={siteTheme === 'light'} onClick={() => setSiteTheme('light')} className={`rounded-lg border px-3 py-2.5 text-sm font-semibold ${siteTheme === 'light' ? 'border-blue-400 bg-white text-black' : 'border-white/10 bg-[#1b1c20]'}`}>White</button>
+                <button type="button" aria-pressed={siteTheme === 'dark'} onClick={() => setSiteTheme('dark')} className={`rounded-lg border px-3 py-2.5 text-sm font-semibold ${siteTheme === 'dark' ? 'border-blue-400 bg-[#343944]' : 'border-white/10 bg-[#1b1c20]'}`}>Noir</button>
+                <button type="button" aria-pressed={siteTheme === 'light'} onClick={() => setSiteTheme('light')} className={`rounded-lg border px-3 py-2.5 text-sm font-semibold ${siteTheme === 'light' ? 'border-blue-400 bg-white text-black' : 'border-white/10 bg-[#1b1c20]'}`}>Blanc</button>
               </div>
-              <label htmlFor="site-font-choice-main" className="mb-2 mt-4 block text-xs font-semibold text-white/60">Font</label>
+              <label htmlFor="site-font-choice-main" className="mb-2 mt-4 block text-xs font-semibold text-white/60">Police</label>
               <select id="site-font-choice-main" value={siteFont} onChange={(event) => setSiteFont(event.target.value)} className="h-10 w-full rounded-lg border border-white/15 bg-[#1b1c20] px-3 text-sm text-white outline-none focus:border-blue-400">
                 <option value="Manrope">Manrope</option><option value="Arial">Arial</option><option value="Verdana">Verdana</option><option value="Trebuchet MS">Trebuchet MS</option><option value="Georgia">Georgia</option>
               </select>
-              <p className="mt-3 text-[11px] text-white/50">Your choices are saved on this device.</p>
+              <p className="mt-3 text-[11px] text-white/50">Tes choix sont enregistrés sur cet appareil.</p>
             </div>
           )}
           {robuxPickerOpen && onSetBalance && (
@@ -250,10 +250,10 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
           </button>
           {settingsOpen && (
             <div className="absolute right-4 top-12 z-[70] w-56 overflow-hidden rounded-lg border border-border bg-card py-1 text-foreground shadow-xl sm:right-5 lg:right-6">
-              {['Settings', 'Quick Sign In', 'Help and Safety', 'Switch Accounts', 'Logout'].map((label) => (
+              {['Paramètres', 'Connexion rapide', 'Aide et sécurité', 'Changer de compte', 'Déconnexion'].map((label) => (
                 <button key={label} type="button" onClick={() => {
                   setSettingsOpen(false)
-                  if (label === 'Logout') {
+                  if (label === 'Déconnexion') {
                     setProfile(null)
                     try { window.localStorage.removeItem('catalog-demo-profile') } catch {}
                     window.dispatchEvent(new CustomEvent('catalog-profile-updated', { detail: null }))
