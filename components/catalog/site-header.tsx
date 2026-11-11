@@ -121,7 +121,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
           <RobloxMark className="md:hidden" />
         </a>
 
-        <nav aria-label="Main" className="hidden shrink-0 items-center gap-0.5 md:flex">
+        <nav aria-label="Navigation principale" className="hidden shrink-0 items-center gap-0.5 md:flex">
           {navLinks.map((label) => (
             <a
               key={label}
@@ -170,7 +170,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
                 >
                   <Search className="size-4 shrink-0 text-[#a3a5ab]" />
                   <span className="min-w-0 truncate">
-                    <span className="font-semibold text-white">{query.trim()} </span><span className="text-[#a3a5ab]">in </span><span className="text-white">{category}</span>
+                    <span className="font-semibold text-white">{query.trim()} </span><span className="text-[#a3a5ab]">dans </span><span className="text-white">{category}</span>
                   </span>
                 </button>
               ))}
@@ -202,10 +202,10 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
           {appearanceOpen && (
             <div className="absolute right-0 top-full z-[120] mt-2 w-72 rounded-xl border border-[#38393e] bg-[#242529] p-4 text-white shadow-2xl">
               <div className="mb-3 flex items-center justify-between">
-                <h2 className="text-base font-bold">Appearance</h2>
+                <h2 className="text-base font-bold">Apparence</h2>
                 <button type="button" aria-label="Close appearance" onClick={() => setAppearanceOpen(false)} className="rounded-md px-2 py-1 text-lg text-white/70 hover:bg-white/10">×</button>
               </div>
-              <p className="mb-2 text-xs font-semibold text-white/60">Site color</p>
+              <p className="mb-2 text-xs font-semibold text-white/60">Couleur du site</p>
               <div className="grid grid-cols-2 gap-2">
                 <button type="button" aria-pressed={siteTheme === 'dark'} onClick={() => setSiteTheme('dark')} className={`rounded-lg border px-3 py-2.5 text-sm font-semibold ${siteTheme === 'dark' ? 'border-blue-400 bg-[#343944]' : 'border-white/10 bg-[#1b1c20]'}`}>Noir</button>
                 <button type="button" aria-pressed={siteTheme === 'light'} onClick={() => setSiteTheme('light')} className={`rounded-lg border px-3 py-2.5 text-sm font-semibold ${siteTheme === 'light' ? 'border-blue-400 bg-white text-black' : 'border-white/10 bg-[#1b1c20]'}`}>Blanc</button>
@@ -221,13 +221,13 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
             <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 p-4" onClick={() => setRobuxPickerOpen(false)}>
               <section role="dialog" aria-modal="true" aria-labelledby="robux-picker-title" className="w-full max-w-sm rounded-2xl border border-border bg-card p-5 text-foreground shadow-2xl" onClick={(event) => event.stopPropagation()}>
                 <div className="flex items-center justify-between gap-3">
-                  <h2 id="robux-picker-title" className="text-xl font-extrabold">Choose your Robux balance</h2>
+                  <h2 id="robux-picker-title" className="text-xl font-extrabold">Choisis ton solde de Robux</h2>
                   <button type="button" onClick={() => setRobuxPickerOpen(false)} aria-label="Close" className="rounded-lg px-2 py-1 text-xl hover:bg-secondary">×</button>
                 </div>
-                <p className="mt-2 text-sm text-muted-foreground">Choose 9,000 Robux or more.</p>
-                <label htmlFor="custom-robux-balance" className="mt-4 block text-sm font-semibold">Robux amount</label>
+                <p className="mt-2 text-sm text-muted-foreground">Choisis 9 000 Robux ou plus.</p>
+                <label htmlFor="custom-robux-balance" className="mt-4 block text-sm font-semibold">Montant de Robux</label>
                 <input id="custom-robux-balance" type="number" min="9000" step="1" value={robuxAmount} onChange={(event) => setRobuxAmount(event.target.value)} className="mt-2 h-11 w-full rounded-lg border border-border bg-background px-3 text-foreground outline-none focus:border-[#7183ff]" />
-                <button type="button" disabled={!Number.isSafeInteger(Number(robuxAmount)) || Number(robuxAmount) < 9000} onClick={() => { onSetBalance(Number(robuxAmount)); setRobuxPickerOpen(false) }} className="mt-4 h-11 w-full rounded-lg bg-[#335fff] font-extrabold text-white disabled:cursor-not-allowed disabled:opacity-50">Set balance</button>
+                <button type="button" disabled={!Number.isSafeInteger(Number(robuxAmount)) || Number(robuxAmount) < 9000} onClick={() => { onSetBalance(Number(robuxAmount)); setRobuxPickerOpen(false) }} className="mt-4 h-11 w-full rounded-lg bg-[#335fff] font-extrabold text-white disabled:cursor-not-allowed disabled:opacity-50">Définir le solde</button>
               </section>
             </div>
           )}
@@ -242,7 +242,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
           </button>
           <button
             type="button"
-            aria-label="Settings"
+            aria-label="Paramètres"
             onClick={() => setSettingsOpen((open) => !open)}
             className="hidden rounded-lg p-2 transition-colors hover:bg-secondary sm:block"
           >
@@ -271,28 +271,28 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4" onClick={() => setProfileOpen(false)}>
           <section role="dialog" aria-modal="true" aria-labelledby="profile-title" className="w-full max-w-md rounded-xl border border-border bg-card p-5 text-foreground shadow-2xl" onClick={(event) => event.stopPropagation()}>
             <div className="flex items-center justify-between gap-3">
-              <h2 id="profile-title" className="text-lg font-bold">Set your Roblox profile</h2>
+              <h2 id="profile-title" className="text-lg font-bold">Définir ton profil Roblox</h2>
               <button type="button" onClick={() => setProfileOpen(false)} aria-label="Close" className="rounded-lg px-2 py-1 text-xl hover:bg-secondary">×</button>
             </div>
             {profile && <div className="mt-4 flex items-center gap-3 rounded-lg border border-border p-3">
               {profile.avatarUrl ? <img src={profile.avatarUrl} alt="" className="size-12 rounded-full object-cover" /> : <span className="flex size-12 items-center justify-center rounded-full bg-secondary">👤</span>}
               <div className="min-w-0"><p className="flex items-center gap-1 truncate font-semibold">{profile.displayName}{profile.hasVerifiedBadge && <VerifiedBadge className="size-4 shrink-0" />}</p><p className="truncate text-sm text-muted-foreground">@{profile.name}</p></div>
-              <span className="ml-auto text-xs text-muted-foreground">Current profile</span>
+              <span className="ml-auto text-xs text-muted-foreground">Profil actuel</span>
             </div>}
-            <p className="mt-4 text-sm text-muted-foreground">Enter your Roblox username to find your real avatar and profile name.</p>
+            <p className="mt-4 text-sm text-muted-foreground">Entre ton nom d'utilisateur Roblox pour trouver ton avatar et ton nom de profil.</p>
             <form className="mt-3 flex gap-2" onSubmit={(event) => { event.preventDefault(); void searchProfile() }}>
-              <input value={profileQuery} onChange={(event) => setProfileQuery(event.target.value)} placeholder="Roblox username" aria-label="Roblox username" className="h-10 min-w-0 flex-1 rounded-lg border border-border bg-background px-3 text-sm outline-none focus:border-[#335fff]" />
-              <button type="submit" disabled={profileSearching} className="h-10 rounded-lg bg-[#335fff] px-4 text-sm font-semibold text-white disabled:opacity-50">{profileSearching ? 'Searching…' : 'Search'}</button>
+              <input value={profileQuery} onChange={(event) => setProfileQuery(event.target.value)} placeholder="Nom d'utilisateur Roblox" aria-label="Nom d'utilisateur Roblox" className="h-10 min-w-0 flex-1 rounded-lg border border-border bg-background px-3 text-sm outline-none focus:border-[#335fff]" />
+              <button type="submit" disabled={profileSearching} className="h-10 rounded-lg bg-[#335fff] px-4 text-sm font-semibold text-white disabled:opacity-50">{profileSearching ? 'Recherche…' : 'Rechercher'}</button>
             </form>
             {profileMessage && <p role="status" className="mt-3 text-sm text-muted-foreground">{profileMessage}</p>}
             {profileResults.length > 0 && <div className="mt-3 max-h-64 space-y-2 overflow-y-auto">
               {profileResults.map((player) => <button key={player.id} type="button" onClick={() => chooseProfile(player)} className="flex w-full items-center gap-3 rounded-lg border border-border p-3 text-left hover:bg-secondary">
                 {player.avatarUrl ? <img src={player.avatarUrl} alt="" className="size-11 rounded-full object-cover" /> : <span className="flex size-11 items-center justify-center rounded-full bg-secondary">👤</span>}
                 <span className="min-w-0 flex-1"><span className="flex items-center gap-1 truncate font-semibold">{player.displayName}{player.hasVerifiedBadge && <VerifiedBadge className="size-4 shrink-0" />}</span><span className="block truncate text-sm text-muted-foreground">@{player.name}</span></span>
-                <span className="text-sm font-semibold text-[#335fff]">Use</span>
+                <span className="text-sm font-semibold text-[#335fff]">Utiliser</span>
               </button>)}
             </div>}
-            <p className="mt-4 text-xs text-muted-foreground">This changes the profile shown on this site. It does not sign you in to Roblox.</p>
+            <p className="mt-4 text-xs text-muted-foreground">Cela change le profil affiché sur ce site. Tu n'es pas connecté à Roblox.</p>
           </section>
         </div>
       )}
