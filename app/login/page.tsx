@@ -19,6 +19,9 @@ export default function LoginPage() {
   const [gameImages, setGameImages] = useState<Record<string, string>>({})
   const [showPassword, setShowPassword] = useState(false)
   const [search, setSearch] = useState('')
+  const [username, setUsername] = useState('')
+  const [loginError, setLoginError] = useState('')
+  const [signingIn, setSigningIn] = useState(false)
 
   useEffect(() => {
     let active = true
@@ -29,7 +32,25 @@ export default function LoginPage() {
     return () => { active = false }
   }, [])
 
-  function demoAction() {}
+  async function demoAction() {
+    const requestedName = username.trim()
+    if (requestedName.length < 3) { setLoginError('Enter a Roblox username with at least 3 characters.'); return }
+    setSigningIn(true)
+    setLoginError('')
+    try {
+      const response = await fetch('/api/roblox-users?keyword=' + encodeURIComponent(requestedName), { cache: 'no-store' })
+      if (!response.ok) throw new Error('Roblox user lookup failed')
+      const payload = await response.json()
+      const players = Array.isArray(payload.data) ? payload.data : []
+      const player = players.find((item: { name?: string }) => item.name?.toLowerCase() === requestedName.toLowerCase())
+      if (!player) { setLoginError('Roblox username not found. Check the spelling and try again.'); return }
+      // This selects a local demo profile; it does not authenticate with Roblox.
+      window.localStorage.setItem('catalog-demo-profile', JSON.stringify(player))
+      window.dispatchEvent(new CustomEvent('catalog-profile-updated', { detail: player }))
+      router.push('/')
+    } catch { setLoginError('Could not load this Roblox profile. Please try again.') }
+    finally { setSigningIn(false) }
+  }
 
   return (
     <main className="login-scene relative flex h-screen min-h-[680px] items-center justify-center overflow-hidden bg-[#08090d] px-4 pb-5 pt-[88px] text-white">
@@ -69,7 +90,7 @@ export default function LoginPage() {
 
         <form onSubmit={(event) => { event.preventDefault(); demoAction() }}>
           <label htmlFor="demo-username" className="mb-2 block text-sm font-semibold">Username</label>
-          <input id="demo-username" type="text" autoComplete="off" placeholder="Username" className="mb-4 h-[44px] w-full rounded-[10px] border border-[#626675] bg-[#191a1f] px-4 text-base text-white outline-none placeholder:text-[#a7a9b1] focus:border-[#8b91a3]" />
+          <input id="demo-username" type="text" autoComplete="off" value={username} onChange={(event) => { setUsername(event.target.value); setLoginError('') }} placeholder="Username" className="mb-4 h-[44px] w-full rounded-[10px] border border-[#626675] bg-[#191a1f] px-4 text-base text-white outline-none placeholder:text-[#a7a9b1] focus:border-[#8b91a3]" />
 
           <label htmlFor="demo-password" className="mb-2 block text-sm font-semibold">Password</label>
           <div className="relative">
@@ -83,7 +104,8 @@ export default function LoginPage() {
             </button>
           </div>
 
-          <button type="submit" className="mt-4 h-[44px] w-full rounded-[10px] bg-[#292a31] text-base font-semibold text-[#a5a6ad] hover:bg-[#34353d]">Sign in</button>
+          <button type="submit" disabled={signingIn} className="mt-4 h-[44px] w-full rounded-[10px] bg-[#292a31] text-base font-semibold text-white hover:bg-[#34353d] disabled:cursor-wait disabled:opacity-60">{signingIn ? 'Loading profile…' : 'Sign in'}</button>
+          {loginError && <p role="alert" className="mt-3 text-sm text-[#ff8585]">{loginError}</p>}
         </form>
 
         <button type="button" onClick={demoAction} className="mt-3 text-sm text-[#c3c4ca] underline underline-offset-2">Forgot password or username?</button>
