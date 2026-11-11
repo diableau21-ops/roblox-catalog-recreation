@@ -68,7 +68,7 @@ export default function RobuxPage() {
   const [sendSuccess, setEnvoyerSuccess] = useState(false)
   const [sendReview, setEnvoyerReview] = useState(false)
   const [sendProcessing, setEnvoyerProcessing] = useState(false)
-  const [selectedPackage, setSélectionneredPackage] = useState<(typeof packages)[number] | null>(null)
+  const [selectedPackage, setSelectedPackage] = useState<(typeof packages)[number] | null>(null)
   const [paying, setPaying] = useState(false)
   const [paid, setPaid] = useState(false)
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'paypal'>('card')
@@ -112,7 +112,7 @@ export default function RobuxPage() {
         setEnvoyerError(`Aucun joueur Roblox trouvé pour “${keyword}”.`)
       }
     } catch {
-      setEnvoyerError('Aucun résultat pour le moment. Vérifie le nom d'utilisateur Roblox et réessaie.')
+      setEnvoyerError("Aucun résultat pour le moment. Vérifie le nom d'utilisateur Roblox et réessaie.")
     } finally {
       setEnvoyerSearching(false)
     }
@@ -185,7 +185,7 @@ export default function RobuxPage() {
 
               <button
                 type="button"
-                onClick={() => { setSélectionneredPackage(pack); setPaying(false); setPaid(false); setPaymentMethod('card') }}
+                onClick={() => { setSelectedPackage(pack); setPaying(false); setPaid(false); setPaymentMethod('card') }}
                 className={`min-w-[104px] rounded-lg px-3 py-3 text-sm font-extrabold tabular-nums transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:min-w-[132px] sm:px-5 sm:text-base ${pack.featured ? 'bg-[#335FFF] text-white hover:bg-[#244BE0]' : 'bg-[#34343A] text-white hover:bg-[#45454D]'}`}
               >
                 {pack.price}
@@ -201,18 +201,18 @@ export default function RobuxPage() {
           </p>
         )}
         {selectedPackage && (
-          <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/80 p-3" onClick={() => setSélectionneredPackage(null)}>
+          <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/80 p-3" onClick={() => setSelectedPackage(null)}>
             <section role="dialog" aria-modal="true" aria-labelledby="package-info-title" className="w-full max-w-md rounded-2xl border border-[#41414b] bg-[#17171c] p-5 text-[#f7f6f2] shadow-2xl sm:p-6" onClick={(e) => e.stopPropagation()}>
               <div className="flex items-center justify-between gap-3">
                 <h2 id="package-info-title" className="text-2xl font-extrabold">Aperçu du forfait de Robux</h2>
-                <button type="button" onClick={() => setSélectionneredPackage(null)} aria-label="Fermer" className="rounded-lg px-3 py-1 text-2xl text-white/70 hover:bg-white/10">×</button>
+                <button type="button" onClick={() => setSelectedPackage(null)} aria-label="Fermer" className="rounded-lg px-3 py-1 text-2xl text-white/70 hover:bg-white/10">×</button>
               </div>
               <div className="mt-5 rounded-xl border border-[#34343b] bg-[#202024] p-4">
                 <div className="flex items-center gap-3"><RobuxIcon className="size-9" /><div><p className="font-extrabold">{selectedPackage.amount} Robux</p><p className="text-sm text-white/60">Aperçu visuel du catalogue · {selectedPackage.price}</p></div></div>
               </div>
               <p className="mt-4 text-sm leading-6 text-white/75">Ceci est une maquette non officielle créée par des fans. Les achats sont désactivés : aucun paiement n'est prélevé et aucun Robux n'est livré. Pour acheter des Robux, visite le site officiel de Roblox.</p>
               <a href="https://www.roblox.com/upgrades/robux" target="_blank" rel="noreferrer" className="mt-5 flex h-12 w-full items-center justify-center rounded-lg bg-[#335fff] font-extrabold hover:bg-[#244be0]">Ouvrir le site officiel de Roblox</a>
-              <button type="button" onClick={() => setSélectionneredPackage(null)} className="mt-2 h-11 w-full rounded-lg border border-white/15 font-bold hover:bg-white/5">Fermer preview</button>
+              <button type="button" onClick={() => setSelectedPackage(null)} className="mt-2 h-11 w-full rounded-lg border border-white/15 font-bold hover:bg-white/5">Fermer preview</button>
             </section>
           </div>
         )}
@@ -224,14 +224,14 @@ export default function RobuxPage() {
               <div className="relative z-10">
                 {sendProcessing ? (
                   <div className="py-8 text-center">
-                    <h2 id="send-robux-title" className="text-2xl font-extrabold">Envoyering</h2>
+                    <h2 id="send-robux-title" className="text-2xl font-extrabold">Envoi en cours</h2>
                     <div className="mt-7 flex flex-col items-center">
                       {sendPlayer?.avatarUrl ? <img src={sendPlayer.avatarUrl} alt="" className="size-24 rounded-full bg-[#303030] object-cover" /> : <span className="flex size-24 items-center justify-center rounded-full bg-[#303030] text-2xl font-bold">{(sendPlayer?.displayName || sendPlayer?.name || '?').slice(0,2).toUpperCase()}</span>}
                       <p className="mt-3 flex items-center justify-center gap-1.5 text-xl font-bold">{sendPlayer?.displayName}{sendPlayer?.hasVerifiedBadge && <VerifiedBadge className="size-4" />}</p>
                       <p className="text-sm text-white/60">@{sendPlayer?.name}</p>
                     </div>
-                    <div className="mx-auto mt-8 size-12 animate-spin rounded-full border-4 border-white/15 border-t-[#146bff]" role="status" aria-label="Envoyering" />
-                    <p className="mt-4 text-sm text-white/65">Envoyering {Number(sendAmount || 0).toLocaleString('en-US')} Robux…</p>
+                    <div className="mx-auto mt-8 size-12 animate-spin rounded-full border-4 border-white/15 border-t-[#146bff]" role="status" aria-label="Envoi en cours" />
+                    <p className="mt-4 text-sm text-white/65">Envoi en cours {Number(sendAmount || 0).toLocaleString('en-US')} Robux…</p>
                   </div>
                 ) : sendSuccess ? (
                   <div className="py-3">
@@ -265,7 +265,7 @@ export default function RobuxPage() {
                             <span className="flex items-center gap-2 text-2xl font-extrabold"><RobuxIcon className="size-6"/>{Number(sendAmount||0).toLocaleString('en-US')}</span>
                           </div>
                           <div className="mt-4 flex gap-3">
-                            <button type="button" disabled={sendProcessing} onClick={()=>{const amount=Number(sendAmount);if(!Number.isSafeInteger(amount)||amount<1||amount>balance){setEnvoyerError('Entre un montant valide qui ne dépasse pas ton solde.');return;}setEnvoyerError('');setEnvoyerProcessing(true);window.setTimeout(()=>{setEnvoyerProcessing(false);setEnvoyerSuccess(true)},800)}} className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-[#146bff] text-base font-extrabold disabled:cursor-wait disabled:opacity-80">{sendProcessing ? <><span className="size-4 animate-spin rounded-full border-2 border-white/35 border-t-white" />Envoyering…</> : 'Gift'}</button>
+                            <button type="button" disabled={sendProcessing} onClick={()=>{const amount=Number(sendAmount);if(!Number.isSafeInteger(amount)||amount<1||amount>balance){setEnvoyerError('Entre un montant valide qui ne dépasse pas ton solde.');return;}setEnvoyerError('');setEnvoyerProcessing(true);window.setTimeout(()=>{setEnvoyerProcessing(false);setEnvoyerSuccess(true)},800)}} className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-[#146bff] text-base font-extrabold disabled:cursor-wait disabled:opacity-80">{sendProcessing ? <><span className="size-4 animate-spin rounded-full border-2 border-white/35 border-t-white" />Envoi en cours…</> : 'Gift'}</button>
                             <button type="button" onClick={()=>{setEnvoyerReview(false);setEnvoyerError('')}} className="h-12 flex-1 rounded-xl border border-white/20 text-base font-bold">Modifier</button>
                           </div>
                           {sendError && <p role="status" className="mt-3 text-sm leading-5 text-red-300">{sendError}</p>}
