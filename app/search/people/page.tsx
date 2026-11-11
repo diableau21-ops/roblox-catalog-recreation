@@ -18,7 +18,7 @@ type Player = {
 }
 
 function VerifiedBadge() {
-  return <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Roblox_Verification_Badge.svg" alt="Verified" title="Verified" className="inline-block size-4 shrink-0 object-contain" />
+  return <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Roblox_Verification_Badge.svg" alt="Compte vérifié" title="Compte vérifié" className="inline-block size-4 shrink-0 object-contain" />
 }
 
 function PeopleSearchContent() {
@@ -62,23 +62,23 @@ function PeopleSearchContent() {
           cache: 'no-store',
           signal: controller.signal,
         })
-        if (!response.ok) throw new Error('Search failed')
+        if (!response.ok) throw new Error('La recherche a échoué')
         const payload = await response.json()
         if (!active) return
         const data = Array.isArray(payload.data) ? payload.data : []
         setPlayers(data)
-        setMessage(data.length ? '' : 'No results found.')
+        setMessage(data.length ? '' : 'Aucun résultat trouvé.')
       } catch (error) {
         if (active && !(error instanceof DOMException && error.name === 'AbortError')) {
           setPlayers([])
-          setMessage('Could not load people right now. Please try again.')
+          setMessage('Impossible de charger les utilisateurs pour le moment. Réessaie.')
         }
       } finally {
         if (active) setLoading(false)
       }
     }
     if (keyword.length >= 3) void run()
-    else { setPlayers([]); setMessage('Enter at least 3 characters.'); setLoading(false) }
+    else { setPlayers([]); setMessage('Entre au moins 3 caractères.'); setLoading(false) }
     return () => {
       active = false
       controller.abort()
@@ -91,32 +91,32 @@ function PeopleSearchContent() {
       <LeftNav dark onNotify={(msg) => window.alert(msg)} />
       <div className="ml-0 w-full px-4 pb-24 pt-7 sm:px-8 md:ml-[220px] md:w-[calc(100%-220px)]">
         <div className="mb-6 border-b border-[#292a2e] pb-5">
-          <h1 className="mb-4 text-2xl font-bold">People Results for {keyword}</h1>
+          <h1 className="mb-4 text-2xl font-bold">Résultats de personnes pour {keyword}</h1>
           <form onSubmit={(event) => { event.preventDefault(); const term = searchTerm.trim(); if (term.length >= 3) router.push(`/search/people?keyword=${encodeURIComponent(term)}`) }} className="flex min-h-12 w-full max-w-xl items-center gap-3 rounded-lg border border-[#45464d] bg-[#242529] px-4 focus-within:border-white/60">
             <Search className="size-5 shrink-0 text-[#a3a5ab]" />
-            <input aria-label="Search people" value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Search" className="min-w-0 flex-1 bg-transparent py-2 text-sm text-white outline-none placeholder:text-[#a3a5ab]" />
+            <input aria-label="Rechercher des personnes" value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Rechercher" className="min-w-0 flex-1 bg-transparent py-2 text-sm text-white outline-none placeholder:text-[#a3a5ab]" />
           </form>
         </div>
 
         {loading ? (
-          <p className="py-10 text-sm text-[#a3a5ab]">Loading people…</p>
+          <p className="py-10 text-sm text-[#a3a5ab]">Chargement des utilisateurs…</p>
         ) : message ? (
           <p className="py-10 text-sm text-[#a3a5ab]">{message}</p>
         ) : (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
             {players.map((player) => (
               <article key={player.id} className="relative flex min-h-[270px] flex-col items-center rounded-xl bg-[#191a1f] px-5 py-5 text-center transition-colors hover:bg-[#202127]">
-                <button type="button" aria-label={`More actions for ${player.name}`} aria-expanded={openMenu === player.id} onClick={() => setOpenMenu((current) => current === player.id ? null : player.id)} className="absolute right-3 top-3 flex size-9 items-center justify-center rounded-full text-white hover:bg-[#34353b]">
+                <button type="button" aria-label={`Plus d’actions pour ${player.name}`} aria-expanded={openMenu === player.id} onClick={() => setOpenMenu((current) => current === player.id ? null : player.id)} className="absolute right-3 top-3 flex size-9 items-center justify-center rounded-full text-white hover:bg-[#34353b]">
                   <MoreHorizontal className="size-6" />
                 </button>
                 {openMenu === player.id && (
                   <div className="absolute right-3 top-12 z-30 w-44 overflow-hidden rounded-md border border-[#38393e] bg-[#242529] py-1 text-left shadow-xl">
-                    <button type="button" onClick={() => { setSendRecipient(player); setSendAmount('0'); setSendStage('edit'); setSendMessage(''); setOpenMenu(null) }} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Send Robux</button>
-                    <button type="button" onClick={() => setOpenMenu(null)} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Follow</button>
-                    <button type="button" onClick={() => setOpenMenu(null)} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Inventory</button>
-                    <button type="button" onClick={() => setOpenMenu(null)} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Favorites</button>
-                    <button type="button" onClick={() => setOpenMenu(null)} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Block User</button>
-                    <button type="button" onClick={() => setOpenMenu(null)} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Report Abuse</button>
+                    <button type="button" onClick={() => { setSendRecipient(player); setSendAmount('0'); setSendStage('edit'); setSendMessage(''); setOpenMenu(null) }} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Envoyer des Robux</button>
+                    <button type="button" onClick={() => setOpenMenu(null)} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Suivre</button>
+                    <button type="button" onClick={() => setOpenMenu(null)} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Inventaire</button>
+                    <button type="button" onClick={() => setOpenMenu(null)} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Favoris</button>
+                    <button type="button" onClick={() => setOpenMenu(null)} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Bloquer cet utilisateur</button>
+                    <button type="button" onClick={() => setOpenMenu(null)} className="block w-full px-3 py-2.5 text-left text-sm font-semibold text-white hover:bg-[#35363c]">Signaler un abus</button>
                   </div>
                 )}
                 <a href={`/users/${player.id}/${encodeURIComponent(player.name)}`} className="flex w-full flex-col items-center">
@@ -128,7 +128,7 @@ function PeopleSearchContent() {
                     {player.hasVerifiedBadge && <VerifiedBadge />}
                   </span>
                   <span className="mt-1 max-w-full truncate text-sm text-[#a3a5ab]">@{player.name}</span>
-                  <span className={`mt-2 text-xs ${player.isOnline ? "text-[#43b581]" : "text-[#858891]"}`}>{player.isOnline ? "Online" : "Offline"}</span>
+                  <span className={`mt-2 text-xs ${player.isOnline ? "text-[#43b581]" : "text-[#858891]"}`}>{player.isOnline ? "En ligne" : "Hors ligne"}</span>
                 </a>
                 <button
                   type="button"
@@ -136,7 +136,7 @@ function PeopleSearchContent() {
                   onClick={() => setSent((current) => current.includes(player.id) ? current : [...current, player.id])}
                   className="mt-auto w-full max-w-[220px] rounded-lg bg-[#242529] px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#303136] active:bg-[#1b1c20] disabled:cursor-default disabled:bg-[#1c1d21] disabled:text-[#858891]"
                 >
-                  {sent.includes(player.id) ? 'Request Sent' : 'Add Friend'}
+                  {sent.includes(player.id) ? 'Demande envoyée' : 'Ajouter comme ami'}
                 </button>
               </article>
             ))}
@@ -148,14 +148,14 @@ function PeopleSearchContent() {
               <div className="flex w-full items-center justify-between gap-3 border-b border-white/10 pb-4">
                 <div className="flex min-w-0 items-center gap-2">
                   <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="" className="size-7 shrink-0 object-contain brightness-0 invert" />
-                  <span className="truncate text-xl font-extrabold">Send Robux</span>
+                  <span className="truncate text-xl font-extrabold">Envoyer des Robux</span>
                 </div>
-                <div className="flex shrink-0 items-center gap-1.5 text-sm font-bold"><RobuxIcon className="size-5" /><span className="tabular-nums">{robuxBalance.toLocaleString('en-US')}</span></div>
+                <div className="flex shrink-0 items-center gap-1.5 text-sm font-bold"><RobuxIcon className="size-5" /><span className="tabular-nums">{robuxBalance.toLocaleString('fr-CA')}</span></div>
               </div>
               <div className="flex flex-1 flex-col items-center justify-center py-5 text-center">
               {sendRecipient.avatarUrl ? <img src={sendRecipient.avatarUrl} alt="" className="size-16 rounded-full object-cover opacity-80" /> : <span className="size-16 rounded-full bg-[#3a3b40]" />}
               <span aria-label="Loading" className="mt-6 size-8 animate-spin rounded-full border-[3px] border-white/20 border-t-white" />
-              <p className="mt-5 text-lg font-bold">Sending Robux...</p>
+              <p className="mt-5 text-lg font-bold">Envoi des Robux…</p>
               <p className="mt-1 text-sm text-white/60">To @{sendRecipient.name}</p>
               </div>
             </section>
@@ -167,19 +167,19 @@ function PeopleSearchContent() {
               <div className="flex items-center justify-between gap-3 border-b border-white/10 pb-4">
                 <div className="flex min-w-0 items-center gap-2.5">
                   <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Roblox_Plus.svg" alt="" className="size-7 shrink-0 object-contain brightness-0 invert" />
-                  <h2 id="people-send-title" className="truncate text-xl font-extrabold">Send Robux</h2>
+                  <h2 id="people-send-title" className="truncate text-xl font-extrabold">Envoyer des Robux</h2>
                 </div>
-                <div className="flex shrink-0 items-center gap-1.5 text-sm font-bold"><RobuxIcon className="size-5" /><span className="tabular-nums">{robuxBalance.toLocaleString('en-US')}</span></div>
+                <div className="flex shrink-0 items-center gap-1.5 text-sm font-bold"><RobuxIcon className="size-5" /><span className="tabular-nums">{robuxBalance.toLocaleString('fr-CA')}</span></div>
               </div>
               {sendStage === "success" ? (
                 <div className="flex min-h-[370px] flex-col items-center px-2 pb-1 pt-8 text-center">
                   {sendRecipient.avatarUrl ? <img src={sendRecipient.avatarUrl} alt={`Avatar of ${sendRecipient.name}`} className="size-20 rounded-full object-cover" /> : <span className="size-20 rounded-full bg-[#3a3b40]" />}
                   <p className="mt-3 flex items-center justify-center gap-1.5 text-lg font-bold">{sendRecipient.displayName}{sendRecipient.hasVerifiedBadge && <VerifiedBadge />}</p>
                   <p className="mt-0.5 text-sm text-white/60">@{sendRecipient.name}</p>
-                  <p className="mt-5 text-sm font-semibold text-white/65">Robux send</p>
+                  <p className="mt-5 text-sm font-semibold text-white/65">Robux envoyés</p>
                   <div className="mt-3 flex items-center justify-center gap-2">
                     <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Robux_2019_Logo_gold.svg" alt="" className="size-7 object-contain brightness-0 invert" />
-                    <p className="text-2xl font-extrabold">{Number(sendAmount).toLocaleString("en-US")}</p>
+                    <p className="text-2xl font-extrabold">{Number(sendAmount).toLocaleString("fr-CA")}</p>
                   </div>
                   <button type="button" onClick={() => setSendRecipient(null)} className="mt-auto h-12 w-full max-w-[220px] rounded-xl bg-[#146bff] font-extrabold hover:bg-[#2878ff]">OK</button>
                 </div>
@@ -193,7 +193,7 @@ function PeopleSearchContent() {
                         <p className="mt-0.5 text-sm text-white/55">@{sendRecipient.name}</p>
                         <div className="mt-7 flex items-center justify-center gap-2">
                           <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Robux_2019_Logo_gold.svg" alt="" className="size-9 object-contain brightness-0 invert" />
-                          <label htmlFor="people-send-amount" className="sr-only">Robux amount</label>
+                          <label htmlFor="people-send-amount" className="sr-only">Montant de Robux</label>
                           <input id="people-send-amount" type="number" min="1" step="1" value={sendAmount} onChange={(event) => { setSendAmount(event.target.value); setSendMessage("") }} className="w-32 bg-transparent text-center text-5xl font-extrabold text-white outline-none" />
                         </div>
                         <div className="mt-8 grid w-full grid-cols-4 gap-2">
@@ -203,8 +203,8 @@ function PeopleSearchContent() {
                             </button>
                           ))}
                         </div>
-                        <button type="button" disabled={!Number.isSafeInteger(Number(sendAmount)) || Number(sendAmount) < 1} onClick={() => { setSendMessage(""); setSendStage("confirm") }} className="mt-9 h-11 w-full rounded-lg bg-[#335fff] font-bold text-white transition-colors hover:bg-[#426cff] disabled:cursor-not-allowed disabled:opacity-45">Next</button>
-                        <p className="mt-3 text-xs text-white/65">Robux are sent instantly with no fees</p>
+                        <button type="button" disabled={!Number.isSafeInteger(Number(sendAmount)) || Number(sendAmount) < 1} onClick={() => { setSendMessage(""); setSendStage("confirm") }} className="mt-9 h-11 w-full rounded-lg bg-[#335fff] font-bold text-white transition-colors hover:bg-[#426cff] disabled:cursor-not-allowed disabled:opacity-45">Suivant</button>
+                        <p className="mt-3 text-xs text-white/65">Les Robux sont envoyés instantanément, sans frais</p>
                       </div>
                     </>
                   ) : (
@@ -217,15 +217,15 @@ function PeopleSearchContent() {
                       <div className="mt-4 rounded-lg bg-[#292a31] px-4 py-6 text-center">
                         <div className="flex items-center justify-center gap-2">
                           <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Robux_2019_Logo_gold.svg" alt="" className="size-9 object-contain brightness-0 invert" />
-                          <p className="text-4xl font-extrabold">{Number(sendAmount).toLocaleString("en-US")}</p>
+                          <p className="text-4xl font-extrabold">{Number(sendAmount).toLocaleString("fr-CA")}</p>
                         </div>
-                        <p className="mt-2 text-sm text-white/65">The recipient will get {Number(sendAmount).toLocaleString("en-US")} Robux.</p>
+                        <p className="mt-2 text-sm text-white/65">Le destinataire recevra {Number(sendAmount).toLocaleString("fr-CA")} Robux.</p>
                       </div>
                       <div className="mt-5 flex gap-2">
-                        <button type="button" onClick={() => { setSendStage("loading"); window.setTimeout(() => { const amount = Number(sendAmount); setRobuxBalance((currentBalance) => { const updatedBalance = Math.max(0, currentBalance - amount); try { window.localStorage.setItem('catalog-demo-robux-balance', String(updatedBalance)); window.dispatchEvent(new Event('catalog-demo-balance-change')) } catch {} return updatedBalance }); setSendStage("success") }, 1600) }} className="h-11 flex-1 rounded-lg bg-[#335fff] font-bold text-white hover:bg-[#426cff]">Send</button>
-                        <button type="button" onClick={() => setSendStage("edit")} className="h-11 flex-1 rounded-lg bg-[#303139] font-bold text-white hover:bg-[#3a3b44]">Edit</button>
+                        <button type="button" onClick={() => { setSendStage("loading"); window.setTimeout(() => { const amount = Number(sendAmount); setRobuxBalance((currentBalance) => { const updatedBalance = Math.max(0, currentBalance - amount); try { window.localStorage.setItem('catalog-demo-robux-balance', String(updatedBalance)); window.dispatchEvent(new Event('catalog-demo-balance-change')) } catch {} return updatedBalance }); setSendStage("success") }, 1600) }} className="h-11 flex-1 rounded-lg bg-[#335fff] font-bold text-white hover:bg-[#426cff]">Envoyer</button>
+                        <button type="button" onClick={() => setSendStage("edit")} className="h-11 flex-1 rounded-lg bg-[#303139] font-bold text-white hover:bg-[#3a3b44]">Modifier</button>
                       </div>
-                      <p className="mt-3 text-center text-xs text-white/65">You need an age check or parental consent to send Robux. Once you send, you cannot cancel.</p>
+                      <p className="mt-3 text-center text-xs text-white/65">Une vérification de l’âge ou le consentement parental peut être nécessaire pour envoyer des Robux. Une fois envoyés, ils ne peuvent pas être annulés.</p>
                     </>
                   )}
                 </>
@@ -234,21 +234,21 @@ function PeopleSearchContent() {
           </div>
         )}
         <footer className="mt-16 border-t border-[#292a2e] pt-7 pb-5 text-xs text-[#a3a5ab]">
-          <nav aria-label="Footer" className="flex flex-wrap items-center gap-x-5 gap-y-3">
-            <a className="hover:underline" href="https://www.roblox.com/info/about-us?locale=en_us">About Us</a>
-            <a className="hover:underline" href="https://www.roblox.com/info/jobs?locale=en_us">Jobs</a>
-            <a className="hover:underline" href="https://www.roblox.com/info/blog?locale=en_us">Newsroom</a>
+          <nav aria-label="Pied de page" className="flex flex-wrap items-center gap-x-5 gap-y-3">
+            <a className="hover:underline" href="https://www.roblox.com/info/about-us?locale=en_us">À propos</a>
+            <a className="hover:underline" href="https://www.roblox.com/info/jobs?locale=en_us">Emplois</a>
+            <a className="hover:underline" href="https://www.roblox.com/info/blog?locale=en_us">Actualités</a>
             <a className="hover:underline" href="https://www.roblox.com/info/parents?locale=en_us">Parents</a>
-            <a className="hover:underline" href="https://www.roblox.com/giftcards?locale=en_us">Buy Gift Cards</a>
-            <a className="hover:underline" href="https://www.roblox.com/info/help?locale=en_us">Help</a>
-            <a className="hover:underline" href="https://www.roblox.com/info/terms?locale=en_us">Terms</a>
-            <a className="hover:underline" href="https://www.roblox.com/info/accessibility?locale=en_us">Accessibility</a>
-            <a className="hover:underline" href="https://www.roblox.com/info/privacy?locale=en_us">Privacy</a>
-            <span>Your Privacy Choices</span>
-            <a className="hover:underline" href="https://www.roblox.com/sitemap?locale=en_us">Sitemap</a>
+            <a className="hover:underline" href="https://www.roblox.com/giftcards?locale=en_us">Acheter des cartes-cadeaux</a>
+            <a className="hover:underline" href="https://www.roblox.com/info/help?locale=en_us">Aide</a>
+            <a className="hover:underline" href="https://www.roblox.com/info/terms?locale=en_us">Conditions</a>
+            <a className="hover:underline" href="https://www.roblox.com/info/accessibility?locale=en_us">Accessibilité</a>
+            <a className="hover:underline" href="https://www.roblox.com/info/privacy?locale=en_us">Confidentialité</a>
+            <span>Vos choix de confidentialité</span>
+            <a className="hover:underline" href="https://www.roblox.com/sitemap?locale=en_us">Plan du site</a>
           </nav>
           <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
-            <span>English (United States)</span>
+            <span>Français (Canada)</span>
             <span>©2026 Roblox Corporation. Roblox, the Roblox logo and Powering Imagination are among our registered and unregistered trademarks in the U.S. and other countries.</span>
           </div>
         </footer>
@@ -260,7 +260,7 @@ function PeopleSearchContent() {
 
 export default function PeopleSearchPage() {
   return (
-    <Suspense fallback={<main className="min-h-screen bg-black px-6 py-12 text-white">Loading people…</main>}>
+    <Suspense fallback={<main className="min-h-screen bg-black px-6 py-12 text-white">Chargement des utilisateurs…</main>}>
       <PeopleSearchContent />
     </Suspense>
   )
