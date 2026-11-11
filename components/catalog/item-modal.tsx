@@ -160,7 +160,7 @@ export function ItemModal({
                   onClick={() => setConfirming(false)}
                   className="h-9 rounded-lg bg-secondary text-sm font-semibold hover:bg-secondary/80"
                 >
-                  Cancel
+                  Annuler
                 </button>
                 {!insufficient && effectivePrice > 0 && (
                   <p className="flex items-center justify-center gap-1 text-xs text-muted-foreground">
@@ -176,7 +176,7 @@ export function ItemModal({
                 onClick={() => setConfirming(true)}
                 className="h-11 rounded-lg bg-[#335fff] font-bold text-white hover:bg-[#244be0] disabled:cursor-not-allowed disabled:bg-secondary disabled:text-muted-foreground"
               >
-                {effectivePrice === null ? 'Off Sale' : effectivePrice === 0 ? 'Get' : 'Buy'}
+                {effectivePrice === null ? 'Indisponible' : effectivePrice === 0 ? 'Obtenir' : 'Acheter'}
               </button>
             )}
 
@@ -188,7 +188,7 @@ export function ItemModal({
                 onClick={onTryOn}
                 className="h-10 flex-1 rounded-lg bg-secondary text-sm font-semibold hover:bg-secondary/80"
               >
-                Try On
+                Essayer
               </button>
               <button
                 type="button"
@@ -204,7 +204,7 @@ export function ItemModal({
                 aria-label="Share"
                 onClick={() => {
                   navigator.clipboard?.writeText(`${window.location.origin}/catalog/${item.id}`)
-                  onNotify('Link copied to clipboard')
+                  onNotify('Lien copié')
                 }}
                 className="flex h-10 items-center rounded-lg bg-secondary px-3 hover:bg-secondary/80"
               >
