@@ -17,7 +17,7 @@ const games = [
 export default function LoginPage() {
   const router = useRouter()
   const [gameImages, setGameImages] = useState<Record<string, string>>({})
-  const [showPassword, setShowMot de passe] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
   const [search, setSearch] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -99,7 +99,7 @@ export default function LoginPage() {
           <label htmlFor="demo-password" className="mb-2 block text-sm font-semibold">Mot de passe</label>
           <div className="relative">
             <input id="demo-password" type={showPassword ? 'text' : 'password'} autoComplete="off" value={password} onChange={(event) => { setPassword(event.target.value); setLoginError('') }} placeholder="Mot de passe" className="h-[44px] w-full rounded-[10px] border border-[#626675] bg-[#191a1f] py-2 pl-4 pr-12 text-base text-white outline-none placeholder:text-[#a7a9b1] focus:border-[#8b91a3]" />
-            <button type="button" onClick={() => setShowMot de passe((visible) => !visible)} aria-label={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'} aria-pressed={showPassword} className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-[#c3c4ca] hover:text-white">
+            <button type="button" onClick={() => setShowPassword((visible) => !visible)} aria-label={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'} aria-pressed={showPassword} className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-[#c3c4ca] hover:text-white">
               {showPassword ? (
                 <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 3l18 18" /><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8" /><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c5 0 8.5 4.5 9.5 7-.4 1-1.2 2.2-2.4 3.3" /><path d="M6.2 6.2C3.9 7.6 2.7 9.6 2.5 12c.7 1.8 3.8 7 9.5 7 1.2 0 2.3-.2 3.3-.7" /></svg>
               ) : (
