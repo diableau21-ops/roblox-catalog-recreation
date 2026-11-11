@@ -212,7 +212,7 @@ export default function RobuxPage() {
               </div>
               <p className="mt-4 text-sm leading-6 text-white/75">Ceci est une maquette non officielle créée par des fans. Les achats sont désactivés : aucun paiement n'est prélevé et aucun Robux n'est livré. Pour acheter des Robux, visite le site officiel de Roblox.</p>
               <a href="https://www.roblox.com/upgrades/robux" target="_blank" rel="noreferrer" className="mt-5 flex h-12 w-full items-center justify-center rounded-lg bg-[#335fff] font-extrabold hover:bg-[#244be0]">Ouvrir le site officiel de Roblox</a>
-              <button type="button" onClick={() => setSelectedPackage(null)} className="mt-2 h-11 w-full rounded-lg border border-white/15 font-bold hover:bg-white/5">Fermer preview</button>
+              <button type="button" onClick={() => setSelectedPackage(null)} className="mt-2 h-11 w-full rounded-lg border border-white/15 font-bold hover:bg-white/5">Fermer l’aperçu</button>
             </section>
           </div>
         )}
@@ -238,7 +238,7 @@ export default function RobuxPage() {
                     <div className="flex items-center justify-between gap-4">
                       <div className="flex items-center gap-2.5">
                         <img src="https://robux-send-fake-creator-iker.lovable.app/__l5e/assets-v1/1aea3764-f82d-470c-b9d7-fc4c6220088e/robux-menu-icon.png" alt="Robux" className="size-6 shrink-0 object-contain" />
-                        <h2 id="send-robux-title" className="text-xl font-extrabold">Gift</h2>
+                        <h2 id="send-robux-title" className="text-xl font-extrabold">Cadeau</h2>
                       </div>
                       <span className="flex shrink-0 items-center gap-2 text-lg font-bold text-white/80"><RobuxIcon className="size-5"/>{balance.toLocaleString('en-US')}</span>
                     </div>
@@ -248,7 +248,7 @@ export default function RobuxPage() {
                 ) : (
                   <>
                     <div className="flex items-center justify-between gap-3">
-                      <div className="flex min-w-0 items-center gap-2.5"><img src="https://robux-send-fake-creator-iker.lovable.app/__l5e/assets-v1/1aea3764-f82d-470c-b9d7-fc4c6220088e/robux-menu-icon.png" alt="Robux" className="size-6 shrink-0 object-contain" /><h2 id="send-robux-title" className="text-2xl font-extrabold">Gift</h2></div><span className="ml-auto flex items-center gap-2 text-lg text-white/65"><RobuxIcon className="size-5"/>{balance.toLocaleString("en-US")}</span>
+                      <div className="flex min-w-0 items-center gap-2.5"><img src="https://robux-send-fake-creator-iker.lovable.app/__l5e/assets-v1/1aea3764-f82d-470c-b9d7-fc4c6220088e/robux-menu-icon.png" alt="Robux" className="size-6 shrink-0 object-contain" /><h2 id="send-robux-title" className="text-2xl font-extrabold">Cadeau</h2></div><span className="ml-auto flex items-center gap-2 text-lg text-white/65"><RobuxIcon className="size-5"/>{balance.toLocaleString("fr-CA")}</span>
                       <button type="button" onClick={() => setEnvoyerOpen(false)} aria-label="Fermer" className="rounded-lg px-2 py-1 text-xl text-white/75 hover:bg-white/10">×</button>
                     </div>
                     {sendPlayer && sendReview ? (
@@ -300,7 +300,7 @@ export default function RobuxPage() {
                         {sendPlayers.length > 0 && <div className="mt-4 max-h-60 space-y-2 overflow-y-auto">
                           {sendPlayers.map((player) => <button key={player.id} type="button" onClick={() => setEnvoyerPlayer(player)} className="flex w-full items-center gap-3 rounded-lg border border-white/15 p-3 text-left hover:border-[#7183ff] hover:bg-white/5">
                             {player.avatarUrl ? <img src={player.avatarUrl} alt="" className="size-11 rounded-full object-cover" /> : <span className="flex size-11 items-center justify-center rounded-full bg-white/10">👤</span>}
-                            <span className="min-w-0 flex-1"><span className="flex items-center gap-1.5 truncate font-semibold">{player.displayName}{player.hasVerifiedBadge && <span title="Verified Roblox account" aria-label="Verified account" className="inline-flex size-4 shrink-0 items-center justify-center rounded-full bg-[#335fff] text-[10px] font-black text-white">✓</span>}</span><span className="block truncate text-sm text-white/60">@{player.name}</span></span>
+                            <span className="min-w-0 flex-1"><span className="flex items-center gap-1.5 truncate font-semibold">{player.displayName}{player.hasVerifiedBadge && <span title="Compte Roblox vérifié" aria-label="Compte vérifié" className="inline-flex size-4 shrink-0 items-center justify-center rounded-full bg-[#335fff] text-[10px] font-black text-white">✓</span>}</span><span className="block truncate text-sm text-white/60">@{player.name}</span></span>
                             <span className="text-sm font-bold text-[#9eafff]">Sélectionner</span>
                           </button>)}
                         </div>}
