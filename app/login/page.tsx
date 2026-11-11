@@ -20,6 +20,7 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [search, setSearch] = useState('')
   const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const [loginError, setLoginError] = useState('')
   const [signingIn, setSigningIn] = useState(false)
 
@@ -34,6 +35,7 @@ export default function LoginPage() {
 
   async function demoAction() {
     const requestedName = username.trim()
+    if (!password) { setLoginError('Enter any password to continue.'); return }
     if (requestedName.length < 3) { setLoginError('Enter a Roblox username with at least 3 characters.'); return }
     setSigningIn(true)
     setLoginError('')
@@ -94,7 +96,7 @@ export default function LoginPage() {
 
           <label htmlFor="demo-password" className="mb-2 block text-sm font-semibold">Password</label>
           <div className="relative">
-            <input id="demo-password" type={showPassword ? 'text' : 'password'} autoComplete="new-password" placeholder="Password" className="h-[44px] w-full rounded-[10px] border border-[#626675] bg-[#191a1f] py-2 pl-4 pr-12 text-base text-white outline-none placeholder:text-[#a7a9b1] focus:border-[#8b91a3]" />
+            <input id="demo-password" type={showPassword ? 'text' : 'password'} autoComplete="off" value={password} onChange={(event) => { setPassword(event.target.value); setLoginError('') }} placeholder="Password" className="h-[44px] w-full rounded-[10px] border border-[#626675] bg-[#191a1f] py-2 pl-4 pr-12 text-base text-white outline-none placeholder:text-[#a7a9b1] focus:border-[#8b91a3]" />
             <button type="button" onClick={() => setShowPassword((visible) => !visible)} aria-label={showPassword ? 'Hide password' : 'Show password'} aria-pressed={showPassword} className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-[#c3c4ca] hover:text-white">
               {showPassword ? (
                 <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 3l18 18" /><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8" /><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c5 0 8.5 4.5 9.5 7-.4 1-1.2 2.2-2.4 3.3" /><path d="M6.2 6.2C3.9 7.6 2.7 9.6 2.5 12c.7 1.8 3.8 7 9.5 7 1.2 0 2.3-.2 3.3-.7" /></svg>
