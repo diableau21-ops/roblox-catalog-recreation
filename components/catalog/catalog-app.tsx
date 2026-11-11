@@ -15,11 +15,11 @@ import { RobuxModal } from './robux-modal'
 type Sort = 'relevance' | 'favorited' | 'recent' | 'priceLow' | 'priceHigh'
 
 const sortLabels: Record<Sort, string> = {
-  relevance: 'Relevance',
-  favorited: 'Most Favorited',
-  recent: 'Recently Created',
-  priceLow: 'Price (Low to High)',
-  priceHigh: 'Price (High to Low)',
+  relevance: 'Pertinence',
+  favorited: 'Les plus populaires',
+  recent: 'Récemment créés',
+  priceLow: 'Prix croissant',
+  priceHigh: 'Prix décroissant',
 }
 
 
@@ -393,7 +393,7 @@ export function CatalogApp() {
           <section role="dialog" aria-modal="true" aria-labelledby="cart-title" onClick={(event) => event.stopPropagation()} className="flex h-full max-h-[calc(100dvh-16px)] w-full max-w-[420px] flex-col self-start overflow-hidden rounded-l-xl border border-[#3b3d40] bg-[#232527] p-5 text-[#f7f7f8] shadow-2xl sm:mr-3 sm:mt-2 sm:h-auto sm:max-h-[calc(100dvh-16px)] sm:rounded-xl">
             <div className="flex items-center justify-between gap-3 border-b border-[#45484b] pb-4">
               <h2 id="cart-title" className="text-lg font-bold">Panier ({cartItems.length})</h2>
-              <button type="button" onClick={() => setCartOpen(false)} aria-label="Close cart" className="rounded-lg p-2 text-[#c7c9cb] hover:bg-[#393c3f]"><X className="size-5" /></button>
+              <button type="button" onClick={() => setCartOpen(false)} aria-label="Fermer le panier" className="rounded-lg p-2 text-[#c7c9cb] hover:bg-[#393c3f]"><X className="size-5" /></button>
             </div>
             {cartProducts.length === 0 ? (
               <div className="flex min-h-56 flex-1 flex-col items-center justify-center gap-3 text-center"><ShoppingCart className="size-10 text-[#aeb2b5]" /><p className="font-semibold">Ton panier est vide</p><p className="text-sm text-[#b8bbbe]">Ajoute un article pour le voir ici.</p><button type="button" onClick={() => setCartOpen(false)} className="rounded-md bg-[#393c3f] px-4 py-2 text-sm font-semibold hover:bg-[#484c50]">Continuer les achats</button></div>
@@ -404,15 +404,15 @@ export function CatalogApp() {
                     <li key={item.id + '-' + index} className="flex items-center gap-3 border-b border-[#393c3f] pb-3">
                       <div className="relative size-[88px] shrink-0 overflow-hidden rounded-md bg-[#34373a]">
                         <Image src={item.image?.startsWith('http') ? item.image : (process.env.NEXT_PUBLIC_BASE_PATH ?? '') + (item.image || '/placeholder.svg')} alt={item.name} fill sizes="88px" className="object-contain p-1" />
-                        <span aria-label="Selected" className="absolute right-1.5 top-1.5 flex size-4 items-center justify-center rounded-sm border border-[#335fff] bg-[#335fff] text-[11px] font-bold text-white">✓</span>
+                        <span aria-label="Sélectionné" className="absolute right-1.5 top-1.5 flex size-4 items-center justify-center rounded-sm border border-[#335fff] bg-[#335fff] text-[11px] font-bold text-white">✓</span>
                       </div>
-                      <div className="min-w-0 flex-1 self-start pt-1"><p className="line-clamp-2 text-sm font-semibold">{item.name}</p><p className="mt-1 flex items-center gap-1 text-sm text-[#d4d6d8]"><span className="font-bold text-[#f7f7f8]">{item.price === null ? 'Indisponible' : item.price.toLocaleString('en-US')}</span>{item.price === null ? '' : ' Robux'}</p></div>
+                      <div className="min-w-0 flex-1 self-start pt-1"><p className="line-clamp-2 text-sm font-semibold">{item.name}</p><p className="mt-1 flex items-center gap-1 text-sm text-[#d4d6d8]"><span className="font-bold text-[#f7f7f8]">{item.price === null ? 'Indisponible' : item.price.toLocaleString('fr-CA')}</span>{item.price === null ? '' : ' Robux'}</p></div>
                       <button type="button" onClick={() => setCartItems((items) => items.filter((_, i) => i !== index))} aria-label={'Retirer ' + item.name} className="self-start rounded-md p-1.5 text-[#b8bbbe] hover:bg-[#393c3f] hover:text-white"><X className="size-4" /></button>
                     </li>
                   ))}
                 </ul>
                 <div className="border-t border-[#45484b] pt-4">
-                  <div className="mb-3 flex items-center justify-between text-sm font-semibold"><span>Total : {cartProducts.length} {cartProducts.length === 1 ? 'article' : 'articles'}</span><span className="flex items-center gap-1.5 text-base font-bold"><span aria-hidden="true">◈</span>{cartTotal.toLocaleString('en-US')} Robux</span></div>
+                  <div className="mb-3 flex items-center justify-between text-sm font-semibold"><span>Total : {cartProducts.length} {cartProducts.length === 1 ? 'article' : 'articles'}</span><span className="flex items-center gap-1.5 text-base font-bold"><span aria-hidden="true">◈</span>{cartTotal.toLocaleString('fr-CA')} Robux</span></div>
                   <button type="button" onClick={() => { if (cartProducts.some((item) => item.price === null)) { notify('Certains articles ne sont pas en vente'); return } if (cartTotal > balance) { setCartInsufficient(true); return } setCartInsufficient(false); setBalance((value) => value - cartTotal); setOwned((previous) => new Set([...previous, ...cartProducts.map((item) => item.id)])); setCartItems([]); setCartOpen(false); notify('Achat du panier effectué !') }} className="h-11 w-full rounded-md bg-[#335fff] font-bold text-white transition-colors hover:bg-[#244be0]">Acheter</button>
                   {cartInsufficient && <p role="alert" className="mt-3 text-sm leading-5 text-[#ff8585]">Tu n'as pas assez de Robux pour cette transaction</p>}
                   <div className="mt-4 rounded-lg border border-[#45484b] bg-[#2c2f32] px-3 py-3"><p className="text-center text-sm font-semibold">Obtiens 10 % de rabais avec Roblox Plus</p><a href="https://www.roblox.com/plus" target="_blank" rel="noreferrer" className="mt-2 flex h-9 w-full items-center justify-center rounded-md bg-[#335fff] text-sm font-bold text-white hover:bg-[#244be0]">Essayer gratuitement</a></div>
