@@ -74,7 +74,7 @@ export function ItemModal({
         <button
           type="button"
           onClick={onClose}
-          aria-label="Close"
+          aria-label="Fermer"
           className="absolute right-3 top-3 z-10 rounded-full p-1.5 hover:bg-secondary"
         >
           <X className="size-5" />
@@ -84,7 +84,7 @@ export function ItemModal({
           <Image src={item.image?.startsWith('http') ? item.image : `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${item.image || '/placeholder.svg'}`} alt={item.name} fill sizes="400px" className="object-contain p-4" />
           {item.limited && (
             <span className="absolute bottom-3 left-3 flex overflow-hidden rounded text-xs font-bold uppercase">
-              <span className="bg-limited px-2 py-0.5 text-black">Limited</span>
+              <span className="bg-limited px-2 py-0.5 text-black">Limité</span>
               {item.limited === 'Limited U' && <span className="bg-foreground px-2 py-0.5 text-background">U</span>}
             </span>
           )}
@@ -102,12 +102,12 @@ export function ItemModal({
           </div>
 
           <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-sm">
-            <dt className="text-muted-foreground">Price</dt>
+            <dt className="text-muted-foreground">Prix</dt>
             <dd>
               {item.price === null && resale ? (
                 <span className="flex flex-col">
                   <Price price={resale} />
-                  <span className="text-xs text-muted-foreground">Lowest resale price</span>
+                  <span className="text-xs text-muted-foreground">Prix de revente le plus bas</span>
                 </span>
               ) : (
                 <Price price={item.price} />
@@ -122,18 +122,18 @@ export function ItemModal({
           <div className="mt-auto flex flex-col gap-2">
             {owned ? (
               <div className="rounded-lg bg-secondary px-4 py-3 text-center text-sm font-semibold">
-                {'You own this item'}
+                {'Tu possèdes cet article'}
               </div>
             ) : confirming && effectivePrice !== null ? (
               <div className="flex flex-col gap-3 rounded-lg border border-border p-4">
                 <p className="text-sm">
-                  Would you like to buy <strong>{item.name}</strong> for{' '}
+                  Veux-tu acheter <strong>{item.name}</strong> for{' '}
                   <Price price={effectivePrice} className="inline-flex" />?
                 </p>
                 {insufficient ? (
                   <>
                     <p className="text-sm text-destructive">
-                      {`You need ${(effectivePrice - balance).toLocaleString('en-US')} more Robux to buy this item.`}
+                      {`Il te manque ${(effectivePrice - balance).toLocaleString('en-US')} Robux pour acheter cet article.`}
                     </p>
                     <button
                       type="button"
@@ -152,7 +152,7 @@ export function ItemModal({
                     }}
                     className="h-10 rounded-lg bg-success font-bold text-white hover:bg-success/90"
                   >
-                    {effectivePrice === 0 ? 'Get Now' : 'Buy Now'}
+                    {effectivePrice === 0 ? 'Obtenir' : 'Acheter'}
                   </button>
                 )}
                 <button
@@ -164,7 +164,7 @@ export function ItemModal({
                 </button>
                 {!insufficient && effectivePrice > 0 && (
                   <p className="flex items-center justify-center gap-1 text-xs text-muted-foreground">
-                    Balance after transaction: <RobuxIcon className="size-3" />
+                    Solde après la transaction : <RobuxIcon className="size-3" />
                     {(balance - effectivePrice).toLocaleString('en-US')}
                   </p>
                 )}
