@@ -32,7 +32,7 @@ export function RobuxModal({ onClose, onAdd }: { onClose: () => void; onAdd: (n:
         <button
           type="button"
           onClick={onClose}
-          aria-label="Close"
+          aria-label="Fermer"
           className="absolute right-3 top-3 rounded-full p-1.5 hover:bg-secondary"
         >
           <X className="size-5" />
