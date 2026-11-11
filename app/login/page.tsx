@@ -50,7 +50,8 @@ export default function LoginPage() {
       window.localStorage.setItem('catalog-demo-profile', JSON.stringify(player))
       window.sessionStorage.setItem('catalog-demo-signed-in', 'true')
       window.dispatchEvent(new CustomEvent('catalog-profile-updated', { detail: player }))
-      router.push('/')
+      // Use a full navigation so the home page re-reads sessionStorage reliably.
+      window.location.assign('/')
     } catch { setLoginError('Could not load this Roblox profile. Please try again.') }
     finally { setSigningIn(false) }
   }
