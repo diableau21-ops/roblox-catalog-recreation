@@ -81,7 +81,7 @@ export function ProfileSiteHeader() {
               <div className="absolute right-0 top-full z-[110] mt-2 w-72 rounded-xl border border-[#38393e] bg-[#242529] p-4 text-white shadow-2xl">
                 <div className="mb-3 flex items-center justify-between">
                   <h2 className="text-base font-bold">Apparence</h2>
-                  <button type="button" aria-label="Close appearance" onClick={() => setAppearanceOpen(false)} className="rounded-md px-2 py-1 text-lg text-white/70 hover:bg-white/10">×</button>
+                  <button type="button" aria-label="Fermer l’apparence" onClick={() => setAppearanceOpen(false)} className="rounded-md px-2 py-1 text-lg text-white/70 hover:bg-white/10">×</button>
                 </div>
                 <p className="mb-2 text-xs font-semibold text-white/60">Couleur du site</p>
                 <div className="grid grid-cols-2 gap-2">
