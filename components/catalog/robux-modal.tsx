@@ -38,9 +38,9 @@ export function RobuxModal({ onClose, onAdd }: { onClose: () => void; onAdd: (n:
           <X className="size-5" />
         </button>
         <h2 id="robux-title" className="text-xl font-bold">
-          Buy Robux
+          Acheter des Robux
         </h2>
-        <p className="mt-1 text-sm text-muted-foreground">No payment is processed on this page.</p>
+        <p className="mt-1 text-sm text-muted-foreground">Aucun paiement n'est effectué sur cette page.</p>
         <ul className="mt-5 grid grid-cols-2 gap-3">
           {packages.map((p) => (
             <li key={p.robux}>
