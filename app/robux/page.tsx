@@ -19,7 +19,7 @@ const packages: { amount: string; previous: string; bonus: string; price: string
 
 function VerifiedBadge({ className = 'size-4' }: { className?: string }) {
   return (
-    <svg aria-label="Verified Roblox account" role="img" viewBox="0 0 24 24" className={className} xmlns="http://www.w3.org/2000/svg">
+    <svg aria-label="Compte Roblox vérifié" role="img" viewBox="0 0 24 24" className={className} xmlns="http://www.w3.org/2000/svg">
       <path fill="#00A2FF" d="M12 1.2 15 3l3.5-.1 1.2 3.3 3 2-1 3.8 1 3.5-3 2.4-1.2 3.2-3.5-.1-3 1.9-3-1.9-3.5.1-1.2-3.2-3-2.4 1-3.5-1-3.8 3-2L5.5 2.9 9 3z"/>
       <path fill="#fff" d="m10.1 15.9-3.3-3.3 1.7-1.7 1.6 1.6 4.8-4.8 1.7 1.7z"/>
     </svg>
@@ -134,7 +134,7 @@ export default function RobuxPage() {
       <LeftNav onNotify={notify} onBuyRobux={openPackages} />
       <div className="ml-0 px-4 pb-12 pt-5 sm:px-6 sm:pt-7 md:ml-[220px] md:px-6">
       <header className="mx-auto flex w-full max-w-5xl items-center justify-end">
-        <div className="flex items-center gap-3 rounded-lg bg-[#29292E] p-1.5 pl-3 text-sm font-extrabold" aria-label={`${balance.toLocaleString('en-US')} Robux balance`}>
+        <div className="flex items-center gap-3 rounded-lg bg-[#29292E] p-1.5 pl-3 text-sm font-extrabold" aria-label={`${balance.toLocaleString('fr-CA')} solde de Robux`}>
           <RobuxIcon className="size-5" />
           <span className="tabular-nums">{balance.toLocaleString('en-US')}</span>
           <button
@@ -265,7 +265,7 @@ export default function RobuxPage() {
                             <span className="flex items-center gap-2 text-2xl font-extrabold"><RobuxIcon className="size-6"/>{Number(sendAmount||0).toLocaleString('en-US')}</span>
                           </div>
                           <div className="mt-4 flex gap-3">
-                            <button type="button" disabled={sendProcessing} onClick={()=>{const amount=Number(sendAmount);if(!Number.isSafeInteger(amount)||amount<1||amount>balance){setEnvoyerError('Entre un montant valide qui ne dépasse pas ton solde.');return;}setEnvoyerError('');setEnvoyerProcessing(true);window.setTimeout(()=>{setEnvoyerProcessing(false);setEnvoyerSuccess(true)},800)}} className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-[#146bff] text-base font-extrabold disabled:cursor-wait disabled:opacity-80">{sendProcessing ? <><span className="size-4 animate-spin rounded-full border-2 border-white/35 border-t-white" />Envoi en cours…</> : 'Gift'}</button>
+                            <button type="button" disabled={sendProcessing} onClick={()=>{const amount=Number(sendAmount);if(!Number.isSafeInteger(amount)||amount<1||amount>balance){setEnvoyerError('Entre un montant valide qui ne dépasse pas ton solde.');return;}setEnvoyerError('');setEnvoyerProcessing(true);window.setTimeout(()=>{setEnvoyerProcessing(false);setEnvoyerSuccess(true)},800)}} className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-[#146bff] text-base font-extrabold disabled:cursor-wait disabled:opacity-80">{sendProcessing ? <><span className="size-4 animate-spin rounded-full border-2 border-white/35 border-t-white" />Envoi en cours…</> : 'Cadeau'}</button>
                             <button type="button" onClick={()=>{setEnvoyerReview(false);setEnvoyerError('')}} className="h-12 flex-1 rounded-xl border border-white/20 text-base font-bold">Modifier</button>
                           </div>
                           {sendError && <p role="status" className="mt-3 text-sm leading-5 text-red-300">{sendError}</p>}
