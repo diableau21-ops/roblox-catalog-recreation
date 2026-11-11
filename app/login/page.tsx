@@ -84,7 +84,7 @@ export default function LoginPage() {
               <div className={`game-fallback fallback-${index + 1}`}><span>{game.title}</span></div>
             )}
             {game.placeId === '142823291' && (
-              <span className="mm2-notice">これはRoblox公式のログインページではありません。実際のパスワードを入力しないでください。</span>
+              <span className="mm2-notice">Ceci n'est pas une page de connexion officielle de Roblox. N'entre pas ton vrai mot de passe.</span>
             )}
           </div>
         ))}
