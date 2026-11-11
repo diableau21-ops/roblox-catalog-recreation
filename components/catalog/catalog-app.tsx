@@ -248,7 +248,7 @@ export function CatalogApp() {
             </div>
           </div>
 
-          <div className="-mx-3 mt-4 flex gap-2 overflow-x-auto px-3 pb-2 lg:mx-0 lg:mt-5 lg:px-0" role="group" aria-label="Categories">
+          <div className="-mx-3 mt-4 flex gap-2 overflow-x-auto px-3 pb-2 lg:mx-0 lg:mt-5 lg:px-0" role="group" aria-label="Catégories">
             {categories.map((c) => (
               <button
                 key={c.id}
