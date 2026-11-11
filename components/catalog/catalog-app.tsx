@@ -137,7 +137,7 @@ export function CatalogApp() {
     } catch {}
   }, [balance, balanceReady])
   const [query, setQuery] = useState('')
-  const [language, setLanguage] = useState('English')
+  const [language, setLanguage] = useState('Français')
   const t = (text: string) => translations[language]?.[text] ?? text
   const [category, setCategory] = useState<Category>('all')
   const [subcategory, setSubcategory] = useState<string | null>(null)
@@ -214,13 +214,13 @@ export function CatalogApp() {
         balance={balance}
         query={query}
         onQueryChange={setQuery}
-        onBuyRobux={() => { window.location.href = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/robux` }}
+        onAcheterRobux={() => { window.location.href = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/robux` }}
         onNotify={notify}
       />
 
       <LeftNav
         onNotify={notify}
-        onBuyRobux={() => { window.location.href = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/robux` }}
+        onAcheterRobux={() => { window.location.href = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/robux` }}
       />
 
       <main
@@ -241,7 +241,7 @@ export function CatalogApp() {
               </p>
             </div>
             <div className="flex items-center gap-2">
-              <button type="button" onClick={() => { setCartInsufficient(false); setCartOpen(true) }} aria-label={`Shopping cart, ${cartItems.length} items`} className="relative rounded-lg p-2 transition-colors hover:bg-secondary">
+              <button type="button" onClick={() => { setCartInsufficient(false); setCartOpen(true) }} aria-label={`Panier, ${cartItems.length} articles`} className="relative rounded-lg p-2 transition-colors hover:bg-secondary">
                 <ShoppingCart className="size-5" />
                 <span className="absolute -right-0.5 -top-0.5 flex size-4 items-center justify-center rounded-full bg-[#335fff] text-[10px] font-bold text-white">{cartItems.length}</span>
               </button>
@@ -310,10 +310,10 @@ export function CatalogApp() {
                       setCartInsufficient(false)
                       if (cartItems.includes(item.id)) {
                         setCartItems((current) => current.filter((id) => id !== item.id))
-                        notify(`${item.name} removed from your cart.`)
+                        notify(`${item.name} retiré du panier.`)
                       } else {
                         setCartItems((current) => current.includes(item.id) ? current : [...current, item.id])
-                        notify(`${item.name} has been added to your cart.`)
+                        notify(`${item.name} ajouté au panier.`)
                       }
                     }}
                   />
@@ -346,13 +346,13 @@ export function CatalogApp() {
               onChange={(e) => setLanguage(e.target.value)}
               className="rounded-md border border-border bg-input px-3 py-2 text-sm text-foreground"
             >
-              {['English', 'Français', 'Español', 'Português', 'Deutsch', 'Italiano', '日本語', '한국어', '简体中文'].map((l) => (
+              {['Français'].map((l) => (
                 <option key={l} value={l}>{l}</option>
               ))}
             </select>
           </div>
           <p className="w-full pt-3 text-xs leading-relaxed text-muted-foreground">
-            Unofficial fan-made interface. Not affiliated with Roblox. Purchases and account actions are not connected to Roblox.
+            Interface non officielle créée par des fans. Non affiliée à Roblox. Les achats et les actions de compte ne sont pas reliés à Roblox.
           </p>
         </div>
       </footer>
@@ -366,24 +366,24 @@ export function CatalogApp() {
           favorited={favorites.has(openItem.id)}
           balance={balance}
           onClose={() => setOpenId(null)}
-          onBuy={(price) => {
+          onAcheter={(price) => {
             setBalance((b) => b - price)
             setOwned((prev) => new Set(prev).add(openItem.id))
-            notify(`You purchased ${openItem.name}!`)
+            notify(`Tu as acheté ${openItem.name} !`)
           }}
           onToggleFavorite={() => toggleFavorite(openItem.id)}
           onAddToCart={() => {
             setCartInsufficient(false)
             if (cartItems.includes(openItem.id)) {
               setCartItems((items) => items.filter((id) => id !== openItem.id))
-              notify(`${openItem.name} removed from your cart.`)
+              notify(`${openItem.name} retiré du panier.`)
             } else {
               setCartItems((items) => items.includes(openItem.id) ? items : [...items, openItem.id])
-              notify(`${openItem.name} added to cart`)
+              notify(`${openItem.name} ajouté au panier`)
             }
           }}
-          onTryOn={() => notify(`Trying on ${openItem.name}`)}
-          onBuyRobux={() => { window.location.href = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/robux` }}
+          onTryOn={() => notify(`Essai de ${openItem.name}`)}
+          onAcheterRobux={() => { window.location.href = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/robux` }}
           onNotify={notify}
         />
       )}
@@ -392,11 +392,11 @@ export function CatalogApp() {
         <div className="fixed inset-0 z-[80] flex justify-end bg-black/45 sm:bg-transparent" onClick={() => setCartOpen(false)}>
           <section role="dialog" aria-modal="true" aria-labelledby="cart-title" onClick={(event) => event.stopPropagation()} className="flex h-full max-h-[calc(100dvh-16px)] w-full max-w-[420px] flex-col self-start overflow-hidden rounded-l-xl border border-[#3b3d40] bg-[#232527] p-5 text-[#f7f7f8] shadow-2xl sm:mr-3 sm:mt-2 sm:h-auto sm:max-h-[calc(100dvh-16px)] sm:rounded-xl">
             <div className="flex items-center justify-between gap-3 border-b border-[#45484b] pb-4">
-              <h2 id="cart-title" className="text-lg font-bold">Shopping cart ({cartItems.length})</h2>
+              <h2 id="cart-title" className="text-lg font-bold">Panier ({cartItems.length})</h2>
               <button type="button" onClick={() => setCartOpen(false)} aria-label="Close cart" className="rounded-lg p-2 text-[#c7c9cb] hover:bg-[#393c3f]"><X className="size-5" /></button>
             </div>
             {cartProducts.length === 0 ? (
-              <div className="flex min-h-56 flex-1 flex-col items-center justify-center gap-3 text-center"><ShoppingCart className="size-10 text-[#aeb2b5]" /><p className="font-semibold">Your cart is empty</p><p className="text-sm text-[#b8bbbe]">Add an item to see it here.</p><button type="button" onClick={() => setCartOpen(false)} className="rounded-md bg-[#393c3f] px-4 py-2 text-sm font-semibold hover:bg-[#484c50]">Continue shopping</button></div>
+              <div className="flex min-h-56 flex-1 flex-col items-center justify-center gap-3 text-center"><ShoppingCart className="size-10 text-[#aeb2b5]" /><p className="font-semibold">Ton panier est vide</p><p className="text-sm text-[#b8bbbe]">Ajoute un article pour le voir ici.</p><button type="button" onClick={() => setCartOpen(false)} className="rounded-md bg-[#393c3f] px-4 py-2 text-sm font-semibold hover:bg-[#484c50]">Continuer les achats</button></div>
             ) : (
               <>
                 <ul className="min-h-0 flex-1 space-y-3 overflow-y-auto py-4">
@@ -406,16 +406,16 @@ export function CatalogApp() {
                         <Image src={item.image?.startsWith('http') ? item.image : (process.env.NEXT_PUBLIC_BASE_PATH ?? '') + (item.image || '/placeholder.svg')} alt={item.name} fill sizes="88px" className="object-contain p-1" />
                         <span aria-label="Selected" className="absolute right-1.5 top-1.5 flex size-4 items-center justify-center rounded-sm border border-[#335fff] bg-[#335fff] text-[11px] font-bold text-white">✓</span>
                       </div>
-                      <div className="min-w-0 flex-1 self-start pt-1"><p className="line-clamp-2 text-sm font-semibold">{item.name}</p><p className="mt-1 flex items-center gap-1 text-sm text-[#d4d6d8]"><span className="font-bold text-[#f7f7f8]">{item.price === null ? 'Off Sale' : item.price.toLocaleString('en-US')}</span>{item.price === null ? '' : ' Robux'}</p></div>
-                      <button type="button" onClick={() => setCartItems((items) => items.filter((_, i) => i !== index))} aria-label={'Remove ' + item.name} className="self-start rounded-md p-1.5 text-[#b8bbbe] hover:bg-[#393c3f] hover:text-white"><X className="size-4" /></button>
+                      <div className="min-w-0 flex-1 self-start pt-1"><p className="line-clamp-2 text-sm font-semibold">{item.name}</p><p className="mt-1 flex items-center gap-1 text-sm text-[#d4d6d8]"><span className="font-bold text-[#f7f7f8]">{item.price === null ? 'Indisponible' : item.price.toLocaleString('en-US')}</span>{item.price === null ? '' : ' Robux'}</p></div>
+                      <button type="button" onClick={() => setCartItems((items) => items.filter((_, i) => i !== index))} aria-label={'Retirer ' + item.name} className="self-start rounded-md p-1.5 text-[#b8bbbe] hover:bg-[#393c3f] hover:text-white"><X className="size-4" /></button>
                     </li>
                   ))}
                 </ul>
                 <div className="border-t border-[#45484b] pt-4">
-                  <div className="mb-3 flex items-center justify-between text-sm font-semibold"><span>Total: {cartProducts.length} {cartProducts.length === 1 ? 'item' : 'items'}</span><span className="flex items-center gap-1.5 text-base font-bold"><span aria-hidden="true">◈</span>{cartTotal.toLocaleString('en-US')} Robux</span></div>
-                  <button type="button" onClick={() => { if (cartProducts.some((item) => item.price === null)) { notify('Some items are not for sale'); return } if (cartTotal > balance) { setCartInsufficient(true); return } setCartInsufficient(false); setBalance((value) => value - cartTotal); setOwned((previous) => new Set([...previous, ...cartProducts.map((item) => item.id)])); setCartItems([]); setCartOpen(false); notify('Cart purchased successfully') }} className="h-11 w-full rounded-md bg-[#335fff] font-bold text-white transition-colors hover:bg-[#244be0]">Buy</button>
-                  {cartInsufficient && <p role="alert" className="mt-3 text-sm leading-5 text-[#ff8585]">You have insufficient funds for this transaction</p>}
-                  <div className="mt-4 rounded-lg border border-[#45484b] bg-[#2c2f32] px-3 py-3"><p className="text-center text-sm font-semibold">Get 10% off with Roblox Plus</p><a href="https://www.roblox.com/plus" target="_blank" rel="noreferrer" className="mt-2 flex h-9 w-full items-center justify-center rounded-md bg-[#335fff] text-sm font-bold text-white hover:bg-[#244be0]">Get free trial</a></div>
+                  <div className="mb-3 flex items-center justify-between text-sm font-semibold"><span>Total : {cartProducts.length} {cartProducts.length === 1 ? 'article' : 'articles'}</span><span className="flex items-center gap-1.5 text-base font-bold"><span aria-hidden="true">◈</span>{cartTotal.toLocaleString('en-US')} Robux</span></div>
+                  <button type="button" onClick={() => { if (cartProducts.some((item) => item.price === null)) { notify('Certains articles ne sont pas en vente'); return } if (cartTotal > balance) { setCartInsufficient(true); return } setCartInsufficient(false); setBalance((value) => value - cartTotal); setOwned((previous) => new Set([...previous, ...cartProducts.map((item) => item.id)])); setCartItems([]); setCartOpen(false); notify('Achat du panier effectué !') }} className="h-11 w-full rounded-md bg-[#335fff] font-bold text-white transition-colors hover:bg-[#244be0]">Acheter</button>
+                  {cartInsufficient && <p role="alert" className="mt-3 text-sm leading-5 text-[#ff8585]">Tu n'as pas assez de Robux pour cette transaction</p>}
+                  <div className="mt-4 rounded-lg border border-[#45484b] bg-[#2c2f32] px-3 py-3"><p className="text-center text-sm font-semibold">Obtiens 10 % de rabais avec Roblox Plus</p><a href="https://www.roblox.com/plus" target="_blank" rel="noreferrer" className="mt-2 flex h-9 w-full items-center justify-center rounded-md bg-[#335fff] text-sm font-bold text-white hover:bg-[#244be0]">Essayer gratuitement</a></div>
                 </div>
               </>
             )}
@@ -429,7 +429,7 @@ export function CatalogApp() {
           onAdd={(n) => {
             setBalance((b) => b + n)
             setRobuxOpen(false)
-            notify(`${n.toLocaleString('en-US')} Robux added to your balance`)
+            notify(`${n.toLocaleString('fr-CA')} Robux ajoutés à ton solde`)
           }}
         />
       )}
