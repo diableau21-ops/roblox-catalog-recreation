@@ -130,7 +130,7 @@ export function SiteHeader({ balance, query, onQueryChange, onBuyRobux, onNotify
                 e.preventDefault()
                 if (label === 'Robux') {
                   window.location.href = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/robux`
-                } else if (label !== 'Catalog') onNotify(`${label} sera bientôt disponible`)
+                } else if (label !== 'Catalogue') onNotify(`${label} sera bientôt disponible`)
               }}
               aria-current={label === 'Catalog' ? 'page' : undefined}
               className="relative px-2.5 py-[18px] text-sm font-semibold text-foreground/90 transition-colors hover:text-foreground lg:px-3 lg:text-base aria-[current=page]:text-foreground aria-[current=page]:after:absolute aria-[current=page]:after:inset-x-2.5 aria-[current=page]:after:bottom-0 aria-[current=page]:after:h-[3px] aria-[current=page]:after:rounded-full aria-[current=page]:after:bg-foreground lg:aria-[current=page]:after:inset-x-3"
