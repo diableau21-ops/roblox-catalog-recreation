@@ -50,7 +50,7 @@ export function ItemCard({ item, owned, inCart, favorited, onOpen, onAddToCart, 
             type="button"
             onClick={onAddToCart}
             className="absolute bottom-0 left-0 right-0 z-10 translate-y-full bg-white py-2.5 text-sm font-bold text-[#191919] opacity-0 shadow-md transition-all duration-150 group-hover:translate-y-0 group-hover:opacity-100 focus-visible:translate-y-0 focus-visible:opacity-100"
-            aria-label={`${inCart ? 'Retirer' : 'Ajouter'} ${item.name} ${inCart ? 'du' : 'au'} shopping cart`}
+            aria-label={`${inCart ? 'Retirer' : 'Ajouter'} ${item.name} ${inCart ? 'du' : 'au'} panier`}
           >
             {inCart ? 'Retirer' : 'Ajouter'}
           </button>
