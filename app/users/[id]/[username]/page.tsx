@@ -73,24 +73,24 @@ export default async function RobloxUserProfile({ params }: { params: Promise<{ 
                   <h1 className="flex flex-wrap items-center gap-2 text-2xl font-extrabold sm:text-3xl">{result.user.displayName}{result.user.hasVerifiedBadge && <VerifiedBadge />}</h1>
                   <p className="mt-1 text-base text-[#a4a7b0]">@{result.user.name}</p>
                   <div className="mt-4 flex flex-wrap items-center gap-3 text-sm">
-                    <span className="font-semibold">{result.friends?.toLocaleString('en-US') ?? '—'} <span className="font-normal text-[#a4a7b0]">Friends</span></span>
+                    <span className="font-semibold">{result.friends?.toLocaleString('fr-CA') ?? '—'} <span className="font-normal text-[#a4a7b0]">Amis</span></span>
                     <span className="text-[#777777]">•</span>
-                    <span className="font-semibold">{result.followers?.toLocaleString('en-US') ?? '—'} <span className="font-normal text-[#a4a7b0]">Followers</span></span>
+                    <span className="font-semibold">{result.followers?.toLocaleString('fr-CA') ?? '—'} <span className="font-normal text-[#a4a7b0]">Abonnés</span></span>
                     <span className="text-[#555963]">•</span>
-                    <span className="font-semibold">{result.following?.toLocaleString('en-US') ?? '—'} <span className="font-normal text-[#a4a7b0]">Following</span></span>
+                    <span className="font-semibold">{result.following?.toLocaleString('fr-CA') ?? '—'} <span className="font-normal text-[#a4a7b0]">Abonnements</span></span>
                   </div>
                 </div>
                 <ProfileActions username={result.user.name} />
               </div>
-              <nav className="flex gap-7 border-b border-[#252525] px-0" aria-label="Profile sections">
-                <a href="#about" className="border-b-[3px] border-[#335fff] py-4 text-sm font-bold">About</a>
+              <nav className="flex gap-7 border-b border-[#252525] px-0" aria-label="Sections du profil">
+                <a href="#about" className="border-b-[3px] border-[#335fff] py-4 text-sm font-bold">À propos</a>
                 
               </nav>
             </section>
 
             <div className="mt-5 w-full">
               <section id="about" className="w-full border-0 bg-transparent p-0 shadow-none">
-                <h2 className="text-xl font-extrabold">About</h2>
+                <h2 className="text-xl font-extrabold">À propos</h2>
                 <p className="mt-4 min-h-16 whitespace-pre-wrap break-words text-sm leading-6 text-[#d1d3d8]">{result.user.description?.trim() || 'This user has no description.'}</p>
                 {result.user.created && <p className="mt-6 border-t border-[#252525] pt-4 text-sm text-[#a4a7b0]">Join Date: {new Date(result.user.created).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>}
               </section>
@@ -98,7 +98,7 @@ export default async function RobloxUserProfile({ params }: { params: Promise<{ 
 
           </>
         )}
-        <p className="mt-6 text-left text-xs text-[#a0a0a0]">Public profile information from Roblox. This fan-made site is not affiliated with Roblox.</p>
+        <p className="mt-6 text-left text-xs text-[#a0a0a0]">Informations publiques du profil provenant de Roblox. Ce site créé par des fans n’est pas affilié à Roblox.</p>
       </div>
     </main>
   )
