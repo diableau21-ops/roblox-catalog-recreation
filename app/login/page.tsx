@@ -18,7 +18,6 @@ export default function LoginPage() {
   const router = useRouter()
   const [gameImages, setGameImages] = useState<Record<string, string>>({})
   const [showPassword, setShowPassword] = useState(false)
-  const [search, setSearch] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [loginError, setLoginError] = useState('')
@@ -57,26 +56,7 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="login-scene relative flex h-screen min-h-[680px] items-center justify-center overflow-hidden bg-[#08090d] px-4 pb-5 pt-[88px] text-white">
-      <header className="login-topbar fixed inset-x-0 top-0 z-30 flex h-[64px] items-center gap-6 border-b border-[#393a3f] bg-[#191a1f] px-5 text-white shadow-lg">
-        <a href="/" aria-label="Roblox home" className="flex shrink-0 items-center text-white">
-          <span className="flex items-center text-[25px] font-black leading-none tracking-[-1.8px]">
-            ROBL
-            <svg viewBox="0 0 36 36" className="mx-[1px] h-[22px] w-[22px] shrink-0" aria-hidden="true"><path fill="currentColor" d="M8.1 1.8 34.2 8.1 27.9 34.2 1.8 27.9 8.1 1.8Zm6.1 9.1-2.2 9.1 9.1 2.2 2.2-9.1-9.1-2.2Z"/></svg>
-            X
-          </span>
-        </a>
-        <nav className="hidden items-center gap-5 whitespace-nowrap text-[15px] font-semibold text-[#e5e5e7] md:flex">
-          <a href="/" className="transition hover:text-white">Classements</a>
-          <a href="/catalog" className="transition hover:text-white">Marché</a>
-          <a href="/create" className="transition hover:text-white">Créer</a>
-          <a href="/robux" className="transition hover:text-white">Robux</a>
-        </nav>
-        <form className="flex h-[36px] w-full max-w-[300px] items-center rounded-lg border border-[#55565d] bg-[#292a30] px-3 focus-within:border-[#a7a8ad]" onSubmit={(event) => event.preventDefault()}>
-          <svg viewBox="0 0 24 24" className="mr-2 h-[18px] w-[18px] shrink-0 text-[#bdbec4]" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg>
-          <input aria-label="Rechercher" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Rechercher" className="min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-[#bdbec4]" />
-        </form>
-      </header>
+    <main className="login-scene relative flex h-screen min-h-[680px] items-center justify-center overflow-hidden bg-[#08090d] px-4 pb-5 pt-5 text-white">
       <div className="login-stars" aria-hidden="true" />
       <div className="game-collage" aria-hidden="true">
         {games.map((game, index) => (
@@ -120,7 +100,7 @@ export default function LoginPage() {
         <div className="my-4 flex items-center gap-4 text-xs text-[#c5c6cc]"><span className="h-px flex-1 bg-[#34353c]" />OU<span className="h-px flex-1 bg-[#34353c]" /></div>
 
         <p className="mt-5 text-center text-sm font-semibold">Tu n'as pas de compte ? <button type="button" onClick={demoAction} className="underline underline-offset-2">Créer one</button></p>
-        <button type="button" onClick={() => router.push('/')} className="mt-3 w-full text-sm font-semibold text-[#c6c7cd] underline underline-offset-2">Back to Marché</button>
+        <button type="button" onClick={() => router.push('/')} className="mt-3 w-full text-sm font-semibold text-[#c6c7cd] underline underline-offset-2">Retour</button>
       </section>
       <style jsx>{`
         .login-topbar { box-sizing: border-box; }\n        .login-stars { position: fixed; inset: 0; pointer-events: none; opacity: .75; background-image: radial-gradient(1px 1px at 8% 18%,#fff 99%,transparent),radial-gradient(1px 1px at 22% 73%,#fff 99%,transparent),radial-gradient(2px 2px at 78% 15%,#fff 99%,transparent),radial-gradient(1px 1px at 91% 62%,#fff 99%,transparent),radial-gradient(1px 1px at 64% 84%,#fff 99%,transparent),radial-gradient(1px 1px at 42% 31%,#fff 99%,transparent); background-size: 230px 190px; }
