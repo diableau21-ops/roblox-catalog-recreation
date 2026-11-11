@@ -24,7 +24,7 @@ export function ItemCard({ item, owned, inCart, favorited, onOpen, onAddToCart, 
           type="button"
           onClick={onOpen}
           className="absolute inset-0 h-full w-full focus-visible:outline-2 focus-visible:outline-foreground"
-          aria-label={`View ${item.name}`}
+          aria-label={`Voir ${item.name}`}
         >
         <Image
           src={item.image?.startsWith('http') ? item.image : `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${item.image || '/placeholder.svg'}`}
@@ -35,7 +35,7 @@ export function ItemCard({ item, owned, inCart, favorited, onOpen, onAddToCart, 
         />
         {item.limited && (
           <span className="absolute bottom-1.5 left-1.5 inline-flex h-[18px] items-stretch text-[10px] font-black uppercase leading-none shadow-sm">
-            <span className="flex items-center bg-[#00b06f] px-1.5 tracking-[0.02em] text-white">Limited</span>
+            <span className="flex items-center bg-[#00b06f] px-1.5 tracking-[0.02em] text-white">Limité</span>
             {item.limited === 'Limited U' && <span className="flex items-center bg-[#f5a623] px-1.5 font-black text-[#191919]">U</span>}
           </span>
         )}
@@ -50,9 +50,9 @@ export function ItemCard({ item, owned, inCart, favorited, onOpen, onAddToCart, 
             type="button"
             onClick={onAddToCart}
             className="absolute bottom-0 left-0 right-0 z-10 translate-y-full bg-white py-2.5 text-sm font-bold text-[#191919] opacity-0 shadow-md transition-all duration-150 group-hover:translate-y-0 group-hover:opacity-100 focus-visible:translate-y-0 focus-visible:opacity-100"
-            aria-label={`${inCart ? 'Remove' : 'Add'} ${item.name} ${inCart ? 'from' : 'to'} shopping cart`}
+            aria-label={`${inCart ? 'Retirer' : 'Ajouter'} ${item.name} ${inCart ? 'du' : 'au'} shopping cart`}
           >
-            {inCart ? 'Remove' : 'Add'}
+            {inCart ? 'Retirer' : 'Ajouter'}
           </button>
         )}
       </div>
