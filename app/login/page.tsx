@@ -17,10 +17,10 @@ const games = [
 export default function LoginPage() {
   const router = useRouter()
   const [gameImages, setGameImages] = useState<Record<string, string>>({})
-  const [showMot de passe, setShowMot de passe] = useState(false)
-  const [search, setRechercher] = useState('')
-  const [username, setNom d'utilisateur] = useState('')
-  const [password, setMot de passe] = useState('')
+  const [showPassword, setShowMot de passe] = useState(false)
+  const [search, setSearch] = useState('')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const [loginError, setLoginError] = useState('')
   const [signingIn, setSigningIn] = useState(false)
 
@@ -45,7 +45,7 @@ export default function LoginPage() {
       const payload = await response.json()
       const players = Array.isArray(payload.data) ? payload.data : []
       const player = players.find((item: { name?: string }) => item.name?.toLowerCase() === requestedName.toLowerCase())
-      if (!player) { setLoginError('Nom d'utilisateur Roblox introuvable. Vérifie l'orthographe et réessaie.'); return }
+      if (!player) { setLoginError("Nom d'utilisateur Roblox introuvable. Vérifie l'orthographe et réessaie."); return }
       // This selects a local demo profile; it does not authenticate with Roblox.
       window.localStorage.setItem('catalog-demo-profile', JSON.stringify(player))
       window.sessionStorage.setItem('catalog-demo-signed-in', 'true')
@@ -71,7 +71,7 @@ export default function LoginPage() {
         </nav>
         <form className="flex h-[36px] w-full max-w-[300px] items-center rounded-lg border border-[#55565d] bg-[#292a30] px-3 focus-within:border-[#a7a8ad]" onSubmit={(event) => event.preventDefault()}>
           <svg viewBox="0 0 24 24" className="mr-2 h-[18px] w-[18px] shrink-0 text-[#bdbec4]" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg>
-          <input aria-label="Rechercher" value={search} onChange={(event) => setRechercher(event.target.value)} placeholder="Rechercher" className="min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-[#bdbec4]" />
+          <input aria-label="Rechercher" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Rechercher" className="min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-[#bdbec4]" />
         </form>
       </header>
       <div className="login-stars" aria-hidden="true" />
@@ -94,13 +94,13 @@ export default function LoginPage() {
 
         <form onSubmit={(event) => { event.preventDefault(); demoAction() }}>
           <label htmlFor="demo-username" className="mb-2 block text-sm font-semibold">Nom d'utilisateur</label>
-          <input id="demo-username" type="text" autoComplete="off" value={username} onChange={(event) => { setNom d'utilisateur(event.target.value); setLoginError('') }} placeholder="Nom d'utilisateur" className="mb-4 h-[44px] w-full rounded-[10px] border border-[#626675] bg-[#191a1f] px-4 text-base text-white outline-none placeholder:text-[#a7a9b1] focus:border-[#8b91a3]" />
+          <input id="demo-username" type="text" autoComplete="off" value={username} onChange={(event) => { setUsername(event.target.value); setLoginError('') }} placeholder="Nom d'utilisateur" className="mb-4 h-[44px] w-full rounded-[10px] border border-[#626675] bg-[#191a1f] px-4 text-base text-white outline-none placeholder:text-[#a7a9b1] focus:border-[#8b91a3]" />
 
           <label htmlFor="demo-password" className="mb-2 block text-sm font-semibold">Mot de passe</label>
           <div className="relative">
-            <input id="demo-password" type={showMot de passe ? 'text' : 'password'} autoComplete="off" value={password} onChange={(event) => { setMot de passe(event.target.value); setLoginError('') }} placeholder="Mot de passe" className="h-[44px] w-full rounded-[10px] border border-[#626675] bg-[#191a1f] py-2 pl-4 pr-12 text-base text-white outline-none placeholder:text-[#a7a9b1] focus:border-[#8b91a3]" />
-            <button type="button" onClick={() => setShowMot de passe((visible) => !visible)} aria-label={showMot de passe ? 'Masquer le mot de passe' : 'Afficher le mot de passe'} aria-pressed={showMot de passe} className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-[#c3c4ca] hover:text-white">
-              {showMot de passe ? (
+            <input id="demo-password" type={showPassword ? 'text' : 'password'} autoComplete="off" value={password} onChange={(event) => { setPassword(event.target.value); setLoginError('') }} placeholder="Mot de passe" className="h-[44px] w-full rounded-[10px] border border-[#626675] bg-[#191a1f] py-2 pl-4 pr-12 text-base text-white outline-none placeholder:text-[#a7a9b1] focus:border-[#8b91a3]" />
+            <button type="button" onClick={() => setShowMot de passe((visible) => !visible)} aria-label={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'} aria-pressed={showPassword} className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-[#c3c4ca] hover:text-white">
+              {showPassword ? (
                 <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 3l18 18" /><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8" /><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c5 0 8.5 4.5 9.5 7-.4 1-1.2 2.2-2.4 3.3" /><path d="M6.2 6.2C3.9 7.6 2.7 9.6 2.5 12c.7 1.8 3.8 7 9.5 7 1.2 0 2.3-.2 3.3-.7" /></svg>
               ) : (
                 <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M2.5 12s3.5-7 9.5-7 9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7Z" /><circle cx="12" cy="12" r="3" /></svg>
