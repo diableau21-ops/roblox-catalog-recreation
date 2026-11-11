@@ -48,6 +48,7 @@ export default function LoginPage() {
       if (!player) { setLoginError('Roblox username not found. Check the spelling and try again.'); return }
       // This selects a local demo profile; it does not authenticate with Roblox.
       window.localStorage.setItem('catalog-demo-profile', JSON.stringify(player))
+      window.sessionStorage.setItem('catalog-demo-signed-in', 'true')
       window.dispatchEvent(new CustomEvent('catalog-profile-updated', { detail: player }))
       router.push('/')
     } catch { setLoginError('Could not load this Roblox profile. Please try again.') }
