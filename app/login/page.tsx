@@ -36,7 +36,7 @@ export default function LoginPage() {
   async function demoAction() {
     const requestedName = username.trim()
     if (password.length <= 4) { setLoginError('Entre un mot de passe fictif de plus de 4 caractères.'); return }
-    if (requestedName.length < 3) { setLoginError('Entre un nom d'utilisateur Roblox d'au moins 3 caractères.'); return }
+    if (requestedName.length < 3) { setLoginError("Entre un nom d'utilisateur Roblox d'au moins 3 caractères."); return }
     setSigningIn(true)
     setLoginError('')
     try {
