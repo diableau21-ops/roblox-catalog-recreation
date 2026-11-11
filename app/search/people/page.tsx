@@ -154,7 +154,7 @@ function PeopleSearchContent() {
               </div>
               <div className="flex flex-1 flex-col items-center justify-center py-5 text-center">
               {sendRecipient.avatarUrl ? <img src={sendRecipient.avatarUrl} alt="" className="size-16 rounded-full object-cover opacity-80" /> : <span className="size-16 rounded-full bg-[#3a3b40]" />}
-              <span aria-label="Loading" className="mt-6 size-8 animate-spin rounded-full border-[3px] border-white/20 border-t-white" />
+              <span aria-label="Chargement" className="mt-6 size-8 animate-spin rounded-full border-[3px] border-white/20 border-t-white" />
               <p className="mt-5 text-lg font-bold">Envoi des Robux…</p>
               <p className="mt-1 text-sm text-white/60">To @{sendRecipient.name}</p>
               </div>
