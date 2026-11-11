@@ -62,14 +62,14 @@ export function LeftNav({ onNotify, onBuyRobux, dark = false }: Props) {
 
   return (
     <>
-      <nav aria-label="Mobile navigation" className="fixed inset-x-0 bottom-0 z-40 flex items-center justify-around border-t border-border bg-header/95 px-2 pb-[env(safe-area-inset-bottom)] pt-2 shadow-[0_-4px_20px_rgba(0,0,0,0.18)] backdrop-blur-md md:hidden">
+      <nav aria-label="Navigation mobile" className="fixed inset-x-0 bottom-0 z-40 flex items-center justify-around border-t border-border bg-header/95 px-2 pb-[env(safe-area-inset-bottom)] pt-2 shadow-[0_-4px_20px_rgba(0,0,0,0.18)] backdrop-blur-md md:hidden">
         <a href={(process.env.NEXT_PUBLIC_BASE_PATH ?? '') + '/'} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><House className="size-5" /><span>Accueil</span></a>
         <a href={(process.env.NEXT_PUBLIC_BASE_PATH ?? '') + '/'} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><Search className="size-5" /><span>Catalogue</span></a>
         <button type="button" onClick={() => notify('La section Avatar sera bientôt disponible')} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><Shirt className="size-5" /><span>Avatar</span></button>
         <button type="button" onClick={buyRobux} className="flex min-w-0 flex-1 flex-col items-center gap-1 py-1 text-[10px] font-semibold text-foreground/90"><Package className="size-5" /><span>Robux</span></button>
       </nav>
       <nav
-        aria-label="Account"
+        aria-label="Compte"
         className={cn(
           'fixed bottom-0 left-0 top-14 z-40 hidden w-[220px] flex-col overflow-y-auto border-r px-3 py-4 md:flex',
           dark ? 'border-[#292a2e] bg-black text-white' : 'border-border bg-header',
@@ -83,7 +83,7 @@ export function LeftNav({ onNotify, onBuyRobux, dark = false }: Props) {
           <span className="relative size-9 overflow-hidden rounded-full bg-thumb">
             {profile?.avatarUrl ? <img src={profile.avatarUrl} alt="" className="size-9 object-cover" /> : <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/avatar.png`} alt="" fill sizes="36px" className="object-cover" />}
           </span>
-          <span className="flex min-w-0 flex-1 items-center gap-1 truncate text-base font-bold"><span className="truncate">{profile?.displayName || 'Builderman'}</span>{profile?.hasVerifiedBadge && <img src="https://cdn3.emoji.gg/emojis/9389-roblox-verified.png" alt="Verified Roblox account" title="Verified Roblox account" className="size-4 shrink-0" />}</span>
+          <span className="flex min-w-0 flex-1 items-center gap-1 truncate text-base font-bold"><span className="truncate">{profile?.displayName || 'Builderman'}</span>{profile?.hasVerifiedBadge && <img src="https://cdn3.emoji.gg/emojis/9389-roblox-verified.png" alt="Compte Roblox vérifié" title="Compte Roblox vérifié" className="size-4 shrink-0" />}</span>
         </button>
         <ul className="flex flex-col gap-0.5">
           {links.map(({ label, icon: Icon, badge }) => (
@@ -118,8 +118,8 @@ export function LeftNav({ onNotify, onBuyRobux, dark = false }: Props) {
             </span>
             <span className={dark ? 'text-sm font-bold leading-5 text-white' : 'text-sm font-bold leading-5 text-foreground'}>Roblox Plus</span>
           </div>
-          <p className="text-sm font-bold leading-5 text-foreground">More fun for less Robux.</p>
-          <p className="mt-1 text-xs leading-4 text-muted-foreground">Subscribe to Roblox Plus.</p>
+          <p className="text-sm font-bold leading-5 text-foreground">Plus de plaisir pour moins de Robux.</p>
+          <p className="mt-1 text-xs leading-4 text-muted-foreground">Abonne-toi à Roblox Plus.</p>
           <button
             type="button"
             onClick={onBuyRobux}
